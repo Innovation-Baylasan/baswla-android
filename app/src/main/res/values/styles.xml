@@ -9,6 +9,24 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowTranslucentNavigation">true</item>
+<!--
+        <item name="materialButtonStyle">@style/RoundedButton</item>
+-->
+
     </style>
 
+<!--
+    <style name="RoundedButton" parent="Widget.MaterialComponents.Button">
+        <item name="cornerRadius">16dp</item>
+        <item name="android:textColor">#fff</item>
+        <item name="android:background">@color/colorAccent</item>
+    </style>
+-->
+
+
+ <!--   <style name="RoundedShape" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item>
+    </style>
+-->
 </resources>
