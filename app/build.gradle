@@ -37,7 +37,7 @@ dependencies {
 
 
     implementation "com.airbnb.android:lottie:$lottieVersion"
-   // implementation 'com.github.kldMohammed:dots:0.1.0'
+    // implementation 'com.github.kldMohammed:dots:0.1.0'
 
 
 }
