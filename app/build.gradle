@@ -18,8 +18,32 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            minifyEnabled false
+            signingConfig signingConfigs.debug
+        }
+    }
+    flavorDimensions "version"
+
+    productFlavors {
+        dev {
+            minSdkVersion 28
+//            resValue "string", "base_url", "base url dev"
+            resValue "string", "app_name", "Map x dev"
+            applicationIdSuffix = '.dev'
+        }
+        prod {
+//            resValue "string", "base_url", "base url release"
+            resValue "string", "app_name", "Map x"
+        }
+        local {
+//            resValue "string", "base_url", "base url local"
+            resValue "string", "app_name", "Map x local"
+            resValue "string", "app_name1", "Map x local"
+            applicationIdSuffix = '.local'
         }
     }
 }
@@ -32,6 +56,7 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.1.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
@@ -41,7 +66,7 @@ dependencies {
 
 
     implementation "com.airbnb.android:lottie:$lottieVersion"
-   // implementation 'com.github.kldMohammed:dots:0.1.0'
+    // implementation 'com.github.kldMohammed:dots:0.1.0'
 
 
 }
