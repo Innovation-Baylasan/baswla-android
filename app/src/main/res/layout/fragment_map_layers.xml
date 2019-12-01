@@ -6,32 +6,36 @@
     android:layout_height="match_parent"
     android:background="?selectableItemBackgroundBorderless"
     android:orientation="vertical"
-    tools:context=".MapLayersFragment">
+    tools:context=".layers.MapLayersFragment">
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Map Filter"
         android:layout_marginTop="16dp"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
-        />
+        android:text="Map Filter"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="@tools:sample/lorem/random"
-        android:maxLines="4"
-        android:gravity="center"
-        android:layout_marginBottom="8dp"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        />
+        android:layout_marginBottom="8dp"
+        android:gravity="center"
+        android:maxLines="4"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+        tools:text="@tools:sample/lorem/random" />
+
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/mapLayersRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-android:id="@+id/mapLayersRecyclerView"
         android:layout_weight="1"
-
+        android:clipToPadding="false"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:spanCount="3"
+        tools:itemCount="100"
         tools:listitem="@layout/row_map_layer" />
 
     <com.google.android.material.button.MaterialButton
@@ -39,8 +43,10 @@ android:id="@+id/mapLayersRecyclerView"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+
         android:text="Select"
-        app:cornerRadius="16dp"
         android:textSize="18sp"
-        android:layout_marginBottom="16dp"/>
+        app:backgroundTint="@color/colorAccent"
+        app:cornerRadius="16dp" />
 </LinearLayout>
