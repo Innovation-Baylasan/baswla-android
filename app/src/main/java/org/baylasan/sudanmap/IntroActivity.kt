@@ -1,13 +1,13 @@
-package org.baylasan.sudanmap.intro
+package org.baylasan.sudanmap
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
 import kotlinx.android.synthetic.main.activity_intro.*
-import org.baylasan.sudanmap.main.MainActivity
-import org.baylasan.sudanmap.R
+import org.baylasan.sudanmap.adapter.ViewPagerAdapter
 import org.baylasan.sudanmap.domain.ViewPagerModel
 
 class IntroActivity : AppCompatActivity() {

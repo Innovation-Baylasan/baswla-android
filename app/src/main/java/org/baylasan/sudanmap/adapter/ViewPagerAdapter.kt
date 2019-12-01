@@ -1,4 +1,4 @@
-package org.baylasan.sudanmap.intro
+package org.baylasan.sudanmap.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -24,12 +24,9 @@ class ViewPagerAdapter (private val viewList :ArrayList<ViewPagerModel>):
 
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewPagerVH =
-        ViewPagerVH(
-            LayoutInflater.from(parent.context).inflate(
-                R.layout.pager_item, parent, false
-            )
-        )
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewPagerVH  = ViewPagerVH(
+        LayoutInflater.from(parent.context).inflate(
+        R.layout.pager_item, parent, false))
 
     override fun getItemCount() = viewList.size
 

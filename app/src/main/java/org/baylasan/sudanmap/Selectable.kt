@@ -1,4 +1,4 @@
-package org.baylasan.sudanmap.layers
+package org.baylasan.sudanmap
 
 /**
  * Selectable represents a item that can be toggled
