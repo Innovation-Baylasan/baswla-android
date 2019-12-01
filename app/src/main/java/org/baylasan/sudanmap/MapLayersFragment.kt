@@ -1,4 +1,4 @@
-package org.baylasan.sudanmap.layers
+package org.baylasan.sudanmap
 
 
 import android.app.Activity
@@ -9,8 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_map_layers.*
-import org.baylasan.sudanmap.R
 
 /**
  * A simple [Fragment] subclass.

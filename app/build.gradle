@@ -30,6 +30,7 @@ android {
 
     productFlavors {
         dev {
+            minSdkVersion 28
 //            resValue "string", "base_url", "base url dev"
             resValue "string", "app_name", "Map x dev"
             applicationIdSuffix = '.dev'
