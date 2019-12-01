@@ -1,4 +1,4 @@
-package org.baylasan.sudanmap
+package org.baylasan.sudanmap.layers
 
 import android.view.View
 import android.widget.ImageView
