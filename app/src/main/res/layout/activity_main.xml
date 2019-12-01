@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".main.MainActivity">
 
 
     <fragment
@@ -38,7 +38,7 @@
 
                 <androidx.appcompat.widget.AppCompatImageButton
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
                     app:backgroundTint="@android:color/transparent"
                     app:srcCompat="@drawable/ic_navigation" />
@@ -51,8 +51,9 @@
 
                 <androidx.appcompat.widget.AppCompatImageButton
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
+                    android:id="@+id/layersButton"
                     app:backgroundTint="@android:color/transparent"
                     app:srcCompat="@drawable/ic_layers" />
 
@@ -77,9 +78,10 @@
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:paddingStart="8dp"
+                    android:id="@+id/searchButton"
                     android:paddingEnd="8dp"
                     app:srcCompat="@drawable/ic_search"
                     app:tint="@color/colorAccent" />
