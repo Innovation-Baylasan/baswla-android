@@ -4,4 +4,10 @@
     <color name="colorPrimaryDark">#F4f4f4</color>
     <color name="colorAccent">#EB413C</color>
     <color name="colorOnBackground">#FFFFFF</color>
+    <color name="rateBtnBackgroundColor">#FFF0D6</color>
+    <color name="rateBtnTextColor">#F4A210</color>
+    <color name="white" >#fff</color >
+    <color name="black" >#000000</color >
+    <color name="black_overlay" >#66000000</color >
+
 </resources>

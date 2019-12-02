@@ -67,7 +67,10 @@ dependencies {
 
 
     implementation "com.airbnb.android:lottie:$lottieVersion"
-    // implementation 'com.github.kldMohammed:dots:0.1.0'
+    implementation 'com.github.kldMohammed:dots:0.1.0'
+
+    // image manipulation
+    implementation("io.coil-kt:coil:0.8.0")
 
 
 }
