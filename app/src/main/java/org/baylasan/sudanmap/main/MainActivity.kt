@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
                 .replace(R.id.fragmentLayout, SearchFragment.newInstance(), "search")
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 .addToBackStack(null)
-                .commit()g
+                .commit()
         }
     }
 }
