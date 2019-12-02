@@ -4,17 +4,6 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_maps">Map</string>
-    <string name="start_up_week_end">Startups Weekend Sudan</string>
-    <string name="rate_now_btn_label">Rate now</string>
-    <string name="number_sample">112</string>
-    <string name="followers">Followers</string>
-    <string name="events">Events</string>
-    <string name="review">Review</string>
-    <string name="sample_descripition">rambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem</string>
-    <string name="leave_review">Leave Review</string>
-    <string name="comment_hint">Comment Placed Here Comment Placed HereComment Placed Here</string>
-    <string name="post">Post</string>
-    <string name="follow">Follow</string>
     <string name="title_activity_add_entitiy">AddEntitiyActivity</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
