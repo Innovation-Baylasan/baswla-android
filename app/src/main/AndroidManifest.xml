@@ -34,11 +34,6 @@
 
         <activity android:name=".intro.IntroActivity">
 
-        <activity android:name=".search.SearchActivity" />
-        <activity android:name=".IntroActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
         </activity>
         <activity android:name=".main.MainActivity">
             <intent-filter>
