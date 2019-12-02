@@ -322,7 +322,7 @@
                                 android:id="@+id/editText"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:background="null"
+                                android:background="@null"
                                 android:ems="10"
                                 android:gravity="center|start|top"
                                 android:hint="@string/comment_hint"

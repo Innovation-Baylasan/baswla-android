@@ -71,14 +71,7 @@
     <item name="chipStrokeWidth">0.5dp</item>
 
 </style>
-    <style name="AppTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <!--
     <style name="RoundedButton" parent="Widget.MaterialComponents.Button">
