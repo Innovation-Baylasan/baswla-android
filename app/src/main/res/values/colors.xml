@@ -9,5 +9,7 @@
     <color name="white" >#fff</color >
     <color name="black" >#000000</color >
     <color name="black_overlay" >#66000000</color >
+    <color name="reviewAccentColor" >#0671DB</color >
+    <color name="reviewBackColor" >#DAEAFA</color >
 
 </resources>

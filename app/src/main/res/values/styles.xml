@@ -125,7 +125,22 @@
         <item name="backgroundTint">@color/rateBtnBackgroundColor</item>
         <item name="android:elevation" tools:targetApi="lollipop">8dp
         </item>
+        <item name="cornerRadius">20dp</item>
         <item name="android:textColor">@color/rateBtnTextColor</item>
+    </style>
+    <style name="ReviewButton" parent="Widget.MaterialComponents.Button">
+        <item name="backgroundTint">@color/reviewBackColor</item>
+        <item name="android:elevation" tools:targetApi="lollipop">8dp
+        </item>
+        <item name="cornerRadius">0dp</item>
+        <item name="android:textColor">@color/reviewAccentColor</item>
+    </style>
+    <style name="FollowButton" parent="Widget.MaterialComponents.Button">
+        <item name="backgroundTint">@color/reviewAccentColor</item>
+        <item name="android:elevation" tools:targetApi="lollipop">8dp
+        </item>
+        <item name="cornerRadius">20dp</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 
 
