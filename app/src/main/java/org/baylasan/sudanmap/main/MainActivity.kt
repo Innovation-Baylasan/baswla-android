@@ -1,9 +1,9 @@
 package org.baylasan.sudanmap.main
 
 import android.os.Bundle
-import android.view.KeyEvent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
+import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_main.*
 import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.layers.MapLayersFragment
@@ -27,6 +27,14 @@ class MainActivity : AppCompatActivity() {
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 .addToBackStack(null)
                 .commit()
+        }
+        entityListRecyclerView.layoutManager = LinearLayoutManager(this)
+        entityListRecyclerView.adapter = EntityListAdapter{
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragmentLayout, SearchFragment.newInstance(), "search")
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                .addToBackStack(null)
+                .commit()g
         }
     }
 }

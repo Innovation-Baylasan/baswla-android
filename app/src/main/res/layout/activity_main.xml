@@ -90,19 +90,19 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
     </FrameLayout>
-
+<androidx.core.widget.NestedScrollView
+    app:behavior_expandedOffset="200"
+    app:behavior_fitToContents="true"
+    app:layout_behavior="@string/bottom_sheet_behavior"
+    app:behavior_peekHeight="70dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/contentLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/white"
         android:fitsSystemWindows="true"
-        app:behavior_expandedOffset="200"
-        app:behavior_fitToContents="true"
-        app:cardElevation="0dp"
-        app:layout_behavior="@string/bottom_sheet_behavior"
-        app:layout_dodgeInsetEdges="top"
-        app:layout_insetEdge="top">
+        >
 
         <ImageView
             android:layout_width="wrap_content"
@@ -113,14 +113,17 @@
             app:srcCompat="@drawable/ic_scroll_thumb" />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/entityListRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginTop="24dp"
             android:orientation="vertical"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:itemCount="10"
             tools:listitem="@layout/row_entitiy_list" />
     </com.google.android.material.card.MaterialCardView>
+
+</androidx.core.widget.NestedScrollView>
     <FrameLayout
 
         android:id="@+id/fragmentLayout"

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_search.*
 import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.searchfilter.SearchFilterFragment
@@ -26,5 +27,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                 ?.addToBackStack(null)
                 ?.commit()
         }
+        searchRecyclerView.adapter = SearchAdapter()
+        searchRecyclerView.layoutManager = LinearLayoutManager(activity)
     }
 }
