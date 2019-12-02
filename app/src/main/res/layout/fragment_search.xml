@@ -4,9 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="org.baylasan.sudanmap.search.SearchActivity">
+    android:background="?android:windowBackground"
+    android:focusableInTouchMode="true"
+    android:focusable="true"
+    android:clickable="true"
+    >
 
-    <com.google.android.material.card.MaterialCardView
+    <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="0dp"
         android:layout_height="?actionBarSize"
@@ -23,12 +27,11 @@
             android:layout_gravity="center"
             android:orientation="horizontal">
 
-            <androidx.appcompat.widget.AppCompatImageView
+            <androidx.appcompat.widget.AppCompatImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:background="?actionBarItemBackground"
-                android:padding="16dp"
+                app:backgroundTint="@android:color/transparent"
                 app:srcCompat="@drawable/ic_arrow_back_black_24dp" />
 
             <View
@@ -45,7 +48,7 @@
                 android:gravity="center"
                 android:text="Search keyword"
                 android:textColor="@android:color/black"
-                android:textSize="22sp" />
+                android:textSize="20sp" />
 
             <View
                 android:id="@+id/divider2"
@@ -53,20 +56,20 @@
                 android:layout_height="match_parent"
                 android:background="?android:attr/listDivider" />
 
-            <androidx.appcompat.widget.AppCompatImageView
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/filterButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:background="?actionBarItemBackground"
-                android:padding="16dp"
-                app:srcCompat="@drawable/ic_filter_list_black_24dp" />
+                app:backgroundTint="@android:color/transparent"
+                app:srcCompat="@drawable/ic_filter" />
         </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
+    </androidx.cardview.widget.CardView>
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        tools:itemCount="2"
+        tools:itemCount="20"
         tools:listitem="@layout/row_search_result"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

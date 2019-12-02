@@ -4,8 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?selectableItemBackgroundBorderless"
+    android:focusableInTouchMode="true"
+    android:focusable="true"
+    android:clickable="true"
+    android:background="?android:windowBackground"
     android:orientation="vertical"
+
     tools:context=".layers.MapLayersFragment">
 
     <TextView

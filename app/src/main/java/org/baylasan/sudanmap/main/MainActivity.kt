@@ -1,19 +1,32 @@
 package org.baylasan.sudanmap.main
 
 import android.os.Bundle
+import android.view.KeyEvent
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.material.bottomsheet.BottomSheetBehavior
+import androidx.fragment.app.FragmentTransaction
 import kotlinx.android.synthetic.main.activity_main.*
 import org.baylasan.sudanmap.R
+import org.baylasan.sudanmap.layers.MapLayersFragment
+import org.baylasan.sudanmap.search.SearchFragment
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val bottomSheetBehavior = BottomSheetBehavior.from(contentLayout)
         layersButton.setOnClickListener {
-
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragmentLayout, MapLayersFragment.newInstance(), "layers")
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                .addToBackStack(null)
+                .commit()
+        }
+        searchButton.setOnClickListener {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragmentLayout, SearchFragment.newInstance(), "search")
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                .addToBackStack(null)
+                .commit()
         }
     }
 }
