@@ -19,11 +19,14 @@
             android:id="@+id/toolbar_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorAccent"
             android:fitsSystemWindows="true"
-
             app:layout_scrollFlags="exitUntilCollapsed|scroll">
-
+<ImageView
+    android:scaleType="centerCrop"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:srcCompat="@drawable/ic_add_entity_background"
+    />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="200dp"

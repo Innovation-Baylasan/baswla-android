@@ -7,6 +7,13 @@
     android:orientation="vertical"
     tools:context="org.baylasan.sudanmap.searchfilter.SearchFilterFragment">
 
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:navigationIcon="@drawable/ic_arrow_back_black_24dp"
+
+        app:title="Search Filter" />
+
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -41,8 +48,8 @@
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="16dp"
                 android:maxLines="3"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-                tools:text="@tools:sample/lorem/random" />
+                android:text="random descriptive text that describe this section of filter"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
 
             <com.google.android.material.chip.ChipGroup
                 android:layout_width="match_parent"
@@ -50,64 +57,48 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="16dp"
+                app:singleSelection="false"
                 app:checkedChip="@id/chip1">
 
 
                 <com.google.android.material.chip.Chip
+
                     android:id="@+id/chip1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:text="@tools:sample/lorem[1]" />
+
+                    android:text="Startup" />
 
                 <com.google.android.material.chip.Chip
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:text="@tools:sample/lorem[1]" />
+                    android:text="Business accelerator " />
+
 
                 <com.google.android.material.chip.Chip
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:text="@tools:sample/lorem[1]" />
+                    android:text="R&amp;D Center" />
 
                 <com.google.android.material.chip.Chip
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:text="@tools:sample/lorem[1]" />
+                    android:text="Investor" />
 
                 <com.google.android.material.chip.Chip
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:text="@tools:sample/lorem[1]" />
+                    android:text="VC" />
 
                 <com.google.android.material.chip.Chip
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:text="@tools:sample/lorem[1]" />
+                    tools:text="Category n" />
 
                 <com.google.android.material.chip.Chip
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:text="@tools:sample/lorem[1]" />
-
-                <com.google.android.material.chip.Chip
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    tools:text="@tools:sample/lorem[1]" />
-
-                <com.google.android.material.chip.Chip
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    tools:text="@tools:sample/lorem[1]" />
-
-                <com.google.android.material.chip.Chip
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    tools:text="@tools:sample/lorem[1]" />
-
-                <com.google.android.material.chip.Chip
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    tools:text="@tools:sample/lorem[1]" />
+                    tools:text="Category n" />
             </com.google.android.material.chip.ChipGroup>
         </LinearLayout>
 
@@ -148,8 +139,9 @@
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="16dp"
                 android:maxLines="3"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-                tools:text="@tools:sample/lorem/random" />
+                android:text="random descriptive text that describe this section of filter"
+
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
 
             <com.google.android.material.slider.Slider
                 android:layout_width="match_parent"
@@ -157,11 +149,13 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
-                android:value="1"
-                app:floatingLabel="true"
                 android:layout_marginBottom="8dp"
+                android:value="1"
+
                 android:valueFrom="0"
                 android:valueTo="10"
+                app:floatingLabel="true"
+
                 app:thumbColor="@color/colorAccent"
                 app:trackColor="#F5f5f5" />
         </LinearLayout>
@@ -201,8 +195,8 @@
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="16dp"
                 android:maxLines="3"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-                tools:text="@tools:sample/lorem/random" />
+                android:text="random descriptive text that describe this section of filter"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
 
             <com.google.android.material.chip.ChipGroup
                 android:layout_width="match_parent"
@@ -215,57 +209,29 @@
                 <com.google.android.material.chip.Chip
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:text="@tools:sample/lorem[1]" />
+                    android:text="Sport" />
 
                 <com.google.android.material.chip.Chip
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:text="@tools:sample/lorem[1]" />
+                    android:text="activity 2" />
 
                 <com.google.android.material.chip.Chip
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:text="@tools:sample/lorem[1]" />
+                    android:text="activity 3" />
 
                 <com.google.android.material.chip.Chip
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:text="@tools:sample/lorem[1]" />
+                    android:text="activity 4" />
 
                 <com.google.android.material.chip.Chip
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:text="@tools:sample/lorem[1]" />
+                    android:text="activity 5" />
 
-                <com.google.android.material.chip.Chip
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    tools:text="@tools:sample/lorem[1]" />
 
-                <com.google.android.material.chip.Chip
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    tools:text="@tools:sample/lorem[1]" />
-
-                <com.google.android.material.chip.Chip
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    tools:text="@tools:sample/lorem[1]" />
-
-                <com.google.android.material.chip.Chip
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    tools:text="@tools:sample/lorem[1]" />
-
-                <com.google.android.material.chip.Chip
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    tools:text="@tools:sample/lorem[1]" />
-
-                <com.google.android.material.chip.Chip
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    tools:text="@tools:sample/lorem[1]" />
             </com.google.android.material.chip.ChipGroup>
         </LinearLayout>
 
