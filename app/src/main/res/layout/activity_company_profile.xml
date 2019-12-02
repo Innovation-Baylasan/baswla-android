@@ -130,72 +130,80 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/linearLayout3"
-                    android:layout_width="135dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
                     android:layout_marginStart="24dp"
-                    android:layout_marginTop="8dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/linearLayout2"
                     app:layout_constraintEnd_toStartOf="@+id/linearLayout2"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/rateNowBtn">
+                    app:layout_constraintTop_toTopOf="@+id/linearLayout2">
 
                     <TextView
                         android:id="@+id/companyProfileFolowersNumTxt"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
                         android:layout_marginEnd="8dp"
                         android:gravity="center_horizontal"
                         android:text="@string/number_sample"
-                        app:layout_constraintBottom_toTopOf="@+id/companyProfileFolowersTxt"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent" />
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/companyProfileFolowersTxt"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
                         android:gravity="center_horizontal"
-                        android:text="TextView"
+                        android:text="@string/followers"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="@+id/companyProfileFolowersNumTxt"
-                        app:layout_constraintStart_toStartOf="@+id/companyProfileFolowersNumTxt" />
+                        app:layout_constraintStart_toStartOf="@+id/companyProfileFolowersNumTxt"
+                        app:layout_constraintTop_toBottomOf="@+id/companyProfileFolowersNumTxt" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/linearLayout2"
-                    android:layout_width="136dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/linearLayout4"
                     app:layout_constraintEnd_toStartOf="@+id/linearLayout4"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toEndOf="@+id/linearLayout3"
-                    app:layout_constraintTop_toBottomOf="@+id/rateNowBtn">
+                    app:layout_constraintTop_toTopOf="@+id/linearLayout4">
 
                     <TextView
                         android:id="@+id/companyProfileEventsNumTxt"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="19dp"
+                        android:layout_marginTop="8dp"
                         android:text="112"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="@+id/companyProfileEventsTxt"
-                        app:layout_constraintStart_toStartOf="@+id/companyProfileEventsTxt" />
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/companyProfileEventsTxt"
-                        android:layout_width="136dp"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="1dp"
-                        android:layout_marginLeft="1dp"
-                        android:text="TextView"
-                        app:layout_constraintStart_toEndOf="parent"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:gravity="center_horizontal"
+                        android:text="@string/events"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/companyProfileEventsNumTxt" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/linearLayout4"
-                    android:layout_width="136dp"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="24dp"
@@ -206,23 +214,27 @@
 
                     <TextView
                         android:id="@+id/companyProfileReviewsNumTxt"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="19dp"
-                        android:text="TextView"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="@+id/companyProfileReviewsTxt"
-                        app:layout_constraintStart_toStartOf="@+id/companyProfileReviewsTxt" />
+                        android:text="@string/number_sample"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/companyProfileReviewsTxt"
-                        android:layout_width="136dp"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="126dp"
-                        android:layout_marginLeft="126dp"
-                        android:text="TextView"
-                        app:layout_constraintStart_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/companyProfileReviewsNumTxt" />
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:gravity="center_horizontal"
+                        android:text="@string/review"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/companyProfileReviewsNumTxt" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </FrameLayout>

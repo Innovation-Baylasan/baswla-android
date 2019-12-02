@@ -7,4 +7,7 @@
     <string name="start_up_week_end">Startups Weekend Sudan</string>
     <string name="rate_now_btn_label">Rate now</string>
     <string name="number_sample">112</string>
+    <string name="followers">Followers</string>
+    <string name="events">Events</string>
+    <string name="review">Review</string>
 </resources>
