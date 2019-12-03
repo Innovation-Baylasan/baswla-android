@@ -38,7 +38,7 @@
         </item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-
+        <item name="android:fontFamily">@font/neo_sans_arabic_regular</item>
 
         <!--<item name="android:textSize">24sp</item>-->
 
@@ -65,20 +65,13 @@
         -->
 
     </style>
-<style name="Outlined" parent="Widget.MaterialComponents.Chip.Choice">
-    <item name="chipBackgroundColor">@android:color/transparent</item>
-    <item name="chipStrokeColor">@android:color/darker_gray</item>
-    <item name="chipStrokeWidth">0.5dp</item>
 
-</style>
-    <style name="AppTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
+    <style name="Outlined" parent="Widget.MaterialComponents.Chip.Choice">
+        <item name="chipBackgroundColor">@android:color/transparent</item>
+        <item name="chipStrokeColor">@android:color/darker_gray</item>
+        <item name="chipStrokeWidth">0.5dp</item>
+
     </style>
-
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <!--
     <style name="RoundedButton" parent="Widget.MaterialComponents.Button">
@@ -149,6 +142,7 @@
         <item name="cornerRadius">20dp</item>
         <item name="android:textColor">@color/rateBtnTextColor</item>
     </style>
+
     <style name="ReviewButton" parent="Widget.MaterialComponents.Button">
         <item name="backgroundTint">@color/reviewBackColor</item>
         <item name="android:elevation" tools:targetApi="lollipop">8dp
@@ -156,6 +150,7 @@
         <item name="cornerRadius">0dp</item>
         <item name="android:textColor">@color/reviewAccentColor</item>
     </style>
+
     <style name="FollowButton" parent="Widget.MaterialComponents.Button">
         <item name="backgroundTint">@color/reviewAccentColor</item>
         <item name="android:elevation" tools:targetApi="lollipop">8dp
