@@ -108,4 +108,13 @@
     <string name="action_settings">Settings</string>
     <string name="welcome">Welcome</string>
     <string name="welcome_text_description">Here we shoukd put text to let user register in our app</string>
+    <string name="user_name">Username</string>
+    <string name="password">Passowrd</string>
+    <string name="sgin_in">Sign in</string>
+    <string name="sign_up_as_org">Sign up as organization</string>
+    <string name="or">OR</string>
+    <string name="sign_in_as_guest">Sign in as guest</string>
+    <string name="sample_name">John Doe</string>
+    <string name="sample_comment">Nice Done, Such Great Place</string>
+    <string name="sample_date_in_month">2 month ago</string>
 </resources>

@@ -2,6 +2,7 @@ package org.baylasan.sudanmap.auth
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import org.baylasan.sudanmap.R
 
 class AuthActivity : AppCompatActivity() {
 
