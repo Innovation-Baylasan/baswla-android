@@ -6,6 +6,7 @@
     android:layout_height="wrap_content"
     app:cardCornerRadius="4dp"
 android:id="@+id/layerCard"
+    app:cardBackgroundColor="@android:color/white"
     app:strokeWidth="1dp"
     android:layout_marginEnd="4dp"
     android:layout_marginStart="4dp"

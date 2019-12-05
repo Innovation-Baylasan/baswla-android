@@ -68,6 +68,7 @@ dependencies {
 
     implementation "androidx.viewpager2:viewpager2:1.0.0"
 
+    implementation 'com.github.m7mdra:like-google-maps:0.3'
 
     implementation "com.airbnb.android:lottie:$lottieVersion"
     implementation 'com.github.kldMohammed:dots:0.1.0'
