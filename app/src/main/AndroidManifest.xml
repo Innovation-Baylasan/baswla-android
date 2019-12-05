@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="org.baylasan.sudanmap">
     <!--
              The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
@@ -9,6 +10,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
+        tools:replace="android:allowBackup"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -16,6 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+
             android:name=".addentity.AddEntityActivity"
             android:label="@string/title_activity_add_entitiy"
             android:theme="@style/AppTheme.NoActionBar"></activity>
@@ -31,12 +34,12 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".intro.IntroActivity"></activity>
 
+        <activity android:name=".intro.IntroActivity" />
+        <activity
+            android:name=".main.MainActivity"
+            android:windowSoftInputMode="adjustNothing">
 
-        <activity android:name=".main.MainActivity">
-
-        </activity>
         <activity android:name=".auth.AuthActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

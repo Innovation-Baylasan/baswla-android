@@ -342,6 +342,19 @@
                                                 app:layout_constraintStart_toStartOf="parent"
                                                 app:layout_constraintTop_toBottomOf="@+id/textView6">
 
+                            <EditText
+                                android:id="@+id/editText"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:ems="10"
+                                android:gravity="center|start|top"
+                                android:hint="@string/comment_hint"
+
+                                android:inputType="textShortMessage|textMultiLine|text"
+                                android:lines="3"
+                                android:maxLines="10"
+                                android:nestedScrollingEnabled="true" />
                                                 <EditText
                                                     android:id="@+id/editText"
                                                     android:layout_width="match_parent"

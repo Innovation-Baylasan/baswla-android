@@ -8,7 +8,7 @@
              <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
              <item name="colorAccent">@color/colorAccent</item>-->
 
-
+<!--
         <item name="colorOnPrimary">@color/colorAccent</item>
         <item name="colorSecondary">@color/colorAccent</item>
         <item name="colorSecondaryVariant">@color/white</item>
@@ -16,10 +16,8 @@
         <item name="colorError">#F44336</item>
         <item name="colorOnError">#FFFFFF</item>
         <item name="colorSurface">#FFFFFF</item>
-        <item name="colorOnSurface">#212121</item>
-        <item name="android:statusBarColor" tools:targetApi="lollipop">@color/white
-        </item>
-        <!--<item name="android:colorBackground" >@color/ghostWhite</item >-->
+        <item name="colorOnSurface">#212121</item>-->
+        <item name="android:statusBarColor" tools:targetApi="lollipop">@color/white</item>
         <item name="colorOnBackground">#212121</item>
 
         <item name="colorPrimary">@android:color/white</item>
@@ -32,7 +30,7 @@
         <!--
                 <item name="android:statusBarColor">@color/ghostWhite</item>
         -->
-        <item name="android:textColorHintInverse">@color/black_overlay</item>
+<!--        <item name="android:textColorHintInverse">@color/black_overlay</item>-->
 
         <item name="android:windowLightStatusBar" tools:targetApi="m">true
         </item>
@@ -50,13 +48,13 @@
         <!--	<item name="toolbarStyle" >@style/ToolbarTheme</item >
         <item name="actionBarTheme" >@style/ToolbarTheme</item >
         <item name="actionBarStyle" >@style/ToolbarTheme</item >-->
-        <item name="shapeAppearanceSmallComponent">@style/AppShapeAppearance.SmallComponent</item>
-        <item name="shapeAppearanceMediumComponent">@style/AppShapeAppearance.MediumComponent</item>
-        <item name="materialCardViewStyle">@style/AppCard</item>
+<!--        <item name="shapeAppearanceSmallComponent">@style/AppShapeAppearance.SmallComponent</item>-->
+<!--        <item name="shapeAppearanceMediumComponent">@style/AppShapeAppearance.MediumComponent</item>-->
+<!--        <item name="materialCardViewStyle">@style/AppCard</item>-->
 
-        <item name="android:textAppearance">@style/TextAppearance</item>
-        <item name="textInputStyle">@style/AppTextField</item>
-        <item name="materialButtonStyle">@style/AppButton</item>
+<!--        <item name="android:textAppearance">@style/TextAppearance</item>-->
+<!--        <item name="textInputStyle">@style/AppTextField</item>-->
+<!--        <item name="materialButtonStyle">@style/AppButton</item>-->
 
         <item name="android:navigationBarColor" tools:targetApi="lollipop">@color/white
         </item>
@@ -72,6 +70,7 @@
         <item name="chipStrokeWidth">0.5dp</item>
 
     </style>
+
 
     <!--
     <style name="RoundedButton" parent="Widget.MaterialComponents.Button">
