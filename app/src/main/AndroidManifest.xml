@@ -38,7 +38,7 @@
         <activity android:name=".intro.IntroActivity" />
         <activity
             android:name=".main.MainActivity"
-            android:windowSoftInputMode="adjustNothing">
+            android:windowSoftInputMode="adjustNothing"/>
 
         <activity android:name=".auth.AuthActivity">
             <intent-filter>
