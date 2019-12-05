@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="org.baylasan.sudanmap.addentity.AddEntityActivity"
+    tools:context="org.baylasan.sudanmap.ui.addentity.AddEntityActivity"
     tools:showIn="@layout/activity_add_entity">
 
     <com.google.android.material.card.MaterialCardView

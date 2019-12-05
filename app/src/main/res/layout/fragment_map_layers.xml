@@ -10,7 +10,7 @@
     android:background="?android:windowBackground"
     android:orientation="vertical"
 
-    tools:context=".layers.MapLayersFragment">
+    tools:context=".ui.layers.MapLayersFragment">
 
     <TextView
         android:layout_width="wrap_content"
