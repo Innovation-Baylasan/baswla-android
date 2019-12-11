@@ -9,9 +9,6 @@ import java.net.UnknownHostException;
 
 import io.reactivex.Observable;
 import io.reactivex.functions.Function;
-import m7mdra.com.mawgif.data.common.ClientConnectionException;
-import m7mdra.com.mawgif.data.common.TimeoutConnectionException;
-import m7mdra.com.mawgif.data.common.UnexpectedException;
 import retrofit2.Response;
 public class ThrowableObservableFunc1<T> implements Function<Throwable, Observable<? extends Response<T>>> {
     private static final String TAG = "ThrowableObservable";

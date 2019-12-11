@@ -1,16 +1,16 @@
-package m7mdra.com.mawgif.data
+package org.baylasan.sudanmap.data
 
 import io.reactivex.Single
-import m7mdra.com.mawgif.domain.places.model.Place
-import m7mdra.com.mawgif.domain.user.CreateAccountUseCase
-import m7mdra.com.mawgif.domain.user.LoginUseCase
+
+import org.baylasan.sudanmap.domain.entity.model.EntityDto
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 
-interface MawgifApi {
-    interface User {
+interface SudanMapApi {
+   /* interface User {
         @POST("users")
         fun createUser(@Body request: CreateAccountUseCase.Request): Single<Response<m7mdra.com.mawgif.domain.user.model.User>>
 
@@ -24,4 +24,12 @@ interface MawgifApi {
         @GET("places/availablePlaces")
         fun getAvailablePlaces(): Single<Response<List<Place>>>
     }
+*/
+
+    interface Entity {
+        @GET("categories/{id}/entities")
+        fun getEntities(@Path("id") id :Int = 1) : Single<Response<List<EntityDto>>>
+    }
 }
+
+const val BASE_URL = "http://104.248.145.132/api/"

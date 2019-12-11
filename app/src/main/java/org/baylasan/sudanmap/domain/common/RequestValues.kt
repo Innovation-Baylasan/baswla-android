@@ -1,3 +1,3 @@
-package m7mdra.com.mawgif.domain.common
+package org.baylasan.sudanmap.domain.common
 
  interface RequestValues

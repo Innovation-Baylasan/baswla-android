@@ -112,7 +112,7 @@
             app:strokeColor="@color/colorAccent"
             app:strokeWidth="1dp"
             android:textColor="@color/colorAccent"
-            android:id="@+id/button4"
+            android:id="@+id/signUpAsOrg"
             android:layout_width="0dp"
             app:rippleColor="@color/colorAccent"
             android:layout_height="wrap_content"
@@ -136,7 +136,7 @@
             android:layout_marginEnd="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button4">
+            app:layout_constraintTop_toBottomOf="@+id/signUpAsOrg">
 
             <TextView
                 android:id="@+id/tvText"
@@ -167,7 +167,7 @@
         <com.google.android.material.button.MaterialButton
             style="@style/Widget.MaterialComponents.Button.TextButton"
             app:rippleColor="@color/colorAccent"
-            android:id="@+id/button5"
+            android:id="@+id/signInAsGuest"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"

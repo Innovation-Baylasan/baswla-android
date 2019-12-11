@@ -1,4 +1,4 @@
-package m7mdra.com.mawgif.domain.common
+package org.baylasan.sudanmap.domain.common
 
 
 import io.reactivex.Completable

@@ -6,16 +6,23 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.fragment.app.FragmentTransaction
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.fish4fun.likegooglemaps.bottomsheet.CustomBottomSheetBehavior
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 import org.baylasan.sudanmap.R
+import org.baylasan.sudanmap.data.WebAccess
+import org.baylasan.sudanmap.domain.entity.model.EntityDto
 import org.baylasan.sudanmap.ui.layers.MapLayersFragment
 import org.baylasan.sudanmap.ui.search.SearchFragment
 
 
 class MainActivity : AppCompatActivity() {
+
+    private val entities = ArrayList<EntityDto>()
+    lateinit var adapter: EntityListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,8 +42,8 @@ class MainActivity : AppCompatActivity() {
                 .commit()
         }
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = EntityListAdapter {
+        recyclerView.layoutManager = StaggeredGridLayoutManager(2 , StaggeredGridLayoutManager.VERTICAL)
+      adapter=  EntityListAdapter(entities) {
             supportFragmentManager.beginTransaction()
                 .replace(
                     R.id.fragmentLayout,
@@ -47,6 +54,17 @@ class MainActivity : AppCompatActivity() {
                 .addToBackStack(null)
                 .commit()
         }
+
+        openSheet.setOnClickListener {
+            val addPhotoBottomDialogFragment: EntityDialogFragment =
+                EntityDialogFragment.newInstance()
+            addPhotoBottomDialogFragment.show(
+                supportFragmentManager, "tag"
+            )
+
+        }
+
+        recyclerView.adapter =adapter
         val bottomSheet = findViewById<View>(R.id.bottomSheet)
         val layoutParams = bottomSheet.layoutParams as CoordinatorLayout.LayoutParams
         val bottomSheetBehavior = layoutParams.behavior as CustomBottomSheetBehavior<*>
@@ -66,5 +84,23 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         })
+
+        loadEntities()
+    }
+
+    fun loadEntities(){
+        WebAccess.apiService.getEntities()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({this::handleResult} , {this::handleError})
+    }
+
+    fun handleResult(result : List<EntityDto>){
+        entities.addAll(result)
+        adapter.notifyDataSetChanged()
+    }
+
+    fun handleError(error : Throwable){
+
     }
 }

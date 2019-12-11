@@ -1,6 +1,4 @@
-package m7mdra.com.mawgif.data.common
-
-import m7mdra.com.mawgif.data.common.ApiErrorResponse
+package org.baylasan.sudanmap.data.common
 
 class ApiException(val apiErrorResponse: ApiErrorResponse) : Exception("ApiException")
 

@@ -117,4 +117,7 @@
     <string name="sample_name">John Doe</string>
     <string name="sample_comment">Nice Done, Such Great Place</string>
     <string name="sample_date_in_month">2 month ago</string>
+    <string name="email">Email</string>
+    <string name="password_confirmation">Password Confirmation</string>
+    <string name="type">Type</string>
 </resources>

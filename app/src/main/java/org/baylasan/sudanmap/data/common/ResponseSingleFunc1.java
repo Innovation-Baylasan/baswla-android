@@ -4,11 +4,6 @@ import java.io.IOException;
 
 import io.reactivex.Single;
 import io.reactivex.functions.Function;
-import m7mdra.com.mawgif.data.common.ApiErrorResponse;
-import m7mdra.com.mawgif.data.common.ApiException;
-import m7mdra.com.mawgif.data.common.ExceedLimitException;
-import m7mdra.com.mawgif.data.common.ResponseConvertException;
-import m7mdra.com.mawgif.data.common.UnAuthorizedException;
 import okhttp3.ResponseBody;
 import retrofit2.Converter;
 import retrofit2.Response;
