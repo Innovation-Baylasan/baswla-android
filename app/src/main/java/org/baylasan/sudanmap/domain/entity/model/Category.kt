@@ -16,4 +16,6 @@ data class Category(
     val name: String = "",
     @SerializedName("updated_at")
     val updatedAt: String = ""
+
+
 )

@@ -1,10 +1,17 @@
 package org.baylasan.sudanmap.domain.entity
 
-/*
-class GetEntitiesUseCase(private val entityRepository: EntityRepository) :SingleUseCase<GetEntitiesUseCase.categoryId , Single<List<EntityDto>>> {
+import io.reactivex.Single
+import org.baylasan.sudanmap.domain.common.RequestValues
+import org.baylasan.sudanmap.domain.common.SingleUseCase
+import org.baylasan.sudanmap.domain.entity.model.EntityDto
 
-    val categoryId :Int = 1
-    override fun execute(params: GetEntitiesUseCase.categoryId): Single<List<EntityDto>> {
-      return  entityRepository.getEntities(params)
+class GetEntitiesUseCase(private val entityRepository: EntityRepository) :
+    SingleUseCase<GetEntitiesUseCase.Params, List<EntityDto>> {
+
+    val categoryId: Int = 1
+    override fun execute(params: Params): Single<List<EntityDto>> {
+        return entityRepository.getEntities(params.categoryId)
     }
-}*/
+
+    class Params(val categoryId: Int) : RequestValues
+}

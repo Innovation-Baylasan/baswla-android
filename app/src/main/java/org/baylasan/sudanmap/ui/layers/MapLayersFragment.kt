@@ -9,11 +9,14 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import kotlinx.android.synthetic.main.fragment_map_layers.*
 import org.baylasan.sudanmap.R
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * A simple [Fragment] subclass.
  */
-class MapLayersFragment : Fragment( R.layout.fragment_map_layers) {
+class MapLayersFragment : Fragment(R.layout.fragment_map_layers) {
+    private val viewModel: MapLayersViewModel by viewModel()
+
     companion object {
         @JvmStatic
         fun newInstance(): MapLayersFragment {
@@ -30,7 +33,7 @@ class MapLayersFragment : Fragment( R.layout.fragment_map_layers) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mapLayersRecyclerView.layoutManager = GridLayoutManager(activity, 3)
-
+        viewModel.loadCategories()
         mapLayersRecyclerView.adapter =
             MapLayersAdapter()
     }

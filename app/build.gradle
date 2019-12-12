@@ -33,16 +33,16 @@ android {
 
     productFlavors {
         dev {
-//            resValue "string", "base_url", "base url dev"
+            resValue "string", "base_url", "http://104.248.145.132/api/"
             resValue "string", "app_name", "Map x dev"
             applicationIdSuffix = '.dev'
         }
         prod {
-//            resValue "string", "base_url", "base url release"
+            resValue "string", "base_url", "http://104.248.145.132/api/"
             resValue "string", "app_name", "Map x"
         }
         local {
-//            resValue "string", "base_url", "base url local"
+            resValue "string", "base_url", "http://192.168.1.100/api/"
             resValue "string", "app_name", "Map x local"
             resValue "string", "app_name1", "Map x local"
             applicationIdSuffix = '.local'
@@ -78,7 +78,7 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.1.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
-    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+//    implementation 'androidx.recyclerview:recyclerview:1.1.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
@@ -95,6 +95,7 @@ dependencies {
 
     // image manipulation
     implementation("io.coil-kt:coil:0.8.0")
+    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0"
 
     //networking
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.6.2'

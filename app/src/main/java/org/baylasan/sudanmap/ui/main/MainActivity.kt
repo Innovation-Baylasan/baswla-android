@@ -55,14 +55,7 @@ class MainActivity : AppCompatActivity() {
                 .commit()
         }
 
-        openSheet.setOnClickListener {
-            val addPhotoBottomDialogFragment: EntityDialogFragment =
-                EntityDialogFragment.newInstance()
-            addPhotoBottomDialogFragment.show(
-                supportFragmentManager, "tag"
-            )
 
-        }
 
         recyclerView.adapter =adapter
         val bottomSheet = findViewById<View>(R.id.bottomSheet)
