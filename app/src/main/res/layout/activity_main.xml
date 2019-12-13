@@ -109,18 +109,8 @@
 
         android:id="@+id/fragmentLayout"
         android:layout_width="match_parent"
-        style="?attr/bottomSheetStyle"
-        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent" />
 
 
-    </FrameLayout>
-    <Button
-        android:id="@+id/openSheet"
-
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
-        />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
