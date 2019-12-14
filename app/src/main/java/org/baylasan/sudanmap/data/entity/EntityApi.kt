@@ -2,15 +2,20 @@ package org.baylasan.sudanmap.data.entity
 
 import io.reactivex.Single
 import okhttp3.ResponseBody
+import org.baylasan.sudanmap.data.SudanMapApi
 import org.baylasan.sudanmap.data.common.ApiErrorResponse
+import org.baylasan.sudanmap.data.common.ResponseSingleFunc1
+import org.baylasan.sudanmap.data.common.ThrowableSingleFunc1
 import org.baylasan.sudanmap.domain.entity.EntityRepository
-import org.baylasan.sudanmap.domain.entity.model.EntityDto
+import org.baylasan.sudanmap.domain.entity.model.EntityResponseDto
 import retrofit2.Converter
 
 class EntityApi(
-    private val entityApi: EntityApi,
+    private val entityApi: SudanMapApi.Entity,
     private val errorConverter: Converter<ResponseBody, ApiErrorResponse>
 ) :
     EntityRepository {
-    override fun getEntities(params: Int): Single<List<EntityDto>> = entityApi.getEntities(params)
+    override fun getEntities(): Single<EntityResponseDto> = entityApi.getEntities()
+        .onErrorResumeNext(ThrowableSingleFunc1())
+        .flatMap(ResponseSingleFunc1(errorConverter))
 }

@@ -2,11 +2,10 @@ package org.baylasan.sudanmap.ui.profile
 
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import com.google.android.material.appbar.AppBarLayout
 import kotlinx.android.synthetic.main.fragment_company_profile.*
 import org.baylasan.sudanmap.R
@@ -48,7 +47,7 @@ class CompanyProfileFragment : Fragment() {
 
 
 private fun View.gone() {
-    if (isVisible) visibility = View.GONE
+    visibility = View.GONE
 }
 
 private fun View.show() {
@@ -65,10 +64,12 @@ abstract class AppBarChangedListener : AppBarLayout.OnOffsetChangedListener {
     abstract fun onStateChanged(appBarLayout: AppBarLayout?, state: State)
     private var currentState =
         State.IDLE
+
     override fun onOffsetChanged(appBarLayout: AppBarLayout?, verticalOffset: Int) {
         if (verticalOffset == 0) {
             if (currentState != State.EXPANDED) {
-                onStateChanged(appBarLayout,
+                onStateChanged(
+                    appBarLayout,
                     State.EXPANDED
                 )
             }
@@ -76,7 +77,8 @@ abstract class AppBarChangedListener : AppBarLayout.OnOffsetChangedListener {
                 State.EXPANDED
         } else if (abs(verticalOffset) >= appBarLayout?.totalScrollRange!!) {
             if (currentState != State.COLLAPSED) {
-                onStateChanged(appBarLayout,
+                onStateChanged(
+                    appBarLayout,
                     State.COLLAPSED
                 )
             }
@@ -84,7 +86,8 @@ abstract class AppBarChangedListener : AppBarLayout.OnOffsetChangedListener {
                 State.COLLAPSED
         } else {
             if (currentState != State.IDLE) {
-                onStateChanged(appBarLayout,
+                onStateChanged(
+                    appBarLayout,
                     State.IDLE
                 )
             }

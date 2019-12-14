@@ -3,14 +3,15 @@ package org.baylasan.sudanmap.ui.main
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import coil.api.load
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import kotlinx.android.synthetic.main.row_entitiy_list.view.*
 import kotlinx.android.synthetic.main.row_entity.view.*
 import org.baylasan.sudanmap.R
-import org.baylasan.sudanmap.domain.entity.model.EntityDto
+import org.baylasan.sudanmap.domain.entity.model.Entity
 
-class EntityListAdapter(private val list: List<EntityDto>, val onClick: () -> Unit) :
+class EntityListAdapter(private val list: List<Entity>, val onClick: () -> Unit) :
     RecyclerView.Adapter<EntityListViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EntityListViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(
@@ -25,12 +26,12 @@ class EntityListAdapter(private val list: List<EntityDto>, val onClick: () -> Un
 
     override fun onBindViewHolder(holder: EntityListViewHolder, position: Int) {
         val currentEntity = list[position]
- /*       holder.entitiesRecyclerView.adapter =
+        holder.entitiesRecyclerView.adapter =
             EntityAdapter()
         holder.entitiesRecyclerView.layoutManager = StaggeredGridLayoutManager(
             2,
             StaggeredGridLayoutManager.VERTICAL
-        )*/
+        )
 
         with(holder.itemView) {
             entityName.text = currentEntity.name
@@ -40,17 +41,17 @@ class EntityListAdapter(private val list: List<EntityDto>, val onClick: () -> Un
 
         }
 
-//
-//            LinearLayoutManager(
-//                holder.entitiesRecyclerView.context,
-//                LinearLayoutManager.HORIZONTAL,
-//                false
-//            )
+
+            LinearLayoutManager(
+                holder.entitiesRecyclerView.context,
+                LinearLayoutManager.HORIZONTAL,
+                false
+            )
 
 
-      /*  holder.showMoreButton.setOnClickListener {
+        holder.showMoreButton.setOnClickListener {
             onClick.invoke()
-        }*/
+        }
     }
 }
 
