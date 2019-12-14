@@ -6,6 +6,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import kotlinx.android.synthetic.main.fragment_map_layers.*
 import org.baylasan.sudanmap.R
@@ -34,8 +35,25 @@ class MapLayersFragment : Fragment(R.layout.fragment_map_layers) {
         super.onViewCreated(view, savedInstanceState)
         mapLayersRecyclerView.layoutManager = GridLayoutManager(activity, 3)
         viewModel.loadCategories()
+        val mapLayersAdapter = MapLayersAdapter()
+
+        viewModel.events.observe(this, Observer { event ->
+            when (event) {
+                is DataEvent -> {
+                    progressBar.visibility = View.GONE
+                    mapLayersAdapter.list.addAll(event.categories.map { Selectable(item = it) })
+                    mapLayersAdapter.notifyDataSetChanged()
+                }
+                is LoadingEvent -> {
+                    progressBar.visibility = View.VISIBLE
+
+                }
+                else -> progressBar.visibility = View.GONE
+            }
+
+        })
         mapLayersRecyclerView.adapter =
-            MapLayersAdapter()
+            mapLayersAdapter
     }
 
 }
