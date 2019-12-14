@@ -18,6 +18,7 @@ class CategoryApi(
         return sudanMapApi.getCategories()
             .onErrorResumeNext(ThrowableSingleFunc1())
             .flatMap(ResponseSingleFunc1(errorConverter))
+            .map { it.categories }
     }
 
 }

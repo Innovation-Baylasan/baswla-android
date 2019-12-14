@@ -1,6 +1,7 @@
 package org.baylasan.sudanmap.data
 
 import io.reactivex.Single
+import org.baylasan.sudanmap.data.category.model.CategoryDto
 import org.baylasan.sudanmap.domain.entity.model.Category
 import org.baylasan.sudanmap.domain.entity.model.EntityDto
 import retrofit2.Response
@@ -31,7 +32,7 @@ interface SudanMapApi {
 
     interface Categories {
         @GET("categories")
-        fun getCategories(): Single<Response<List<Category>>>
+        fun getCategories(): Single<Response<CategoryDto>>
 
         @GET("categories/{id}")
         fun getCategoryDetails(@Path("id") categoryId: Int)

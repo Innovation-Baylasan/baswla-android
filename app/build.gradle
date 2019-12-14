@@ -96,6 +96,7 @@ dependencies {
     // image manipulation
     implementation("io.coil-kt:coil:0.8.0")
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0"
+    testImplementation 'android.arch.core:core-testing:1.1.1'
 
     //networking
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.6.2'

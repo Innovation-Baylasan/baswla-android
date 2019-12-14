@@ -1,6 +1,9 @@
 package org.baylasan.sudanmap
 
 import android.app.Application
+import io.reactivex.Scheduler
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.baylasan.sudanmap.data.SudanMapApi
@@ -11,6 +14,7 @@ import org.baylasan.sudanmap.domain.category.FetchCategoriesUseCase
 import org.baylasan.sudanmap.ui.layers.MapLayersViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -26,6 +30,8 @@ val appModule = module {
     single {
         provideErrorConverter(get())
     }
+
+
 }
 
 val categoryModule = module {
@@ -38,8 +44,10 @@ val categoryModule = module {
         MapLayersViewModel(get())
     }
 
-
 }
+
+private fun provideIoScheduler(): Scheduler = Schedulers.io()
+private fun provideMainSchudler(): Scheduler = AndroidSchedulers.mainThread()
 
 private fun provideErrorConverter(retrofit: Retrofit) =
     retrofit.responseBodyConverter<ApiErrorResponse>(ApiErrorResponse::class.java, arrayOf())

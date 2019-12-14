@@ -5,18 +5,10 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import org.baylasan.sudanmap.R
+import org.baylasan.sudanmap.domain.entity.model.Category
 
 class MapLayersAdapter : RecyclerView.Adapter<MapLayersViewHolder>() {
-    val list =
-        mutableListOf(
-            Selectable(item = "item1"),
-            Selectable(item = "item2"),
-            Selectable(item = "item3"),
-            Selectable(item = "item4"),
-            Selectable(item = "item5"),
-            Selectable(item = "item6"),
-            Selectable(item = "item7")
-        )
+    val list = mutableListOf<Selectable<Category>>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MapLayersViewHolder {
         return MapLayersViewHolder(
@@ -33,7 +25,7 @@ class MapLayersAdapter : RecyclerView.Adapter<MapLayersViewHolder>() {
     override fun onBindViewHolder(holder: MapLayersViewHolder, position: Int) {
         holder.apply {
             val selectable = list[adapterPosition]
-            layerName.text = selectable.item
+            layerName.text = selectable.item.name
             itemView.setOnClickListener {
                 selectable.toggle()
                 notifyItemChanged(adapterPosition)
@@ -45,7 +37,7 @@ class MapLayersAdapter : RecyclerView.Adapter<MapLayersViewHolder>() {
                     if (selectable.isSelected) R.color.colorAccent else android.R.color.darker_gray
                 )
             )
-            layerCard.strokeColor=  ContextCompat.getColor(
+            layerCard.strokeColor = ContextCompat.getColor(
                 layerSelected.context,
                 if (selectable.isSelected) R.color.colorAccent else android.R.color.transparent
             )

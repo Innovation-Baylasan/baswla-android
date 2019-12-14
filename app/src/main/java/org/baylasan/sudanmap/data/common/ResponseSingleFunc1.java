@@ -17,7 +17,7 @@ public class ResponseSingleFunc1<T> implements Function<Response<T>, Single<T>> 
 
 
     @Override
-    public Single<T> apply(Response<T> response) throws Exception {
+    public Single<T> apply(Response<T> response) {
         if (response.isSuccessful()) {
             return Single.just(response.body());
         } else {
