@@ -17,7 +17,7 @@ class MapLayersViewModel(private val fetchCategoriesUseCase: FetchCategoriesUseC
         Log.d("MEGA","Cleared.")
     }
     fun loadCategories() {
-        events.value = LoadingEvent()
+        events.value = LoadingEvent
         fetchCategoriesUseCase.execute()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -25,19 +25,19 @@ class MapLayersViewModel(private val fetchCategoriesUseCase: FetchCategoriesUseC
                 events.value = if (it.isNotEmpty()) {
                     DataEvent(it)
                 } else {
-                    EmptyEvent()
+                    EmptyEvent
                 }
             }, {
                 events.value = when (it) {
                     is UnAuthorizedException -> {
-                        SessionExpiredEvent()
+                        SessionExpiredEvent
                     }
                     is TimeoutConnectionException -> {
-                        TimeoutEvent()
+                        TimeoutEvent
                     }
                     is ConnectionException,
                     is ClientConnectionException -> {
-                        NetworkErrorEvent()
+                        NetworkErrorEvent
                     }
                     is ApiException -> {
                         ErrorEvent(it.apiErrorResponse.message)
