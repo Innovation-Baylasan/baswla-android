@@ -7,7 +7,6 @@
     tools:context=".ui.main.MainActivity">
 
 
-
     <fragment
         android:id="@+id/mapFragment"
         android:name="com.google.android.gms.maps.SupportMapFragment"
@@ -23,7 +22,7 @@
         android:paddingStart="8dp"
         android:paddingTop="8dp"
         android:paddingEnd="8dp"
-        android:paddingBottom="16dp">
+      >
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView"
@@ -67,10 +66,10 @@
 
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/searchField"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:id="@+id/searchField"
                     android:background="@android:color/transparent"
                     android:gravity="center"
                     android:hint="type search here..."
@@ -93,20 +92,18 @@
     </FrameLayout>
 
 
-
     <com.fish4fun.likegooglemaps.bottomsheet.CustomBottomSheet
         android:id="@+id/bottomSheet"
-android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:cbs_header_layout="@layout/bottom_sheet_header"
         app:cbs_behavior_hideable="false"
+        android:background="@color/white"
         app:cbs_behavior_peekHeight="header"
-        app:cbs_behavior_topOffset = "72dp"
-
         app:cbs_behavior_snap="true"
-        app:layout_behavior="com.fish4fun.likegooglemaps.bottomsheet.CustomBottomSheetBehavior"
-        />
+        app:cbs_behavior_topOffset="72dp"
+
+        app:cbs_header_layout="@layout/bottom_sheet_header"
+        app:layout_behavior="com.fish4fun.likegooglemaps.bottomsheet.CustomBottomSheetBehavior" />
 
     <FrameLayout
 

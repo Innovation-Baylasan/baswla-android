@@ -1,32 +1,38 @@
-package org.baylasan.sudanmap.ui.layers
+package org.baylasan.sudanmap.ui.main
 
-import android.util.Log
+import android.annotation.SuppressLint
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import org.baylasan.sudanmap.data.common.*
-import org.baylasan.sudanmap.domain.category.FetchCategoriesUseCase
+import org.baylasan.sudanmap.domain.entity.GetEntitiesUseCase
+import org.baylasan.sudanmap.domain.entity.model.EntityResponseDto
 import org.baylasan.sudanmap.ui.BaseViewModel
 
-class MapLayersViewModel(private val fetchCategoriesUseCase: FetchCategoriesUseCase) :
-    BaseViewModel() {
+class EntityViewModel(private val getEntitiesUseCase: GetEntitiesUseCase) : BaseViewModel() {
 
-    val events = MutableLiveData<MapLayersEvent>()
-    override fun onCleared() {
-        super.onCleared()
-        Log.d("MEGA","Cleared.")
-    }
-    fun loadCategories() {
+    private val _entity = MutableLiveData<EntityResponseDto>()
+
+    val entities :LiveData<EntityResponseDto> = _entity
+    val events = MutableLiveData<EntityEvent>()
+
+
+    @SuppressLint("CheckResult")
+    fun loadEntity() {
         events.value = LoadingEvent
-        fetchCategoriesUseCase.execute()
+
+        getEntitiesUseCase.execute()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                events.value = if (it.isNotEmpty()) {
+                events.value = if (it.data.isNotEmpty()) {
                     DataEvent(it)
                 } else {
                     EmptyEvent
                 }
+             /*   _entity.postValue(it)
+                Log.d("MEGA", it.toString())*/
             }, {
                 events.value = when (it) {
                     is UnAuthorizedException -> {
@@ -47,7 +53,6 @@ class MapLayersViewModel(private val fetchCategoriesUseCase: FetchCategoriesUseC
                     }
                 }
             }).addToDisposables()
-
     }
-}
 
+}

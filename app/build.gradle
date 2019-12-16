@@ -94,8 +94,12 @@ dependencies {
     implementation 'com.github.kldMohammed:dots:0.1.0'
 
     // image manipulation
-    implementation("io.coil-kt:coil:0.8.0")
+   // implementation("io.coil-kt:coil:0.8.0")
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
+
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0"
+    implementation 'io.mockk:mockk:1.9.3.kotlin12'
     testImplementation 'android.arch.core:core-testing:1.1.1'
 
     //networking

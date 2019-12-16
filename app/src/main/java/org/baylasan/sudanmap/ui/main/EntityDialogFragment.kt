@@ -11,7 +11,7 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_entity_list_dialog.*
 import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.data.WebAccess
-import org.baylasan.sudanmap.domain.entity.model.EntityDto
+import org.baylasan.sudanmap.domain.entity.model.Entity
 
 // TODO: Customize parameter argument names
 const val ARG_ITEM_COUNT = "item_count"
@@ -28,7 +28,7 @@ const val ARG_ITEM_COUNT = "item_count"
  * You activity (or fragment) needs to implement [EntityDialogFragment.Listener].
  */
 class EntityDialogFragment : BottomSheetDialogFragment() {
-    private val entities = ArrayList<EntityDto>()
+    private val entities = ArrayList<Entity>()
     lateinit var adapter: EntityListAdapter
 
     override fun onCreateView(
@@ -65,7 +65,7 @@ class EntityDialogFragment : BottomSheetDialogFragment() {
             .subscribe({ this::handleResult }, { this::handleError })
     }
 
-    fun handleResult(result: List<EntityDto>) {
+    fun handleResult(result: List<Entity>) {
         entities.addAll(result)
         adapter.notifyDataSetChanged()
     }

@@ -1,17 +1,15 @@
 package org.baylasan.sudanmap.domain.entity
 
 import io.reactivex.Single
-import org.baylasan.sudanmap.domain.common.RequestValues
-import org.baylasan.sudanmap.domain.common.SingleUseCase
-import org.baylasan.sudanmap.domain.entity.model.EntityDto
+import org.baylasan.sudanmap.domain.common.EmptyRequestUseCase
+import org.baylasan.sudanmap.domain.entity.model.EntityResponseDto
 
 class GetEntitiesUseCase(private val entityRepository: EntityRepository) :
-    SingleUseCase<GetEntitiesUseCase.Params, List<EntityDto>> {
+    EmptyRequestUseCase<EntityResponseDto> {
 
-    val categoryId: Int = 1
-    override fun execute(params: Params): Single<List<EntityDto>> {
-        return entityRepository.getEntities(params.categoryId)
+    //  class Params(val categoryId: Int) : RequestValues
+
+    override fun execute(): Single<EntityResponseDto> {
+        return entityRepository.getEntities()
     }
-
-    class Params(val categoryId: Int) : RequestValues
 }
