@@ -44,6 +44,7 @@ class MainActivity : AppCompatActivity() {
 
     private var map: GoogleMap? = null
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -58,9 +59,21 @@ class MainActivity : AppCompatActivity() {
 
         //    map =supportFragmentManager.findFragmentById(R.id.mapFragment) as GoogleMap
 
+        val bottomSheet = findViewById<View>(R.id.bottomSheet)
+
+        val layoutParams = bottomSheet.layoutParams as CoordinatorLayout.LayoutParams
+        val bottomSheetBehavior = layoutParams.behavior as CustomBottomSheetBehavior<*>
+
 
         entities = ArrayList()
-        entityEntitiesListAdapter = EntitiesListAdapter(entities)
+        entityEntitiesListAdapter = EntitiesListAdapter(entities,
+            object : EntitiesListAdapter.OnItemClick {
+                override fun onItemClick(entityDto: Entity) {
+                    moveCameraToClickedItem(entityDto.location.lat, entityDto.location.long)
+                    bottomSheetBehavior.state = CustomBottomSheetBehavior.STATE_COLLAPSED
+                }
+
+            })
 
         layersButton.setOnClickListener {
             supportFragmentManager.beginTransaction()
@@ -77,18 +90,19 @@ class MainActivity : AppCompatActivity() {
                 .commit()
         }
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
+
         recyclerView.layoutParams = FrameLayout.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT)
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
 
         recyclerView.layoutManager =
             StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
 
 
         recyclerView.adapter = entityEntitiesListAdapter
-        val bottomSheet = findViewById<View>(R.id.bottomSheet)
-        val layoutParams = bottomSheet.layoutParams as CoordinatorLayout.LayoutParams
-        val bottomSheetBehavior = layoutParams.behavior as CustomBottomSheetBehavior<*>
+
+        bottomSheetBehavior.state
         bottomSheetBehavior.setBottomSheetCallback(object :
             CustomBottomSheetBehavior.BottomSheetCallback() {
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
@@ -110,6 +124,14 @@ class MainActivity : AppCompatActivity() {
         observeViewModel()
     }
 
+    private fun moveCameraToClickedItem(lat: Double, lng: Double) {
+        val firstLatLng = LatLng(entities[0].location.lat, entities[0].location.long)
+
+        map?.moveCamera(CameraUpdateFactory.newLatLngZoom(firstLatLng, 15f))
+        map?.animateCamera(CameraUpdateFactory.zoomIn())
+        map?.animateCamera(CameraUpdateFactory.zoomTo(15f), 2000, null)
+    }
+
     private fun observeViewModel() {
 
         entityViewModel.events.observe(this, Observer { event ->
@@ -129,14 +151,6 @@ class MainActivity : AppCompatActivity() {
 
         })
 
-        entityViewModel.entities.observe(this, Observer {
-            if (it.data.isNotEmpty()) {
-                entities.addAll(it.data)
-                Log.d("KLD", it.toString())
-                drawMarkerInMap(it.data)
-                entityEntitiesListAdapter.notifyDataSetChanged()
-            }
-        })
     }
 
     private fun drawMarkerInMap(entities: List<Entity>) {
@@ -149,11 +163,8 @@ class MainActivity : AppCompatActivity() {
                 map?.addMarker(markerOptions)
             }
         }
-        val firstLatLng = LatLng(entities[0].location.lat , entities[0].location.long)
 
-        map?.moveCamera(CameraUpdateFactory.newLatLngZoom(firstLatLng ,15f) )
-        map?.animateCamera(CameraUpdateFactory.zoomIn())
-        map?.animateCamera(CameraUpdateFactory.zoomTo(15f), 2000, null)
+      //  moveCameraToClickedItem(entities[0].location.lat, entities[0].location.long)
 
     }
 

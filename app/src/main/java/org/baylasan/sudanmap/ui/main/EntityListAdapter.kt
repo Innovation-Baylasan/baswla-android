@@ -11,7 +11,10 @@ import kotlinx.android.synthetic.main.row_entity.view.*
 import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.domain.entity.model.Entity
 
-class EntitiesListAdapter(private val list: ArrayList<Entity>) :
+class EntitiesListAdapter(
+    private val list: ArrayList<Entity>,
+    private val onItemClick: OnItemClick
+) :
     RecyclerView.Adapter<EntitiesListAdapter.ViewHolder>() {
 
 
@@ -30,18 +33,28 @@ class EntitiesListAdapter(private val list: ArrayList<Entity>) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(list[position])
+        holder.bind(list[position], onItemClick)
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        fun bind(entityDto: Entity) {
-            Log.d("KLD" , entityDto.toString())
+        fun bind(
+            entityDto: Entity,
+            onItemClick: OnItemClick
+        ) {
+            Log.d("KLD", entityDto.toString())
             itemView.entityName.text = entityDto.name
             itemView.entityDescription.text = entityDto.description
             itemView.coverImage.load(entityDto.cover)
             itemView.avatarImage.load(entityDto.avatar)
+            itemView.setOnClickListener {
+                onItemClick.onItemClick(entityDto)
+            }
         }
+    }
+
+    interface OnItemClick {
+        fun onItemClick(entityDto: Entity)
     }
 }
 
-fun ImageView.load(imageUrl : String ) = Picasso.get().load(imageUrl).into(this)
+fun ImageView.load(imageUrl: String) = Picasso.get().load(imageUrl).into(this)
