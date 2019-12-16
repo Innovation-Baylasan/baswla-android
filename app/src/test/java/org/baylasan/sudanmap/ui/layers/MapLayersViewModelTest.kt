@@ -5,10 +5,8 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LifecycleRegistry
 import androidx.lifecycle.Observer
 import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import io.reactivex.Single
-import io.reactivex.schedulers.TestScheduler
 import org.baylasan.sudanmap.domain.category.FetchCategoriesUseCase
 import org.junit.Before
 import org.junit.Rule
@@ -30,7 +28,7 @@ class MapLayersViewModelTest {
         observer = mock(verboseLogging = true)
         lifecycleRegistry = LifecycleRegistry(lifecycleOwner)
         fetchCategoriesUseCase = mock(verboseLogging = true)
-        viewModel = MapLayersViewModel(fetchCategoriesUseCase, TestScheduler(), TestScheduler())
+        viewModel = MapLayersViewModel(fetchCategoriesUseCase)
     }
 
     @Test

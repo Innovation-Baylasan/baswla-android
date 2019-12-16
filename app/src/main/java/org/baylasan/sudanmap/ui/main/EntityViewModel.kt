@@ -9,14 +9,13 @@ import org.baylasan.sudanmap.data.common.*
 import org.baylasan.sudanmap.domain.entity.GetEntitiesUseCase
 import org.baylasan.sudanmap.domain.entity.model.EntityResponseDto
 import org.baylasan.sudanmap.ui.BaseViewModel
-import org.baylasan.sudanmap.ui.layers.*
 
 class EntityViewModel(private val getEntitiesUseCase: GetEntitiesUseCase) : BaseViewModel() {
 
     private val _entity = MutableLiveData<EntityResponseDto>()
 
     val entities :LiveData<EntityResponseDto> = _entity
-    val events = MutableLiveData<AppEvent>()
+    val events = MutableLiveData<EntityEvent>()
 
 
     @SuppressLint("CheckResult")
