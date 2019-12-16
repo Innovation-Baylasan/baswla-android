@@ -79,7 +79,7 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context="org.baylasan.sudanmap.profile.CompanyProfileFragment">
+            tools:context="org.baylasan.sudanmap.ui.profile.CompanyProfileFragment">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"

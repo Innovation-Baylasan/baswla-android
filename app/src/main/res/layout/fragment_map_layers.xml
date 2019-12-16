@@ -4,13 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:focusableInTouchMode="true"
-    android:focusable="true"
-    android:clickable="true"
     android:background="?android:windowBackground"
+    android:clickable="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     android:orientation="vertical"
-
-    tools:context=".layers.MapLayersFragment">
+    tools:context=".ui.layers.MapLayersFragment">
 
     <TextView
         android:layout_width="wrap_content"
@@ -24,23 +23,37 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
         android:gravity="center"
         android:maxLines="4"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-        tools:text="@tools:sample/lorem/random" />
+        android:text="in this area there should be a descriptive text in this area there should be a descriptive text"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/mapLayersRecyclerView"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:clipToPadding="false"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:spanCount="3"
-        tools:itemCount="100"
-        tools:listitem="@layout/row_map_layer" />
+        android:layout_weight="1">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/mapLayersRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="3"
+            tools:itemCount="100"
+            tools:listitem="@layout/row_map_layer" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone" />
+
+    </FrameLayout>
 
     <com.google.android.material.button.MaterialButton
         android:layout_width="match_parent"
@@ -48,7 +61,6 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-
         android:text="Select"
         android:textSize="18sp"
         app:backgroundTint="@color/colorAccent"

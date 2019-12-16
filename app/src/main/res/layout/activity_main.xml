@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".main.MainActivity">
+    tools:context=".ui.main.MainActivity">
+
 
 
     <fragment
@@ -90,9 +91,12 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
     </FrameLayout>
+
+
+
     <com.fish4fun.likegooglemaps.bottomsheet.CustomBottomSheet
         android:id="@+id/bottomSheet"
-
+android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:cbs_header_layout="@layout/bottom_sheet_header"
@@ -103,6 +107,7 @@
         app:cbs_behavior_snap="true"
         app:layout_behavior="com.fish4fun.likegooglemaps.bottomsheet.CustomBottomSheetBehavior"
         />
+
     <FrameLayout
 
         android:id="@+id/fragmentLayout"

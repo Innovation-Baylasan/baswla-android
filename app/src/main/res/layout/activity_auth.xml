@@ -5,11 +5,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="org.baylasan.sudanmap.auth.AuthActivity">
+    tools:context="org.baylasan.sudanmap.ui.auth.AuthActivity">
 
     <fragment
         android:id="@+id/fragment"
-        android:name="org.baylasan.sudanmap.auth.login.LoginFragment"
+        android:name="org.baylasan.sudanmap.ui.auth.login.LoginFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"

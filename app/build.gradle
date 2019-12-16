@@ -15,31 +15,34 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
+        multiDexEnabled = true
     }
     buildTypes {
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            //  multiDexEnabled = true
         }
         debug {
             minifyEnabled false
             signingConfig signingConfigs.debug
+            // multiDexEnabled = true
         }
     }
     flavorDimensions "version"
 
     productFlavors {
         dev {
-//            resValue "string", "base_url", "base url dev"
+            resValue "string", "base_url", "http://104.248.145.132/api/"
             resValue "string", "app_name", "Map x dev"
             applicationIdSuffix = '.dev'
         }
         prod {
-//            resValue "string", "base_url", "base url release"
+            resValue "string", "base_url", "http://104.248.145.132/api/"
             resValue "string", "app_name", "Map x"
         }
         local {
-//            resValue "string", "base_url", "base url local"
+            resValue "string", "base_url", "http://192.168.1.100/api/"
             resValue "string", "app_name", "Map x local"
             resValue "string", "app_name1", "Map x local"
             applicationIdSuffix = '.local'
@@ -49,8 +52,22 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
+
+    lintOptions {
+        disable 'MissingTranslation'
+    }
 }
 
+
+ext {
+    koin_version = "2.0.1"
+}
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
@@ -61,10 +78,13 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.1.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
+//    implementation 'androidx.recyclerview:recyclerview:1.1.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'com.google.android.material:material:1.2.0-alpha02'
+
+    implementation 'androidx.multidex:multidex:2.0.1'
 
     implementation "androidx.viewpager2:viewpager2:1.0.0"
 
@@ -75,6 +95,26 @@ dependencies {
 
     // image manipulation
     implementation("io.coil-kt:coil:0.8.0")
+    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0"
+    testImplementation 'android.arch.core:core-testing:1.1.1'
+
+    //networking
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.6.2'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    implementation 'com.squareup.retrofit2:retrofit:2.6.2'
+    implementation 'com.squareup.retrofit2:converter-gson:2.6.2'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.12.0'
+
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.15'
+
+
+    //di
+    // Koin for Android
+    implementation "org.koin:koin-android:$koin_version"
+    // or Koin for Lifecycle scoping
+    implementation "org.koin:koin-androidx-scope:$koin_version"
+    // or Koin for Android Architecture ViewModel
+    implementation "org.koin:koin-androidx-viewmodel:$koin_version"
 
 
 }

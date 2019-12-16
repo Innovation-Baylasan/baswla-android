@@ -5,6 +5,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
+    android:id="@+id/rowEntityRootView"
     android:layout_margin="4dp"
     android:orientation="vertical"
     app:cardBackgroundColor="@android:color/white"
@@ -16,7 +17,7 @@
 
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/entityName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -25,7 +26,7 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+            app:layout_constraintTop_toBottomOf="@+id/avatarImage" />
 
         <LinearLayout
             android:id="@+id/ratingLayout"
@@ -37,7 +38,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView">
+            app:layout_constraintTop_toBottomOf="@+id/entityName">
 
             <androidx.appcompat.widget.AppCompatRatingBar
                 style="@style/Widget.AppCompat.RatingBar.Small"
@@ -53,6 +54,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/entityDescription"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -67,7 +69,7 @@
             app:layout_constraintTop_toBottomOf="@+id/ratingLayout" />
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/coverImage"
             android:layout_width="0dp"
             android:layout_height="70dp"
             android:background="@drawable/map_filter_top_background"
@@ -77,17 +79,17 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/imageView3"
+            android:id="@+id/avatarImage"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="32dp"
             android:layout_marginEnd="16dp"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView2"
-            app:layout_constraintEnd_toEndOf="@+id/imageView2"
+            app:layout_constraintBottom_toBottomOf="@+id/coverImage"
+            app:layout_constraintEnd_toEndOf="@+id/coverImage"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/imageView2"
-            app:layout_constraintTop_toTopOf="@+id/imageView2"
+            app:layout_constraintStart_toStartOf="@+id/coverImage"
+            app:layout_constraintTop_toTopOf="@+id/coverImage"
             app:layout_constraintVertical_bias="0.0"
             android:src="@mipmap/ic_launcher_round"
             />
