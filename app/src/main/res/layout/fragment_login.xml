@@ -64,13 +64,15 @@
         <com.google.android.material.textfield.TextInputEditText
 
             android:id="@+id/loginUSerNameEt"
+            style="@style/RoundedCornerEditText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
             android:inputType="textPersonName"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView7"
-            style="@style/RoundedCornerEditText" />
+            app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
         <TextView
             android:id="@+id/textView8"
@@ -83,8 +85,7 @@
             app:layout_constraintTop_toBottomOf="@+id/loginUSerNameEt" />
 
         <com.google.android.material.textfield.TextInputEditText
-            style="@style/RoundedCornerEditText"
-            android:id="@+id/loginPasswordEt"
+ android:id="@+id/loginPasswordEt"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -109,21 +110,21 @@
             app:layout_constraintTop_toBottomOf="@+id/loginPasswordEt" />
 
         <com.google.android.material.button.MaterialButton
-            app:strokeColor="@color/colorAccent"
-            app:strokeWidth="1dp"
-            android:textColor="@color/colorAccent"
             android:id="@+id/signUpAsOrg"
             android:layout_width="0dp"
-            app:rippleColor="@color/colorAccent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
-
             android:text="@string/sign_up_as_org"
+            android:textColor="#fff"
             app:layout_constraintEnd_toEndOf="parent"
+
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/signInBtn" />
+            app:layout_constraintTop_toBottomOf="@+id/signInBtn"
+            app:rippleColor="@color/colorAccent"
+            app:strokeColor="@color/colorAccent"
+            app:strokeWidth="1dp" />
 
 
         <RelativeLayout

@@ -1,14 +1,14 @@
 package org.baylasan.sudanmap.ui.intro
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
 import kotlinx.android.synthetic.main.activity_intro.*
-import org.baylasan.sudanmap.ui.main.MainActivity
 import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.domain.ViewPagerModel
+import org.baylasan.sudanmap.ui.auth.AuthActivity
 
 class IntroActivity : AppCompatActivity() {
 
@@ -54,7 +54,7 @@ class IntroActivity : AppCompatActivity() {
 
         nextBtn.setOnClickListener {
             if (nextBtn.text == "Skip") {
-                startActivity(Intent(applicationContext, MainActivity::class.java))
+                startActivity(Intent(applicationContext, AuthActivity::class.java))
                 finish()
             }
             currentPage += 1
