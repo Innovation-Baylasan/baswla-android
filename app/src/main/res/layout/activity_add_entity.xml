@@ -21,12 +21,13 @@
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
             app:layout_scrollFlags="exitUntilCollapsed|scroll">
-<ImageView
-    android:scaleType="centerCrop"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:srcCompat="@drawable/ic_add_entity_background"
-    />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/ic_add_entity_background" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
@@ -65,10 +66,10 @@
                 </LinearLayout>
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_marginTop="4dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
+                    android:layout_marginTop="4dp"
                     android:layout_marginEnd="24dp"
                     android:text="Place holder text, place holder text, place holder text place holder text place holder text place holder text"
                     android:textColor="@android:color/white"
@@ -102,9 +103,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
                     android:layout_marginTop="8dp"
                     android:text="General Information"
+                    android:textColor="@color/black"
                     android:textSize="16sp" />
 
                 <View
@@ -120,8 +121,11 @@
                     android:text="Name" />
 
                 <com.google.android.material.textfield.TextInputEditText
+                    style="@style/RoundedCornerEditText"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginEnd="0dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -130,8 +134,11 @@
                     android:text="E-mail address" />
 
                 <com.google.android.material.textfield.TextInputEditText
+                    style="@style/RoundedCornerEditText"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginEnd="0dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -144,34 +151,18 @@
                     android:layout_height="wrap_content" />
 
                 <TextView
+                    style="@style/RoundedCornerEditText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="0dp"
                     android:layout_marginTop="4dp"
+                    android:layout_marginEnd="0dp"
                     android:text="Select location on map" />
 
                 <com.google.android.gms.maps.MapView
                     android:layout_width="match_parent"
                     android:layout_height="200dp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="field 1" />
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="field 2" />
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
 
                 <com.google.android.material.button.MaterialButton
                     android:layout_width="match_parent"

@@ -60,11 +60,10 @@ class MainActivity : AppCompatActivity() {
         //    map =supportFragmentManager.findFragmentById(R.id.mapFragment) as GoogleMap
 
         val bottomSheet = findViewById<View>(R.id.bottomSheet)
-
         val layoutParams = bottomSheet.layoutParams as CoordinatorLayout.LayoutParams
         val bottomSheetBehavior = layoutParams.behavior as CustomBottomSheetBehavior<*>
 
-
+        bottomSheetBehavior.peekHeight = 80
         entities = ArrayList()
         entityEntitiesListAdapter = EntitiesListAdapter(entities,
             object : EntitiesListAdapter.OnItemClick {
@@ -137,14 +136,12 @@ class MainActivity : AppCompatActivity() {
         entityViewModel.events.observe(this, Observer { event ->
             when (event) {
                 is DataEvent -> {
-                    if (event.entityResponseDto != null) {
-                        val data = event.entityResponseDto.data
-                        if (data.isNotEmpty()) {
-                            entities.addAll(data)
-                            Log.d("KLD", toString())
-                            drawMarkerInMap(data)
-                            entityEntitiesListAdapter.notifyDataSetChanged()
-                        }
+                    val data = event.entityResponseDto.data
+                    if (data.isNotEmpty()) {
+                        entities.addAll(data)
+                        Log.d("KLD", toString())
+                        drawMarkerInMap(data)
+                        entityEntitiesListAdapter.notifyDataSetChanged()
                     }
                 }
             }
@@ -164,7 +161,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-      //  moveCameraToClickedItem(entities[0].location.lat, entities[0].location.long)
+        //  moveCameraToClickedItem(entities[0].location.lat, entities[0].location.long)
 
     }
 

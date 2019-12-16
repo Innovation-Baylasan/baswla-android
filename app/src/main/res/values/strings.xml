@@ -120,4 +120,5 @@
     <string name="email">Email</string>
     <string name="password_confirmation">Password Confirmation</string>
     <string name="type">Type</string>
+    <string name="company">Company</string>
 </resources>

@@ -44,13 +44,13 @@ class IntroActivity : AppCompatActivity() {
 
         introViewPager.setPageTransformer(marginPageTransformer)
 
-    /*    introViewPager.setPageTransformer { page, position ->
-            page.apply {
-                translationY = Math.abs(position) * 500f
-                scaleX = 1f
-                scaleY = 1f
-            }
-        }*/
+        /*    introViewPager.setPageTransformer { page, position ->
+                page.apply {
+                    translationY = Math.abs(position) * 500f
+                    scaleX = 1f
+                    scaleY = 1f
+                }
+            }*/
 
         nextBtn.setOnClickListener {
             if (nextBtn.text == "Skip") {
@@ -60,8 +60,6 @@ class IntroActivity : AppCompatActivity() {
             currentPage += 1
 
             introViewPager.setCurrentItem(currentPage, true)
-
-
 
 
         }

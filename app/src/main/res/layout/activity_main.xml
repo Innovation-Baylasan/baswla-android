@@ -19,10 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="top|center"
         android:clipToPadding="false"
-        android:paddingStart="8dp"
-        android:paddingTop="8dp"
-        android:paddingEnd="8dp"
-      >
+        android:padding="8dp">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView"
@@ -96,8 +93,8 @@
         android:id="@+id/bottomSheet"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:cbs_behavior_hideable="false"
         android:background="@color/white"
+        app:cbs_behavior_hideable="false"
         app:cbs_behavior_peekHeight="header"
         app:cbs_behavior_snap="true"
         app:cbs_behavior_topOffset="72dp"

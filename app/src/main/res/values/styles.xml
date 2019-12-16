@@ -50,13 +50,7 @@
         <!--	<item name="toolbarStyle" >@style/ToolbarTheme</item >
         <item name="actionBarTheme" >@style/ToolbarTheme</item >
         <item name="actionBarStyle" >@style/ToolbarTheme</item >-->
-        <item name="shapeAppearanceSmallComponent">@style/AppShapeAppearance.SmallComponent</item>
-        <item name="shapeAppearanceMediumComponent">@style/AppShapeAppearance.MediumComponent</item>
-        <item name="materialCardViewStyle">@style/AppCard</item>
 
-        <item name="android:textAppearance">@style/TextAppearance</item>
-        <item name="textInputStyle">@style/AppTextField</item>
-        <item name="materialButtonStyle">@style/AppButton</item>
 
         <item name="android:navigationBarColor" tools:targetApi="lollipop">@color/white
         </item>
@@ -109,6 +103,14 @@
     <style name="EditTextTheme" parent="Base.V7.Widget.AppCompat.EditText">
         <item name="android:textColorHighlight">@color/colorAccent</item>
 
+    </style>
+    <style name="RoundedCornerEditText" >
+        <item name="android:layout_marginStart">16dp</item>
+        <item name="android:layout_marginEnd">16dp</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:background">@drawable/edit_text_shape</item>
+        <item name="android:selectAllOnFocus">true</item>
+        <item name="android:singleLine">true</item>
     </style>
 
     <style name="counterText">
