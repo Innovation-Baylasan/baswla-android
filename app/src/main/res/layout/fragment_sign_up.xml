@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/ic_android_mobile_6"
     tools:context="org.baylasan.sudanmap.ui.auth.signup.SignUpActivity">
 
     <ImageView
@@ -44,7 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:text="TextView"
+            android:text="@string/user_name"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
@@ -195,9 +196,13 @@
         <Button
             android:id="@+id/button"
             style="@style/AppButton"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="40dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
             android:text="Accept and Register"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"

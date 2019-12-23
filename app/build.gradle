@@ -99,7 +99,7 @@ dependencies {
 
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0"
     implementation 'io.mockk:mockk:1.9.3.kotlin12'
-    testImplementation 'android.arch.core:core-testing:1.1.1'
+   // testImplementation 'android.arch.core:core-testing:1.1.1'
 
     //networking
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.6.2'

@@ -1,10 +1,13 @@
 package org.baylasan.sudanmap.domain.entity.model
 
 
+import android.os.Parcelable
 import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
 @Keep
+@Parcelize
 data class Entity(
     @SerializedName("avatar")
     val avatar: String = "",
@@ -18,4 +21,4 @@ data class Entity(
     val location: Location = Location(),
     @SerializedName("name")
     val name: String = ""
-)
+):Parcelable

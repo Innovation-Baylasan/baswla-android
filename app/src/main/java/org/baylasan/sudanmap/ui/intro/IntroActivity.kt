@@ -21,16 +21,13 @@ class IntroActivity : AppCompatActivity() {
 
         val introItems = arrayListOf<ViewPagerModel>(
             ViewPagerModel(
-                jsonFile = R.raw.me_at_office, header = "Explore",
+                jsonFile = R.raw.map_inter_actions, header = "Explore",
                 description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nunc eget lorem dolor sed viverra ipsum."
             ), ViewPagerModel(
-                jsonFile = R.raw.limit_of_transaction, header = "Test",
+                jsonFile = R.raw.search, header = "Test",
                 description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nunc eget lorem dolor sed viverra ipsum."
             ), ViewPagerModel(
-                jsonFile = R.raw.me_at_office, header = "Explore",
-                description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nunc eget lorem dolor sed viverra ipsum."
-            ), ViewPagerModel(
-                jsonFile = R.raw.seo_search_ads, header = "Tesyt",
+                jsonFile = R.raw.third, header = "Explore",
                 description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nunc eget lorem dolor sed viverra ipsum."
             )
         )

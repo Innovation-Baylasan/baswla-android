@@ -29,6 +29,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.domain.entity.model.Entity
 import org.baylasan.sudanmap.ui.layers.MapLayersFragment
+import org.baylasan.sudanmap.ui.profile.CompanyProfileFragment
 import org.baylasan.sudanmap.ui.search.SearchFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -68,7 +69,12 @@ class MainActivity : AppCompatActivity() {
         entityEntitiesListAdapter = EntitiesListAdapter(entities,
             object : EntitiesListAdapter.OnItemClick {
                 override fun onItemClick(entityDto: Entity) {
-                    moveCameraToClickedItem(entityDto.location.lat, entityDto.location.long)
+                 //   moveCameraToClickedItem(entityDto.location.lat, entityDto.location.long)
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.fragmentLayout, CompanyProfileFragment.newInstance(entityDto), "profile")
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                        .addToBackStack(null)
+                        .commit()
                     bottomSheetBehavior.state = CustomBottomSheetBehavior.STATE_COLLAPSED
                 }
 
@@ -140,7 +146,7 @@ class MainActivity : AppCompatActivity() {
                     if (data.isNotEmpty()) {
                         entities.addAll(data)
                         Log.d("KLD", toString())
-                        drawMarkerInMap(data)
+                      //  drawMarkerInMap(data)
                         entityEntitiesListAdapter.notifyDataSetChanged()
                     }
                 }

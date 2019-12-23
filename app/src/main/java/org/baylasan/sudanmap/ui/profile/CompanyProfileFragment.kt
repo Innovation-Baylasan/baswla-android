@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.appbar.AppBarLayout
 import kotlinx.android.synthetic.main.fragment_company_profile.*
 import org.baylasan.sudanmap.R
+import org.baylasan.sudanmap.domain.entity.model.Entity
 import kotlin.math.abs
 
 
@@ -16,6 +17,12 @@ import kotlin.math.abs
  * A simple [Fragment] subclass.
  */
 class CompanyProfileFragment : Fragment() {
+    companion object {
+        @JvmStatic
+        fun newInstance(entityDto: Entity): CompanyProfileFragment {
+            return CompanyProfileFragment()
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
