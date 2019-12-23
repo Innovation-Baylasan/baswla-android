@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
 
     android:layout_height="match_parent"
+    android:background="@color/GhostWhite"
     android:fitsSystemWindows="true">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -24,7 +25,7 @@
             app:toolbarId="@+id/toolbar">
 
             <ImageView
-                android:id="@+id/app_bar_image"
+                android:id="@+id/profileCoverImage"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
@@ -44,7 +45,7 @@
                     android:layout_height="wrap_content">
 
                     <ImageView
-                        android:id="@+id/backImageBtn"
+                        android:id="@+id/profileBackBtn"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
                         android:background="@drawable/rounded_accent_background"
@@ -62,7 +63,7 @@
                         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/backImageBtn"
+                        app:layout_constraintStart_toEndOf="@+id/profileBackBtn"
                         app:layout_constraintTop_toTopOf="parent"
                         tools:text="@string/start_up_week_end" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -286,13 +287,15 @@
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                         <TextView
-                            android:id="@+id/textView5"
+                            android:id="@+id/companyDescrition"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
                             android:layout_marginTop="8dp"
                             android:layout_marginEnd="16dp"
+                            android:layout_marginBottom="16dp"
                             android:text="@string/sample_descripition"
+                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="0.5"
                             app:layout_constraintStart_toStartOf="parent"
@@ -309,11 +312,13 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/materialCardView">
+                    app:layout_constraintTop_toBottomOf="@+id/materialCardView"
+                    app:layout_constraintVertical_bias="0.0">
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        tools:itemCount="3"
                         tools:listitem="@layout/row_review_item" />
                     <!--
                                         <androidx.constraintlayout.widget.ConstraintLayout

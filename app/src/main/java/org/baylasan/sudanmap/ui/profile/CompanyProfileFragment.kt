@@ -10,6 +10,8 @@ import com.google.android.material.appbar.AppBarLayout
 import kotlinx.android.synthetic.main.fragment_company_profile.*
 import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.domain.entity.model.Entity
+import org.baylasan.sudanmap.ui.main.load
+import org.baylasan.sudanmap.utils.extra
 import kotlin.math.abs
 
 
@@ -35,6 +37,22 @@ class CompanyProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        profileBackBtn.setOnClickListener {
+            activity?.supportFragmentManager?.popBackStack()
+        }
+
+        val entity = extra("entity", Entity()).value
+
+        entity?.let {
+            profileToolBarTitleTxt.text = it.name
+            companyNameTxt.text = it.name
+            companyDescrition.text = it.description
+            profileCoverImage.load(it.cover)
+
+        }
+
+
         appbar.addOnOffsetChangedListener(object : AppBarChangedListener() {
             override fun onStateChanged(appBarLayout: AppBarLayout?, state: State) {
                 if (state == State.EXPANDED) // toolbar.title = companyNameTxt.text
@@ -49,6 +67,7 @@ class CompanyProfileFragment : Fragment() {
 
         })
     }
+
 
 }
 
