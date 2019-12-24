@@ -12,5 +12,8 @@
     <color name="black_overlay" >#66000000</color >
     <color name="reviewAccentColor" >#0671DB</color >
     <color name="reviewBackColor" >#DAEAFA</color >
+    <color name="grey">#f0f0f0</color>
+    <color name="iconButtonBackColor">#05eb413c</color>
+    <color name="iconButtonColor">#eb413c</color>
 
 </resources>

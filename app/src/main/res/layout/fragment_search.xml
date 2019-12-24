@@ -5,10 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?android:windowBackground"
-    android:focusableInTouchMode="true"
-    android:focusable="true"
     android:clickable="true"
-    
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+
     >
 
     <androidx.cardview.widget.CardView
@@ -29,10 +29,10 @@
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatImageButton
+                style="@style/RoundedButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                app:backgroundTint="@android:color/transparent"
                 app:srcCompat="@drawable/ic_arrow_back_black_24dp" />
 
             <View
@@ -68,13 +68,13 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/searchRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        tools:itemCount="20"
-        android:id="@+id/searchRecyclerView"
-        tools:listitem="@layout/row_search_result"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView" />
+        app:layout_constraintTop_toBottomOf="@+id/cardView"
+        tools:itemCount="20"
+        tools:listitem="@layout/row_search_result" />
 </androidx.constraintlayout.widget.ConstraintLayout>

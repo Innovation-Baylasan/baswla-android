@@ -1,5 +1,6 @@
 package org.baylasan.sudanmap.ui.main
 
+import android.content.Intent
 import android.content.IntentSender
 import android.graphics.Color
 import android.location.Address
@@ -8,31 +9,31 @@ import android.location.Location
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import androidx.annotation.DrawableRes
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.common.api.ResolvableApiException
+import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.card.MaterialCardView
 import kotlinx.android.synthetic.main.activity_main.*
 import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.domain.entity.model.Entity
 import org.baylasan.sudanmap.ui.layers.MapLayersFragment
-import org.baylasan.sudanmap.ui.profile.CompanyProfileFragment
+import org.baylasan.sudanmap.ui.profile.CompanyProfileActivity
 import org.baylasan.sudanmap.ui.search.SearchFragment
-import org.baylasan.sudanmap.utils.newFragmentInstance
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.io.IOException
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -81,25 +82,12 @@ class MainActivity : AppCompatActivity() {
         entityEntitiesListAdapter = EntitiesListAdapter(entities,
             object : EntitiesListAdapter.OnItemClick {
                 override fun onItemClick(entityDto: Entity) {
-                    //   moveCameraToClickedItem(entityDto.location.lat, entityDto.location.long)
-                    supportFragmentManager.beginTransaction()
-                        .replace(
-                            R.id.fragmentLayout,
-                            newFragmentInstance<CompanyProfileFragment>("entity" to entityDto),
-                            "profile"
-                        )
-                        .replace(
-                            R.id.fragmentLayout,
-                            CompanyProfileFragment.newInstance(entityDto),
-                            "profile"
-                        )
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                        .addToBackStack("main")
-                        .setReorderingAllowed(true)
-                        .commit()
+                    bundleOf("entity" to entityDto)
+                    val profileIntent = Intent(applicationContext , CompanyProfileActivity::class.java)
+                    profileIntent.putExtra("entity" , entityDto)
+                    startActivity(profileIntent)
 
-                    newFragmentInstance<CompanyProfileFragment>("entity" to entityDto)
-                    bottomSheetBehavior.state = CustomBottomSheetBehavior.STATE_COLLAPSED
+                  //  bottomSheetBehavior.state = CustomBottomSheetBehavior.STATE_COLLAPSED
                 }
 
             })
@@ -216,7 +204,7 @@ class MainActivity : AppCompatActivity() {
 
                     val gcd = Geocoder(this, Locale.getDefault())
                     val addresses: List<Address>
-                    try {
+              /*      try {
                         addresses = gcd.getFromLocation(
                             mLastLocation!!.latitude,
                             mLastLocation.longitude,
@@ -228,7 +216,7 @@ class MainActivity : AppCompatActivity() {
                     } catch (e: IOException) {
                         e.printStackTrace()
                     }
-
+*/
               /*      val icon = BitmapDescriptorFactory.fromBitmap(
                         BitmapFactory.decodeResource(
                             this.resources,
