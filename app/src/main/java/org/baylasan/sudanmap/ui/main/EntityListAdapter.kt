@@ -46,7 +46,7 @@ class EntitiesListAdapter(
             itemView.entityName.text = entityDto.name
             itemView.entityDescription.text = entityDto.description
             itemView.coverImage.load(entityDto.cover)
-            itemView.avatarImage.loadCircle("https://i.picsum.photos/id/203/200/300.jpg")
+            itemView.avatarImage.loadCircle(entityDto.avatar)
             itemView.setOnClickListener {
                 onItemClick.onItemClick(entityDto)
             }

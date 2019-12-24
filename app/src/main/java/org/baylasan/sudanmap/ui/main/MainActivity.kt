@@ -1,7 +1,9 @@
 package org.baylasan.sudanmap.ui.main
 
+import android.Manifest
 import android.content.Intent
 import android.content.IntentSender
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.location.Address
 import android.location.Geocoder
@@ -11,6 +13,8 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
@@ -38,7 +42,8 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListener,
+    GoogleMap.OnMyLocationClickListener {
 
     private lateinit var entities: ArrayList<Entity>
 
@@ -49,6 +54,8 @@ class MainActivity : AppCompatActivity() {
     private val entityViewModel: EntityViewModel by viewModel()
 
     private var googleMap: GoogleMap? = null
+
+    val permissions =  arrayOf(Manifest.permission.ACCESS_FINE_LOCATION ,Manifest.permission.ACCESS_FINE_LOCATION)
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     override fun onBackPressed() {
@@ -64,6 +71,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+
+        if (!canAccessLocation()) requestPermissions()
+
         val mapFragment =
             supportFragmentManager.findFragmentById(R.id.mapFragment) as SupportMapFragment?
 
@@ -71,8 +81,12 @@ class MainActivity : AppCompatActivity() {
 
         mapFragment?.getMapAsync { googleMap ->
             this.googleMap = googleMap
-            initMap()
-            getCurrentLocation()
+            if (permissionGiven()) {
+                initMap()
+                getCurrentLocation()
+            } else {
+                requestPermissions()
+            }
         }
 
 
@@ -83,11 +97,12 @@ class MainActivity : AppCompatActivity() {
             object : EntitiesListAdapter.OnItemClick {
                 override fun onItemClick(entityDto: Entity) {
                     bundleOf("entity" to entityDto)
-                    val profileIntent = Intent(applicationContext , CompanyProfileActivity::class.java)
-                    profileIntent.putExtra("entity" , entityDto)
+                    val profileIntent =
+                        Intent(applicationContext, CompanyProfileActivity::class.java)
+                    profileIntent.putExtra("entity", entityDto)
                     startActivity(profileIntent)
 
-                  //  bottomSheetBehavior.state = CustomBottomSheetBehavior.STATE_COLLAPSED
+                    //  bottomSheetBehavior.state = CustomBottomSheetBehavior.STATE_COLLAPSED
                 }
 
             })
@@ -141,19 +156,60 @@ class MainActivity : AppCompatActivity() {
         observeViewModel()
     }
 
-    private fun initMap() {
-        googleMap?.isMyLocationEnabled = true
-      /*  googleMap?.setOnMyLocationButtonClickListener(this)
-        googleMap?.setOnMyLocationClickListener(this)*/
+    private fun requestPermissions() {
+        ActivityCompat.requestPermissions(this, permissions, LOCATION_PERMISSION)
+    }
 
-        googleMap?.uiSettings?.isMyLocationButtonEnabled = true
+    private fun permissionGiven(): Boolean {
+        return (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED)
+    }
 
-        fusedLocationClient.lastLocation
-            .addOnSuccessListener { location: Location? ->
-                // for (location in location..locations){
-                updateMapLocation(location)
-                // }
+
+    private fun canAccessLocation(): Boolean {
+        return (hasPermission(Manifest.permission.ACCESS_FINE_LOCATION));
+    }
+
+    private fun hasPermission( perm :String): Boolean {
+        return (PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(this, perm));
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        if (requestCode == LOCATION_PERMISSION) {
+            if (permissions.isNotEmpty() &&
+                permissions[0] == Manifest.permission.ACCESS_FINE_LOCATION &&
+                grantResults[0] == PackageManager.PERMISSION_GRANTED
+            ) {
+                initMap()
+                getCurrentLocation()
+            } else {
+                // Permission was denied. Display an error message.
             }
+        }
+    }
+
+
+    private fun initMap() {
+        if (canAccessLocation()) {
+            googleMap?.isMyLocationEnabled = true
+            /*  googleMap?.setOnMyLocationButtonClickListener(this)
+                  googleMap?.setOnMyLocationClickListener(this)*/
+
+            googleMap?.uiSettings?.isMyLocationButtonEnabled = true
+
+            fusedLocationClient.lastLocation
+                .addOnSuccessListener { location: Location? ->
+                    // for (location in location..locations){
+                    updateMapLocation(location)
+                    // }
+                }
+        }else{
+            requestPermissions()
+        }
     }
 
 
@@ -180,7 +236,8 @@ class MainActivity : AppCompatActivity() {
                 when (exception.statusCode) {
                     LocationSettingsStatusCodes.RESOLUTION_REQUIRED -> try {
                         val resolvable = exception as ResolvableApiException
-                        resolvable.startResolutionForResult(this,
+                        resolvable.startResolutionForResult(
+                            this,
                             REQUEST_CHECK_SETTINGS
                         )
                     } catch (e: IntentSender.SendIntentException) {
@@ -204,32 +261,32 @@ class MainActivity : AppCompatActivity() {
 
                     val gcd = Geocoder(this, Locale.getDefault())
                     val addresses: List<Address>
-              /*      try {
-                        addresses = gcd.getFromLocation(
-                            mLastLocation!!.latitude,
-                            mLastLocation.longitude,
-                            1
-                        )
-                        if (addresses.isNotEmpty()) {
-                            address = addresses[0].getAddressLine(0)
-                        }
-                    } catch (e: IOException) {
-                        e.printStackTrace()
-                    }
-*/
-              /*      val icon = BitmapDescriptorFactory.fromBitmap(
-                        BitmapFactory.decodeResource(
-                            this.resources,
-                            R.drawable.ic_pin
-                        )
-                    )
-                    googleMap?.addMarker(
-                        MarkerOptions()
-                            .position(LatLng(mLastLocation!!.latitude, mLastLocation.longitude))
-                            .title("Current Location")
-                            .snippet(address)
-                            .icon(icon)
-                    )*/
+                    /*      try {
+                              addresses = gcd.getFromLocation(
+                                  mLastLocation!!.latitude,
+                                  mLastLocation.longitude,
+                                  1
+                              )
+                              if (addresses.isNotEmpty()) {
+                                  address = addresses[0].getAddressLine(0)
+                              }
+                          } catch (e: IOException) {
+                              e.printStackTrace()
+                          }
+      */
+                    /*      val icon = BitmapDescriptorFactory.fromBitmap(
+                              BitmapFactory.decodeResource(
+                                  this.resources,
+                                  R.drawable.ic_pin
+                              )
+                          )
+                          googleMap?.addMarker(
+                              MarkerOptions()
+                                  .position(LatLng(mLastLocation!!.latitude, mLastLocation.longitude))
+                                  .title("Current Location")
+                                  .snippet(address)
+                                  .icon(icon)
+                          )*/
 
                     val cameraPosition = CameraPosition.Builder()
                         .target(mLastLocation?.latitude?.let {
@@ -267,7 +324,7 @@ class MainActivity : AppCompatActivity() {
         entityViewModel.events.observe(this, Observer { event ->
             when (event) {
                 is DataEvent -> {
-                    Log.d("MEGA","Data loaded")
+                    Log.d("MEGA", "Data loaded")
 
                     val data = event.entities
                     if (data.isNotEmpty()) {
@@ -291,6 +348,13 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    override fun onMyLocationButtonClick(): Boolean {
+        return false
+    }
+
+    override fun onMyLocationClick(p0: Location) {
+
+    }
 
     companion object {
         private const val LOCATION_PERMISSION = 42

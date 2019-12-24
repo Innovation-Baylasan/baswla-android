@@ -47,11 +47,10 @@
                         android:id="@+id/profileBackBtn"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
-                        android:background="@drawable/rounded_accent_background"
                         android:scaleType="fitXY"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_arrow_white" />
+                        app:srcCompat="@drawable/ic_back" />
 
                     <TextView
                         android:id="@+id/profileToolBarTitleTxt"

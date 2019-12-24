@@ -1,10 +1,10 @@
 package org.baylasan.sudanmap
 
 import android.app.Application
-import okhttp3.Interceptor
 import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.logging.HttpLoggingInterceptor
@@ -20,7 +20,6 @@ import org.baylasan.sudanmap.ui.layers.MapLayersViewModel
 import org.baylasan.sudanmap.ui.main.EntityViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
-import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -79,6 +78,7 @@ private fun provideRetrofit(androidApplication: Application, okHttpClient: OkHtt
 
 private fun provideOkHttpClient(): OkHttpClient = OkHttpClient.Builder()
     .addNetworkInterceptor(HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY })
+    .retryOnConnectionFailure(true)
     .addInterceptor(okHttpInterceptor())
     .build()
 

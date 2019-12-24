@@ -10,4 +10,6 @@ import kotlinx.android.parcel.Parcelize
 data class Location(
     @SerializedName("lat") val lat: Double,
     @SerializedName("long") val long: Double
-) : Parcelable
+) : Parcelable {
+    constructor() : this(0.0, 0.0)
+}

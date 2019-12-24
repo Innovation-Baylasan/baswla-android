@@ -2,10 +2,10 @@ package org.baylasan.sudanmap.domain.entity
 
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
-import io.mockk.mockk
 import io.reactivex.Single
 import org.baylasan.sudanmap.data.common.ApiErrorResponse
 import org.baylasan.sudanmap.data.common.ApiException
+import org.baylasan.sudanmap.domain.entity.model.Entity
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -14,24 +14,7 @@ class GetEntitiesUseCaseTest {
 
     private lateinit var repository: EntityRepository
     private lateinit var getEntitiesUseCase: GetEntitiesUseCase
-    @Test
-    fun testMockk() {
-        val repo = mockk<EntityRepository>()
-        getEntitiesUseCase = GetEntitiesUseCase(repo)
-  /*      every { repo.getEntities() } returns Single.just(
-            listOf(
-                EntityDto(),
-                EntityDto(),
-                EntityDto()
-            )
-        )
 
-        getEntitiesUseCase.execute()
-            .test()
-            .assertNoErrors()
-            .assertComplete()
-            .assertValue { it.size == 3 }*/
-    }
 
     @Before
     fun setUp() {
@@ -43,30 +26,30 @@ class GetEntitiesUseCaseTest {
     fun testWhenFetchDataSuccess() {
         whenever(repository.getEntities()).thenReturn(
             Single.just(
-              EntityResponseDto(currentPage = 0 ,data =   listOf(
+              listOf(
                   Entity(),
                   Entity(),
                   Entity()
               ))
             )
-        )
+
         getEntitiesUseCase.execute()
             .test()
             .assertNoErrors()
             .assertComplete()
             .assertValue {
-                it.data.size == 3
+                it.size == 3
             }
     }
 
 
     @Test
     fun testWhenDataFetchIsEmpty() {
-        whenever(repository.getEntities()).thenReturn(Single.just(EntityResponseDto(data = listOf())))
+        whenever(repository.getEntities()).thenReturn(Single.just( listOf()))
 
         getEntitiesUseCase.execute()
             .test()
-            .assertValue { it.data.isEmpty() }
+            .assertValue { it.isEmpty() }
     }
 
 

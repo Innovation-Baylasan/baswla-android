@@ -16,4 +16,6 @@ data class Entity(
     @SerializedName("id") val id: Int,
     @SerializedName("location") val location: Location,
     @SerializedName("name") val name: String
-):Parcelable
+):Parcelable{
+    constructor() :this ("", Category(),"","",0,Location(),"")
+}
