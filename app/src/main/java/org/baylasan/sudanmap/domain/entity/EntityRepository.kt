@@ -1,8 +1,8 @@
 package org.baylasan.sudanmap.domain.entity
 
 import io.reactivex.Single
-import org.baylasan.sudanmap.domain.entity.model.EntityResponseDto
+import org.baylasan.sudanmap.domain.entity.model.Entity
 
 interface EntityRepository {
-    fun getEntities(): Single<EntityResponseDto>
+    fun getEntities(): Single<List<Entity>>
 }

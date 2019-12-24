@@ -6,8 +6,6 @@ import io.mockk.mockk
 import io.reactivex.Single
 import org.baylasan.sudanmap.data.common.ApiErrorResponse
 import org.baylasan.sudanmap.data.common.ApiException
-import org.baylasan.sudanmap.domain.entity.model.Entity
-import org.baylasan.sudanmap.domain.entity.model.EntityResponseDto
 import org.junit.After
 import org.junit.Before
 import org.junit.Test

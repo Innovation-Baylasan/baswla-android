@@ -3,7 +3,6 @@ package org.baylasan.sudanmap.domain.category
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
 import io.reactivex.Single
-import org.baylasan.sudanmap.domain.entity.model.Category
 import org.junit.Before
 import org.junit.Test
 

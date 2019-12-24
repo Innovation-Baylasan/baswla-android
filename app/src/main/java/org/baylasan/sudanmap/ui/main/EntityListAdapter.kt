@@ -12,7 +12,7 @@ import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.domain.entity.model.Entity
 
 class EntitiesListAdapter(
-    private val list: ArrayList<Entity>,
+    private val list: List<Entity>,
     private val onItemClick: OnItemClick
 ) :
     RecyclerView.Adapter<EntitiesListAdapter.ViewHolder>() {
@@ -44,8 +44,9 @@ class EntitiesListAdapter(
             Log.d("KLD", entityDto.toString())
             itemView.entityName.text = entityDto.name
             itemView.entityDescription.text = entityDto.description
-            itemView.coverImage.load(entityDto.cover)
-            itemView.avatarImage.load(entityDto.avatar)
+/*            itemView.coverImage.load(entityDto.cover)
+            itemView.avatarImage.load(entityDto.avatar)*/
+            //TODO:
             itemView.setOnClickListener {
                 onItemClick.onItemClick(entityDto)
             }

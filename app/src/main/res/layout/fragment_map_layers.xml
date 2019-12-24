@@ -63,6 +63,7 @@
         android:layout_marginBottom="16dp"
         android:text="Select"
         android:textSize="18sp"
+        android:textColor="@color/white"
         app:backgroundTint="@color/colorAccent"
         app:cornerRadius="16dp" />
 </LinearLayout>
