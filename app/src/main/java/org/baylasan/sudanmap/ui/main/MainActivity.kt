@@ -113,6 +113,12 @@ class MainActivity : AppCompatActivity() {
             val entityFilterAdapter = EntityFilterAdapter(it) { category ->
                 entityViewModel.filterEntities(category)
             }
+            filterChipRecyclerView.layoutManager =
+                LinearLayoutManager(
+                    applicationContext,
+                    LinearLayoutManager.HORIZONTAL,
+                    false
+                )
             filterChipRecyclerView.adapter = entityFilterAdapter
 
         })
@@ -157,12 +163,7 @@ class MainActivity : AppCompatActivity() {
                         entities.addAll(data)
                         Log.d("KLD", toString())
                         //  drawMarkerInMap(data)
-                        filterChipRecyclerView.layoutManager =
-                            LinearLayoutManager(
-                                applicationContext,
-                                LinearLayoutManager.HORIZONTAL,
-                                false
-                            )
+
                         entityEntitiesListAdapter.notifyDataSetChanged()
                     }
                 }
