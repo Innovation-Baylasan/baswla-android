@@ -8,24 +8,22 @@ import android.location.Location
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.view.ViewGroup
-import android.widget.FrameLayout
-import android.widget.Toast
+import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AppCompatActivity
-import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.fish4fun.likegooglemaps.bottomsheet.CustomBottomSheetBehavior
-import com.google.android.gms.common.api.ApiException
-import com.google.android.gms.common.api.ResolvableApiException
-import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.card.MaterialCardView
 import kotlinx.android.synthetic.main.activity_main.*
 import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.domain.entity.model.Entity
@@ -45,12 +43,21 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var entityEntitiesListAdapter: EntitiesListAdapter
     lateinit var adapter: EntityListAdapter
+    private lateinit var bottomSheetBehavior: BottomSheetBehavior<MaterialCardView>
 
     private val entityViewModel: EntityViewModel by viewModel()
 
     private var googleMap: GoogleMap? = null
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
+    override fun onBackPressed() {
+        if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_EXPANDED) {
+            bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+        } else {
+            super.onBackPressed()
+
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,12 +74,8 @@ class MainActivity : AppCompatActivity() {
             getCurrentLocation()
         }
 
-        //    map =supportFragmentManager.findFragmentById(R.id.mapFragment) as GoogleMap
 
-        val bottomSheet = findViewById<View>(R.id.bottomSheet)
-        val layoutParams = bottomSheet.layoutParams as CoordinatorLayout.LayoutParams
-        val bottomSheetBehavior = layoutParams.behavior as CustomBottomSheetBehavior<*>
-
+        bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
         bottomSheetBehavior.peekHeight = 80
         entities = ArrayList()
         entityEntitiesListAdapter = EntitiesListAdapter(entities,
@@ -83,6 +86,11 @@ class MainActivity : AppCompatActivity() {
                         .replace(
                             R.id.fragmentLayout,
                             newFragmentInstance<CompanyProfileFragment>("entity" to entityDto),
+                            "profile"
+                        )
+                        .replace(
+                            R.id.fragmentLayout,
+                            CompanyProfileFragment.newInstance(entityDto),
                             "profile"
                         )
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
@@ -112,29 +120,29 @@ class MainActivity : AppCompatActivity() {
         }
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
 
-        recyclerView.layoutParams = FrameLayout.LayoutParams(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
-        )
 
         recyclerView.layoutManager =
             StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
 
 
         recyclerView.adapter = entityEntitiesListAdapter
+        entityViewModel.filterLiveData.observe(this, Observer {
+            val entityFilterAdapter = EntityFilterAdapter(it) { category ->
+                entityViewModel.filterEntities(category)
+            }
+            filterChipRecyclerView.adapter = entityFilterAdapter
 
-        bottomSheetBehavior.state
-        bottomSheetBehavior.setBottomSheetCallback(object :
-            CustomBottomSheetBehavior.BottomSheetCallback() {
+        })
+        bottomSheetBehavior.isHideable = false
+        bottomSheetBehavior.addBottomSheetCallback(object :
+            BottomSheetBehavior.BottomSheetCallback() {
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
             }
 
             override fun onStateChanged(bottomSheet: View, newState: Int) {
-                if (newState == CustomBottomSheetBehavior.STATE_EXPANDED) {
+                if (newState == BottomSheetBehavior.STATE_EXPANDED) {
                     searchBar.setBackgroundColor(Color.WHITE)
-
                 } else {
-
                     searchBar.setBackgroundColor(Color.TRANSPARENT)
 
                 }
@@ -271,11 +279,21 @@ class MainActivity : AppCompatActivity() {
         entityViewModel.events.observe(this, Observer { event ->
             when (event) {
                 is DataEvent -> {
-                    val data = event.entityResponseDto.data
+                    Log.d("MEGA","Data loaded")
+
+                    val data = event.entities
                     if (data.isNotEmpty()) {
+                        entities.clear()
                         entities.addAll(data)
                         Log.d("KLD", toString())
                         //  drawMarkerInMap(data)
+                        //  drawMarkerInMap(data)
+                        filterChipRecyclerView.layoutManager =
+                            LinearLayoutManager(
+                                applicationContext,
+                                LinearLayoutManager.HORIZONTAL,
+                                false
+                            )
                         entityEntitiesListAdapter.notifyDataSetChanged()
                     }
                 }

@@ -8,7 +8,6 @@ import okhttp3.ResponseBody
 import org.baylasan.sudanmap.data.SudanMapApi
 import org.baylasan.sudanmap.data.common.ApiErrorResponse
 import org.baylasan.sudanmap.data.common.UnAuthorizedException
-import org.baylasan.sudanmap.domain.entity.model.EntityResponseDto
 import org.junit.Before
 import org.junit.Test
 import retrofit2.Converter

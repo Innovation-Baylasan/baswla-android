@@ -1,6 +1,6 @@
 package org.baylasan.sudanmap.ui.main
 
-import org.baylasan.sudanmap.domain.entity.model.EntityResponseDto
+import org.baylasan.sudanmap.domain.entity.model.Entity
 
 sealed class EntityEvent
 
@@ -10,4 +10,4 @@ object EmptyEvent : EntityEvent()
 object SessionExpiredEvent : EntityEvent()
 object TimeoutEvent : EntityEvent()
 class ErrorEvent(val errorMessage: String) : EntityEvent()
-class DataEvent(val entityResponseDto: EntityResponseDto) : EntityEvent()
+class DataEvent(val entities: List<Entity>) : EntityEvent()

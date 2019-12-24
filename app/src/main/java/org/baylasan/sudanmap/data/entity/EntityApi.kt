@@ -7,7 +7,7 @@ import org.baylasan.sudanmap.data.common.ApiErrorResponse
 import org.baylasan.sudanmap.data.common.ResponseSingleFunc1
 import org.baylasan.sudanmap.data.common.ThrowableSingleFunc1
 import org.baylasan.sudanmap.domain.entity.EntityRepository
-import org.baylasan.sudanmap.domain.entity.model.EntityResponseDto
+import org.baylasan.sudanmap.domain.entity.model.Entity
 import retrofit2.Converter
 
 class EntityApi(
@@ -15,7 +15,7 @@ class EntityApi(
     private val errorConverter: Converter<ResponseBody, ApiErrorResponse>
 ) :
     EntityRepository {
-    override fun getEntities(): Single<EntityResponseDto> = entityApi.getEntities()
+    override fun getEntities(): Single<List<Entity>> = entityApi.getEntities()
         .onErrorResumeNext(ThrowableSingleFunc1())
         .flatMap(ResponseSingleFunc1(errorConverter))
 }
