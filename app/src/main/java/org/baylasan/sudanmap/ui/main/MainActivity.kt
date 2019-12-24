@@ -133,6 +133,12 @@ class MainActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
             val entityFilterAdapter = EntityFilterAdapter(it) { category ->
                 entityViewModel.filterEntities(category)
             }
+            filterChipRecyclerView.layoutManager =
+                LinearLayoutManager(
+                    applicationContext,
+                    LinearLayoutManager.HORIZONTAL,
+                    false
+                )
             filterChipRecyclerView.adapter = entityFilterAdapter
 
         })
@@ -339,6 +345,7 @@ class MainActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
                                 LinearLayoutManager.HORIZONTAL,
                                 false
                             )
+
                         entityEntitiesListAdapter.notifyDataSetChanged()
                     }
                 }
