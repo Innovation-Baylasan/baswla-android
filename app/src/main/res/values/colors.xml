@@ -7,9 +7,13 @@
     <color name="rateBtnBackgroundColor">#FFF0D6</color>
     <color name="rateBtnTextColor">#F4A210</color>
     <color name="white" >#fff</color >
+    <color name="GhostWhite" >#f6f6f6</color >
     <color name="black" >#000000</color >
     <color name="black_overlay" >#66000000</color >
     <color name="reviewAccentColor" >#0671DB</color >
     <color name="reviewBackColor" >#DAEAFA</color >
+    <color name="grey">#f0f0f0</color>
+    <color name="iconButtonBackColor">#05eb413c</color>
+    <color name="iconButtonColor">#eb413c</color>
 
 </resources>

@@ -18,8 +18,8 @@
         <item name="colorOnError">#FFFFFF</item>
         <item name="colorSurface">#FFFFFF</item>
         <item name="colorOnSurface">#212121</item>
-        <item name="android:statusBarColor" tools:targetApi="lollipop">@color/white
-        </item>
+        <!--  <item name="android:statusBarColor" tools:targetApi="lollipop">@color/white
+          </item>-->
 
         <!--<item name="android:colorBackground" >@selected_chip_background/ghostWhite</item >-->
         <item name="colorOnBackground">#212121</item>
@@ -36,8 +36,8 @@
         -->
         <item name="android:textColorHintInverse">@color/black_overlay</item>
 
-        <item name="android:windowLightStatusBar" tools:targetApi="m">true
-        </item>
+        <!--   <item name="android:windowLightStatusBar" tools:targetApi="m">true
+           </item>-->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
 
@@ -54,8 +54,6 @@
         <item name="actionBarStyle" >@style/ToolbarTheme</item >-->
 
 
-        <item name="android:navigationBarColor" tools:targetApi="lollipop">@color/white
-        </item>
         <!--
                 <item name="materialButtonStyle">@style/RoundedButton</item>
         -->
@@ -196,6 +194,16 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">8dp</item>
     </style>
+
+
+    <style name="RoundedButton" parent="Widget.AppCompat.Button">
+        <item name="iconTint">@color/iconButtonColor</item>
+        <item name="android:radius">16dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:background">@color/iconButtonBackColor</item>
+    </style>
+
+
     <!--
         <style name="RoundedButton" parent="Widget.MaterialComponents.Button">
             <item name="cornerRadius">16dp</item>

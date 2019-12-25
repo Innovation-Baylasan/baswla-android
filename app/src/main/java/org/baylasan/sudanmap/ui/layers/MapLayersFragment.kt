@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
@@ -33,6 +34,11 @@ class MapLayersFragment : Fragment(R.layout.fragment_map_layers) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        selectBtn.setOnClickListener {
+            (activity as AppCompatActivity).supportFragmentManager.popBackStack()
+        }
+
         mapLayersRecyclerView.layoutManager = GridLayoutManager(activity, 3)
         viewModel.loadCategories()
         val mapLayersAdapter = MapLayersAdapter()

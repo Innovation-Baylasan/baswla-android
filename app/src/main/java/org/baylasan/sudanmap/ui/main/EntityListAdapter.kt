@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
+import jp.wasabeef.picasso.transformations.CropCircleTransformation
 import kotlinx.android.synthetic.main.row_entity.view.*
 import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.domain.entity.model.Entity
@@ -44,9 +45,8 @@ class EntitiesListAdapter(
             Log.d("KLD", entityDto.toString())
             itemView.entityName.text = entityDto.name
             itemView.entityDescription.text = entityDto.description
-/*            itemView.coverImage.load(entityDto.cover)
-            itemView.avatarImage.load(entityDto.avatar)*/
-            //TODO:
+            itemView.coverImage.load(entityDto.cover)
+            itemView.avatarImage.loadCircle(entityDto.avatar)
             itemView.setOnClickListener {
                 onItemClick.onItemClick(entityDto)
             }
@@ -58,4 +58,22 @@ class EntitiesListAdapter(
     }
 }
 
-fun ImageView.load(imageUrl: String) = Picasso.get().load(imageUrl).into(this)
+// fun ImageView.load(imageUrl: String) = Picasso.get().load(imageUrl ).into(this)
+
+fun ImageView.load(imageUrl: String){
+    if (imageUrl.isEmpty()) {
+        setImageResource(R.drawable.ic_launcher_foreground);
+    } else{
+        Picasso.get().load(imageUrl).into(this)
+    }
+}
+
+fun ImageView.loadCircle(imageUrl: String){
+    if (imageUrl.isEmpty()) {
+        setImageResource(R.drawable.ic_launcher_foreground);
+    } else{
+        Picasso.get()
+            .load(imageUrl)
+            .transform(CropCircleTransformation()).into(this)
+    }
+}

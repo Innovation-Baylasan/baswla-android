@@ -2,39 +2,43 @@ package org.baylasan.sudanmap.ui.profile
 
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.appbar.AppBarLayout
 import kotlinx.android.synthetic.main.fragment_company_profile.*
 import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.domain.entity.model.Entity
+import org.baylasan.sudanmap.ui.main.load
+import org.baylasan.sudanmap.utils.gone
+import org.baylasan.sudanmap.utils.show
 import kotlin.math.abs
 
 
 /**
  * A simple [Fragment] subclass.
  */
-class CompanyProfileFragment : Fragment() {
-    companion object {
-        @JvmStatic
-        fun newInstance(entityDto: Entity): CompanyProfileFragment {
-            return CompanyProfileFragment()
+class CompanyProfileActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.fragment_company_profile)
+
+        profileBackBtn.setOnClickListener {
+            super.onBackPressed()
         }
-    }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_company_profile, container, false)
-    }
+        val entity = intent?.getParcelableExtra<Entity>("entity")
+        Log.d("Profile", entity.toString())
+        entity?.let {
+            profileToolBarTitleTxt.text = it.name
+            companyNameTxt.text = it.name
+            companyDescrition.text = it.description
+            profileCoverImage.load(it.cover)
+
+        }
 
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         appbar.addOnOffsetChangedListener(object : AppBarChangedListener() {
             override fun onStateChanged(appBarLayout: AppBarLayout?, state: State) {
                 if (state == State.EXPANDED) // toolbar.title = companyNameTxt.text
@@ -50,16 +54,9 @@ class CompanyProfileFragment : Fragment() {
         })
     }
 
+
 }
 
-
-private fun View.gone() {
-    visibility = View.GONE
-}
-
-private fun View.show() {
-    visibility = View.VISIBLE
-}
 
 /**
  * Creating custom listener to appBarLayout

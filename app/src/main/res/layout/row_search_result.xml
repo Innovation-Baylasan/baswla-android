@@ -20,13 +20,13 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginTop="16dp"
         android:maxLines="2"
 
         android:text="Entity name Entity name "
         android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-        app:layout_constraintEnd_toStartOf="@+id/materialButton"
+        app:layout_constraintEnd_toStartOf="@+id/imageButton3"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/imageView"
         app:layout_constraintTop_toTopOf="parent" />
@@ -44,23 +44,21 @@
         android:id="@+id/chipGroup"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         app:chipSpacingHorizontal="2dp"
 
         app:chipSpacingVertical="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/ratingBar"
         app:layout_constraintTop_toBottomOf="@+id/imageView"
         app:lineSpacing="0dp">
 
         <com.google.android.material.chip.Chip
+            style="@style/Outlined"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="VC"
-            style="@style/Outlined"
-            />
+            android:text="VC" />
 
         <com.google.android.material.chip.Chip
             style="@style/Outlined"
@@ -77,18 +75,35 @@
             android:text="Software house" />
 
 
-
     </com.google.android.material.chip.ChipGroup>
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/materialButton"
+
+    <ImageView
+        android:id="@+id/imageButton3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:text="Follow"
-
         app:cornerRadius="16dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_event_blue" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:background="#22000000"/>
+    <!--  <com.google.android.material.button.MaterialButton
+          android:id="@+id/materialButton"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="8dp"
+          android:layout_marginEnd="8dp"
+          android:text="Follow"
+
+          app:cornerRadius="16dp"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintTop_toTopOf="parent" />-->
 </androidx.constraintlayout.widget.ConstraintLayout>

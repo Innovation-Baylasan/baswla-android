@@ -15,6 +15,7 @@ public class ThrowableSingleFunc1<T> implements Function<Throwable, Single<? ext
 
     @Override
     public Single<? extends Response<T>> apply(Throwable throwable) {
+        throwable.printStackTrace();
         String message = throwable.getMessage();
         if (TextUtils.isEmpty(message)) {
             message = "";

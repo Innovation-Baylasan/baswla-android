@@ -3,37 +3,51 @@ package org.baylasan.sudanmap.ui.main
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.Manifest
+import android.content.Intent
+import android.content.IntentSender
+import android.content.pm.PackageManager
+import android.graphics.Color
+import android.location.Address
+import android.location.Geocoder
+import android.location.Location
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import androidx.annotation.DrawableRes
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
+import androidx.core.os.bundleOf
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.common.api.ResolvableApiException
+import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.BitmapDescriptor
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.card.MaterialCardView
 import kotlinx.android.synthetic.main.activity_main.*
 import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.domain.entity.model.Entity
 import org.baylasan.sudanmap.ui.layers.MapLayersFragment
-import org.baylasan.sudanmap.ui.profile.CompanyProfileFragment
+import org.baylasan.sudanmap.ui.profile.CompanyProfileActivity
 import org.baylasan.sudanmap.ui.search.SearchFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.util.*
+import kotlin.collections.ArrayList
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListener,
+    GoogleMap.OnMyLocationClickListener {
 
     private lateinit var entities: ArrayList<Entity>
 
@@ -43,8 +57,11 @@ class MainActivity : AppCompatActivity() {
 
     private val entityViewModel: EntityViewModel by viewModel()
 
-    private var map: GoogleMap? = null
+    private var googleMap: GoogleMap? = null
 
+    val permissions =  arrayOf(Manifest.permission.ACCESS_FINE_LOCATION ,Manifest.permission.ACCESS_FINE_LOCATION)
+
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
     override fun onBackPressed() {
         if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_EXPANDED) {
             bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
@@ -60,12 +77,22 @@ class MainActivity : AppCompatActivity() {
         ViewCompat.setNestedScrollingEnabled(bottomSheet, true)
 
 
+
+        if (!canAccessLocation()) requestPermissions()
+
         val mapFragment =
             supportFragmentManager.findFragmentById(R.id.mapFragment) as SupportMapFragment?
 
-        mapFragment?.getMapAsync { googleMap ->
-            map = googleMap
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
+        mapFragment?.getMapAsync { googleMap ->
+            this.googleMap = googleMap
+            if (permissionGiven()) {
+                initMap()
+                getCurrentLocation()
+            } else {
+                requestPermissions()
+            }
         }
 
 
@@ -75,16 +102,13 @@ class MainActivity : AppCompatActivity() {
         entityEntitiesListAdapter = EntitiesListAdapter(entities,
             object : EntitiesListAdapter.OnItemClick {
                 override fun onItemClick(entityDto: Entity) {
-                    //   moveCameraToClickedItem(entityDto.location.lat, entityDto.location.long)
-                    supportFragmentManager.beginTransaction()
-                        .replace(
-                            R.id.fragmentLayout,
-                            CompanyProfileFragment.newInstance(entityDto),
-                            "profile"
-                        )
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                        .addToBackStack(null)
-                        .commit()
+                    bundleOf("entity" to entityDto)
+                    val profileIntent =
+                        Intent(applicationContext, CompanyProfileActivity::class.java)
+                    profileIntent.putExtra("entity", entityDto)
+                    startActivity(profileIntent)
+
+                    //  bottomSheetBehavior.state = CustomBottomSheetBehavior.STATE_COLLAPSED
                 }
 
             })
@@ -139,12 +163,167 @@ class MainActivity : AppCompatActivity() {
         observeViewModel()
     }
 
-    private fun moveCameraToClickedItem(lat: Double, lng: Double) {
-        val firstLatLng = LatLng(entities[0].location.lat, entities[0].location.long)
+    private fun requestPermissions() {
+        ActivityCompat.requestPermissions(this, permissions, LOCATION_PERMISSION)
+    }
 
-        map?.moveCamera(CameraUpdateFactory.newLatLngZoom(firstLatLng, 15f))
-        map?.animateCamera(CameraUpdateFactory.zoomIn())
-        map?.animateCamera(CameraUpdateFactory.zoomTo(15f), 2000, null)
+    private fun permissionGiven(): Boolean {
+        return (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED)
+    }
+
+
+    private fun canAccessLocation(): Boolean {
+        return (hasPermission(Manifest.permission.ACCESS_FINE_LOCATION));
+    }
+
+    private fun hasPermission( perm :String): Boolean {
+        return (PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(this, perm));
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        if (requestCode == LOCATION_PERMISSION) {
+            if (permissions.isNotEmpty() &&
+                permissions[0] == Manifest.permission.ACCESS_FINE_LOCATION &&
+                grantResults[0] == PackageManager.PERMISSION_GRANTED
+            ) {
+                initMap()
+                getCurrentLocation()
+            } else {
+                // Permission was denied. Display an error message.
+            }
+        }
+    }
+
+
+    private fun initMap() {
+        if (canAccessLocation()) {
+            googleMap?.isMyLocationEnabled = true
+            /*  googleMap?.setOnMyLocationButtonClickListener(this)
+                  googleMap?.setOnMyLocationClickListener(this)*/
+
+            googleMap?.uiSettings?.isMyLocationButtonEnabled = true
+
+            fusedLocationClient.lastLocation
+                .addOnSuccessListener { location: Location? ->
+                    // for (location in location..locations){
+                    updateMapLocation(location)
+                    // }
+                }
+        }else{
+            requestPermissions()
+        }
+    }
+
+
+    private fun getCurrentLocation() {
+
+        val locationRequest = LocationRequest()
+        locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+        locationRequest.interval = (10 * 1000).toLong()
+        locationRequest.fastestInterval = 2000
+
+        val builder = LocationSettingsRequest.Builder()
+        builder.addLocationRequest(locationRequest)
+        val locationSettingsRequest = builder.build()
+
+        val result = LocationServices.getSettingsClient(this)
+            .checkLocationSettings(locationSettingsRequest)
+        result.addOnCompleteListener { task ->
+            try {
+                val response = task.getResult(ApiException::class.java)
+                if (response!!.locationSettingsStates.isLocationPresent) {
+                    getLastLocation()
+                }
+            } catch (exception: ApiException) {
+                when (exception.statusCode) {
+                    LocationSettingsStatusCodes.RESOLUTION_REQUIRED -> try {
+                        val resolvable = exception as ResolvableApiException
+                        resolvable.startResolutionForResult(
+                            this,
+                            REQUEST_CHECK_SETTINGS
+                        )
+                    } catch (e: IntentSender.SendIntentException) {
+                    } catch (e: ClassCastException) {
+                    }
+
+                    LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE -> {
+                    }
+                }
+            }
+        }
+    }
+
+    private fun getLastLocation() {
+        fusedLocationClient.lastLocation
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful && task.result != null) {
+                    val mLastLocation = task.result
+                    Log.d("getLastLocation", mLastLocation.toString())
+                    var address = "No known address"
+
+                    val gcd = Geocoder(this, Locale.getDefault())
+                    val addresses: List<Address>
+                    /*      try {
+                              addresses = gcd.getFromLocation(
+                                  mLastLocation!!.latitude,
+                                  mLastLocation.longitude,
+                                  1
+                              )
+                              if (addresses.isNotEmpty()) {
+                                  address = addresses[0].getAddressLine(0)
+                              }
+                          } catch (e: IOException) {
+                              e.printStackTrace()
+                          }
+      */
+                    /*      val icon = BitmapDescriptorFactory.fromBitmap(
+                              BitmapFactory.decodeResource(
+                                  this.resources,
+                                  R.drawable.ic_pin
+                              )
+                          )
+                          googleMap?.addMarker(
+                              MarkerOptions()
+                                  .position(LatLng(mLastLocation!!.latitude, mLastLocation.longitude))
+                                  .title("Current Location")
+                                  .snippet(address)
+                                  .icon(icon)
+                          )*/
+
+                    val cameraPosition = CameraPosition.Builder()
+                        .target(mLastLocation?.latitude?.let {
+                            LatLng(
+                                it,
+                                mLastLocation.longitude
+                            )
+                        })
+                        .zoom(17f)
+                        .build()
+                    googleMap?.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+                } else {
+                    Toast.makeText(this, "No current location found", Toast.LENGTH_LONG)
+                        .show()
+                }
+            }
+    }
+
+
+    private fun updateMapLocation(location: Location?) {
+        googleMap?.moveCamera(
+            CameraUpdateFactory.newLatLng(
+                LatLng(
+                    location?.latitude ?: 0.0,
+                    location?.longitude ?: 0.0
+                )
+            )
+        )
+
+        googleMap?.moveCamera(CameraUpdateFactory.zoomTo(15.0f))
     }
 
     private fun observeViewModel() {
@@ -156,12 +335,14 @@ class MainActivity : AppCompatActivity() {
                     Log.d("MEGA", "Data loaded")
                     entityFilterLoading.visibility = View.GONE
                     entityLoading.visibility = View.GONE
+                    Log.d("MEGA", "Data loaded")
 
                     val data = event.entities
                     if (data.isNotEmpty()) {
                         entities.clear()
                         entities.addAll(data)
                         Log.d("KLD", toString())
+                        //  drawMarkerInMap(data)
                         //  drawMarkerInMap(data)
 
                         entityEntitiesListAdapter.notifyDataSetChanged()
@@ -180,40 +361,16 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun drawMarkerInMap(entities: List<Entity>) {
-        entities.forEach { entity ->
-            if (map != null) {
-                val latLng = LatLng(entity.location.lat, entity.location.long)
-                val markerOptions = MarkerOptions().position(latLng)
-                    .icon((bitmapDescriptorFromVector(this, R.drawable.ic_business)))
+    override fun onMyLocationButtonClick(): Boolean {
+        return false
+    }
 
-                map?.addMarker(markerOptions)
-            }
-        }
-
-        //  moveCameraToClickedItem(entities[0].location.lat, entities[0].location.long)
+    override fun onMyLocationClick(p0: Location) {
 
     }
 
-    private fun bitmapDescriptorFromVector(context: Context, @DrawableRes vectorDrawableResourceId: Int): BitmapDescriptor? {
-        val background =
-            ContextCompat.getDrawable(context, R.drawable.ic_business)
-        background!!.setBounds(0, 0, background.intrinsicWidth, background.intrinsicHeight)
-        val vectorDrawable = ContextCompat.getDrawable(context, vectorDrawableResourceId)
-        vectorDrawable!!.setBounds(
-            40,
-            20,
-            vectorDrawable.intrinsicWidth + 40,
-            vectorDrawable.intrinsicHeight + 20
-        )
-        val bitmap = Bitmap.createBitmap(
-            background.intrinsicWidth,
-            background.intrinsicHeight,
-            Bitmap.Config.ARGB_8888
-        )
-        val canvas = Canvas(bitmap)
-        background.draw(canvas)
-        vectorDrawable.draw(canvas)
-        return BitmapDescriptorFactory.fromBitmap(bitmap)
+    companion object {
+        private const val LOCATION_PERMISSION = 42
+        private const val REQUEST_CHECK_SETTINGS = 40
     }
 }

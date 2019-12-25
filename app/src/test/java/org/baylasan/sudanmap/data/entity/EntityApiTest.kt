@@ -34,7 +34,7 @@ class EntityApiTest {
         whenever(entityService.getEntities()).thenReturn(Single.create {
             it.onSuccess(
                 Response.success(
-                    EntityResponseDto()
+                   listOf()
                 )
             )
         })
