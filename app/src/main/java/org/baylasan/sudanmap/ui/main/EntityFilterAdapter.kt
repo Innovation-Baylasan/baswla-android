@@ -2,16 +2,15 @@ package org.baylasan.sudanmap.ui.main
 
 
 import android.content.Context
-import android.content.res.ColorStateList
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.domain.entity.model.Category
-import org.xmlpull.v1.XmlPullParser
 
 class EntityFilterAdapter(
+    private val context: Context,
     private val list: List<Category>,
     private val onClick: (Category) -> Unit
 ) :
@@ -28,18 +27,33 @@ class EntityFilterAdapter(
 
     override fun getItemCount(): Int = list.size
 
+
     override fun onBindViewHolder(holder: EntityFilterViewHolder, position: Int) {
         val category = list[holder.adapterPosition]
         holder.chipFilter.text = category.name
-        holder.chipFilter.isSelected = category == selectedCategory
+        holder.chipFilter.background = ContextCompat.getDrawable(
+            context, if (isSelected(category))
+                R.drawable.selected_chip_background else
+                R.drawable.not_selected_chip_background
+        )
+        holder.chipFilter.setTextColor(
+            ContextCompat.getColor(
+                context,
+                if (isSelected(category)) R.color.white else R.color.black
+            )
+        )
 
         holder.chipFilter.setOnClickListener {
             selectedCategory = category
             onClick(category)
-
+            notifyItemChanged(position)
+            notifyDataSetChanged()
 
         }
 
     }
+
+    private fun isSelected(category: Category) =
+        category == selectedCategory
 
 }

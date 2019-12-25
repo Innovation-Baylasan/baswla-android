@@ -3,13 +3,13 @@ package org.baylasan.sudanmap.ui.main
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -57,6 +57,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        ViewCompat.setNestedScrollingEnabled(bottomSheet, true)
+
 
         val mapFragment =
             supportFragmentManager.findFragmentById(R.id.mapFragment) as SupportMapFragment?
@@ -68,7 +70,7 @@ class MainActivity : AppCompatActivity() {
 
 
         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
-        bottomSheetBehavior.peekHeight = 80
+        bottomSheetBehavior.peekHeight = 250
         entities = ArrayList()
         entityEntitiesListAdapter = EntitiesListAdapter(entities,
             object : EntitiesListAdapter.OnItemClick {
@@ -110,7 +112,7 @@ class MainActivity : AppCompatActivity() {
 
         recyclerView.adapter = entityEntitiesListAdapter
         entityViewModel.filterLiveData.observe(this, Observer {
-            val entityFilterAdapter = EntityFilterAdapter(it) { category ->
+            val entityFilterAdapter = EntityFilterAdapter(this, it) { category ->
                 entityViewModel.filterEntities(category)
             }
             filterChipRecyclerView.layoutManager =
@@ -129,12 +131,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onStateChanged(bottomSheet: View, newState: Int) {
-                if (newState == BottomSheetBehavior.STATE_EXPANDED) {
-                    searchBar.setBackgroundColor(Color.WHITE)
-                } else {
-                    searchBar.setBackgroundColor(Color.TRANSPARENT)
-
-                }
+                searchField.isEnabled = newState != BottomSheetBehavior.STATE_EXPANDED
             }
         })
 
@@ -154,8 +151,11 @@ class MainActivity : AppCompatActivity() {
 
         entityViewModel.events.observe(this, Observer { event ->
             when (event) {
+
                 is DataEvent -> {
-                    Log.d("MEGA","Data loaded")
+                    Log.d("MEGA", "Data loaded")
+                    entityFilterLoading.visibility = View.GONE
+                    entityLoading.visibility = View.GONE
 
                     val data = event.entities
                     if (data.isNotEmpty()) {
@@ -166,6 +166,13 @@ class MainActivity : AppCompatActivity() {
 
                         entityEntitiesListAdapter.notifyDataSetChanged()
                     }
+                }
+                is LoadingEvent -> {
+                    entityFilterLoading.visibility = View.VISIBLE
+                    entityLoading.visibility = View.VISIBLE
+                }
+                else -> {
+                    TODO("this crash happens because you did not Handle other events")
                 }
             }
 

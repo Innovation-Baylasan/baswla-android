@@ -3,10 +3,10 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
         <!--     &lt;!&ndash; Customize your theme here. &ndash;&gt;
-             <item name="android:windowBackground">@android:chip_background/white</item>
-             <item name="colorPrimary">@chip_background/colorPrimary</item>
-             <item name="colorPrimaryDark">@chip_background/colorPrimaryDark</item>
-             <item name="colorAccent">@chip_background/colorAccent</item>-->
+             <item name="android:windowBackground">@android:selected_chip_background/white</item>
+             <item name="colorPrimary">@selected_chip_background/colorPrimary</item>
+             <item name="colorPrimaryDark">@selected_chip_background/colorPrimaryDark</item>
+             <item name="colorAccent">@selected_chip_background/colorAccent</item>-->
 
 
         <item name="colorOnPrimary">@color/colorAccent</item>
@@ -21,7 +21,7 @@
         <item name="android:statusBarColor" tools:targetApi="lollipop">@color/white
         </item>
 
-        <!--<item name="android:colorBackground" >@chip_background/ghostWhite</item >-->
+        <!--<item name="android:colorBackground" >@selected_chip_background/ghostWhite</item >-->
         <item name="colorOnBackground">#212121</item>
 
         <item name="colorPrimary">@android:color/white</item>
@@ -29,10 +29,10 @@
         <item name="colorAccent">@color/colorAccent</item>
 
         <!--
-                <item name="android:colorPrimaryDark">@chip_background/black_overlay</item>
+                <item name="android:colorPrimaryDark">@selected_chip_background/black_overlay</item>
         -->
         <!--
-                <item name="android:statusBarColor">@chip_background/ghostWhite</item>
+                <item name="android:statusBarColor">@selected_chip_background/ghostWhite</item>
         -->
         <item name="android:textColorHintInverse">@color/black_overlay</item>
 
@@ -79,7 +79,7 @@
     <style name="RoundedButton" parent="Widget.MaterialComponents.Button">
         <item name="cornerRadius">16dp</item>
         <item name="android:textColor">#fff</item>
-        <item name="android:background">@chip_background/colorAccent</item>
+        <item name="android:background">@selected_chip_background/colorAccent</item>
     </style>
 -->
 
@@ -200,7 +200,7 @@
         <style name="RoundedButton" parent="Widget.MaterialComponents.Button">
             <item name="cornerRadius">16dp</item>
             <item name="android:textColor">#fff</item>
-            <item name="android:background">@chip_background/colorAccent</item>
+            <item name="android:background">@selected_chip_background/colorAccent</item>
         </style>
     -->
 
