@@ -7,234 +7,292 @@
     android:orientation="vertical"
     tools:context="org.baylasan.sudanmap.ui.searchfilter.SearchFilterFragment">
 
-    <androidx.appcompat.widget.Toolbar
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:navigationIcon="@drawable/ic_back"
-        android:id="@+id/searchFilterToolbar"
 
-        app:title="Search Filter" />
-
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="8dp"
-        android:layout_weight="1">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:orientation="horizontal">
 
-            <TextView
-
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_margin="8dp"
                 android:layout_marginEnd="16dp"
-                android:text="Filter By Category"
-                android:textColor="@android:color/black"
-                android:textSize="18sp" />
+                app:srcCompat="@drawable/ic_back" />
 
-            <View
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="4dp"
-                android:background="?android:attr/listDivider" />
-
-            <TextView
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginEnd="16dp"
-                android:maxLines="3"
-                android:text="random descriptive text that describe this section of filter"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
+                android:layout_margin="8dp"
+                android:orientation="vertical">
 
-            <com.google.android.material.chip.ChipGroup
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginEnd="16dp"
-                app:singleSelection="false"
-                app:checkedChip="@id/chip1">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Search Filter" />
 
-
-                <com.google.android.material.chip.Chip
-
-                    android:id="@+id/chip1"
+                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
-                    android:text="Startup" />
-
-                <com.google.android.material.chip.Chip
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Business accelerator " />
+                    app:srcCompat="@drawable/ic_rectangle" />
+            </LinearLayout>
 
 
-                <com.google.android.material.chip.Chip
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="R&amp;D Center" />
-
-                <com.google.android.material.chip.Chip
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Investor" />
-
-                <com.google.android.material.chip.Chip
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="VC" />
-
-                <com.google.android.material.chip.Chip
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    tools:text="Category n" />
-
-                <com.google.android.material.chip.Chip
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    tools:text="Category n" />
-            </com.google.android.material.chip.ChipGroup>
         </LinearLayout>
+    </com.google.android.material.appbar.AppBarLayout>
 
+    <!--
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/searchFilterToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:navigationIcon="@drawable/ic_back"
 
-    </androidx.cardview.widget.CardView>
+            app:title="Search Filter" />
+    -->
 
-    <androidx.cardview.widget.CardView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="8dp"
-        android:layout_weight="1">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:text="Filter By Number of followers"
-                android:textColor="@android:color/black"
-                android:textSize="18sp" />
-
-            <View
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="4dp"
-                android:background="?android:attr/listDivider" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginEnd="16dp"
-                android:maxLines="3"
-                android:text="random descriptive text that describe this section of filter"
-
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
-
-            <com.google.android.material.slider.Slider
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_height="0dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="8dp"
-                android:value="1"
+                android:layout_weight="1">
 
-                android:valueFrom="0"
-                android:valueTo="10"
-                app:floatingLabel="true"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="8dp"
+                    android:orientation="vertical">
 
-                app:thumbColor="@color/colorAccent"
-                app:trackColor="#F5f5f5" />
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
+                    <TextView
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="8dp"
-        android:layout_weight="1">
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:text="Filter By Category"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="4dp"
+                        android:background="?android:attr/listDivider" />
 
-            <TextView
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginEnd="16dp"
+                        android:maxLines="3"
+                        android:text="random descriptive text that describe this section of filter"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
 
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:text="Filter By Activity"
-                android:textColor="@android:color/black"
-                android:textSize="18sp" />
+                    <com.google.android.material.chip.ChipGroup
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginBottom="16dp"
+                        android:layout_marginEnd="16dp"
+                        app:checkedChip="@id/chip1"
+                        app:singleSelection="false">
 
-            <View
+
+                        <com.google.android.material.chip.Chip
+
+                            android:id="@+id/chip1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:text="Startup" />
+
+                        <com.google.android.material.chip.Chip
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Business accelerator " />
+
+
+                        <com.google.android.material.chip.Chip
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="R&amp;D Center" />
+
+                        <com.google.android.material.chip.Chip
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Investor" />
+
+                        <com.google.android.material.chip.Chip
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="VC" />
+
+                        <com.google.android.material.chip.Chip
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            tools:text="Category n" />
+
+                        <com.google.android.material.chip.Chip
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            tools:text="Category n" />
+                    </com.google.android.material.chip.ChipGroup>
+                </LinearLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="4dp"
-                android:background="?android:attr/listDivider" />
+                android:layout_height="0dp"
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginEnd="16dp"
-                android:maxLines="3"
-                android:text="random descriptive text that describe this section of filter"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
+                android:layout_marginTop="8dp"
+                android:layout_weight="1">
 
-            <com.google.android.material.chip.ChipGroup
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:orientation="vertical">
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:text="Filter By Number of followers"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="4dp"
+                        android:background="?android:attr/listDivider" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginEnd="16dp"
+                        android:maxLines="3"
+                        android:text="random descriptive text that describe this section of filter"
+
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
+
+                    <com.google.android.material.slider.Slider
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginBottom="8dp"
+                        android:value="1"
+
+                        android:valueFrom="0"
+                        android:valueTo="10"
+                        app:floatingLabel="true"
+
+                        app:thumbColor="@color/colorAccent"
+                        app:trackColor="#F5f5f5" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginEnd="16dp">
+                android:layout_height="0dp"
+                android:layout_marginTop="8dp"
+                android:layout_weight="1">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="8dp"
+                    android:orientation="vertical">
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:text="Filter By Activity"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="4dp"
+                        android:background="?android:attr/listDivider" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginEnd="16dp"
+                        android:maxLines="3"
+                        android:text="random descriptive text that describe this section of filter"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
+
+                    <com.google.android.material.chip.ChipGroup
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginBottom="16dp"
+                        android:layout_marginEnd="16dp">
 
 
-                <com.google.android.material.chip.Chip
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Sport" />
+                        <com.google.android.material.chip.Chip
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Sport" />
 
-                <com.google.android.material.chip.Chip
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="activity 2" />
+                        <com.google.android.material.chip.Chip
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="activity 2" />
 
-                <com.google.android.material.chip.Chip
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="activity 3" />
+                        <com.google.android.material.chip.Chip
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="activity 3" />
 
-                <com.google.android.material.chip.Chip
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="activity 4" />
+                        <com.google.android.material.chip.Chip
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="activity 4" />
 
-                <com.google.android.material.chip.Chip
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="activity 5" />
+                        <com.google.android.material.chip.Chip
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="activity 5" />
 
 
-            </com.google.android.material.chip.ChipGroup>
+                    </com.google.android.material.chip.ChipGroup>
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
         </LinearLayout>
-
-    </androidx.cardview.widget.CardView>
+    </ScrollView>
 </LinearLayout>

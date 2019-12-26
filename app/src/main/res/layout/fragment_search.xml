@@ -4,78 +4,93 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?android:windowBackground"
+    android:background="@color/background"
     android:clickable="true"
     android:focusable="true"
     android:focusableInTouchMode="true"
 
     >
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
-        android:layout_width="0dp"
-        android:layout_height="?actionBarSize"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:orientation="horizontal">
+            android:layout_height="?actionBarSize"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            app:cardElevation="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/searchBackBtn"
-                android:layout_gravity="center"
-                app:srcCompat="@drawable/ic_back" />
-
-            <View
-                android:id="@+id/divider"
-                android:layout_width="1dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="?android:attr/listDivider" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="Search keyword"
-                android:textColor="@android:color/black"
-                android:textSize="20sp" />
+                android:orientation="horizontal">
 
-            <View
-                android:id="@+id/divider2"
-                android:layout_width="1dp"
-                android:layout_height="match_parent"
-                android:background="?android:attr/listDivider" />
+                <ImageView
+                    android:id="@+id/searchBackBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="4dp"
+                    app:srcCompat="@drawable/ic_back" />
 
-            <androidx.appcompat.widget.AppCompatImageButton
-                android:id="@+id/filterButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                app:backgroundTint="@android:color/transparent"
-                app:srcCompat="@drawable/ic_filter" />
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
+                <View
+                    android:id="@+id/divider"
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="?android:attr/listDivider" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Search keyword"
+                    android:textColor="@android:color/black"
+                    android:textSize="20sp" />
+
+                <View
+                    android:id="@+id/divider2"
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="?android:attr/listDivider"
+                    android:visibility="gone" />
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/filterButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    app:backgroundTint="@android:color/transparent"
+                    app:srcCompat="@drawable/ic_filter" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/searchRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/white"
+        android:layoutAnimation="@anim/layout_animation_fall_down"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
         tools:itemCount="20"
-        android:layoutAnimation="@anim/layout_animation_fall_down"
         tools:listitem="@layout/row_search_result" />
 </androidx.constraintlayout.widget.ConstraintLayout>

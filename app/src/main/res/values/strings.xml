@@ -121,4 +121,11 @@
     <string name="password_confirmation">Password Confirmation</string>
     <string name="type">Type</string>
     <string name="company">Company</string>
+    <string name="privacy_string">
+        Here is a text explaining to the user that upon registration,  <font color="red">
+            <strong>the policy of the agreement    </strong>
+        </font> will be approved.
+And <font color="red">
+            <strong> Privacy Policy      </strong>
+        </font>and its consequences.</string>
 </resources>
