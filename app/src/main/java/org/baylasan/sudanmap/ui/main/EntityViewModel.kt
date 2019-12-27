@@ -33,7 +33,7 @@ class EntityViewModel(private val getEntitiesUseCase: GetEntitiesUseCase) : Base
 
                     filterLiveData.value =
                         entities.groupBy { entity -> entity.category }.keys.toMutableList().apply {
-                            add(0, Category("", "", -1, "All", ""))
+                            add(0,Category())
                         }
                 } else {
                     events.value = EmptyEvent

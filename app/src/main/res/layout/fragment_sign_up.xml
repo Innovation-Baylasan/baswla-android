@@ -174,8 +174,8 @@
                     android:layout_marginStart="8dp"
                     android:padding="10dp"
                     android:id="@+id/individualBtn"
-                    app:iconTint="@color/black"
-                    android:textColor="@color/black"
+                    app:iconTint="@color/black_overlay"
+                    android:textColor="@color/black_overlay"
                     android:text="Individual"
                     app:cornerRadius="8dp"
 

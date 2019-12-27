@@ -8,15 +8,16 @@ import kotlinx.android.synthetic.main.pager_item.view.*
 import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.domain.ViewPagerModel
 
-class ViewPagerAdapter (private val viewList :ArrayList<ViewPagerModel>):
+class ViewPagerAdapter(private val viewList: ArrayList<ViewPagerModel>) :
     RecyclerView.Adapter<ViewPagerAdapter.ViewPagerVH>() {
 
-    class ViewPagerVH(itemView :View)  : RecyclerView.ViewHolder(itemView){
+    class ViewPagerVH(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(model: ViewPagerModel) {
-            with(itemView){
+            with(itemView) {
                 lottieView.setAnimation(model.jsonFile)
-                lottieView.playAnimation()
+                lottieView.speed = 1.3f
+
                 headerText.text = model.header
                 descriptionText.text = model.description
             }

@@ -30,7 +30,7 @@ private var selectedType = 0
             individualBtn.iconTint = ContextCompat.getColorStateList(applicationContext, R.color.colorAccent)
 
             companyBtn.strokeColor = ContextCompat.getColorStateList(applicationContext, R.color.black_overlay)
-            companyBtn.setTextColor(ContextCompat.getColor(applicationContext, R.color.black))
+            companyBtn.setTextColor(ContextCompat.getColor(applicationContext, R.color.black_overlay))
             companyBtn.iconTint = ContextCompat.getColorStateList(applicationContext, R.color.black_overlay)
         }
 
