@@ -4,7 +4,6 @@ package org.baylasan.sudanmap.ui.searchfilter
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
-import kotlinx.android.synthetic.main.fragment_search_filter.*
 import org.baylasan.sudanmap.R
 
 
@@ -23,9 +22,9 @@ class SearchFilterFragment : Fragment(R.layout.fragment_search_filter) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        searchFilterToolbar.setNavigationOnClickListener {
+       /* searchFilterToolbar.setNavigationOnClickListener {
             activity?.supportFragmentManager?.popBackStack()
-        }
+        }*/
 
     }
 

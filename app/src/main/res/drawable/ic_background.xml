@@ -3,7 +3,4 @@
     android:width="30dp" xmlns:android="http://schemas.android.com/apk/res/android">
     <path android:fillAlpha="0.09" android:fillColor="#eb413c"
         android:pathData="M8,0L22,0A8,8 0,0 1,30 8L30,22A8,8 0,0 1,22 30L8,30A8,8 0,0 1,0 22L0,8A8,8 0,0 1,8 0z" android:strokeAlpha="0.09"/>
-    <path android:fillColor="#eb413c"
-        android:pathData="M22.137,21.522l-3.664,-3.811A6.213,6.213 0,1 0,13.716 19.931a6.149,6.149 0,0 0,3.561 -1.125l3.692,3.84a0.811,0.811 0,1 0,1.169 -1.124ZM13.716,9.121A4.594,4.594 0,1 1,9.121 13.716,4.6 4.6,0 0,1 13.716,9.121Z"
-        android:strokeColor="#eb413c" android:strokeWidth="0.8"/>
 </vector>

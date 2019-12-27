@@ -67,6 +67,7 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.appcompat.widget.Toolbar>
         </com.google.android.material.appbar.CollapsingToolbarLayout>
+
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
@@ -398,6 +399,14 @@
         app:layout_anchorGravity="top|center"
         app:srcCompat="@color/colorAccent"
         tools:src="@tools:sample/avatars" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_anchor="@+id/nestedScrollView"
+        app:layout_anchorGravity="right"
+        app:srcCompat="@drawable/ic_event_blue" />
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
