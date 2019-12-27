@@ -14,5 +14,5 @@ data class Category(
     @SerializedName("name") val name: String,
     @SerializedName("updated_at") val updatedAt: String
 ) :Parcelable{
-    constructor() :this("", "", 0, "", "" )
+    constructor() :this("", "", -1, "ALL", "" )
 }

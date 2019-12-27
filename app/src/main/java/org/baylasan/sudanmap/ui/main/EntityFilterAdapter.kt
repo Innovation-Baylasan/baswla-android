@@ -14,7 +14,7 @@ class EntityFilterAdapter(
     private val onClick: (Category) -> Unit
 ) :
     RecyclerView.Adapter<EntityFilterViewHolder>() {
-    private var selectedCategory: Category? = null
+    private var selectedCategory: Category = Category()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EntityFilterViewHolder =
         EntityFilterViewHolder(
             LayoutInflater.from(parent.context).inflate(
@@ -53,6 +53,6 @@ class EntityFilterAdapter(
     }
 
     private fun isSelected(category: Category) =
-        category == selectedCategory
+        category.id == selectedCategory.id
 
 }
