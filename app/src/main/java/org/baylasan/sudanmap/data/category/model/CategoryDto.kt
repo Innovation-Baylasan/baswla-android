@@ -3,7 +3,7 @@ package org.baylasan.sudanmap.data.category.model
 
 import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
-import org.baylasan.sudanmap.domain.entity.model.Category
+import org.baylasan.sudanmap.data.entity.model.Category
 
 @Keep
 data class CategoryDto(

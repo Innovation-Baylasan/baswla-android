@@ -1,4 +1,4 @@
-package org.baylasan.sudanmap.domain.entity.model
+package org.baylasan.sudanmap.data.entity.model
 
 
 import android.os.Parcelable
@@ -8,7 +8,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Keep
 @Parcelize
-data class Entity(
+data class EntityDto(
     @SerializedName("avatar") val avatar: String,
     @SerializedName("category") val category: Category,
     @SerializedName("cover") val cover: String,

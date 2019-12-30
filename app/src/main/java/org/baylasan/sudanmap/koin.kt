@@ -16,6 +16,7 @@ import org.baylasan.sudanmap.domain.category.CategoryRepository
 import org.baylasan.sudanmap.domain.category.FetchCategoriesUseCase
 import org.baylasan.sudanmap.domain.entity.EntityRepository
 import org.baylasan.sudanmap.domain.entity.GetEntitiesUseCase
+import org.baylasan.sudanmap.domain.entity.GetNearbyEntitiesUseCase
 import org.baylasan.sudanmap.ui.layers.MapLayersViewModel
 import org.baylasan.sudanmap.ui.main.EntityViewModel
 import org.koin.android.ext.koin.androidApplication
@@ -59,8 +60,9 @@ val entityListModule = module {
     factory { get<Retrofit>().create(SudanMapApi.Entity::class.java) }
     factory<EntityRepository> { EntityApi(get(), get()) }
     factory { GetEntitiesUseCase(get()) }
+    factory { GetNearbyEntitiesUseCase(get()) }
     viewModel {
-        EntityViewModel(get())
+        EntityViewModel(get(), get())
     }
 }
 
@@ -77,7 +79,9 @@ private fun provideRetrofit(androidApplication: Application, okHttpClient: OkHtt
 
 
 private fun provideOkHttpClient(): OkHttpClient = OkHttpClient.Builder()
-    .addNetworkInterceptor(HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY })
+    .addNetworkInterceptor(HttpLoggingInterceptor().apply {
+        level = HttpLoggingInterceptor.Level.BODY
+    })
     .retryOnConnectionFailure(true)
     .addInterceptor(okHttpInterceptor())
     .build()

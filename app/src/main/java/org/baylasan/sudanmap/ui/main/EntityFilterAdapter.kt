@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import org.baylasan.sudanmap.R
-import org.baylasan.sudanmap.domain.entity.model.Category
+import org.baylasan.sudanmap.data.entity.model.Category
 
 class EntityFilterAdapter(
     private val context: Context,

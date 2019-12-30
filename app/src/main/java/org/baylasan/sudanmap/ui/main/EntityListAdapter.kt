@@ -10,10 +10,10 @@ import com.squareup.picasso.Picasso
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
 import kotlinx.android.synthetic.main.row_entity.view.*
 import org.baylasan.sudanmap.R
-import org.baylasan.sudanmap.domain.entity.model.Entity
+import org.baylasan.sudanmap.data.entity.model.EntityDto
 
 class EntitiesListAdapter(
-    private val list: List<Entity>,
+    private val list: List<EntityDto>,
     private val onItemClick: OnItemClick
 ) :
     RecyclerView.Adapter<EntitiesListAdapter.ViewHolder>() {
@@ -39,22 +39,22 @@ class EntitiesListAdapter(
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun bind(
-            entityDto: Entity,
+            entityDtoDto: EntityDto,
             onItemClick: OnItemClick
         ) {
-            Log.d("KLD", entityDto.toString())
-            itemView.entityName.text = entityDto.name
-            itemView.entityDescription.text = entityDto.description
-            itemView.coverImage.load(entityDto.cover)
-            itemView.avatarImage.loadCircle(entityDto.avatar)
+            Log.d("KLD", entityDtoDto.toString())
+            itemView.entityName.text = entityDtoDto.name
+            itemView.entityDescription.text = entityDtoDto.description
+            itemView.coverImage.load(entityDtoDto.cover)
+            itemView.avatarImage.loadCircle(entityDtoDto.avatar)
             itemView.setOnClickListener {
-                onItemClick.onItemClick(entityDto)
+                onItemClick.onItemClick(entityDtoDto)
             }
         }
     }
 
     interface OnItemClick {
-        fun onItemClick(entityDto: Entity)
+        fun onItemClick(entityDtoDto: EntityDto)
     }
 }
 

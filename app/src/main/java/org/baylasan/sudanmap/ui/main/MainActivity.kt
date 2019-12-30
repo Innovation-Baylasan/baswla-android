@@ -1,15 +1,9 @@
 package org.baylasan.sudanmap.ui.main
 
-import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.Canvas
 import android.Manifest
 import android.content.Intent
 import android.content.IntentSender
 import android.content.pm.PackageManager
-import android.graphics.Color
-import android.location.Address
-import android.location.Geocoder
 import android.location.Location
 import android.os.Bundle
 import android.util.Log
@@ -18,8 +12,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat
 import androidx.core.os.bundleOf
+import androidx.core.view.ViewCompat
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -31,25 +25,32 @@ import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.card.MaterialCardView
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
+import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.activity_main.*
 import org.baylasan.sudanmap.R
-import org.baylasan.sudanmap.domain.entity.model.Entity
+import org.baylasan.sudanmap.data.entity.model.EntityDto
 import org.baylasan.sudanmap.ui.layers.MapLayersFragment
 import org.baylasan.sudanmap.ui.profile.CompanyProfileActivity
 import org.baylasan.sudanmap.ui.search.SearchFragment
+import org.baylasan.sudanmap.utils.gone
+import org.baylasan.sudanmap.utils.show
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.util.*
-import kotlin.collections.ArrayList
+import java.util.concurrent.TimeUnit
 
 
 class MainActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListener,
     GoogleMap.OnMyLocationClickListener {
 
-    private lateinit var entities: ArrayList<Entity>
+    private lateinit var entities: ArrayList<EntityDto>
 
     private lateinit var entityEntitiesListAdapter: EntitiesListAdapter
     lateinit var adapter: EntityListAdapter
@@ -59,9 +60,17 @@ class MainActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
 
     private var googleMap: GoogleMap? = null
 
-    val permissions =  arrayOf(Manifest.permission.ACCESS_FINE_LOCATION ,Manifest.permission.ACCESS_FINE_LOCATION)
+    private val permissions =
+        arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION)
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
+
+    private val locationUpdatesSubject = PublishSubject.create<LatLng>()
+    /*  lateinit var clusterManager: ClusterManager<Place>
+      lateinit var clusterRenderer: MarkerClusterRenderer*/
+
+    private val compositeDisposable = CompositeDisposable()
+
     override fun onBackPressed() {
         if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_EXPANDED) {
             bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
@@ -93,19 +102,33 @@ class MainActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
             } else {
                 requestPermissions()
             }
+
+            googleMap.setOnCameraMoveListener {
+                val latLng = googleMap.cameraPosition.target
+                locationUpdatesSubject.onNext(latLng)
+            }
         }
 
+        val locationUpdatesDisposable = locationUpdatesSubject
+            .debounce(1, TimeUnit.SECONDS)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                entityViewModel.loadNearby(it.latitude, it.longitude)
+            }, {})
+
+        compositeDisposable.add(locationUpdatesDisposable)
 
         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
         bottomSheetBehavior.peekHeight = 250
         entities = ArrayList()
         entityEntitiesListAdapter = EntitiesListAdapter(entities,
             object : EntitiesListAdapter.OnItemClick {
-                override fun onItemClick(entityDto: Entity) {
-                    bundleOf("entity" to entityDto)
+                override fun onItemClick(entityDtoDto: EntityDto) {
+                    bundleOf("entity" to entityDtoDto)
                     val profileIntent =
                         Intent(applicationContext, CompanyProfileActivity::class.java)
-                    profileIntent.putExtra("entity", entityDto)
+                    profileIntent.putExtra("entity", entityDtoDto)
                     startActivity(profileIntent)
 
                     //  bottomSheetBehavior.state = CustomBottomSheetBehavior.STATE_COLLAPSED
@@ -174,11 +197,11 @@ class MainActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
 
 
     private fun canAccessLocation(): Boolean {
-        return (hasPermission(Manifest.permission.ACCESS_FINE_LOCATION));
+        return (hasPermission(Manifest.permission.ACCESS_FINE_LOCATION))
     }
 
-    private fun hasPermission( perm :String): Boolean {
-        return (PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(this, perm));
+    private fun hasPermission(perm: String): Boolean {
+        return (PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(this, perm))
     }
 
     override fun onRequestPermissionsResult(
@@ -214,7 +237,7 @@ class MainActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
                     updateMapLocation(location)
                     // }
                 }
-        }else{
+        } else {
             requestPermissions()
         }
     }
@@ -263,37 +286,6 @@ class MainActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful && task.result != null) {
                     val mLastLocation = task.result
-                    Log.d("getLastLocation", mLastLocation.toString())
-                    var address = "No known address"
-
-                    val gcd = Geocoder(this, Locale.getDefault())
-                    val addresses: List<Address>
-                    /*      try {
-                              addresses = gcd.getFromLocation(
-                                  mLastLocation!!.latitude,
-                                  mLastLocation.longitude,
-                                  1
-                              )
-                              if (addresses.isNotEmpty()) {
-                                  address = addresses[0].getAddressLine(0)
-                              }
-                          } catch (e: IOException) {
-                              e.printStackTrace()
-                          }
-      */
-                    /*      val icon = BitmapDescriptorFactory.fromBitmap(
-                              BitmapFactory.decodeResource(
-                                  this.resources,
-                                  R.drawable.ic_pin
-                              )
-                          )
-                          googleMap?.addMarker(
-                              MarkerOptions()
-                                  .position(LatLng(mLastLocation!!.latitude, mLastLocation.longitude))
-                                  .title("Current Location")
-                                  .snippet(address)
-                                  .icon(icon)
-                          )*/
 
                     val cameraPosition = CameraPosition.Builder()
                         .target(mLastLocation?.latitude?.let {
@@ -305,6 +297,7 @@ class MainActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
                         .zoom(17f)
                         .build()
                     googleMap?.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+                    entityViewModel.loadNearby(mLastLocation?.latitude!!, mLastLocation.longitude)
                 } else {
                     Toast.makeText(this, "No current location found", Toast.LENGTH_LONG)
                         .show()
@@ -337,14 +330,11 @@ class MainActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
                     entityLoading.visibility = View.GONE
                     Log.d("MEGA", "Data loaded")
 
-                    val data = event.entities
+                    val data = event.entityDtos
                     if (data.isNotEmpty()) {
                         entities.clear()
                         entities.addAll(data)
                         Log.d("KLD", toString())
-                        //  drawMarkerInMap(data)
-                        //  drawMarkerInMap(data)
-
                         entityEntitiesListAdapter.notifyDataSetChanged()
                     }
                 }
@@ -352,21 +342,86 @@ class MainActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
                     entityFilterLoading.visibility = View.VISIBLE
                     entityLoading.visibility = View.VISIBLE
                 }
+                is ErrorEvent -> {
+                    Toast.makeText(applicationContext, event.errorMessage, Toast.LENGTH_LONG).show()
+                    entityFilterLoading.visibility = View.GONE
+                    entityLoading.visibility = View.GONE
+                }
                 else -> {
-                    TODO("this crash happens because you did not Handle other events")
+                    Toast.makeText(applicationContext, "Error", Toast.LENGTH_LONG).show()
+                    entityFilterLoading.visibility = View.GONE
+                    entityLoading.visibility = View.GONE
                 }
             }
 
         })
 
+
+        entityViewModel.nearbyEvents.observe(this, Observer { event ->
+            when (event) {
+
+                is NearbyDataEvent -> {
+                    Log.d("MEGA", "Data loaded")
+                    loadinCard.gone()
+                    Log.d("MEGA", "Data loaded")
+
+                    val data = event.nearByEntity.data
+                    if (data.isNotEmpty()) {
+                        googleMap?.clear()
+                        data.forEach { entity ->
+                            googleMap?.let {
+                                it.addMarker(
+                                    MarkerOptions().position(
+                                        LatLng(
+                                            entity.location.lat,
+                                            entity.location.long
+                                        )
+                                    ).icon(BitmapDescriptorFactory.defaultMarker()).title(entity.name)
+                                )
+                            }
+                        }
+
+                    } else {
+                        Toast.makeText(
+                            applicationContext,
+                            "No data in this area",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                }
+                is NearbyLoadingEvent -> {
+                    loadinCard.show()
+                }
+                is NearbyErrorEvent -> {
+                    Toast.makeText(applicationContext, event.errorMessage, Toast.LENGTH_LONG).show()
+                    loadinCard.gone()
+                }
+                else -> {
+                    Toast.makeText(applicationContext, "Error", Toast.LENGTH_LONG).show()
+                    loadinCard.gone()
+                    /*   loadinCard.postDelayed({
+
+                           loadinCard.visibility = View.GONE
+
+                       }, 3000)*/
+                }
+            }
+        })
+
     }
 
     override fun onMyLocationButtonClick(): Boolean {
-        return false
+        return true
     }
 
     override fun onMyLocationClick(p0: Location) {
 
+    }
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+        compositeDisposable.clear()
     }
 
     companion object {

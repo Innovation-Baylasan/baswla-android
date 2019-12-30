@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.appbar.AppBarLayout
 import kotlinx.android.synthetic.main.fragment_company_profile.*
 import org.baylasan.sudanmap.R
-import org.baylasan.sudanmap.domain.entity.model.Entity
+import org.baylasan.sudanmap.data.entity.model.EntityDto
 import org.baylasan.sudanmap.ui.main.load
 import org.baylasan.sudanmap.utils.gone
 import org.baylasan.sudanmap.utils.show
@@ -28,7 +28,7 @@ class CompanyProfileActivity : AppCompatActivity() {
             super.onBackPressed()
         }
 
-        val entity = intent?.getParcelableExtra<Entity>("entity")
+        val entity = intent?.getParcelableExtra<EntityDto>("entity")
         Log.d("Profile", entity.toString())
         entity?.let {
             profileToolBarTitleTxt.text = it.name
