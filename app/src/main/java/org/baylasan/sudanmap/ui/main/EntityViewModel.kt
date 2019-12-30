@@ -26,7 +26,6 @@ class EntityViewModel(
 
     fun loadEntity() {
         events.value = LoadingEvent
-
         getEntitiesUseCase.execute()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -76,7 +75,12 @@ class EntityViewModel(
         getNearbyEntitiesUseCase.execute(params)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ nearbyEvents.value = NearbyDataEvent(it) }, {
+            .subscribe({ if (it.data.isNotEmpty()) {
+                nearbyEvents.value = NearbyDataEvent(it)
+            } else {
+                nearbyEvents.value = NearbyEmptyEvent
+            }
+            }, {
                 it.printStackTrace()
 
                 nearbyEvents.value = when (it) {
