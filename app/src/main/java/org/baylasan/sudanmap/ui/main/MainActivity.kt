@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
+import androidx.core.view.ViewCompat
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
@@ -73,7 +74,7 @@ class MainActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-//        ViewCompat.setNestedScrollingEnabled(bottomSheet, true)
+        ViewCompat.setNestedScrollingEnabled(recyclerViewsLayout, true)
 
         if (!canAccessLocation()) requestPermissions()
 
@@ -91,13 +92,8 @@ class MainActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
                 requestPermissions()
             }
         }
-        searchField.setOnKeyListener { v, keyCode, event ->
-
-            if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
-                openSearchFragment()
-                hideKeyboard()
-            }
-            true
+        searchField.setOnClickListener {
+            openSearchFragment()
         }
 
         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
@@ -155,6 +151,11 @@ class MainActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
 
             override fun onStateChanged(bottomSheet: View, newState: Int) {
                 searchField.isEnabled = newState != BottomSheetBehavior.STATE_EXPANDED
+
+                this@MainActivity.bottomSheet.radius =
+                    if (newState == BottomSheetBehavior.STATE_EXPANDED)
+                        0f
+                    else 20f
             }
         })
 
@@ -163,13 +164,11 @@ class MainActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
     }
 
     private fun openSearchFragment() {
-        val keyword = searchField.text.toString()
-        if (keyword.isEmpty())
-            return
+
         supportFragmentManager.beginTransaction()
             .replace(
                 R.id.fragmentLayout,
-                SearchFragment.newInstance(keyword),
+                SearchFragment.newInstance(),
                 "search"
             )
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)

@@ -33,8 +33,8 @@ class CompanyProfileActivity : AppCompatActivity() {
             profileToolBarTitleTxt.text = it.name
             companyNameTxt.text = it.name
             companyDescrition.text = it.description
-            profileCoverImage.load(it.cover)
-            profileImage.loadCircle(it.avatar)
+//            profileCoverImage.load(it.cover)
+//            profileImage.loadCircle(it.avatar)
 
         }
 

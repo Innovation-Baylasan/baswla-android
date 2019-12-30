@@ -2,6 +2,8 @@ package org.baylasan.sudanmap.ui.search
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
@@ -15,34 +17,39 @@ import org.baylasan.sudanmap.ui.main.EmptyEvent
 import org.baylasan.sudanmap.ui.main.LoadingEvent
 import org.baylasan.sudanmap.ui.profile.CompanyProfileActivity
 import org.baylasan.sudanmap.ui.searchfilter.SearchFilterFragment
+import org.baylasan.sudanmap.utils.gone
+import org.baylasan.sudanmap.utils.show
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class SearchFragment : Fragment(R.layout.fragment_search) {
+class SearchFragment : Fragment(R.layout.fragment_search), TextWatcher {
 
     companion object {
         const val SEARCH_KEY = "keyword"
         @JvmStatic
-        fun newInstance(keyword: String): SearchFragment {
-            val fragment = SearchFragment()
-            val bundle = Bundle()
-            bundle.putString(SEARCH_KEY, keyword)
-            fragment.arguments = bundle
-            return fragment
+        fun newInstance(): SearchFragment {
+            return SearchFragment()
         }
     }
 
     private val viewModel: SearchViewModel by viewModel()
+    override fun onStop() {
+        super.onStop()
+        queryField.removeTextChangedListener(this)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val keyword = arguments?.getString(SEARCH_KEY)
 
-        if (keyword != null)
-            viewModel.findEntitiesWithKeyword(keyword)
+        queryField.addTextChangedListener(this)
         viewModel.events.observe(this, Observer { event ->
             when (event) {
                 is DataEvent -> {
+                    progressBar.gone()
+                    emptyView.gone()
+                    errorView.gone()
+                    searchRecyclerView.show()
+
                     searchRecyclerView.adapter = SearchAdapter(list = event.entities, onClick = {
                         val profileIntent = Intent(activity, CompanyProfileActivity::class.java)
                         profileIntent.putExtra("entity", it)
@@ -50,9 +57,23 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                     })
                 }
                 is LoadingEvent -> {
+                    progressBar.show()
+                    searchRecyclerView.gone()
+                    emptyView.gone()
+                    errorView.gone()
+
                 }
                 is EmptyEvent -> {
-
+                    emptyView.show()
+                    progressBar.gone()
+                    searchRecyclerView.gone()
+                    errorView.gone()
+                }
+                else -> {
+                    emptyView.gone()
+                    searchRecyclerView.gone()
+                    progressBar.gone()
+                    errorView.show()
                 }
             }
 
@@ -78,5 +99,16 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         searchRecyclerView.addItemDecoration(itemDecor)
         searchRecyclerView.layoutManager = LinearLayoutManager(activity)
 
+    }
+
+    override fun afterTextChanged(s: Editable) {
+        viewModel.findEntitiesWithKeyword(s.toString())
+
+    }
+
+    override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+    }
+
+    override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
     }
 }
