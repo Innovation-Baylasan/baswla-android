@@ -18,7 +18,7 @@ class EntityApiTest {
 
 
     private lateinit var entityApi: EntityApi
-    private lateinit var entityService: SudanMapApi.Entity
+    private lateinit var entityService: SudanMapApi.Entities
     private lateinit var converter: Converter<ResponseBody, ApiErrorResponse>
 
     @Before

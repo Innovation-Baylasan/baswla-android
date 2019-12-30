@@ -1,30 +1,26 @@
 package org.baylasan.sudanmap.ui.main
 
-import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.Canvas
 import android.Manifest
 import android.content.Intent
 import android.content.IntentSender
 import android.content.pm.PackageManager
-import android.graphics.Color
 import android.location.Address
 import android.location.Geocoder
 import android.location.Location
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
@@ -36,11 +32,13 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.card.MaterialCardView
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.entity_loading_layout.*
 import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.domain.entity.model.Entity
 import org.baylasan.sudanmap.ui.layers.MapLayersFragment
 import org.baylasan.sudanmap.ui.profile.CompanyProfileActivity
 import org.baylasan.sudanmap.ui.search.SearchFragment
+import org.baylasan.sudanmap.utils.hideKeyboard
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 import kotlin.collections.ArrayList
@@ -59,7 +57,8 @@ class MainActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
 
     private var googleMap: GoogleMap? = null
 
-    val permissions =  arrayOf(Manifest.permission.ACCESS_FINE_LOCATION ,Manifest.permission.ACCESS_FINE_LOCATION)
+    private val permissions =
+        arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION)
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     override fun onBackPressed() {
@@ -74,9 +73,7 @@ class MainActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        ViewCompat.setNestedScrollingEnabled(bottomSheet, true)
-
-
+//        ViewCompat.setNestedScrollingEnabled(bottomSheet, true)
 
         if (!canAccessLocation()) requestPermissions()
 
@@ -94,7 +91,14 @@ class MainActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
                 requestPermissions()
             }
         }
+        searchField.setOnKeyListener { v, keyCode, event ->
 
+            if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
+                openSearchFragment()
+                hideKeyboard()
+            }
+            true
+        }
 
         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
         bottomSheetBehavior.peekHeight = 250
@@ -121,17 +125,12 @@ class MainActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
                 .commit()
         }
         searchButton.setOnClickListener {
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.fragmentLayout, SearchFragment.newInstance(), "search")
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                .addToBackStack(null)
-                .commit()
+            openSearchFragment()
         }
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
 
 
-        recyclerView.layoutManager =
-            StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        recyclerView.layoutManager = GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
 
 
         recyclerView.adapter = entityEntitiesListAdapter
@@ -163,6 +162,21 @@ class MainActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
         observeViewModel()
     }
 
+    private fun openSearchFragment() {
+        val keyword = searchField.text.toString()
+        if (keyword.isEmpty())
+            return
+        supportFragmentManager.beginTransaction()
+            .replace(
+                R.id.fragmentLayout,
+                SearchFragment.newInstance(keyword),
+                "search"
+            )
+            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+            .addToBackStack(null)
+            .commit()
+    }
+
     private fun requestPermissions() {
         ActivityCompat.requestPermissions(this, permissions, LOCATION_PERMISSION)
     }
@@ -177,7 +191,7 @@ class MainActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
         return (hasPermission(Manifest.permission.ACCESS_FINE_LOCATION));
     }
 
-    private fun hasPermission( perm :String): Boolean {
+    private fun hasPermission(perm: String): Boolean {
         return (PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(this, perm));
     }
 
@@ -214,7 +228,7 @@ class MainActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
                     updateMapLocation(location)
                     // }
                 }
-        }else{
+        } else {
             requestPermissions()
         }
     }
@@ -352,9 +366,7 @@ class MainActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
                     entityFilterLoading.visibility = View.VISIBLE
                     entityLoading.visibility = View.VISIBLE
                 }
-                else -> {
-                    TODO("this crash happens because you did not Handle other events")
-                }
+
             }
 
         })

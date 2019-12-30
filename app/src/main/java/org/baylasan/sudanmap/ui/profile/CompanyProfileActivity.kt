@@ -6,18 +6,18 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.appbar.AppBarLayout
+import kotlinx.android.synthetic.main.content_company_profile.*
 import kotlinx.android.synthetic.main.fragment_company_profile.*
 import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.domain.entity.model.Entity
 import org.baylasan.sudanmap.ui.main.load
+import org.baylasan.sudanmap.ui.main.loadCircle
 import org.baylasan.sudanmap.utils.gone
 import org.baylasan.sudanmap.utils.show
 import kotlin.math.abs
 
 
-/**
- * A simple [Fragment] subclass.
- */
+
 class CompanyProfileActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,12 +29,12 @@ class CompanyProfileActivity : AppCompatActivity() {
         }
 
         val entity = intent?.getParcelableExtra<Entity>("entity")
-        Log.d("Profile", entity.toString())
         entity?.let {
             profileToolBarTitleTxt.text = it.name
             companyNameTxt.text = it.name
             companyDescrition.text = it.description
             profileCoverImage.load(it.cover)
+            profileImage.loadCircle(it.avatar)
 
         }
 

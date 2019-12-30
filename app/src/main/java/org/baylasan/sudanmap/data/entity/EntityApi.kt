@@ -11,11 +11,20 @@ import org.baylasan.sudanmap.domain.entity.model.Entity
 import retrofit2.Converter
 
 class EntityApi(
-    private val entityApi: SudanMapApi.Entity,
+    private val entityApi: SudanMapApi.Entities,
     private val errorConverter: Converter<ResponseBody, ApiErrorResponse>
 ) :
     EntityRepository {
     override fun getEntities(): Single<List<Entity>> = entityApi.getEntities()
         .onErrorResumeNext(ThrowableSingleFunc1())
         .flatMap(ResponseSingleFunc1(errorConverter))
+        .map { it.entityList }
+
+
+    override fun findEntitiesByKeyword(keyword: String): Single<List<Entity>> {
+        return entityApi.findEntitiesByKeyword(keyword)
+            .onErrorResumeNext(ThrowableSingleFunc1())
+            .flatMap(ResponseSingleFunc1(errorConverter))
+            .map { it.entityList }
+    }
 }

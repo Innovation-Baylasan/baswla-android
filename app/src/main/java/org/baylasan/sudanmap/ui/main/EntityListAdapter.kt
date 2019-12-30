@@ -45,8 +45,8 @@ class EntitiesListAdapter(
             Log.d("KLD", entityDto.toString())
             itemView.entityName.text = entityDto.name
             itemView.entityDescription.text = entityDto.description
-            itemView.coverImage.load(entityDto.cover)
-            itemView.avatarImage.loadCircle(entityDto.avatar)
+//            itemView.coverImage.load(entityDto.cover)
+//            itemView.avatarImage.loadCircle(entityDto.avatar)
             itemView.setOnClickListener {
                 onItemClick.onItemClick(entityDto)
             }
@@ -62,7 +62,7 @@ class EntitiesListAdapter(
 
 fun ImageView.load(imageUrl: String){
     if (imageUrl.isEmpty()) {
-        setImageResource(R.drawable.ic_launcher_foreground);
+        setImageResource(R.drawable.circle)
     } else{
         Picasso.get().load(imageUrl).into(this)
     }
@@ -70,7 +70,7 @@ fun ImageView.load(imageUrl: String){
 
 fun ImageView.loadCircle(imageUrl: String){
     if (imageUrl.isEmpty()) {
-        setImageResource(R.drawable.ic_launcher_foreground);
+        setImageResource(R.drawable.circle);
     } else{
         Picasso.get()
             .load(imageUrl)
