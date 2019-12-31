@@ -5,6 +5,7 @@ import org.baylasan.sudanmap.data.entity.model.EntityDto
 import org.baylasan.sudanmap.data.entity.model.NearByEntity
 
 interface EntityRepository {
-    fun getEntities(): Single<List<EntityDto>>
     fun getNearbyEntities(latitude: Double, longitude: Double): Single<NearByEntity>
+    fun getEntities(): Single<List<Entity>>
+    fun findEntitiesByKeyword(keyword: String): Single<List<Entity>>
 }

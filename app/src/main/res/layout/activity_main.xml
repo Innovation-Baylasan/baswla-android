@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     tools:context=".ui.main.MainActivity">
 
 
@@ -12,6 +13,7 @@
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
 
     <FrameLayout
         android:id="@+id/searchBar"
@@ -26,7 +28,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardBackgroundColor="@android:color/white"
-            app:cardCornerRadius="4dp">
+            app:cardCornerRadius="4dp"
+            app:cardElevation="8dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -37,42 +40,36 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
+                    android:background="?actionBarItemBackground"
+                    android:padding="8dp"
                     android:visibility="visible"
                     app:backgroundTint="@android:color/transparent"
-                    app:srcCompat="@drawable/ic_navigation" />
+                    app:srcCompat="@drawable/ic_menu" />
 
-                <View
-                    android:id="@+id/divider"
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="?android:attr/listDivider" />
 
                 <androidx.appcompat.widget.AppCompatImageButton
                     android:id="@+id/layersButton"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
+                    android:background="?actionBarItemBackground"
+                    android:padding="8dp"
+
                     app:backgroundTint="@android:color/transparent"
                     app:srcCompat="@drawable/ic_layer" />
 
-                <View
-                    android:id="@+id/divider2"
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="?android:attr/listDivider" />
-
-
-                <com.google.android.material.textfield.TextInputEditText
+                <TextView
                     android:id="@+id/searchField"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+
                     android:background="@android:color/transparent"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:gravity="center"
-                    android:hint="type search here..."
-                    android:imeOptions="actionSearch"
-                    android:inputType="text"
-                    android:maxLines="1" />
+                    android:maxLines="1"
+                    android:text="Type search here..." />
 
 
                 <androidx.appcompat.widget.AppCompatImageView
@@ -92,9 +89,10 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/bottomSheet"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-
-        app:cardBackgroundColor="@color/white"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_end_cardview"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="2dp"
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
         <LinearLayout
@@ -106,130 +104,49 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:padding="8dp"
+                android:padding="16dp"
                 app:srcCompat="@drawable/ic_scroll_thumb" />
 
-            <io.supercharge.shimmerlayout.ShimmerLayout
-                android:id="@+id/entityFilterLoading"
+            <include layout="@layout/entity_loading_layout" />
+
+            <LinearLayout
                 android:layout_width="match_parent"
+                android:id="@+id/recyclerViewsLayout"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
-                app:shimmer_auto_start="true">
+                android:orientation="vertical">
 
-                <com.google.android.material.chip.ChipGroup
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/filterChipRecyclerView"
                     android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
-                    android:layout_height="wrap_content"
-                    app:singleLine="true">
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView"
 
-                    <com.google.android.material.chip.Chip
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="               " />
-
-                    <com.google.android.material.chip.Chip
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="               " />
-
-                    <com.google.android.material.chip.Chip
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="               " />
-
-                    <com.google.android.material.chip.Chip
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="               " />
-
-                    <com.google.android.material.chip.Chip
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="               " />
-
-                    <com.google.android.material.chip.Chip
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="               " />
-
-                    <com.google.android.material.chip.Chip
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="               " />
-
-                    <com.google.android.material.chip.Chip
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="               " />
-
-                    <com.google.android.material.chip.Chip
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="               " />
-                </com.google.android.material.chip.ChipGroup>
-            </io.supercharge.shimmerlayout.ShimmerLayout>
-
-            <io.supercharge.shimmerlayout.ShimmerLayout
-                android:id="@+id/entityLoading"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                app:shimmer_auto_start="true">
-
-                <GridLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
 
-                    android:layout_gravity="center"
-                    android:columnCount="2">
-
-                    <include
-                        layout="@layout/entity_loading"
-                        android:layout_margin="8dp" />
-
-                    <include
-                        layout="@layout/entity_loading"
-                        android:layout_margin="8dp" />
-
-                    <include
-                        layout="@layout/entity_loading"
-                        android:layout_margin="8dp" />
-
-                    <include
-                        layout="@layout/entity_loading"
-                        android:layout_margin="8dp" />
-
-                    <include
-                        layout="@layout/entity_loading"
-                        android:layout_margin="8dp" />
-
-                    <include
-                        layout="@layout/entity_loading"
-                        android:layout_margin="8dp" />
-
-
-                </GridLayout>
-            </io.supercharge.shimmerlayout.ShimmerLayout>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/filterChipRecyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="150dp"
+        app:elevation="1dp"
+        app:fabCustomSize="58dp"
+        app:srcCompat="@drawable/ic_location_pin" />
 
     <FrameLayout
 
         android:id="@+id/fragmentLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:elevation="3dp" />
 
 
 <!--

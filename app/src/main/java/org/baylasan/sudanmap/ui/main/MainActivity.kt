@@ -8,9 +8,12 @@ import android.content.IntentSender
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.location.Address
+import android.location.Geocoder
 import android.location.Location
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
 import android.view.View
 import android.widget.Toast
 import androidx.annotation.DrawableRes
@@ -21,9 +24,9 @@ import androidx.core.os.bundleOf
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
@@ -38,11 +41,13 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.entity_loading_layout.*
 import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.data.entity.model.EntityDto
 import org.baylasan.sudanmap.ui.layers.MapLayersFragment
 import org.baylasan.sudanmap.ui.profile.CompanyProfileActivity
 import org.baylasan.sudanmap.ui.search.SearchFragment
+import org.baylasan.sudanmap.utils.hideKeyboard
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.concurrent.TimeUnit
 
@@ -83,9 +88,7 @@ class MainActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        ViewCompat.setNestedScrollingEnabled(bottomSheet, true)
-
-
+        ViewCompat.setNestedScrollingEnabled(recyclerViewsLayout, true)
 
         if (!canAccessLocation()) requestPermissions()
 
@@ -107,6 +110,9 @@ class MainActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
                 val latLng = googleMap.cameraPosition.target
                 locationUpdatesSubject.onNext(latLng)
             }
+        }
+        searchField.setOnClickListener {
+            openSearchFragment()
         }
 
         val locationUpdatesDisposable = locationUpdatesSubject
@@ -144,17 +150,12 @@ class MainActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
                 .commit()
         }
         searchButton.setOnClickListener {
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.fragmentLayout, SearchFragment.newInstance(), "search")
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                .addToBackStack(null)
-                .commit()
+            openSearchFragment()
         }
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
 
 
-        recyclerView.layoutManager =
-            StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        recyclerView.layoutManager = GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
 
 
         recyclerView.adapter = entityEntitiesListAdapter
@@ -179,11 +180,29 @@ class MainActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
 
             override fun onStateChanged(bottomSheet: View, newState: Int) {
                 searchField.isEnabled = newState != BottomSheetBehavior.STATE_EXPANDED
+
+                this@MainActivity.bottomSheet.radius =
+                    if (newState == BottomSheetBehavior.STATE_EXPANDED)
+                        0f
+                    else 20f
             }
         })
 
         entityViewModel.loadEntity()
         observeViewModel()
+    }
+
+    private fun openSearchFragment() {
+
+        supportFragmentManager.beginTransaction()
+            .replace(
+                R.id.fragmentLayout,
+                SearchFragment.newInstance(),
+                "search"
+            )
+            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+            .addToBackStack(null)
+            .commit()
     }
 
     private fun requestPermissions() {

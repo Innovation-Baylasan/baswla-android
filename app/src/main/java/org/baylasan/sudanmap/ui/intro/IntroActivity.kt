@@ -19,7 +19,7 @@ class IntroActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_intro)
 
-        val introItems = arrayListOf<ViewPagerModel>(
+        val introItems = arrayListOf(
             ViewPagerModel(
                 jsonFile = R.raw.map_inter_actions, header = "Explore",
                 description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nunc eget lorem dolor sed viverra ipsum."
@@ -50,7 +50,7 @@ class IntroActivity : AppCompatActivity() {
             }*/
 
         nextBtn.setOnClickListener {
-            if (nextBtn.text == "Skip") {
+            if (currentPage == 2) {
                 startActivity(Intent(applicationContext, AuthActivity::class.java))
                 finish()
             }
@@ -72,7 +72,9 @@ class IntroActivity : AppCompatActivity() {
                 if (currentPage == introItems.lastIndex) {
                     //  introViewPager.setCurrentItem(currentPage, true)
                     //  currentPage =0
-                    nextBtn.text = "Skip"
+                    nextBtn.text = "Finish"
+                } else {
+                    nextBtn.text = "Next"
                 }
             }
 

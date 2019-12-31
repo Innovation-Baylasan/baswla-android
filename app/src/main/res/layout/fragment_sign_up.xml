@@ -28,6 +28,9 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:text="Sign Up"
+                android:fontFamily="@font/neo_sans_arabic_bold"
+                android:textColor="@color/black"
+                android:textSize="40sp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display2"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -38,6 +41,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/neo_sans_arabic_light"
+                android:textSize="16sp"
                 android:text="Some text appears here"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView" />
@@ -47,7 +53,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
                 android:text="@string/user_name"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView11" />
@@ -56,9 +63,7 @@
                 android:id="@+id/editText2"
                 style="@style/RoundedCornerEditText"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
 
-                android:ems="10"
                 android:inputType="textPersonName"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -70,6 +75,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
                 android:text="@string/email"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/editText2" />
@@ -78,9 +84,7 @@
                 android:id="@+id/editText3"
                 style="@style/RoundedCornerEditText"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
 
-                android:ems="10"
                 android:inputType="textPersonName"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -93,6 +97,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
                 android:text="@string/password"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/editText3" />
@@ -101,9 +106,7 @@
                 android:id="@+id/editText4"
                 style="@style/RoundedCornerEditText"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
 
-                android:ems="10"
                 android:inputType="textPassword"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -116,6 +119,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginBottom="16sp"
                 android:text="@string/password_confirmation"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/editText4" />
@@ -124,8 +128,6 @@
                 android:id="@+id/editText5"
                 style="@style/RoundedCornerEditText"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:ems="10"
 
                 android:inputType="textPassword"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -140,6 +142,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:text="@string/type"
+                android:layout_marginBottom="8sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/editText5" />
 
@@ -158,6 +161,7 @@
                 <com.google.android.material.button.MaterialButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+
                     android:layout_marginEnd="8dp"
                     android:padding="10dp"
                     android:text="@string/company"
@@ -174,8 +178,8 @@
                     android:layout_marginStart="8dp"
                     android:padding="10dp"
                     android:id="@+id/individualBtn"
-                    app:iconTint="@color/black"
-                    android:textColor="@color/black"
+                    app:iconTint="@color/black_overlay"
+                    android:textColor="@color/black_overlay"
                     android:text="Individual"
                     app:cornerRadius="8dp"
 
@@ -192,27 +196,32 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
+                android:textSize="12sp"
                 android:text="@string/privacy_string"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/button"
-                style="@style/AppButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="40dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="40dp"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:text="Accept and Register"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:text="Sign up"
+                android:textSize="22sp"
+                app:cornerRadius="8dp"
+                android:fontFamily="@font/neo_sans_arabic_regular"
+                android:layout_marginBottom="8dp"
+                android:textColor="@color/white"
+                app:backgroundTint="@color/colorAccent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView17" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </FrameLayout>

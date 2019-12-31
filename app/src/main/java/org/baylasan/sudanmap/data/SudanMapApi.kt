@@ -2,6 +2,7 @@ package org.baylasan.sudanmap.data
 
 import io.reactivex.Single
 import org.baylasan.sudanmap.data.category.model.CategoryDto
+import org.baylasan.sudanmap.data.entity.EntityResponse
 import org.baylasan.sudanmap.data.entity.model.NearByEntity
 import retrofit2.Response
 import retrofit2.http.GET
@@ -10,16 +11,14 @@ import retrofit2.http.Query
 
 interface SudanMapApi {
 
-    interface Entity {
+    interface Entities {
         @GET("entities")
-        fun getEntities(): Single<Response<List<org.baylasan.sudanmap.data.entity.model.EntityDto>>>
-
-
-        @GET("entities")
-        fun getNearbyEntities(@Query("lat") lat: Double, @Query("long") long: Double):
-                Single<Response<NearByEntity>>
+        fun getEntities(): Single<Response<EntityResponse>>
 
         @GET("categories/{id}/entities")
+        fun getEntitiesByCategory(@Path("id") id: Int = 1): Single<Response<EntityResponse>>
+        @GET("entities")
+        fun findEntitiesByKeyword(@Query("q")keyword:String) : Single<Response<EntityResponse>>
         fun getEntitiesByCategory(@Path("id") id: Int = 1):
                 Single<Response<List<Entity>>>
     }

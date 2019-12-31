@@ -13,7 +13,7 @@ import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.data.entity.model.EntityDto
 
 class EntitiesListAdapter(
-    private val list: List<EntityDto>,
+    private val list: List<Entity>,
     private val onItemClick: OnItemClick
 ) :
     RecyclerView.Adapter<EntitiesListAdapter.ViewHolder>() {
@@ -39,22 +39,22 @@ class EntitiesListAdapter(
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun bind(
-            entityDtoDto: EntityDto,
+            entityDto: Entity,
             onItemClick: OnItemClick
         ) {
-            Log.d("KLD", entityDtoDto.toString())
-            itemView.entityName.text = entityDtoDto.name
-            itemView.entityDescription.text = entityDtoDto.description
-            itemView.coverImage.load(entityDtoDto.cover)
-            itemView.avatarImage.loadCircle(entityDtoDto.avatar)
+            Log.d("KLD", entityDto.toString())
+            itemView.entityName.text = entityDto.name
+            itemView.entityDescription.text = entityDto.description
+//            itemView.coverImage.load(entityDto.cover)
+//            itemView.avatarImage.loadCircle(entityDto.avatar)
             itemView.setOnClickListener {
-                onItemClick.onItemClick(entityDtoDto)
+                onItemClick.onItemClick(entityDto)
             }
         }
     }
 
     interface OnItemClick {
-        fun onItemClick(entityDtoDto: EntityDto)
+        fun onItemClick(entityDto: Entity)
     }
 }
 
@@ -62,7 +62,7 @@ class EntitiesListAdapter(
 
 fun ImageView.load(imageUrl: String){
     if (imageUrl.isEmpty()) {
-        setImageResource(R.drawable.ic_launcher_foreground);
+        setImageResource(R.drawable.circle)
     } else{
         Picasso.get().load(imageUrl).into(this)
     }
@@ -70,7 +70,7 @@ fun ImageView.load(imageUrl: String){
 
 fun ImageView.loadCircle(imageUrl: String){
     if (imageUrl.isEmpty()) {
-        setImageResource(R.drawable.ic_launcher_foreground);
+        setImageResource(R.drawable.circle);
     } else{
         Picasso.get()
             .load(imageUrl)

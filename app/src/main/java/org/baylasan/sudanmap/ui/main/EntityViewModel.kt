@@ -15,8 +15,7 @@ class EntityViewModel(
     private val getNearbyEntitiesUseCase: GetNearbyEntitiesUseCase
 ) : BaseViewModel() {
 
-    private lateinit var entityDto: List<EntityDto>
-
+    lateinit var entities: List<Entity>
     val events = MutableLiveData<EntityEvent>()
 
     val nearbyEvents = MutableLiveData<NearbyEntityEvent>()
@@ -24,13 +23,15 @@ class EntityViewModel(
     val filterLiveData = MutableLiveData<List<Category>>()
 
 
+    @SuppressLint("CheckResult")
     fun loadEntity() {
         events.value = LoadingEvent
+
         getEntitiesUseCase.execute()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                entityDto = it
+                entities = it
 
                 if (it.isNotEmpty()) {
                     DataEvent(it)
@@ -39,7 +40,7 @@ class EntityViewModel(
                     filterLiveData.value =
                         entityDto.groupBy { entity -> entity.category }.keys.toMutableList()
                             .apply {
-                                add(0, Category("", "", -1, "All", ""))
+                                add(0,Category())
                             }
                 } else {
                     events.value = EmptyEvent
@@ -105,9 +106,9 @@ class EntityViewModel(
     }
 
     fun filterEntities(category: Category) {
-        val list = entityDto.filter { it.category == category }
+        val list = entities.filter { it.category == category }
         if (category.id == -1) {
-            events.value = DataEvent(entityDto)
+            events.value = DataEvent(entities)
 
         } else {
             events.value = DataEvent(list)

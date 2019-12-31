@@ -10,7 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 
 object WebAccess {
-    val apiService: SudanMapApi.Entity by lazy {
+    val apiService: SudanMapApi.Entities by lazy {
         Log.d("WebAccess", "Creating retrofit client")
 
         val logging = HttpLoggingInterceptor()
@@ -42,6 +42,6 @@ object WebAccess {
             .build()
 
         // Create Retrofit client
-        return@lazy retrofit.create(SudanMapApi.Entity::class.java)
+        return@lazy retrofit.create(SudanMapApi.Entities::class.java)
     }
 }
