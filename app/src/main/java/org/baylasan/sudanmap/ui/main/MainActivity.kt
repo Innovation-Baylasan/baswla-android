@@ -1,19 +1,15 @@
 package org.baylasan.sudanmap.ui.main
 
 import android.Manifest
-import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.content.IntentSender
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
-import android.location.Address
-import android.location.Geocoder
 import android.location.Location
 import android.os.Bundle
 import android.util.Log
-import android.view.KeyEvent
 import android.view.View
 import android.widget.Toast
 import androidx.annotation.DrawableRes
@@ -43,11 +39,12 @@ import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.entity_loading_layout.*
 import org.baylasan.sudanmap.R
-import org.baylasan.sudanmap.data.entity.model.EntityDto
+import org.baylasan.sudanmap.data.entity.model.Entity
 import org.baylasan.sudanmap.ui.layers.MapLayersFragment
 import org.baylasan.sudanmap.ui.profile.CompanyProfileActivity
 import org.baylasan.sudanmap.ui.search.SearchFragment
-import org.baylasan.sudanmap.utils.hideKeyboard
+import org.baylasan.sudanmap.utils.gone
+import org.baylasan.sudanmap.utils.show
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.concurrent.TimeUnit
 
@@ -55,7 +52,7 @@ import java.util.concurrent.TimeUnit
 class MainActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListener,
     GoogleMap.OnMyLocationClickListener {
 
-    private lateinit var entities: ArrayList<EntityDto>
+    private lateinit var entities: ArrayList<Entity>
 
     private lateinit var entityEntitiesListAdapter: EntitiesListAdapter
     lateinit var adapter: EntityListAdapter
@@ -130,7 +127,7 @@ class MainActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
         entities = ArrayList()
         entityEntitiesListAdapter = EntitiesListAdapter(entities,
             object : EntitiesListAdapter.OnItemClick {
-                override fun onItemClick(entityDtoDto: EntityDto) {
+                override fun onItemClick(entityDtoDto: Entity) {
                     bundleOf("entity" to entityDtoDto)
                     val profileIntent =
                         Intent(applicationContext, CompanyProfileActivity::class.java)
@@ -156,7 +153,6 @@ class MainActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
 
 
         recyclerView.layoutManager = GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
-
 
         recyclerView.adapter = entityEntitiesListAdapter
         entityViewModel.filterLiveData.observe(this, Observer {
@@ -264,13 +260,7 @@ class MainActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
 
     private fun getCurrentLocation() {
 
-        val locationRequest = LocationRequest()
-        locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-        locationRequest.interval = (10 * 1000).toLong()
-        locationRequest.fastestInterval = 2000
-
         val builder = LocationSettingsRequest.Builder()
-        builder.addLocationRequest(locationRequest)
         val locationSettingsRequest = builder.build()
 
         val result = LocationServices.getSettingsClient(this)
@@ -280,6 +270,7 @@ class MainActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
                 val response = task.getResult(ApiException::class.java)
                 if (response!!.locationSettingsStates.isLocationPresent) {
                     getLastLocation()
+
                 }
             } catch (exception: ApiException) {
                 when (exception.statusCode) {
@@ -313,7 +304,7 @@ class MainActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
                                 mLastLocation.longitude
                             )
                         })
-                        .zoom(5f)
+                        .zoom(6f)
                         .build()
                     googleMap?.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
                     entityViewModel.loadNearby(mLastLocation?.latitude!!, mLastLocation.longitude)
@@ -347,9 +338,8 @@ class MainActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
                     Log.d("MEGA", "Data loaded")
                     entityFilterLoading.visibility = View.GONE
                     entityLoading.visibility = View.GONE
-                    Log.d("MEGA", "Data loaded")
 
-                    val data = event.entityDtos
+                    val data = event.entityList
                     if (data.isNotEmpty()) {
                         entities.clear()
                         entities.addAll(data)
@@ -375,19 +365,17 @@ class MainActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
 
         })
 
-
+        myLocationFab.setOnClickListener {
+            getCurrentLocation()
+        }
         entityViewModel.nearbyEvents.observe(this, Observer { event ->
-            val dialog = ProgressDialog(this)
-            dialog.setMessage("Loading")
 
             when (event) {
 
                 is NearbyDataEvent -> {
                     Log.d("MEGA", "Data loaded")
-                    // loadinCard.gone()
-                    Log.d("MEGA", "Data loaded")
-                    dialog.dismiss()
-                    val data = event.nearByEntity.data
+                    loadingCard.gone()
+                    val data = event.nearByEntity
                     if (data.isNotEmpty()) {
                         googleMap?.clear()
                         data.forEach { entity ->
@@ -420,23 +408,16 @@ class MainActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
                 }
                 is NearbyLoadingEvent -> {
                     Log.d("KLD", "Loading")
-                    dialog.show()
-                    // loadinCard.show()
+                    loadingCard.show()
                 }
                 is NearbyErrorEvent -> {
                     Toast.makeText(applicationContext, event.errorMessage, Toast.LENGTH_LONG).show()
-                    //  loadinCard.gone()
-                    dialog.dismiss()
+                    loadingCard.gone()
                 }
                 else -> {
                     Toast.makeText(applicationContext, "Error", Toast.LENGTH_LONG).show()
-                    // loadinCard.gone()
-                    dialog.dismiss()
-                    /*   loadinCard.postDelayed({
+                    loadingCard.gone()
 
-                           loadinCard.visibility = View.GONE
-
-                       }, 3000)*/
                 }
             }
         })

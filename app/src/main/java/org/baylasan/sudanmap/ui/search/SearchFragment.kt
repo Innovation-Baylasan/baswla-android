@@ -50,7 +50,7 @@ class SearchFragment : Fragment(R.layout.fragment_search), TextWatcher {
                     errorView.gone()
                     searchRecyclerView.show()
 
-                    searchRecyclerView.adapter = SearchAdapter(list = event.entities, onClick = {
+                    searchRecyclerView.adapter = SearchAdapter(list = event.entityList, onClick = {
                         val profileIntent = Intent(activity, CompanyProfileActivity::class.java)
                         profileIntent.putExtra("entity", it)
                         startActivity(profileIntent)

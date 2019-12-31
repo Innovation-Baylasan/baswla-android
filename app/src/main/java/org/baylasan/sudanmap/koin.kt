@@ -27,7 +27,6 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-import java.time.Duration
 import java.util.concurrent.TimeUnit
 
 
@@ -60,7 +59,8 @@ val entityListModule = module(override = true) {
     factory { get<Retrofit>().create(SudanMapApi.Entities::class.java) }
     factory<EntityRepository> { EntityApi(get(), get()) }
     factory { GetEntitiesUseCase(get()) }
-    viewModel { EntityViewModel(get()) }
+    factory { GetNearbyEntitiesUseCase(get()) }
+    viewModel { EntityViewModel(get(), get()) }
 }
 val searchModule = module(override = true) {
     factory { get<Retrofit>().create(SudanMapApi.Entities::class.java) }
@@ -91,7 +91,7 @@ private fun provideOkHttpClient(): OkHttpClient = OkHttpClient.Builder()
     })
     .retryOnConnectionFailure(true)
     .addInterceptor(okHttpInterceptor())
-    .writeTimeout(0,TimeUnit.SECONDS)
+    .writeTimeout(0, TimeUnit.SECONDS)
     .build()
 
 private fun okHttpInterceptor() = Interceptor { chain ->

@@ -5,7 +5,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import org.baylasan.sudanmap.data.common.*
 import org.baylasan.sudanmap.data.entity.model.Category
-import org.baylasan.sudanmap.data.entity.model.EntityDto
+import org.baylasan.sudanmap.data.entity.model.Entity
 import org.baylasan.sudanmap.domain.entity.GetEntitiesUseCase
 import org.baylasan.sudanmap.domain.entity.GetNearbyEntitiesUseCase
 import org.baylasan.sudanmap.ui.BaseViewModel
@@ -23,7 +23,7 @@ class EntityViewModel(
     val filterLiveData = MutableLiveData<List<Category>>()
 
 
-    @SuppressLint("CheckResult")
+
     fun loadEntity() {
         events.value = LoadingEvent
 
@@ -38,7 +38,7 @@ class EntityViewModel(
                     events.value = DataEvent(it)
 
                     filterLiveData.value =
-                        entityDto.groupBy { entity -> entity.category }.keys.toMutableList()
+                        it.groupBy { entity -> entity.category }.keys.toMutableList()
                             .apply {
                                 add(0,Category())
                             }
@@ -76,7 +76,7 @@ class EntityViewModel(
         getNearbyEntitiesUseCase.execute(params)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ if (it.data.isNotEmpty()) {
+            .subscribe({ if (it.isNotEmpty()) {
                 nearbyEvents.value = NearbyDataEvent(it)
             } else {
                 nearbyEvents.value = NearbyEmptyEvent

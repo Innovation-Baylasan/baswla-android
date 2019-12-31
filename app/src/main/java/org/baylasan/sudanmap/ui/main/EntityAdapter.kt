@@ -9,9 +9,9 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import kotlinx.android.synthetic.main.row_entitiy_list.view.*
 import kotlinx.android.synthetic.main.row_entity.view.*
 import org.baylasan.sudanmap.R
-import org.baylasan.sudanmap.data.entity.model.EntityDto
+import org.baylasan.sudanmap.data.entity.model.Entity
 
-class EntityListAdapter(private val list: List<EntityDto>, val onClick: () -> Unit) :
+class EntityListAdapter(private val list: List<Entity>, val onClick: () -> Unit) :
     RecyclerView.Adapter<EntityListViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EntityListViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(

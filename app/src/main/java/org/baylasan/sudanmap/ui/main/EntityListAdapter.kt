@@ -10,7 +10,7 @@ import com.squareup.picasso.Picasso
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
 import kotlinx.android.synthetic.main.row_entity.view.*
 import org.baylasan.sudanmap.R
-import org.baylasan.sudanmap.data.entity.model.EntityDto
+import org.baylasan.sudanmap.data.entity.model.Entity
 
 class EntitiesListAdapter(
     private val list: List<Entity>,

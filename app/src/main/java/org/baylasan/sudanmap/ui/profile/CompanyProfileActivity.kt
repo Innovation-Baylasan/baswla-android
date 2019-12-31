@@ -9,7 +9,7 @@ import com.google.android.material.appbar.AppBarLayout
 import kotlinx.android.synthetic.main.content_company_profile.*
 import kotlinx.android.synthetic.main.fragment_company_profile.*
 import org.baylasan.sudanmap.R
-import org.baylasan.sudanmap.domain.entity.model.Entity
+import org.baylasan.sudanmap.data.entity.model.Entity
 import org.baylasan.sudanmap.ui.main.load
 import org.baylasan.sudanmap.ui.main.loadCircle
 import org.baylasan.sudanmap.utils.gone

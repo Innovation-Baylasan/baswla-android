@@ -8,7 +8,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Keep
 @Parcelize
-data class EntityDto(
+data class Entity(
     @SerializedName("avatar") val avatar: String,
     @SerializedName("category") val category: Category,
     @SerializedName("cover") val cover: String,
