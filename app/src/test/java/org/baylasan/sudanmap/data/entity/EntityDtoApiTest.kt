@@ -14,11 +14,11 @@ import retrofit2.Converter
 import retrofit2.Response
 import java.net.SocketTimeoutException
 
-class EntityApiTest {
+class EntityDtoApiTest {
 
 
     private lateinit var entityApi: EntityApi
-    private lateinit var entityService: SudanMapApi.Entity
+    private lateinit var entityService: SudanMapApi.Entities
     private lateinit var converter: Converter<ResponseBody, ApiErrorResponse>
 
     @Before

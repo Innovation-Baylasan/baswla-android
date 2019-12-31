@@ -1,4 +1,4 @@
-package org.baylasan.sudanmap.domain.entity.model
+package org.baylasan.sudanmap.data.entity.model
 
 import android.os.Parcelable
 import androidx.annotation.Keep

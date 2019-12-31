@@ -1,4 +1,4 @@
-package org.baylasan.sudanmap.domain.entity.model
+package org.baylasan.sudanmap.data.entity.model
 
 import android.os.Parcelable
 import androidx.annotation.Keep
@@ -13,6 +13,6 @@ data class Category(
     @SerializedName("id") val id: Int,
     @SerializedName("name") val name: String,
     @SerializedName("updated_at") val updatedAt: String
-) :Parcelable{
-    constructor() :this("", "", -1, "ALL", "" )
+) : Parcelable {
+    constructor() : this("", "", -1, "ALL", "")
 }

@@ -26,6 +26,7 @@ class MapLayersFragment : Fragment(R.layout.fragment_map_layers) {
         }
     }
 
+
     private lateinit var activity: Activity
     override fun onAttach(context: Context) {
         super.onAttach(context)

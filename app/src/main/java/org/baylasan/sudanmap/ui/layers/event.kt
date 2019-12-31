@@ -1,6 +1,6 @@
 package org.baylasan.sudanmap.ui.layers
 
-import org.baylasan.sudanmap.domain.entity.model.Category
+import org.baylasan.sudanmap.data.entity.model.Category
 
 sealed class MapLayersEvent
 

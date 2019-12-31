@@ -12,7 +12,7 @@
     <string name="review">Review</string>
     <string name="sample_descripition">rambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem</string>
     <string name="leave_review">Leave Review</string>
-    <string name="comment_hint">Comment Placed Here Comment Placed HereComment Placed Here</string>
+    <string name="comment_hint">Leave a comment or Review here</string>
     <string name="post">Post</string>
     <string name="follow">Follow</string>
     <string name="title_activity_add_entitiy">AddEntitiyActivity</string>
@@ -111,11 +111,11 @@
     <string name="user_name">Username</string>
     <string name="password">Passowrd</string>
     <string name="sgin_in">Sign in</string>
-    <string name="sign_up_as_org">Sign up as organization</string>
+    <string name="sign_up_as_org">Sign up</string>
     <string name="or">OR</string>
     <string name="sign_in_as_guest">Sign in as guest</string>
     <string name="sample_name">John Doe</string>
-    <string name="sample_comment">Nice Done, Such Great Place</string>
+    <string name="sample_comment">Nice Done, Such Great Place Nice Done, Such Great Place Nice Done, Such Great Place Nice Done, Such Great Place</string>
     <string name="sample_date_in_month">2 month ago</string>
     <string name="email">Email</string>
     <string name="password_confirmation">Password Confirmation</string>

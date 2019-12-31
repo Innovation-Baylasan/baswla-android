@@ -7,7 +7,7 @@ import org.baylasan.sudanmap.data.common.ApiErrorResponse
 import org.baylasan.sudanmap.data.common.ResponseSingleFunc1
 import org.baylasan.sudanmap.data.common.ThrowableSingleFunc1
 import org.baylasan.sudanmap.domain.category.CategoryRepository
-import org.baylasan.sudanmap.domain.entity.model.Category
+import org.baylasan.sudanmap.data.entity.model.Category
 import retrofit2.Converter
 
 class CategoryApi(

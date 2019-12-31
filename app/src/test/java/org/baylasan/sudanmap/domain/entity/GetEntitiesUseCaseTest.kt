@@ -5,7 +5,7 @@ import com.nhaarman.mockitokotlin2.whenever
 import io.reactivex.Single
 import org.baylasan.sudanmap.data.common.ApiErrorResponse
 import org.baylasan.sudanmap.data.common.ApiException
-import org.baylasan.sudanmap.domain.entity.model.Entity
+import org.baylasan.sudanmap.data.entity.model.Entity
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
