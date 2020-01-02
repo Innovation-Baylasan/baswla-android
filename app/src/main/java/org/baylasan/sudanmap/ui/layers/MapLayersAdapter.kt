@@ -6,6 +6,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.data.entity.model.Category
+import org.baylasan.sudanmap.ui.main.loadCircle
 
 class MapLayersAdapter : RecyclerView.Adapter<MapLayersViewHolder>() {
     val list = mutableListOf<Selectable<Category>>()
@@ -25,11 +26,13 @@ class MapLayersAdapter : RecyclerView.Adapter<MapLayersViewHolder>() {
     override fun onBindViewHolder(holder: MapLayersViewHolder, position: Int) {
         holder.apply {
             val selectable = list[adapterPosition]
-            layerName.text = selectable.item.name
+            val category = selectable.item
+            layerName.text = category.name
             itemView.setOnClickListener {
                 selectable.toggle()
                 notifyItemChanged(adapterPosition)
             }
+            layerImage.loadCircle("http://104.248.145.132/${category.icon}")
             layerSelected.setColorFilter(
 
                 ContextCompat.getColor(

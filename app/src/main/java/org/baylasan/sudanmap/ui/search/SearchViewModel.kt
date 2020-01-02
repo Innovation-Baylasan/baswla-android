@@ -18,12 +18,11 @@ class SearchViewModel(private val useCase: FindEntitiesByKeywordUseCase) : BaseV
     init {
         searchSubject
             .filter { it.isNotEmpty() && it.isNotBlank() && it.length > 1 }
-            .debounce(500, TimeUnit.MILLISECONDS)
             .observeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
+            .subscribe { keyword ->
                 events.value = LoadingEvent
-                useCase.execute(FindEntitiesByKeywordUseCase.Request(it))
+                useCase.execute(FindEntitiesByKeywordUseCase.Request(keyword))
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({

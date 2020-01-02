@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
@@ -40,16 +41,17 @@ class SearchFragment : Fragment(R.layout.fragment_search), TextWatcher {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        searchRecyclerView.layoutManager = LinearLayoutManager(activity)
 
         queryField.addTextChangedListener(this)
         viewModel.events.observe(this, Observer { event ->
+            Log.d("MEGA","$event")
             when (event) {
                 is DataEvent -> {
+                    searchRecyclerView.show()
                     progressBar.gone()
                     emptyView.gone()
                     errorView.gone()
-                    searchRecyclerView.show()
-
                     searchRecyclerView.adapter = SearchAdapter(list = event.entityList, onClick = {
                         val profileIntent = Intent(activity, CompanyProfileActivity::class.java)
                         profileIntent.putExtra("entity", it)
@@ -70,10 +72,10 @@ class SearchFragment : Fragment(R.layout.fragment_search), TextWatcher {
                     errorView.gone()
                 }
                 else -> {
+                    errorView.show()
                     emptyView.gone()
                     searchRecyclerView.gone()
                     progressBar.gone()
-                    errorView.show()
                 }
             }
 

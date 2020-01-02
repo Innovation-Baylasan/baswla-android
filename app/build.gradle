@@ -30,21 +30,35 @@ android {
         }
     }
     flavorDimensions "version"
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            def project = "compass"
+            def SEP = "-"
+            def flavor = variant.productFlavors[0].name
+            def buildType = variant.variantData.variantConfiguration.buildType.name
+            def version = variant.versionName
+            def date = new Date()
+            def formattedDate = date.format('ddMMyy-HH.mm')
 
+            def newApkName = project + SEP + flavor + SEP + buildType + SEP + "v"+version + SEP + formattedDate + ".apk"
+
+            outputFileName = new File(newApkName)
+        }
+    }
     productFlavors {
         dev {
             resValue "string", "base_url", "http://104.248.145.132/api/"
-            resValue "string", "app_name", "Map x dev"
+            resValue "string", "app_name", "Compass Dev"
             applicationIdSuffix = '.dev'
         }
         prod {
             resValue "string", "base_url", "http://104.248.145.132/api/"
-            resValue "string", "app_name", "Map x"
+            resValue "string", "app_name", "Compass"
+
         }
         local {
             resValue "string", "base_url", "http://192.168.1.100/api/"
-            resValue "string", "app_name", "Map x local"
-            resValue "string", "app_name1", "Map x local"
+            resValue "string", "app_name", "Compass local"
             applicationIdSuffix = '.local'
         }
     }

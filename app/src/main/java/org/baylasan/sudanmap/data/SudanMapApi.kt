@@ -18,7 +18,7 @@ interface SudanMapApi {
         fun getEntitiesByCategory(@Path("id") id: Int = 1): Single<Response<EntityResponse>>
 
         @GET("entities")
-        fun getNearbyEntities(@Query("lat") lat: Double, @Query("long") long: Double):
+        fun getNearbyEntities(@Query("@lat") lat: Double, @Query("@long") long: Double):
                 Single<Response<EntityResponse>>
 
         @GET("entities")

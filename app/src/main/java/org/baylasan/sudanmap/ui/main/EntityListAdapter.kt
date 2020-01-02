@@ -34,21 +34,22 @@ class EntitiesListAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(list[position], onItemClick)
+        val entity = list[position]
+        holder.bind(entity, onItemClick)
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun bind(
-            entityDto: Entity,
+            entity: Entity,
             onItemClick: OnItemClick
         ) {
-            Log.d("KLD", entityDto.toString())
-            itemView.entityName.text = entityDto.name
-            itemView.entityDescription.text = entityDto.description
-//            itemView.coverImage.load(entityDto.cover)
-//            itemView.avatarImage.loadCircle(entityDto.avatar)
+            Log.d("KLD", entity.toString())
+            itemView.entityName.text = entity.name
+            itemView.entityDescription.text = entity.description
+            itemView.coverImage.load(entity.cover)
+            itemView.avatarImage.loadCircle(entity.avatar)
             itemView.setOnClickListener {
-                onItemClick.onItemClick(entityDto)
+                onItemClick.onItemClick(entity)
             }
         }
     }
@@ -64,7 +65,11 @@ fun ImageView.load(imageUrl: String){
     if (imageUrl.isEmpty()) {
         setImageResource(R.drawable.circle)
     } else{
-        Picasso.get().load(imageUrl).into(this)
+        Picasso.get().load(imageUrl)
+            .error(R.drawable.ic_icon)
+            .placeholder(R.drawable.ic_icon)
+
+            .into(this)
     }
 }
 
@@ -74,6 +79,8 @@ fun ImageView.loadCircle(imageUrl: String){
     } else{
         Picasso.get()
             .load(imageUrl)
+            .error(R.drawable.ic_icon)
+            .placeholder(R.drawable.ic_icon)
             .transform(CropCircleTransformation()).into(this)
     }
 }

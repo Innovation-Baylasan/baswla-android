@@ -10,6 +10,7 @@ import kotlinx.android.synthetic.main.row_search_result.view.*
 import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.data.entity.model.Entity
 import org.baylasan.sudanmap.ui.main.load
+import org.baylasan.sudanmap.ui.main.loadCircle
 
 class SearchAdapter(private val list: List<Entity>, private val onClick:(Entity)->Unit) : RecyclerView.Adapter<SearchViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchViewHolder {
@@ -28,7 +29,7 @@ class SearchAdapter(private val list: List<Entity>, private val onClick:(Entity)
 
     override fun onBindViewHolder(holder: SearchViewHolder, position: Int) {
         val entity = list[position]
-        holder.entityAvatar.load(entity.avatar)
+        holder.entityAvatar.loadCircle(entity.avatar)
         holder.entityName.text = entity.name
         holder.itemView.setOnClickListener {
             onClick(entity)

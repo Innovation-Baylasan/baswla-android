@@ -12,6 +12,7 @@ import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.data.entity.model.Entity
 import org.baylasan.sudanmap.ui.main.load
 import org.baylasan.sudanmap.ui.main.loadCircle
+import org.baylasan.sudanmap.ui.view.AppBarChangedListener
 import org.baylasan.sudanmap.utils.gone
 import org.baylasan.sudanmap.utils.show
 import kotlin.math.abs
@@ -33,8 +34,8 @@ class CompanyProfileActivity : AppCompatActivity() {
             profileToolBarTitleTxt.text = it.name
             companyNameTxt.text = it.name
             companyDescrition.text = it.description
-//            profileCoverImage.load(it.cover)
-//            profileImage.loadCircle(it.avatar)
+            profileCoverImage.load(it.cover)
+            profileImage.loadCircle(it.avatar)
 
         }
 
@@ -57,47 +58,3 @@ class CompanyProfileActivity : AppCompatActivity() {
 
 }
 
-
-/**
- * Creating custom listener to appBarLayout
- * to ease work with scrolling event
- */
-abstract class AppBarChangedListener : AppBarLayout.OnOffsetChangedListener {
-    enum class State { EXPANDED, COLLAPSED, IDLE }
-
-    abstract fun onStateChanged(appBarLayout: AppBarLayout?, state: State)
-    private var currentState =
-        State.IDLE
-
-    override fun onOffsetChanged(appBarLayout: AppBarLayout?, verticalOffset: Int) {
-        if (verticalOffset == 0) {
-            if (currentState != State.EXPANDED) {
-                onStateChanged(
-                    appBarLayout,
-                    State.EXPANDED
-                )
-            }
-            currentState =
-                State.EXPANDED
-        } else if (abs(verticalOffset) >= appBarLayout?.totalScrollRange!!) {
-            if (currentState != State.COLLAPSED) {
-                onStateChanged(
-                    appBarLayout,
-                    State.COLLAPSED
-                )
-            }
-            currentState =
-                State.COLLAPSED
-        } else {
-            if (currentState != State.IDLE) {
-                onStateChanged(
-                    appBarLayout,
-                    State.IDLE
-                )
-            }
-            currentState =
-                State.IDLE
-        }
-    }
-
-}

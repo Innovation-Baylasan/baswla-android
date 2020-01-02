@@ -10,6 +10,7 @@ import android.graphics.Canvas
 import android.location.Location
 import android.os.Bundle
 import android.util.Log
+import android.util.TypedValue
 import android.view.View
 import android.widget.Toast
 import androidx.annotation.DrawableRes
@@ -25,7 +26,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.ResolvableApiException
-import com.google.android.gms.location.*
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.LocationSettingsRequest
+import com.google.android.gms.location.LocationSettingsStatusCodes
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
@@ -42,8 +46,9 @@ import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.data.entity.model.Entity
 import org.baylasan.sudanmap.ui.layers.MapLayersFragment
 import org.baylasan.sudanmap.ui.profile.CompanyProfileActivity
+import org.baylasan.sudanmap.ui.profile.CompanyProfileSheetDialog
 import org.baylasan.sudanmap.ui.search.SearchFragment
-import org.baylasan.sudanmap.utils.gone
+import org.baylasan.sudanmap.utils.hide
 import org.baylasan.sudanmap.utils.show
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.concurrent.TimeUnit
@@ -86,7 +91,6 @@ class MainActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         ViewCompat.setNestedScrollingEnabled(recyclerViewsLayout, true)
-
         if (!canAccessLocation()) requestPermissions()
 
         val mapFragment =
@@ -101,6 +105,11 @@ class MainActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
                 getCurrentLocation()
             } else {
                 requestPermissions()
+            }
+            googleMap.setOnMarkerClickListener {
+                val entity = (it.tag as Entity)
+                CompanyProfileSheetDialog.newInstance(entity).show(supportFragmentManager, "")
+                true
             }
 
             googleMap.setOnCameraMoveListener {
@@ -128,7 +137,6 @@ class MainActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
         entityEntitiesListAdapter = EntitiesListAdapter(entities,
             object : EntitiesListAdapter.OnItemClick {
                 override fun onItemClick(entityDtoDto: Entity) {
-                    bundleOf("entity" to entityDtoDto)
                     val profileIntent =
                         Intent(applicationContext, CompanyProfileActivity::class.java)
                     profileIntent.putExtra("entity", entityDtoDto)
@@ -180,7 +188,11 @@ class MainActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
                 this@MainActivity.bottomSheet.radius =
                     if (newState == BottomSheetBehavior.STATE_EXPANDED)
                         0f
-                    else 20f
+                    else TypedValue.applyDimension(
+                        TypedValue.COMPLEX_UNIT_DIP,
+                        20f,
+                        resources.displayMetrics
+                    )
             }
         })
 
@@ -304,10 +316,10 @@ class MainActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
                                 mLastLocation.longitude
                             )
                         })
-                        .zoom(6f)
+                        .zoom(12f)
                         .build()
-                    googleMap?.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
-                    entityViewModel.loadNearby(mLastLocation?.latitude!!, mLastLocation.longitude)
+                    googleMap?.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+//                    entityViewModel.loadNearby(mLastLocation?.latitude!!, mLastLocation.longitude)
                 } else {
                     Toast.makeText(this, "No current location found", Toast.LENGTH_LONG)
                         .show()
@@ -371,52 +383,58 @@ class MainActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
         entityViewModel.nearbyEvents.observe(this, Observer { event ->
 
             when (event) {
-
+                is NearbyEmptyEvent -> {
+                    loadingCard.hide()
+                    emptyCard.show()
+                }
                 is NearbyDataEvent -> {
                     Log.d("MEGA", "Data loaded")
-                    loadingCard.gone()
+                    loadingCard.hide()
+                    emptyCard.hide()
+
                     val data = event.nearByEntity
-                    if (data.isNotEmpty()) {
-                        googleMap?.clear()
-                        data.forEach { entity ->
-                            googleMap?.let {
-                                it.addMarker(
-                                    MarkerOptions().position(
-                                        LatLng(
-                                            entity.location.lat,
-                                            entity.location.long
-                                        )
-                                    ).icon(
-                                        bitmapDescriptorFromVector(
-                                            this,
-                                            R.drawable.ic_marker
-                                        )
-                                    ).title(entity.name)
-                                    //).icon(BitmapDescriptorFactory.defaultMarker()).title("KLD")
+                    googleMap?.clear()
+
+                    data.forEach { entity ->
+                        val latLng = LatLng(
+                            entity.location.lat,
+                            entity.location.long
+                        )
+
+                        val marker = googleMap?.addMarker(
+                            MarkerOptions().position(
+                                latLng
+                            ).icon(
+                                bitmapDescriptorFromVector(
+                                    this,
+                                    R.drawable.ic_marker
                                 )
-                            }
-                        }
+                            ).title(entity.name)
+                            //).icon(BitmapDescriptorFactory.defaultMarker()).title("KLD")
+                        )
+                        marker?.tag = entity
 
 
-                    } else {
-                        Toast.makeText(
-                            applicationContext,
-                            "No data in this area",
-                            Toast.LENGTH_LONG
-                        ).show()
                     }
+
+
                 }
                 is NearbyLoadingEvent -> {
                     Log.d("KLD", "Loading")
                     loadingCard.show()
+                    emptyCard.hide()
+
                 }
                 is NearbyErrorEvent -> {
                     Toast.makeText(applicationContext, event.errorMessage, Toast.LENGTH_LONG).show()
-                    loadingCard.gone()
+                    loadingCard.hide()
+                    emptyCard.hide()
+
                 }
                 else -> {
-                    Toast.makeText(applicationContext, "Error", Toast.LENGTH_LONG).show()
-                    loadingCard.gone()
+//                    Toast.makeText(applicationContext, "Error", Toast.LENGTH_LONG).show()
+                    loadingCard.hide()
+                    emptyCard.hide()
 
                 }
             }
