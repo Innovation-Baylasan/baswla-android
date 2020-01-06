@@ -92,6 +92,9 @@ class MainActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         ViewCompat.setNestedScrollingEnabled(recyclerViewsLayout, true)
+        openDrawerMenu.setOnClickListener {
+            fragmentLayout.openDrawer(navigationView, true)
+        }
         if (doseNotHaveLocationPermission()
         ) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(
@@ -101,6 +104,7 @@ class MainActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
             ) {
                 AlertDialog.Builder(this, R.style.Theme_MaterialComponents_Light_Dialog)
                     .setTitle(R.string.permission_denied_settings_title)
+                    .setCancelable(false)
                     .setMessage(R.string.permission_denied_settings_subtitle)
                     .setPositiveButton(R.string.grant) { dialog, _ ->
                         ActivityCompat.requestPermissions(

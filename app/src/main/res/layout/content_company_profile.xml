@@ -57,14 +57,19 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="@+id/rateNowBtn" />
 
-                        <Button
+                        <com.google.android.material.button.MaterialButton
+                            app:elevation="0dp"
                             android:id="@+id/rateNowBtn"
                             style="@style/RateButton"
+
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="8dp"
                             android:background="@color/rateBtnBackgroundColor"
                             android:text="@string/rate_now_btn_label"
+                            android:textAllCaps="false"
+                            android:fontFamily="@font/neo_sans_arabic_bold"
+                            android:textSize="14sp"
                             android:textColor="@color/rateBtnTextColor"
                             app:layout_constraintStart_toEndOf="@+id/ratingBar2"
                             app:layout_constraintTop_toBottomOf="@+id/companyNameTxt" />
@@ -77,9 +82,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="90dp"
                         android:text="@string/start_up_week_end"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                         android:textColor="@android:color/black"
-                        android:textSize="18sp"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/neo_sans_arabic_bold"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toStartOf="parent"
@@ -105,7 +110,9 @@
                             android:layout_marginEnd="8dp"
                             android:gravity="center_horizontal"
                             android:text="@string/number_sample"
-                            android:textStyle="bold"
+                            android:textColor="@color/black"
+                            android:fontFamily="@font/neo_sans_arabic_bold"
+                            android:textSize="14sp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -118,6 +125,7 @@
                             android:layout_marginBottom="8dp"
                             android:gravity="center_horizontal"
                             android:text="@string/followers"
+                            android:textColor="#C1C1C1"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="@+id/companyProfileFolowersNumTxt"
                             app:layout_constraintStart_toStartOf="@+id/companyProfileFolowersNumTxt"
@@ -140,7 +148,10 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:text="112"
-                            android:textStyle="bold"
+
+                            android:textColor="@color/black"
+                            android:fontFamily="@font/neo_sans_arabic_bold"
+                            android:textSize="14sp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -153,6 +164,8 @@
                             android:layout_marginBottom="8dp"
                             android:gravity="center_horizontal"
                             android:text="@string/events"
+                            android:textColor="#C1C1C1"
+
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="0.5"
@@ -177,8 +190,10 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:text="@string/number_sample"
-                            android:textStyle="bold"
-                            app:layout_constraintEnd_toEndOf="parent"
+
+                            android:textColor="@color/black"
+                            android:fontFamily="@font/neo_sans_arabic_bold"
+                            android:textSize="14sp"                            app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="0.5"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -191,6 +206,7 @@
                             android:layout_marginBottom="8dp"
                             android:gravity="center_horizontal"
                             android:text="@string/review"
+                            android:textColor="#C1C1C1"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="0.5"
@@ -205,7 +221,9 @@
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="8dp"
                         android:layout_marginEnd="16dp"
+                        android:fontFamily="@font/neo_sans_arabic_light"
                         android:layout_marginBottom="16dp"
+                        android:textSize="14sp"
                         android:text="@string/sample_descripition"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"

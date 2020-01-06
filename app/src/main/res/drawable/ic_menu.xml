@@ -6,36 +6,36 @@
   <path
       android:pathData="M8,0L22,0A8,8 0,0 1,30 8L30,22A8,8 0,0 1,22 30L8,30A8,8 0,0 1,0 22L0,8A8,8 0,0 1,8 0z"
       android:strokeAlpha="0.09"
-      android:fillColor="#eb413c"
+      android:fillColor="@color/colorAccent"
       android:fillAlpha="0.09"/>
   <path
       android:pathData="M8,10L21,10A1,1 0,0 1,22 11L22,11A1,1 0,0 1,21 12L8,12A1,1 0,0 1,7 11L7,11A1,1 0,0 1,8 10z"
       android:strokeWidth="1"
-      android:fillColor="#eb413c"
-      android:strokeColor="#00000000"/>
+      android:fillColor="@color/colorAccent"
+      android:strokeColor="@color/colorAccent"/>
   <path
       android:pathData="M8,10.5L21,10.5A0.5,0.5 0,0 1,21.5 11L21.5,11A0.5,0.5 0,0 1,21 11.5L8,11.5A0.5,0.5 0,0 1,7.5 11L7.5,11A0.5,0.5 0,0 1,8 10.5z"
       android:strokeWidth="1"
       android:fillColor="#00000000"
-      android:strokeColor="#eb413c"/>
+      android:strokeColor="@color/colorAccent"/>
   <path
       android:pathData="M8,14L21,14A1,1 0,0 1,22 15L22,15A1,1 0,0 1,21 16L8,16A1,1 0,0 1,7 15L7,15A1,1 0,0 1,8 14z"
       android:strokeWidth="1"
-      android:fillColor="#eb413c"
-      android:strokeColor="#00000000"/>
+      android:fillColor="@color/colorAccent"
+      android:strokeColor="@color/colorAccent"/>
   <path
       android:pathData="M8,14.5L21,14.5A0.5,0.5 0,0 1,21.5 15L21.5,15A0.5,0.5 0,0 1,21 15.5L8,15.5A0.5,0.5 0,0 1,7.5 15L7.5,15A0.5,0.5 0,0 1,8 14.5z"
       android:strokeWidth="1"
       android:fillColor="#00000000"
-      android:strokeColor="#eb413c"/>
+      android:strokeColor="@color/colorAccent"/>
   <path
       android:pathData="M8,18L21,18A1,1 0,0 1,22 19L22,19A1,1 0,0 1,21 20L8,20A1,1 0,0 1,7 19L7,19A1,1 0,0 1,8 18z"
       android:strokeWidth="1"
-      android:fillColor="#eb413c"
-      android:strokeColor="#00000000"/>
+      android:fillColor="@color/colorAccent"
+      android:strokeColor="@color/colorAccent"/>
   <path
       android:pathData="M8,18.5L21,18.5A0.5,0.5 0,0 1,21.5 19L21.5,19A0.5,0.5 0,0 1,21 19.5L8,19.5A0.5,0.5 0,0 1,7.5 19L7.5,19A0.5,0.5 0,0 1,8 18.5z"
       android:strokeWidth="1"
       android:fillColor="#00000000"
-      android:strokeColor="#eb413c"/>
+      android:strokeColor="@color/colorAccent"/>
 </vector>

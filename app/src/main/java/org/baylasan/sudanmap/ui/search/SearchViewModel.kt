@@ -1,10 +1,8 @@
 package org.baylasan.sudanmap.ui.search
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import io.reactivex.subjects.BehaviorSubject
 import org.baylasan.sudanmap.data.common.*
 import org.baylasan.sudanmap.domain.entity.FindEntitiesByKeywordUseCase
 import org.baylasan.sudanmap.ui.BaseViewModel
@@ -16,7 +14,6 @@ class SearchViewModel(private val useCase: FindEntitiesByKeywordUseCase) : BaseV
 
 
     fun findEntitiesWithKeyword(key: String) {
-
         events.value = LoadingEvent
         useCase.execute(FindEntitiesByKeywordUseCase.Request(key))
             .subscribeOn(Schedulers.io())

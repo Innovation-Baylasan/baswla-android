@@ -122,10 +122,10 @@
     <string name="type">Type</string>
     <string name="company">Company</string>
     <string name="privacy_string">
-        Here is a text explaining to the user that upon registration,  <font color="red">
+        Here is a text explaining to the user that upon registration,  <font color="#003a7c">
             <strong>the policy of the agreement    </strong>
         </font> will be approved.
-And <font color="red">
+And <font color="#003a7c">
             <strong> Privacy Policy      </strong>
         </font>and its consequences.</string>
     <string name="permission_denied_settings_subtitle">Bawsala app relies heavily on Location permission and without it the app wont function probably, we also use it to get nearby events and entities location</string>
