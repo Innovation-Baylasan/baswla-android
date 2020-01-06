@@ -1,6 +1,7 @@
 package org.baylasan.sudanmap.ui
 
 
+import android.app.Activity
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
@@ -64,7 +65,7 @@ class PermissionManager(private val context: Context) {
     fun checkPermission(permission: String, listener: PermissionAskListener) {
         if (isGpsEnabled()) {
             if (shouldAskPermission(permission)) {
-
+                //shoul
                 if (shouldShowRequestPermissionRationale(context as AppCompatActivity, permission)) {
 
                     listener.onPermissionPreviouslyDenied()

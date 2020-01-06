@@ -1,6 +1,10 @@
 package org.baylasan.sudanmap.utils
 
 import android.app.Activity
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import android.provider.Settings
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
@@ -26,7 +30,13 @@ inline fun <reified T : Any> Fragment.extraNotNull(key: String, default: T? = nu
     val value = arguments?.get(key)
     requireNotNull(if (value is T) value else default) { key }
 }
-
+fun Context.openSettings() {
+    startActivity(Intent().apply {
+        action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+        flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        data = Uri.fromParts("package", packageName, null)
+    })
+}
 fun Activity.hideKeyboard() {
     val imm: InputMethodManager =
         getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager

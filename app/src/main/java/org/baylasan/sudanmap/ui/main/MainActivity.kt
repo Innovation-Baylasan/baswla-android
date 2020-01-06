@@ -14,10 +14,10 @@ import android.util.TypedValue
 import android.view.View
 import android.widget.Toast
 import androidx.annotation.DrawableRes
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.os.bundleOf
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
@@ -84,6 +84,7 @@ class MainActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
         } else {
             super.onBackPressed()
 
+
         }
     }
 
@@ -91,8 +92,40 @@ class MainActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         ViewCompat.setNestedScrollingEnabled(recyclerViewsLayout, true)
-        if (!canAccessLocation()) requestPermissions()
+        if (doseNotHaveLocationPermission()
+        ) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(
+                    this,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                )
+            ) {
+                AlertDialog.Builder(this, R.style.Theme_MaterialComponents_Light_Dialog)
+                    .setTitle(R.string.permission_denied_settings_title)
+                    .setMessage(R.string.permission_denied_settings_subtitle)
+                    .setPositiveButton(R.string.grant) { dialog, _ ->
+                        ActivityCompat.requestPermissions(
+                            this,
+                            arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                            LOCATION_PERMISSION
+                        )
+                        dialog.dismiss()
 
+                    }.setNegativeButton(android.R.string.cancel) { dialog, _ ->
+                        showSettingsFragment()
+                        dialog.dismiss()
+                    }
+                    .create().show()
+            } else {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                    LOCATION_PERMISSION
+                )
+
+            }
+        } else {
+            getCurrentLocation()
+        }
         val mapFragment =
             supportFragmentManager.findFragmentById(R.id.mapFragment) as SupportMapFragment?
 
@@ -100,14 +133,10 @@ class MainActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
 
         mapFragment?.getMapAsync { googleMap ->
             this.googleMap = googleMap
-            if (permissionGiven()) {
-                initMap()
-                getCurrentLocation()
-            } else {
-                requestPermissions()
-            }
+
             googleMap.setOnMarkerClickListener {
                 val entity = (it.tag as Entity)
+                Log.d("MEGA", "$entity")
                 CompanyProfileSheetDialog.newInstance(entity).show(supportFragmentManager, "")
                 true
             }
@@ -122,12 +151,14 @@ class MainActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
         }
 
         val locationUpdatesDisposable = locationUpdatesSubject
-            .debounce(1, TimeUnit.SECONDS)
+            .debounce(700, TimeUnit.MILLISECONDS)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 entityViewModel.loadNearby(it.latitude, it.longitude)
-            }, {})
+            }, {
+
+            })
 
         compositeDisposable.add(locationUpdatesDisposable)
 
@@ -217,9 +248,25 @@ class MainActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
         ActivityCompat.requestPermissions(this, permissions, LOCATION_PERMISSION)
     }
 
-    private fun permissionGiven(): Boolean {
-        return (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+
+    private fun doseNotHaveLocationPermission(): Boolean {
+        return (ContextCompat.checkSelfPermission(
+            this,
+            Manifest.permission.ACCESS_FINE_LOCATION
+        )
                 != PackageManager.PERMISSION_GRANTED)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val fragment = supportFragmentManager.findFragmentByTag("perm")
+        if (fragment != null) {
+            if (!doseNotHaveLocationPermission()) {
+                getCurrentLocation()
+                initMap()
+                supportFragmentManager.beginTransaction().remove(fragment).commit()
+            }
+        }
     }
 
 
@@ -244,29 +291,31 @@ class MainActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
                 initMap()
                 getCurrentLocation()
             } else {
-                // Permission was denied. Display an error message.
+                showSettingsFragment()
             }
         }
     }
 
+    private fun showSettingsFragment() {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragmentLayout, PermissionDeniedFragment(), "perm")
+            .commit()
+    }
+
 
     private fun initMap() {
-        if (canAccessLocation()) {
-            googleMap?.isMyLocationEnabled = true
-            /*  googleMap?.setOnMyLocationButtonClickListener(this)
-                  googleMap?.setOnMyLocationClickListener(this)*/
 
-            googleMap?.uiSettings?.isMyLocationButtonEnabled = true
+        googleMap?.isMyLocationEnabled = true
 
-            fusedLocationClient.lastLocation
-                .addOnSuccessListener { location: Location? ->
-                    // for (location in location..locations){
-                    updateMapLocation(location)
-                    // }
-                }
-        } else {
-            requestPermissions()
-        }
+
+        googleMap?.uiSettings?.isMyLocationButtonEnabled = true
+
+        fusedLocationClient.lastLocation
+            .addOnSuccessListener { location: Location? ->
+                updateMapLocation(location)
+                // }
+            }
+
     }
 
 
@@ -320,9 +369,6 @@ class MainActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
                         .build()
                     googleMap?.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
 //                    entityViewModel.loadNearby(mLastLocation?.latitude!!, mLastLocation.longitude)
-                } else {
-                    Toast.makeText(this, "No current location found", Toast.LENGTH_LONG)
-                        .show()
                 }
             }
     }
@@ -376,9 +422,23 @@ class MainActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
             }
 
         })
+        errorCard.setOnClickListener {
+            val lastLatLng = locationUpdatesSubject.lastOrError()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    entityViewModel.loadNearby(it.latitude, it.longitude)
 
+                }, {
+
+                })
+
+        }
         myLocationFab.setOnClickListener {
-            getCurrentLocation()
+            if (canAccessLocation())
+                getCurrentLocation()
+            else
+                requestPermissions()
         }
         entityViewModel.nearbyEvents.observe(this, Observer { event ->
 
@@ -386,11 +446,14 @@ class MainActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
                 is NearbyEmptyEvent -> {
                     loadingCard.hide()
                     emptyCard.show()
+                    errorCard.hide()
+
                 }
                 is NearbyDataEvent -> {
                     Log.d("MEGA", "Data loaded")
                     loadingCard.hide()
                     emptyCard.hide()
+                    errorCard.hide()
 
                     val data = event.nearByEntity
                     googleMap?.clear()
@@ -423,18 +486,15 @@ class MainActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
                     Log.d("KLD", "Loading")
                     loadingCard.show()
                     emptyCard.hide()
-
-                }
-                is NearbyErrorEvent -> {
-                    Toast.makeText(applicationContext, event.errorMessage, Toast.LENGTH_LONG).show()
-                    loadingCard.hide()
-                    emptyCard.hide()
+                    errorCard.hide()
 
                 }
                 else -> {
 //                    Toast.makeText(applicationContext, "Error", Toast.LENGTH_LONG).show()
                     loadingCard.hide()
                     emptyCard.hide()
+                    errorCard.show()
+
 
                 }
             }

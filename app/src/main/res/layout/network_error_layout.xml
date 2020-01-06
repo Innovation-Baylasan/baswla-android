@@ -7,8 +7,8 @@
     android:orientation="vertical">
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:tint="@android:color/darker_gray"
         app:srcCompat="@drawable/ic_signal_wifi_off_black_24dp" />
 
@@ -19,12 +19,20 @@
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5" />
 
     <TextView
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="4dp"
+        android:layout_marginEnd="16dp"
         android:gravity="center"
         android:text="Try to check wifi settings or if the problem is persistent try to contact your ISP"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Body2" />
+
+    <com.google.android.material.button.MaterialButton
+        style="@style/AppButton"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+
+        android:text="Retry" />
 </LinearLayout>

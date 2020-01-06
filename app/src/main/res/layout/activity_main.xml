@@ -2,186 +2,243 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragmentLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/fragmentLayout"
 
     android:animateLayoutChanges="true"
     tools:context=".ui.main.MainActivity">
 
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-
-    <fragment
-        android:id="@+id/mapFragment"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
 
 
-    <FrameLayout
-        android:id="@+id/searchBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top|center"
-        android:clipToPadding="false"
-        android:padding="8dp">
+        <fragment
+            android:id="@+id/mapFragment"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardView"
+
+        <FrameLayout
+            android:id="@+id/searchBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardBackgroundColor="@android:color/white"
-            app:cardCornerRadius="4dp"
-            app:cardElevation="8dp">
+            android:layout_gravity="top|center"
+            android:clipToPadding="false"
+            android:padding="8dp">
 
-            <LinearLayout
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardView"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@android:color/white"
+                app:cardCornerRadius="4dp"
+                app:cardElevation="8dp">
 
-                <androidx.appcompat.widget.AppCompatImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:background="?actionBarItemBackground"
-                    android:padding="8dp"
-                    android:visibility="visible"
-                    app:backgroundTint="@android:color/transparent"
-                    app:srcCompat="@drawable/ic_menu" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:orientation="horizontal">
 
-
-                <androidx.appcompat.widget.AppCompatImageButton
-                    android:id="@+id/layersButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:background="?actionBarItemBackground"
-                    android:padding="8dp"
-
-                    app:backgroundTint="@android:color/transparent"
-                    app:srcCompat="@drawable/ic_layer" />
-
-                <TextView
-                    android:id="@+id/searchField"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-
-                    android:background="@android:color/transparent"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:gravity="center"
-                    android:maxLines="1"
-                    android:text="Type search here..." />
+                    <androidx.appcompat.widget.AppCompatImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:background="?actionBarItemBackground"
+                        android:padding="8dp"
+                        android:visibility="visible"
+                        app:backgroundTint="@android:color/transparent"
+                        app:srcCompat="@drawable/ic_menu" />
 
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/searchButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:paddingStart="8dp"
-                    android:paddingEnd="8dp"
-                    app:srcCompat="@drawable/ic_search"
-                    app:tint="@color/colorAccent" />
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-    </FrameLayout>
+                    <androidx.appcompat.widget.AppCompatImageButton
+                        android:id="@+id/layersButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:background="?actionBarItemBackground"
+                        android:padding="8dp"
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/bottomSheet"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/rounded_end_cardview"
-        app:cardCornerRadius="20dp"
-        app:cardElevation="2dp"
-        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+                        app:backgroundTint="@android:color/transparent"
+                        app:srcCompat="@drawable/ic_layer" />
 
-        <LinearLayout
+                    <TextView
+                        android:id="@+id/searchField"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+
+                        android:background="@android:color/transparent"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center"
+                        android:maxLines="1"
+                        android:text="Type search here..." />
+
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/searchButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
+                        app:srcCompat="@drawable/ic_search"
+                        app:tint="@color/colorAccent" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </FrameLayout>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/bottomSheet"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center|top"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="16dp"
-                app:srcCompat="@drawable/ic_scroll_thumb" />
-
-            <include layout="@layout/entity_loading_layout" />
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="2dp"
+            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
             <LinearLayout
-                android:id="@+id/recyclerViewsLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center|top"
                 android:orientation="vertical">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/filterChipRecyclerView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    app:srcCompat="@drawable/ic_scroll_thumb" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerView"
+                <include layout="@layout/entity_loading_layout" />
 
+                <include
+                    android:id="@+id/errorLayout"
+                    layout="@layout/network_error_layout"
+                    android:visibility="gone"
+
+                    tools:visibility="visible" />
+
+                <LinearLayout
+                    android:id="@+id/recyclerViewsLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/filterChipRecyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
             </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
-        </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/myLocationFab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="150dp"
-        app:elevation="1dp"
-        app:fabCustomSize="58dp"
-        app:srcCompat="@drawable/ic_location_pin" />
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/myLocationFab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="150dp"
+            app:elevation="1dp"
+            app:fabCustomSize="58dp"
+            app:srcCompat="@drawable/ic_location_pin" />
 
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/loadingCard"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="85dp"
-        android:visibility="invisible"
-        app:cardElevation="1dp"
-        app:contentPadding="6dp"
-        app:layout_anchor="@id/searchBar"
-        app:layout_anchorGravity="bottom|center"
-        tools:visibility="visible">
-
-        <LinearLayout
-            android:layout_width="match_parent"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/loadingCard"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:gravity="center">
+            android:layout_marginTop="85dp"
+            android:visibility="invisible"
+            app:cardElevation="1dp"
+            app:contentPadding="6dp"
+            app:layout_anchor="@id/searchBar"
+            app:layout_anchorGravity="bottom|center"
+            tools:visibility="visible">
 
-            <ProgressBar
-                android:id="@+id/progressBar2"
-                style="?android:progressBarStyleSmall"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center">
+
+                <ProgressBar
+                    android:id="@+id/progressBar2"
+                    style="?android:progressBarStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="Loading..."
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/progressBar2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.51" />
+
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/errorCard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="85dp"
+            android:visibility="invisible"
+            app:cardElevation="1dp"
+            app:contentPadding="6dp"
+            app:layout_anchor="@id/searchBar"
+            app:layout_anchorGravity="bottom|center"
+            tools:visibility="visible">
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:drawableStart="@drawable/ic_error_black_24dp"
+                android:drawablePadding="16dp"
+                android:gravity="center"
+                android:text="Failed to load data, tap to retry"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/emptyCard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="85dp"
+            android:visibility="invisible"
+            app:cardElevation="1dp"
+            app:contentPadding="6dp"
+            app:layout_anchor="@id/searchBar"
+            app:layout_anchorGravity="bottom|center"
+            tools:visibility="visible">
+
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
-                android:text="Loading..."
+                android:text="No data found nearby"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/progressBar2"
@@ -189,38 +246,8 @@
                 app:layout_constraintHorizontal_bias="0.51" />
 
 
-        </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
+        </com.google.android.material.card.MaterialCardView>
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/emptyCard"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="85dp"
-        android:visibility="invisible"
-        app:cardElevation="1dp"
-        app:contentPadding="6dp"
-        app:layout_anchor="@id/searchBar"
-        app:layout_anchorGravity="bottom|center"
-        tools:visibility="visible">
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:text="No data found nearby"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/progressBar2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.51" />
-
-
-    </com.google.android.material.card.MaterialCardView>
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </FrameLayout>

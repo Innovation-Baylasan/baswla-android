@@ -40,7 +40,7 @@ android {
             def date = new Date()
             def formattedDate = date.format('ddMMyy-HH.mm')
 
-            def newApkName = project + SEP + flavor + SEP + buildType + SEP + "v"+version + SEP + formattedDate + ".apk"
+            def newApkName = project + SEP + flavor + SEP + buildType + SEP + "v" + version + SEP + formattedDate + ".apk"
 
             outputFileName = new File(newApkName)
         }
@@ -48,17 +48,17 @@ android {
     productFlavors {
         dev {
             resValue "string", "base_url", "http://104.248.145.132/api/"
-            resValue "string", "app_name", "Compass Dev"
+            resValue "string", "app_name", "Bawsala Dev"
             applicationIdSuffix = '.dev'
         }
         prod {
             resValue "string", "base_url", "http://104.248.145.132/api/"
-            resValue "string", "app_name", "Compass"
+            resValue "string", "app_name", "Bawsala"
 
         }
         local {
             resValue "string", "base_url", "http://192.168.1.100/api/"
-            resValue "string", "app_name", "Compass local"
+            resValue "string", "app_name", "Bawsala local"
             applicationIdSuffix = '.local'
         }
     }
@@ -102,6 +102,7 @@ dependencies {
     implementation 'androidx.multidex:multidex:2.0.1'
 
     implementation "androidx.viewpager2:viewpager2:1.0.0"
+    implementation 'com.jakewharton.rxbinding3:rxbinding:3.1.0'
 
 
     implementation "com.airbnb.android:lottie:$lottieVersion"
@@ -115,7 +116,7 @@ dependencies {
     implementation "androidx.core:core-ktx:1.1.0"
 
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0"
-     testImplementation 'android.arch.core:core-testing:1.1.1'
+    testImplementation 'android.arch.core:core-testing:1.1.1'
     implementation 'io.supercharge:shimmerlayout:2.1.0'
 
     //networking

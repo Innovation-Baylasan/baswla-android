@@ -128,4 +128,8 @@
 And <font color="red">
             <strong> Privacy Policy      </strong>
         </font>and its consequences.</string>
+    <string name="permission_denied_settings_subtitle">Bawsala app relies heavily on Location permission and without it the app wont function probably, we also use it to get nearby events and entities location</string>
+    <string name="permission_denied_settings_title">Permission required</string>
+    <string name="open_settings">Open settings</string>
+    <string name="grant">Grant</string>
 </resources>
