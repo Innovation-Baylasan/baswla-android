@@ -10,11 +10,11 @@ import kotlin.math.abs
 abstract class AppBarChangedListener : AppBarLayout.OnOffsetChangedListener {
     enum class State { EXPANDED, COLLAPSED, IDLE }
 
-    abstract fun onStateChanged(appBarLayout: AppBarLayout?, state: State)
+    abstract fun onStateChanged(appBarLayout: AppBarLayout, state: State)
     private var currentState =
         State.IDLE
 
-    override fun onOffsetChanged(appBarLayout: AppBarLayout?, verticalOffset: Int) {
+    override fun onOffsetChanged(appBarLayout: AppBarLayout, verticalOffset: Int) {
         if (verticalOffset == 0) {
             if (currentState != State.EXPANDED) {
                 onStateChanged(
@@ -24,7 +24,7 @@ abstract class AppBarChangedListener : AppBarLayout.OnOffsetChangedListener {
             }
             currentState =
                 State.EXPANDED
-        } else if (abs(verticalOffset) >= appBarLayout?.totalScrollRange!!) {
+        } else if (abs(verticalOffset) >= appBarLayout.totalScrollRange) {
             if (currentState != State.COLLAPSED) {
                 onStateChanged(
                     appBarLayout,

@@ -1,19 +1,151 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.core.widget.NestedScrollView android:id="@+id/nestedScrollView"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    app:behavior_overlapTop="60dp"
+
+    app:cardPreventCornerOverlap="true"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="org.baylasan.sudanmap.ui.addentity.AddEntityActivity"
-    tools:showIn="@layout/activity_add_entity">
+    app:layout_dodgeInsetEdges="top"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardElevation="8dp">
+
         <LinearLayout
-            android:background="@color/colorAccent"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="General Information"
+                android:textColor="@color/black"
+                android:textSize="17sp" />
+
+            <View
+                android:id="@+id/divider3"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="8dp"
+                android:text="Name"
+                android:textSize="12sp" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                style="@style/RoundedCornerEditText"
+                android:layout_width="match_parent"
+                android:layout_marginStart="0dp"
+                android:layout_marginEnd="0dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="8dp"
+                android:text="E-mail address"
+                android:textSize="12sp" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                style="@style/RoundedCornerEditText"
+                android:layout_width="match_parent"
+                android:layout_marginStart="0dp"
+                android:layout_marginEnd="0dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="8dp"
+                android:text="Address"
+                android:textSize="12sp" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                style="@style/RoundedCornerEditText"
+                android:layout_width="match_parent"
+
+                android:layout_marginStart="0dp"
+                android:layout_marginEnd="0dp"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="8dp"
+                android:text="Random Field 1"
+                android:textSize="12sp" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                style="@style/RoundedCornerEditText"
+                android:layout_width="match_parent"
+
+                android:layout_marginStart="0dp"
+                android:layout_marginEnd="0dp"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="8dp"
+                android:text="Random Field 2"
+                android:textSize="12sp" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                style="@style/RoundedCornerEditText"
+                android:layout_width="match_parent"
+
+                android:layout_marginStart="0dp"
+                android:layout_marginEnd="0dp"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Information about location"
+                android:textColor="@color/black"
+                android:textSize="17sp" />
+
+            <View
+                android:id="@+id/divider4"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider" />
+
+
+            <fragment
+                android:id="@+id/mapFragment"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="16dp" />
+
+
+            <com.google.android.material.button.MaterialButton
+                style="@style/AppButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                android:drawableEnd="@drawable/ic_location_pin"
+                android:text="Submit" />
+        </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
+
 </androidx.core.widget.NestedScrollView>

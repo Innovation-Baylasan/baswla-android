@@ -41,7 +41,7 @@ class CompanyProfileActivity : AppCompatActivity() {
 
 
         appbar.addOnOffsetChangedListener(object : AppBarChangedListener() {
-            override fun onStateChanged(appBarLayout: AppBarLayout?, state: State) {
+            override fun onStateChanged(appBarLayout: AppBarLayout, state: State) {
                 if (state == State.EXPANDED) // toolbar.title = companyNameTxt.text
                 {
                     profileImage.show()

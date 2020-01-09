@@ -3,6 +3,7 @@
     <color name="colorPrimary">#FFFFFF</color>
     <color name="colorPrimaryDark">#000</color>
     <color name="colorAccent">#003a7c</color>
+    <color name="yellowAccent">#ffcd58</color>
     <color name="colorOnBackground">#FFFFFF</color>
     <color name="rateBtnBackgroundColor">#FFF0D6</color>
     <color name="rateBtnTextColor">#F4A210</color>

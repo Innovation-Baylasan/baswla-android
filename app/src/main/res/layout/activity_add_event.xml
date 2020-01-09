@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:clipToPadding="true"
     android:fitsSystemWindows="true"
-    tools:context="org.baylasan.sudanmap.ui.addentity.AddEntityActivity">
+    tools:context="org.baylasan.sudanmap.ui.addevent.AddEventActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBar"
@@ -29,7 +29,14 @@
                 android:layout_height="match_parent"
                 android:background="?actionBarItemBackground"
                 android:scaleType="centerCrop"
-                app:srcCompat="@drawable/ic_add_entity_background" />
+                android:src="@color/yellowAccent" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?actionBarItemBackground"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/ic_calender" />
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
@@ -38,25 +45,23 @@
                 android:background="@android:color/transparent"
                 app:layout_collapseMode="pin"
                 app:navigationIcon="@drawable/ic_back">
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/neo_sans_arabic_bold"
+        android:text="Add new event"
+        android:layout_gravity="center|start"
+        android:textColor="@android:color/white"
+        android:textSize="26sp"
+        app:textAllCaps="true" />
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/neo_sans_arabic_bold"
-                        android:text="Add new Entity"
-                        android:layout_gravity="center|start"
-                        android:textColor="@android:color/white"
-                        android:textSize="26sp"
-                        app:textAllCaps="true" />
-
-                </FrameLayout>
+</FrameLayout>
 
             </androidx.appcompat.widget.Toolbar>
-
 
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -73,8 +78,8 @@ place holder text place holder text place holder text"
                 android:textSize="13sp"
                 app:autoSizeTextType="uniform" />
 
-
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
-<include layout="@layout/content_add_entity"/>
+
+    <include layout="@layout/content_add_event" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

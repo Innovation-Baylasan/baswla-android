@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nestedScrollView"
+
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:behavior_overlapTop="60dp"
+    app:cardPreventCornerOverlap="true"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    app:layout_dodgeInsetEdges="top"
+    tools:showIn="@layout/activity_add_event">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardElevation="8dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Event Information"
+                android:textColor="@color/black"
+                android:textSize="17sp" />
+
+            <View
+                android:id="@+id/divider3"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:text="Event Name"
+                android:textSize="12sp" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                style="@style/RoundedCornerEditText"
+                android:layout_width="match_parent"
+                android:layout_marginStart="0dp"
+                android:layout_marginEnd="0dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="8dp"
+                android:text="Description"
+                android:textSize="12sp" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                style="@style/RoundedCornerEditText"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginStart="0dp"
+                android:layout_marginEnd="0dp"
+                android:inputType="textMultiLine"
+
+                android:maxLines="5" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="8dp"
+                android:text="Address"
+                android:textSize="12sp" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                style="@style/RoundedCornerEditText"
+                android:layout_width="match_parent"
+
+                android:layout_marginStart="0dp"
+                android:layout_marginEnd="0dp"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="8dp"
+                android:text="Event Image"
+
+                android:textSize="12sp" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="140dp"
+                    android:background="#F5f5f5" />
+
+                <com.google.android.material.button.MaterialButton
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/neo_sans_arabic_bold"
+                    android:text="Pick/Select an image"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    app:icon="@drawable/ic_camera_alt_black_24dp"
+                    app:iconGravity="textEnd"
+                    app:iconPadding="10dp"
+                    app:iconTint="@color/colorAccent"
+                    app:rippleColor="@color/colorAccent" />
+            </FrameLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="8dp"
+                android:text="Seat count"
+                android:textSize="12sp" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                style="@style/RoundedCornerEditText"
+                android:layout_width="match_parent"
+
+                android:layout_marginStart="0dp"
+                android:layout_marginEnd="0dp"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="8dp"
+                android:text="Seat Price"
+                android:textSize="12sp" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                style="@style/RoundedCornerEditText"
+                android:layout_width="match_parent"
+
+                android:layout_marginStart="0dp"
+                android:layout_marginEnd="0dp"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="8dp"
+                android:text="Registration link"
+                android:textSize="12sp" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                style="@style/RoundedCornerEditText"
+                android:layout_width="match_parent"
+
+                android:layout_marginStart="0dp"
+                android:layout_marginEnd="0dp"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="8dp"
+                android:text="Application Date"
+                android:textSize="12sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.button.MaterialButton
+
+                    android:id="@+id/applicationStartButton"
+                    style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/neo_sans_arabic_bold"
+                    android:text="20/1/2020 4:00PM"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="12sp"
+                    app:backgroundTint="#F5F5F5"
+
+
+                    app:elevation="0dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/neo_sans_arabic_light"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:text="TO"
+                    android:textSize="12sp" />
+
+                <com.google.android.material.button.MaterialButton
+                    style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                    android:layout_width="wrap_content"
+                    android:id="@+id/applicationEndButton"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+
+                    android:fontFamily="@font/neo_sans_arabic_bold"
+                    android:text="22/1/2020 4:00PM"
+                    android:textColor="#BF004E"
+                    android:textSize="12sp"
+                    app:backgroundTint="#F5F5F5"
+                    app:elevation="0dp" />
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                style="@style/AppButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Submit"
+                android:textSize="23sp"
+                app:icon="@drawable/ic_calender_white"
+                app:iconGravity="textEnd"
+                app:iconPadding="11dp"
+
+                app:iconTint="@color/white" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.core.widget.NestedScrollView>
