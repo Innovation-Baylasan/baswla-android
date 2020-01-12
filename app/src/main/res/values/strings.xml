@@ -132,4 +132,6 @@ And <font color="#003a7c">
     <string name="permission_denied_settings_title">Permission required</string>
     <string name="open_settings">Open settings</string>
     <string name="grant">Grant</string>
+    <string name="places">Places</string>
+    <string name="type_search_here">Type search here...</string>
 </resources>

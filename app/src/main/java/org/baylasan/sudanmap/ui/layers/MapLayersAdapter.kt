@@ -6,7 +6,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.data.entity.model.Category
-import org.baylasan.sudanmap.ui.main.loadCircle
+import org.baylasan.sudanmap.ui.main.place.loadCircle
 
 class MapLayersAdapter : RecyclerView.Adapter<MapLayersViewHolder>() {
     val list = mutableListOf<Selectable<Category>>()

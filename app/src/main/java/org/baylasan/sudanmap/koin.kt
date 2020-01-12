@@ -18,12 +18,10 @@ import org.baylasan.sudanmap.domain.entity.EntityRepository
 import org.baylasan.sudanmap.domain.entity.FindEntitiesByKeywordUseCase
 import org.baylasan.sudanmap.domain.entity.GetEntitiesUseCase
 import org.baylasan.sudanmap.domain.entity.GetNearbyEntitiesUseCase
-import org.baylasan.sudanmap.ui.PermissionManager
 import org.baylasan.sudanmap.ui.layers.MapLayersViewModel
-import org.baylasan.sudanmap.ui.main.EntityViewModel
+import org.baylasan.sudanmap.ui.main.place.EntityViewModel
 import org.baylasan.sudanmap.ui.search.SearchViewModel
 import org.koin.android.ext.koin.androidApplication
-import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -60,7 +58,12 @@ val entityListModule = module(override = true) {
     factory<EntityRepository> { EntityApi(get(), get()) }
     factory { GetEntitiesUseCase(get()) }
     factory { GetNearbyEntitiesUseCase(get()) }
-    viewModel { EntityViewModel(get(), get()) }
+    viewModel {
+        EntityViewModel(
+            get(),
+            get()
+        )
+    }
 }
 val searchModule = module(override = true) {
     factory { get<Retrofit>().create(SudanMapApi.Entities::class.java) }

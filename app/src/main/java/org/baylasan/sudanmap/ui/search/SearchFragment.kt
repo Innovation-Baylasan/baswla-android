@@ -15,9 +15,9 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.fragment_search.*
 import org.baylasan.sudanmap.R
-import org.baylasan.sudanmap.ui.main.DataEvent
-import org.baylasan.sudanmap.ui.main.EmptyEvent
-import org.baylasan.sudanmap.ui.main.LoadingEvent
+import org.baylasan.sudanmap.ui.main.place.DataEvent
+import org.baylasan.sudanmap.ui.main.place.EmptyEvent
+import org.baylasan.sudanmap.ui.main.place.LoadingEvent
 import org.baylasan.sudanmap.ui.main.MainActivity
 import org.baylasan.sudanmap.ui.profile.CompanyProfileActivity
 import org.baylasan.sudanmap.ui.searchfilter.SearchFilterFragment

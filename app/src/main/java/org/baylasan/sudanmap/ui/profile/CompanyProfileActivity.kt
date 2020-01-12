@@ -2,21 +2,17 @@ package org.baylasan.sudanmap.ui.profile
 
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import com.google.android.material.appbar.AppBarLayout
 import kotlinx.android.synthetic.main.content_company_profile.*
 import kotlinx.android.synthetic.main.fragment_company_profile.*
 import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.data.entity.model.Entity
-import org.baylasan.sudanmap.ui.main.load
-import org.baylasan.sudanmap.ui.main.loadCircle
+import org.baylasan.sudanmap.ui.main.place.load
+import org.baylasan.sudanmap.ui.main.place.loadCircle
 import org.baylasan.sudanmap.ui.view.AppBarChangedListener
 import org.baylasan.sudanmap.utils.gone
 import org.baylasan.sudanmap.utils.show
-import kotlin.math.abs
-
 
 
 class CompanyProfileActivity : AppCompatActivity() {

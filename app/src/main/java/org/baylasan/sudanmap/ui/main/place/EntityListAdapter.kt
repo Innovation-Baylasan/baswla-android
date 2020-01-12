@@ -1,4 +1,4 @@
-package org.baylasan.sudanmap.ui.main
+package org.baylasan.sudanmap.ui.main.place
 
 import android.util.Log
 import android.view.LayoutInflater
@@ -55,7 +55,7 @@ class EntitiesListAdapter(
     }
 
     interface OnItemClick {
-        fun onItemClick(entityDto: Entity)
+        fun onItemClick(entity: Entity)
     }
 }
 

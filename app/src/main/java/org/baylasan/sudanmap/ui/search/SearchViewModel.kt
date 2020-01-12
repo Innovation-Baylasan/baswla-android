@@ -6,7 +6,7 @@ import io.reactivex.schedulers.Schedulers
 import org.baylasan.sudanmap.data.common.*
 import org.baylasan.sudanmap.domain.entity.FindEntitiesByKeywordUseCase
 import org.baylasan.sudanmap.ui.BaseViewModel
-import org.baylasan.sudanmap.ui.main.*
+import org.baylasan.sudanmap.ui.main.place.*
 
 class SearchViewModel(private val useCase: FindEntitiesByKeywordUseCase) : BaseViewModel() {
     val events = MutableLiveData<EntityEvent>()
@@ -22,7 +22,8 @@ class SearchViewModel(private val useCase: FindEntitiesByKeywordUseCase) : BaseV
                 if (it.isEmpty()) {
                     events.value = EmptyEvent
                 } else {
-                    events.value = DataEvent(it)
+                    events.value =
+                        DataEvent(it)
                 }
             }, {
                 it.printStackTrace()

@@ -9,8 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.row_search_result.view.*
 import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.data.entity.model.Entity
-import org.baylasan.sudanmap.ui.main.load
-import org.baylasan.sudanmap.ui.main.loadCircle
+import org.baylasan.sudanmap.ui.main.place.loadCircle
 
 class SearchAdapter(private val list: List<Entity>, private val onClick:(Entity)->Unit) : RecyclerView.Adapter<SearchViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchViewHolder {

@@ -1,4 +1,4 @@
-package org.baylasan.sudanmap.ui.main
+package org.baylasan.sudanmap.ui.main.place
 
 import android.content.Context
 import android.graphics.Typeface

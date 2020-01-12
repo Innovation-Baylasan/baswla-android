@@ -1,4 +1,4 @@
-package org.baylasan.sudanmap.ui.main
+package org.baylasan.sudanmap.ui.main.place
 
 import androidx.lifecycle.MutableLiveData
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -35,7 +35,8 @@ class EntityViewModel(
 
                 if (it.isNotEmpty()) {
                     DataEvent(it)
-                    events.value = DataEvent(it)
+                    events.value =
+                        DataEvent(it)
 
                     filterLiveData.value =
                         it.groupBy { entity -> entity.category }.keys.toMutableList()
@@ -71,15 +72,18 @@ class EntityViewModel(
 
 
     fun loadNearby(latitude: Double, longitude: Double) {
-        nearbyEvents.value = NearbyLoadingEvent
+        nearbyEvents.value =
+            NearbyLoadingEvent
         val params = GetNearbyEntitiesUseCase.Params(latitude, longitude)
         getNearbyEntitiesUseCase.execute(params)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ if (it.isNotEmpty()) {
-                nearbyEvents.value = NearbyDataEvent(it)
+                nearbyEvents.value =
+                    NearbyDataEvent(it)
             } else {
-                nearbyEvents.value = NearbyEmptyEvent
+                nearbyEvents.value =
+                    NearbyEmptyEvent
             }
             }, {
                 it.printStackTrace()
@@ -108,7 +112,8 @@ class EntityViewModel(
     fun filterEntities(category: Category) {
         val list = entities.filter { it.category == category }
         if (category.id == -1) {
-            events.value = DataEvent(entities)
+            events.value =
+                DataEvent(entities)
 
         } else {
             events.value = DataEvent(list)

@@ -13,8 +13,8 @@ import kotlinx.android.synthetic.main.sheet_dialog_fragment_company_profile.view
 
 import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.data.entity.model.Entity
-import org.baylasan.sudanmap.ui.main.load
-import org.baylasan.sudanmap.ui.main.loadCircle
+import org.baylasan.sudanmap.ui.main.place.load
+import org.baylasan.sudanmap.ui.main.place.loadCircle
 
 
 class CompanyProfileSheetDialog : BottomSheetDialogFragment() {
