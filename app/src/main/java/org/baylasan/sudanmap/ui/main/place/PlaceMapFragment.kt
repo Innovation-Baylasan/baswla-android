@@ -5,17 +5,13 @@ import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.Canvas
 import android.location.Location
 import android.os.Bundle
 import android.os.Looper
 import android.util.Log
 import android.util.TypedValue
 import android.view.View
-import androidx.annotation.DrawableRes
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
@@ -26,9 +22,13 @@ import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.*
+import com.google.android.gms.maps.model.CameraPosition
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.LatLngBounds
+import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.card.MaterialCardView
+import com.squareup.picasso.Picasso
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -43,9 +43,11 @@ import org.baylasan.sudanmap.ui.main.MainActivity
 import org.baylasan.sudanmap.ui.main.MainActivity.Companion.REQUEST_CHECK_SETTINGS
 import org.baylasan.sudanmap.ui.profile.CompanyProfileActivity
 import org.baylasan.sudanmap.ui.profile.CompanyProfileSheetDialog
+import org.baylasan.sudanmap.utils.PicassoMarker
 import org.baylasan.sudanmap.utils.gone
 import org.baylasan.sudanmap.utils.hide
 import org.baylasan.sudanmap.utils.show
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.concurrent.TimeUnit
 
@@ -61,7 +63,7 @@ class PlaceMapFragment : Fragment(R.layout.fragment_place_map) {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var activity: MainActivity
     private lateinit var entities: ArrayList<Entity>
-
+    private val picasso: Picasso by inject()
     override fun onAttach(context: Context) {
         super.onAttach(context)
         activity = context as MainActivity
@@ -231,27 +233,24 @@ class PlaceMapFragment : Fragment(R.layout.fragment_place_map) {
 
                     val data = event.nearByEntity
                     googleMap?.clear()
-
                     data.forEach { entity ->
                         val latLng = LatLng(
                             entity.location.lat,
                             entity.location.long
                         )
-
                         val marker = googleMap?.addMarker(
                             MarkerOptions().position(
                                 latLng
-                            ).icon(
-                                bitmapDescriptorFromVector(
-                                    activity,
-                                    R.drawable.ic_marker
-                                )
                             ).title(entity.name)
                             //).icon(BitmapDescriptorFactory.defaultMarker()).title("KLD")
                         )
                         marker?.tag = entity
 
 
+                        picasso.load(entity.category.iconPng)
+                            .placeholder(R.drawable.ic_marker_placeholder)
+                            .error(R.drawable.ic_marker_placeholder)
+                            .into(PicassoMarker(marker))
                     }
 
 
@@ -276,23 +275,6 @@ class PlaceMapFragment : Fragment(R.layout.fragment_place_map) {
 
     }
 
-    private fun bitmapDescriptorFromVector(context: Context, @DrawableRes vectorResId: Int): BitmapDescriptor? {
-        val vectorDrawable = ContextCompat.getDrawable(context, vectorResId)
-        vectorDrawable?.setBounds(
-            0,
-            0,
-            vectorDrawable.intrinsicWidth,
-            vectorDrawable.intrinsicHeight
-        )
-        val bitmap = Bitmap.createBitmap(
-            vectorDrawable?.intrinsicWidth!!,
-            vectorDrawable.intrinsicHeight,
-            Bitmap.Config.ARGB_8888
-        )
-        val canvas = Canvas(bitmap)
-        vectorDrawable.draw(canvas)
-        return BitmapDescriptorFactory.fromBitmap(bitmap)
-    }
 
     private fun loadNearbyPlacesFromCurrentLocation() {
         val target = googleMap?.cameraPosition?.target

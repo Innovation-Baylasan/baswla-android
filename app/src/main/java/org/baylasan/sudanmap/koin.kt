@@ -1,6 +1,9 @@
 package org.baylasan.sudanmap
 
 import android.app.Application
+import android.content.Context
+import com.squareup.picasso.OkHttp3Downloader
+import com.squareup.picasso.Picasso
 import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -38,6 +41,9 @@ val appModule = module {
         provideRetrofit(androidApplication(), get())
     }
     single {
+        providePicasso(androidApplication())
+    }
+    single {
         provideErrorConverter(get())
     }
 }
@@ -48,6 +54,12 @@ val categoryModule = module(override = true) {
     factory { FetchCategoriesUseCase(get()) }
     viewModel { MapLayersViewModel(get()) }
 
+}
+
+private fun providePicasso(context: Context): Picasso {
+    return Picasso.Builder(context)
+        .downloader(OkHttp3Downloader(context))
+        .build()
 }
 
 private fun provideIoScheduler(): Scheduler = Schedulers.io()
