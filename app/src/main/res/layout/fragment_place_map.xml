@@ -23,6 +23,8 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="100dp"
         app:fabCustomSize="58dp"
+        app:backgroundTint="@color/white"
+        app:backgroundTintMode="src_atop"
         app:elevation="2dp"
         app:srcCompat="@drawable/ic_gps" />
 
@@ -45,7 +47,11 @@
                 android:layout_height="wrap_content"
                 android:padding="16dp"
                 app:srcCompat="@drawable/ic_scroll_thumb" />
+            <include layout="@layout/network_error_layout"
+                android:id="@+id/errorLayout"
+                android:visibility="gone"
 
+                />
             <include layout="@layout/entity_loading_layout" />
 
 

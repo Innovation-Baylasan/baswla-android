@@ -53,6 +53,7 @@
                 android:drawableStart="@drawable/ic_my_places"
                 android:text="Places"
                 app:cornerRadius="0dp"
+                android:id="@+id/openPlacesButton"
                 app:icon="@drawable/ic_my_places"
                 app:iconPadding="16dp"
                 app:iconSize="30dp" />

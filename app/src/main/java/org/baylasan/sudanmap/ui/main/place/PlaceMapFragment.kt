@@ -2,7 +2,6 @@ package org.baylasan.sudanmap.ui.main.place
 
 
 import android.Manifest
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -14,7 +13,6 @@ import android.os.Looper
 import android.util.Log
 import android.util.TypedValue
 import android.view.View
-import android.widget.Toast
 import androidx.annotation.DrawableRes
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -37,6 +35,7 @@ import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.entity_loading_layout.*
 import kotlinx.android.synthetic.main.fragment_place_map.*
+import kotlinx.android.synthetic.main.network_error_layout.*
 import kotlinx.android.synthetic.main.search_bar_layout.*
 import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.data.entity.model.Entity
@@ -178,7 +177,7 @@ class PlaceMapFragment : Fragment(R.layout.fragment_place_map) {
                     Log.d("MEGA", "Data loaded")
                     entityFilterLoading.gone()
                     entityLoading.gone()
-
+                    errorLayout.gone()
 
                     val data = event.entityList
                     if (data.isNotEmpty()) {
@@ -191,18 +190,18 @@ class PlaceMapFragment : Fragment(R.layout.fragment_place_map) {
                 is LoadingEvent -> {
                     entityFilterLoading.show()
                     entityLoading.show()
+                    errorLayout.gone()
                 }
-                is ErrorEvent -> {
-                    Toast.makeText(activity, event.errorMessage, Toast.LENGTH_LONG).show()
+                is ErrorEvent, TimeoutEvent, NetworkErrorEvent -> {
+                    errorLayout.show()
                     entityFilterLoading.gone()
                     entityLoading.gone()
+                    retryButton.setOnClickListener {
+                        viewModel.loadEntity()
+                    }
 
                 }
-                else -> {
-                    entityFilterLoading.gone()
-                    entityLoading.gone()
 
-                }
             }
 
         })
@@ -339,10 +338,10 @@ class PlaceMapFragment : Fragment(R.layout.fragment_place_map) {
         override fun onLocationResult(result: LocationResult) {
             super.onLocationResult(result)
             val lastLocation = result.lastLocation
-            Log.d("MEGA","last location acquired $lastLocation")
+            Log.d("MEGA", "last location acquired $lastLocation")
             zoomToMyLocation(lastLocation)
             val location = result.locations[0]
-            Log.d("MEGA","new location acquired $location")
+            Log.d("MEGA", "new location acquired $location")
 
             zoomToMyLocation(location)
             fusedLocationClient.removeLocationUpdates(this)

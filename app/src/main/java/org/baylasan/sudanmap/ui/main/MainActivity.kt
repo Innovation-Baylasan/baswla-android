@@ -21,6 +21,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.ui.main.event.EventMapFragment
 import org.baylasan.sudanmap.ui.main.place.PlaceMapFragment
+import org.baylasan.sudanmap.ui.place.PlacesActivity
 
 
 class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener,
@@ -38,10 +39,14 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener,
 
     override fun onBackPressed() {
         if (fragmentLayout.isDrawerOpen(navigationView))
-            fragmentLayout.closeDrawer(navigationView, true)
+            closeDrawer()
         else
             super.onBackPressed()
 
+    }
+
+    private fun closeDrawer() {
+        fragmentLayout.closeDrawer(navigationView, true)
     }
 
     private var gpsDialog: AlertDialog? = null
@@ -63,6 +68,15 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener,
         } else {
             setupViewpager()
         }
+        openPlacesButton.setOnClickListener {
+            startActivityAndCloseDrawer<PlacesActivity>()
+        }
+    }
+
+    private inline fun <reified T> startActivityAndCloseDrawer() {
+        startActivity(Intent(this, T::class.java))
+        closeDrawer()
+
     }
 
     private fun requestPermission() {

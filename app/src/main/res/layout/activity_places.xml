@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="org.baylasan.sudanmap.ui.place.PlacesActivity">
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:id="@+id/addPlaceButton"
+        android:layout_margin="16dp"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_add" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="260dp"
+            android:layout_height="260dp"
+            app:srcCompat="@drawable/ic_no_place_empty" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/neo_sans_arabic_bold"
+            android:text="No Places around"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="@font/neo_sans_arabic_light"
+            android:gravity="center"
+            android:text="Try to check later or refresh now or Try to check later or refresh now Try to check later or refresh now Try to check later or refresh now " />
+    </LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,33 +1,35 @@
 package org.baylasan.sudanmap.ui.addentity
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
-import android.view.ViewGroup
-import android.widget.FrameLayout
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
-import androidx.core.view.marginEnd
-import androidx.core.view.updateLayoutParams
-import androidx.core.view.updateMarginsRelative
-import androidx.core.widget.NestedScrollView
-import com.google.android.gms.maps.SupportMapFragment
+import androidx.lifecycle.Observer
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.appbar.AppBarLayout
 import kotlinx.android.synthetic.main.activity_add_entity.*
+import kotlinx.android.synthetic.main.content_add_entity.*
 import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.ui.view.AppBarChangedListener
+import org.baylasan.sudanmap.utils.GpsChecker
+import org.baylasan.sudanmap.utils.LocationLiveData
+import org.baylasan.sudanmap.utils.toLatLng
 
-class AddEntityActivity : AppCompatActivity() {
+class AddEntityActivity : AppCompatActivity(), GpsChecker.OnGpsListener {
+    private lateinit var gpsChecker: GpsChecker
     private val onStateChanged = object : AppBarChangedListener() {
         override fun onStateChanged(appBarLayout: AppBarLayout, state: State) {
             if (state == State.COLLAPSED) {
                 toolbar.setBackgroundColor(
                     ContextCompat.getColor(
                         this@AddEntityActivity,
-                        R.color.colorAccent
+                        R.color.yellowAccent
                     )
                 )
-            }
-            else {
+            } else {
                 toolbar.setBackgroundColor(
                     ContextCompat.getColor(
                         this@AddEntityActivity,
@@ -41,21 +43,77 @@ class AddEntityActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContentView(R.layout.activity_add_entity)
-        val mapFragment =
-            supportFragmentManager.findFragmentById(R.id.mapFragment) as SupportMapFragment
-        mapFragment.getMapAsync {
+        mapView.onCreate(savedInstanceState)
+        gpsChecker = GpsChecker(this)
+        gpsChecker.turnGPSOn(this)
 
-        }
         appBar.addOnOffsetChangedListener(onStateChanged)
 
 
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        mapView.onDestroy()
+    }
+
+    override fun onLowMemory() {
+        super.onLowMemory()
+        mapView.onLowMemory()
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mapView.onResume()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        mapView.onStart()
+    }
+
+    private fun setupMapAndLocation() {
+        mapView.getMapAsync { googleMap ->
+            googleMap.uiSettings.isMyLocationButtonEnabled = true
+            googleMap.isMyLocationEnabled = true
+
+            val marker =
+                googleMap.addMarker(MarkerOptions().position(googleMap.cameraPosition.target))
+            googleMap.setOnCameraMoveListener {
+                marker.position = googleMap.cameraPosition.target
+            }
+
+            LocationLiveData(this).observe(this, Observer { location ->
+                Log.d("MEGA", "Location: $location")
+                googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(location.toLatLng(), 12f))
+
+
+            })
+        }
+    }
+
     override fun onStop() {
         super.onStop()
         appBar.removeOnOffsetChangedListener(onStateChanged)
+        mapView.onStop()
+    }
+
+
+    override fun onGpsEnabled() {
+        setupMapAndLocation()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == GpsChecker.GPS_REQUEST) {
+            if (resultCode == Activity.RESULT_OK) {
+                setupMapAndLocation()
+            } else {
+                gpsChecker.turnGPSOn(this)
+            }
+        }
     }
 
 
