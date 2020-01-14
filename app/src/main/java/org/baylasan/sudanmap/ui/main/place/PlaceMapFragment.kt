@@ -233,6 +233,7 @@ class PlaceMapFragment : Fragment(R.layout.fragment_place_map) {
 
                     val data = event.nearByEntity
                     googleMap?.clear()
+
                     data.forEach { entity ->
                         val latLng = LatLng(
                             entity.location.lat,
