@@ -2,6 +2,7 @@ package org.baylasan.sudanmap.utils
 
 import android.content.Context
 import android.location.Location
+import android.util.Log
 import androidx.lifecycle.LiveData
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
@@ -17,6 +18,7 @@ class LocationLiveData(context: Context) : LiveData<LocationModel>() {
         super.onInactive()
         fusedLocationClient.removeLocationUpdates(locationCallback)
     }
+
 
 
     override fun onActive() {
@@ -70,4 +72,11 @@ data class LocationModel(
 
 fun LocationModel.toLatLng(): LatLng {
     return LatLng(latitude, longitude)
+}
+
+fun LocationModel.toLocation(): Location {
+    val location = Location("")
+    location.latitude = latitude
+    location.longitude = longitude
+    return location
 }

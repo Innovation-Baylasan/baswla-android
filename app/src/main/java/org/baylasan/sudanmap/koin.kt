@@ -1,6 +1,9 @@
 package org.baylasan.sudanmap
 
 import android.app.Application
+import android.content.Context
+import com.squareup.picasso.OkHttp3Downloader
+import com.squareup.picasso.Picasso
 import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -28,7 +31,7 @@ import org.baylasan.sudanmap.ui.auth.login.LoginViewModel
 import org.baylasan.sudanmap.ui.auth.signup.RegisterViewModel
 import org.baylasan.sudanmap.ui.layers.MapLayersViewModel
 import org.baylasan.sudanmap.ui.main.place.EntityViewModel
-import org.baylasan.sudanmap.ui.search.SearchViewModel
+import org.baylasan.sudanmap.ui.placesearch.PlaceSearchViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -46,6 +49,9 @@ val appModule = module {
         provideRetrofit(androidApplication(), get())
     }
     single {
+        providePicasso(androidApplication())
+    }
+    single {
         provideErrorConverter(get())
     }
     factory<SessionManager> { SessionManagerImpl(get()) }
@@ -57,6 +63,12 @@ val categoryModule = module(override = true) {
     factory { FetchCategoriesUseCase(get()) }
     viewModel { MapLayersViewModel(get()) }
 
+}
+
+private fun providePicasso(context: Context): Picasso {
+    return Picasso.Builder(context)
+        .downloader(OkHttp3Downloader(context))
+        .build()
 }
 
 private fun provideIoScheduler(): Scheduler = Schedulers.io()
@@ -78,7 +90,7 @@ val searchModule = module(override = true) {
     factory { get<Retrofit>().create(SudanMapApi.Entities::class.java) }
     factory<EntityRepository> { EntityApi(get(), get()) }
     factory { FindEntitiesByKeywordUseCase(get()) }
-    viewModel { SearchViewModel(get()) }
+    viewModel { PlaceSearchViewModel(get()) }
     factory { GetNearbyEntitiesUseCase(get()) }
     viewModel {
         EntityViewModel(get(), get())

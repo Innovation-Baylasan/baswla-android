@@ -1,4 +1,4 @@
-package org.baylasan.sudanmap.ui.search
+package org.baylasan.sudanmap.ui.placesearch
 
 import android.content.Context
 import android.content.Intent
@@ -8,17 +8,18 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.jakewharton.rxbinding3.widget.textChanges
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
-import kotlinx.android.synthetic.main.fragment_search.*
+import kotlinx.android.synthetic.main.fragment_place_search.*
 import org.baylasan.sudanmap.R
+import org.baylasan.sudanmap.data.entity.model.Entity
+import org.baylasan.sudanmap.ui.main.MainActivity
 import org.baylasan.sudanmap.ui.main.place.DataEvent
 import org.baylasan.sudanmap.ui.main.place.EmptyEvent
+import org.baylasan.sudanmap.ui.main.place.EntitiesListAdapter
 import org.baylasan.sudanmap.ui.main.place.LoadingEvent
-import org.baylasan.sudanmap.ui.main.MainActivity
 import org.baylasan.sudanmap.ui.profile.CompanyProfileActivity
 import org.baylasan.sudanmap.ui.searchfilter.SearchFilterFragment
 import org.baylasan.sudanmap.utils.gone
@@ -27,13 +28,13 @@ import org.baylasan.sudanmap.utils.show
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.concurrent.TimeUnit
 
-class SearchFragment : Fragment(R.layout.fragment_search) {
+class PlaceSearchFragment : Fragment(R.layout.fragment_place_search), EntitiesListAdapter.OnItemClick {
 
     companion object {
         const val SEARCH_KEY = "keyword"
         @JvmStatic
-        fun newInstance(): SearchFragment {
-            return SearchFragment()
+        fun newInstance(): PlaceSearchFragment {
+            return PlaceSearchFragment()
         }
     }
 
@@ -43,7 +44,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         activity = context as MainActivity
     }
 
-    private val viewModel: SearchViewModel by viewModel()
+    private val viewModel: PlaceSearchViewModel by viewModel()
     override fun onStop() {
         super.onStop()
         disposable.dispose()
@@ -53,7 +54,6 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        searchRecyclerView.layoutManager = LinearLayoutManager(activity)
         queryField.setEndDrawableOnTouchListener {
             queryField.setText("")
         }
@@ -79,11 +79,8 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                     progressBar.gone()
                     emptyView.gone()
                     errorView.gone()
-                    searchRecyclerView.adapter = SearchAdapter(list = event.entityList, onClick = {
-                        val profileIntent = Intent(activity, CompanyProfileActivity::class.java)
-                        profileIntent.putExtra("entity", it)
-                        startActivity(profileIntent)
-                    })
+                    searchRecyclerView.adapter =
+                        EntitiesListAdapter(list = event.entityList, onItemClick = this)
                 }
                 is LoadingEvent -> {
                     progressBar.show()
@@ -114,20 +111,22 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
 
         filterButton.setOnClickListener {
             activity.supportFragmentManager.beginTransaction()
-                .replace(R.id.fragmentLayout, SearchFilterFragment.newInstance(), "searchFilter")
+                .add(R.id.fragmentLayout, SearchFilterFragment.newInstance(), "searchFilter")
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 .addToBackStack(null)
-                ?.commit()
+                .commit()
         }
 
 
-        val itemDecor =
-            DividerItemDecoration(searchRecyclerView.context, DividerItemDecoration.HORIZONTAL)
-        // itemDecor.setDrawable(ContextCompat.getDrawable(activity!!, R.drawable.divider)!!)
 
-        searchRecyclerView.addItemDecoration(itemDecor)
-        searchRecyclerView.layoutManager = LinearLayoutManager(activity)
+        searchRecyclerView.layoutManager = StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL)
 
+    }
+
+    override fun onItemClick(entity: Entity) {
+        val profileIntent = Intent(activity, CompanyProfileActivity::class.java)
+        profileIntent.putExtra("entity", entity)
+        startActivity(profileIntent)
     }
 
 

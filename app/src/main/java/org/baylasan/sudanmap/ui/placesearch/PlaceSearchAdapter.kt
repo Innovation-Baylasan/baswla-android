@@ -1,4 +1,4 @@
-package org.baylasan.sudanmap.ui.search
+package org.baylasan.sudanmap.ui.placesearch
 
 import android.view.LayoutInflater
 import android.view.View

@@ -5,30 +5,26 @@ import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.Canvas
 import android.location.Location
 import android.os.Bundle
-import android.os.Looper
 import android.util.Log
 import android.util.TypedValue
 import android.view.View
-import androidx.annotation.DrawableRes
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.gms.common.api.ApiException
-import com.google.android.gms.common.api.ResolvableApiException
-import com.google.android.gms.location.*
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.*
+import com.google.android.gms.maps.model.CameraPosition
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.card.MaterialCardView
+import com.squareup.picasso.Picasso
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -40,12 +36,11 @@ import kotlinx.android.synthetic.main.search_bar_layout.*
 import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.data.entity.model.Entity
 import org.baylasan.sudanmap.ui.main.MainActivity
-import org.baylasan.sudanmap.ui.main.MainActivity.Companion.REQUEST_CHECK_SETTINGS
+import org.baylasan.sudanmap.ui.placesearch.PlaceSearchFragment
 import org.baylasan.sudanmap.ui.profile.CompanyProfileActivity
 import org.baylasan.sudanmap.ui.profile.CompanyProfileSheetDialog
-import org.baylasan.sudanmap.utils.gone
-import org.baylasan.sudanmap.utils.hide
-import org.baylasan.sudanmap.utils.show
+import org.baylasan.sudanmap.utils.*
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.concurrent.TimeUnit
 
@@ -60,8 +55,9 @@ class PlaceMapFragment : Fragment(R.layout.fragment_place_map) {
     private val locationUpdatesSubject = PublishSubject.create<LatLng>()
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var activity: MainActivity
-    private lateinit var entities: ArrayList<Entity>
 
+    private lateinit var entities: ArrayList<Entity>
+    private val picasso: Picasso by inject()
     override fun onAttach(context: Context) {
         super.onAttach(context)
         activity = context as MainActivity
@@ -72,6 +68,12 @@ class PlaceMapFragment : Fragment(R.layout.fragment_place_map) {
 
         openDrawerMenu.setOnClickListener {
             activity.openDrawer()
+        }
+        searchField.setOnClickListener {
+            openSearchPage()
+        }
+        searchButton.setOnClickListener {
+            openSearchPage()
         }
         val mapFragment =
             childFragmentManager.findFragmentById(R.id.mapFragment) as SupportMapFragment?
@@ -84,7 +86,7 @@ class PlaceMapFragment : Fragment(R.layout.fragment_place_map) {
                 activity,
                 Manifest.permission.ACCESS_FINE_LOCATION
             ) == PackageManager.PERMISSION_GRANTED
-            getCurrentLocation()
+            getLocation()
             googleMap.setOnMarkerClickListener {
                 val entity = (it.tag as Entity)
                 Log.d("MEGA", "$entity")
@@ -128,7 +130,7 @@ class PlaceMapFragment : Fragment(R.layout.fragment_place_map) {
 
 
         recyclerView.layoutManager =
-            GridLayoutManager(activity, 2, GridLayoutManager.VERTICAL, false)
+            LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
 
         recyclerView.adapter = entityEntitiesListAdapter
         viewModel.filterLiveData.observe(this, Observer {
@@ -166,6 +168,13 @@ class PlaceMapFragment : Fragment(R.layout.fragment_place_map) {
         viewModel.loadEntity()
         observeViewModel()
 
+    }
+
+    private fun openSearchPage() {
+        activity.supportFragmentManager.beginTransaction()
+            .replace(R.id.fragmentLayout, PlaceSearchFragment(), "")
+            .addToBackStack("")
+            .commit()
     }
 
     private fun observeViewModel() {
@@ -210,8 +219,7 @@ class PlaceMapFragment : Fragment(R.layout.fragment_place_map) {
 
         }
         myLocationFab.setOnClickListener {
-
-            getCurrentLocation()
+            getLocation()
 
         }
         viewModel.nearbyEvents.observe(this, Observer { event ->
@@ -237,21 +245,19 @@ class PlaceMapFragment : Fragment(R.layout.fragment_place_map) {
                             entity.location.lat,
                             entity.location.long
                         )
-
                         val marker = googleMap?.addMarker(
                             MarkerOptions().position(
                                 latLng
-                            ).icon(
-                                bitmapDescriptorFromVector(
-                                    activity,
-                                    R.drawable.ic_marker
-                                )
                             ).title(entity.name)
                             //).icon(BitmapDescriptorFactory.defaultMarker()).title("KLD")
                         )
                         marker?.tag = entity
 
 
+                        picasso.load(entity.category.iconPng)
+                            .placeholder(R.drawable.ic_marker_placeholder)
+                            .error(R.drawable.ic_marker_placeholder)
+                            .into(PicassoMarker(marker))
                     }
 
 
@@ -276,23 +282,6 @@ class PlaceMapFragment : Fragment(R.layout.fragment_place_map) {
 
     }
 
-    private fun bitmapDescriptorFromVector(context: Context, @DrawableRes vectorResId: Int): BitmapDescriptor? {
-        val vectorDrawable = ContextCompat.getDrawable(context, vectorResId)
-        vectorDrawable?.setBounds(
-            0,
-            0,
-            vectorDrawable.intrinsicWidth,
-            vectorDrawable.intrinsicHeight
-        )
-        val bitmap = Bitmap.createBitmap(
-            vectorDrawable?.intrinsicWidth!!,
-            vectorDrawable.intrinsicHeight,
-            Bitmap.Config.ARGB_8888
-        )
-        val canvas = Canvas(bitmap)
-        vectorDrawable.draw(canvas)
-        return BitmapDescriptorFactory.fromBitmap(bitmap)
-    }
 
     private fun loadNearbyPlacesFromCurrentLocation() {
         val target = googleMap?.cameraPosition?.target
@@ -300,64 +289,6 @@ class PlaceMapFragment : Fragment(R.layout.fragment_place_map) {
             viewModel.loadNearby(target.latitude, target.longitude)
     }
 
-    private fun getCurrentLocation() {
-
-        val builder = LocationSettingsRequest.Builder()
-        val locationRequest = LocationRequest()
-        locationRequest.numUpdates = 1
-        val locationSettingsRequest = builder
-            .addLocationRequest(locationRequest)
-            .setAlwaysShow(true)
-            .build()
-
-        val result = LocationServices.getSettingsClient(activity)
-            .checkLocationSettings(locationSettingsRequest)
-        result.addOnCompleteListener { task ->
-            try {
-                val response = task.getResult(ApiException::class.java)
-                response?.locationSettingsStates
-                if (response!!.locationSettingsStates.isLocationPresent) {
-                    getLastLocation()
-
-                }
-            } catch (exception: ApiException) {
-                if (exception is ResolvableApiException) {
-                    exception.startResolutionForResult(activity, REQUEST_CHECK_SETTINGS)
-                }
-            }
-        }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        getCurrentLocation()
-
-    }
-
-    private val locationCallback = object : LocationCallback() {
-        override fun onLocationResult(result: LocationResult) {
-            super.onLocationResult(result)
-            val lastLocation = result.lastLocation
-            Log.d("MEGA", "last location acquired $lastLocation")
-            zoomToMyLocation(lastLocation)
-            val location = result.locations[0]
-            Log.d("MEGA", "new location acquired $location")
-
-            zoomToMyLocation(location)
-            fusedLocationClient.removeLocationUpdates(this)
-        }
-    }
-
-    private fun getLastLocation() {
-        val locationRequest = LocationRequest.create()
-        locationRequest.numUpdates = 1
-        locationRequest.smallestDisplacement = 100f
-
-        fusedLocationClient.requestLocationUpdates(
-            locationRequest, locationCallback,
-            Looper.getMainLooper()
-        )
-    }
 
     private fun zoomToMyLocation(location: Location?) {
         val cameraPosition = CameraPosition.Builder()
@@ -369,15 +300,19 @@ class PlaceMapFragment : Fragment(R.layout.fragment_place_map) {
             })
             .zoom(12f)
             .build()
-        googleMap?.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+        googleMap?.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
     }
 
     override fun onDestroy() {
         super.onDestroy()
         compositeDisposable.dispose()
-        fusedLocationClient.removeLocationUpdates(locationCallback)
 
+    }
 
+    private fun getLocation() {
+        LocationLiveData(activity).observe(this, Observer {
+            zoomToMyLocation(it.toLocation())
+        })
     }
 
 }

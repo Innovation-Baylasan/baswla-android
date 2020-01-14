@@ -24,6 +24,7 @@ class EntityViewModel(
 
 
 
+
     fun loadEntity() {
         events.value = LoadingEvent
 
