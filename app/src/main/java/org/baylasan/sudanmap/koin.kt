@@ -12,6 +12,7 @@ import org.baylasan.sudanmap.data.SudanMapApi
 import org.baylasan.sudanmap.data.category.CategoryApi
 import org.baylasan.sudanmap.data.common.ApiErrorResponse
 import org.baylasan.sudanmap.data.entity.EntityApi
+import org.baylasan.sudanmap.data.user.SessionManagerImpl
 import org.baylasan.sudanmap.data.user.UserApi
 import org.baylasan.sudanmap.domain.category.CategoryRepository
 import org.baylasan.sudanmap.domain.category.FetchCategoriesUseCase
@@ -19,6 +20,7 @@ import org.baylasan.sudanmap.domain.entity.EntityRepository
 import org.baylasan.sudanmap.domain.entity.FindEntitiesByKeywordUseCase
 import org.baylasan.sudanmap.domain.entity.GetEntitiesUseCase
 import org.baylasan.sudanmap.domain.entity.GetNearbyEntitiesUseCase
+import org.baylasan.sudanmap.domain.user.SessionManager
 import org.baylasan.sudanmap.domain.user.UserLoginUseCase
 import org.baylasan.sudanmap.domain.user.UserRegisterUseCase
 import org.baylasan.sudanmap.domain.user.UserRepository
@@ -46,6 +48,7 @@ val appModule = module {
     single {
         provideErrorConverter(get())
     }
+    single<SessionManager> { SessionManagerImpl(get()) }
 }
 
 val categoryModule = module(override = true) {
