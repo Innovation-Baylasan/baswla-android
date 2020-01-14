@@ -21,6 +21,7 @@ class SessionManagerImpl(context: Context) : SessionManager {
         prefs.putPreference(USER_EMAIL, user.email)
         prefs.putPreference(USER_TOKEN, user.token)
         prefs.putPreference(NAME, user.name)
+        prefs.putPreference(IS_LOGIN, true)
         prefs.putPreference(USER_NAME, user.username)
     }
 
@@ -42,7 +43,7 @@ class SessionManagerImpl(context: Context) : SessionManager {
 
     override fun setIsFirstTime(firstTime: Boolean) = prefs.putPreference(IS_FIRST_TIME, firstTime)
 
-    override fun isFirstTime(): Boolean = prefs.findPreference(IS_FIRST_TIME, false)
+    override fun isFirstTime(): Boolean = prefs.findPreference(IS_FIRST_TIME, true)
 
     companion object {
         private const val PREF_NAME = "baswala"
