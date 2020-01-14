@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.util.Patterns
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -31,7 +32,7 @@ class SignUpActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
 
-
+        setAdjustScreen()
         individualBtn.setOnClickListener {
             selectedType = 2
             individualBtn.strokeColor =
@@ -153,6 +154,12 @@ class SignUpActivity : AppCompatActivity() {
             RegisterRequest(email, name, password, passwordConfirmation, roleId = selectedType)
 
         viewModel.register(registerRequest)
+    }
+
+     fun setAdjustScreen() {
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
+        /*android:windowSoftInputMode="adjustPan|adjustResize"*/
     }
 
 }
