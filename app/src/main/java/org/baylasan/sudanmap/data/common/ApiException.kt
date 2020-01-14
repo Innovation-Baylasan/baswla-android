@@ -14,4 +14,5 @@ class ResponseConvertException(message: String) : Exception(message)
 class UnAuthorizedException : Exception("Unauthorized Exception please login again")
 
 class UnexpectedException(message: String) : Exception(message)
+class ResponseException(message: String) : Exception(message)
 

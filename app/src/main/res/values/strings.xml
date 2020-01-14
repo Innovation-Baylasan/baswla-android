@@ -134,4 +134,12 @@ And <font color="#003a7c">
     <string name="grant">Grant</string>
     <string name="places">Places</string>
     <string name="type_search_here">Type search here...</string>
+    <string name="sign_up">Sign up</string>
+    <string name="name">Name</string>
+    <string name="email_not_valid">Email not valid</string>
+    <string name="password_required">Password required</string>
+    <string name="password_should_be_8_chars">Password should be 8 characters at least</string>
+    <string name="please_confirm_password">Please confirm your password</string>
+    <string name="password_didnt_match">Password didn\'t match</string>
+    <string name="name_required">Name required</string>
 </resources>
