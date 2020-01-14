@@ -1,17 +1,15 @@
 package org.baylasan.sudanmap.ui.main
 
 import android.Manifest
-import android.content.Context
+import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.location.LocationManager
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.location.LocationManagerCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
@@ -22,18 +20,26 @@ import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.ui.main.event.EventMapFragment
 import org.baylasan.sudanmap.ui.main.place.PlaceMapFragment
 import org.baylasan.sudanmap.ui.place.PlacesActivity
+import org.baylasan.sudanmap.utils.GpsChecker
 
 
 class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener,
-    BottomNavigationView.OnNavigationItemSelectedListener {
+    BottomNavigationView.OnNavigationItemSelectedListener, GpsChecker.OnGpsListener {
+
+    private lateinit var gpsChecker: GpsChecker
+
     override fun onActivityResult(
         requestCode: Int,
         resultCode: Int,
         data: Intent?
     ) {
         super.onActivityResult(requestCode, resultCode, data)
-        for (fragment in supportFragmentManager.fragments) {
-            fragment.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == GpsChecker.GPS_REQUEST) {
+            if (resultCode == Activity.RESULT_OK) {
+                checkPermission()
+            } else {
+                gpsChecker.turnGPSOn(this)
+            }
         }
     }
 
@@ -49,25 +55,16 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener,
         fragmentLayout.closeDrawer(navigationView, true)
     }
 
-    private var gpsDialog: AlertDialog? = null
     private var permissionDialog: AlertDialog? = null
-    private var didSetupViewPager = false
 
-    fun isGpsEnabled(): Boolean {
-        return LocationManagerCompat.isLocationEnabled(getSystemService(Context.LOCATION_SERVICE) as LocationManager)
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        gpsChecker = GpsChecker(this)
+        gpsChecker.turnGPSOn(this)
 
-        if (doseNotHaveLocationPermission()
-        ) {
-            requestPermission()
-        } else {
-            setupViewpager()
-        }
         openPlacesButton.setOnClickListener {
             startActivityAndCloseDrawer<PlacesActivity>()
         }
@@ -209,6 +206,18 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener,
     companion object {
         const val LOCATION_PERMISSION = 42
         const val REQUEST_CHECK_SETTINGS = 40
+    }
+
+    override fun onGpsEnabled() {
+        checkPermission()
+    }
+
+    private fun checkPermission() {
+        if (doseNotHaveLocationPermission()) {
+            requestPermission()
+        } else {
+            setupViewpager()
+        }
     }
 }
 

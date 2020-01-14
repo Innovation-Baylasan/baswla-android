@@ -1,4 +1,4 @@
-package org.baylasan.sudanmap.ui.search
+package org.baylasan.sudanmap.ui.placesearch
 
 import androidx.lifecycle.MutableLiveData
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -8,7 +8,7 @@ import org.baylasan.sudanmap.domain.entity.FindEntitiesByKeywordUseCase
 import org.baylasan.sudanmap.ui.BaseViewModel
 import org.baylasan.sudanmap.ui.main.place.*
 
-class SearchViewModel(private val useCase: FindEntitiesByKeywordUseCase) : BaseViewModel() {
+class PlaceSearchViewModel(private val useCase: FindEntitiesByKeywordUseCase) : BaseViewModel() {
     val events = MutableLiveData<EntityEvent>()
 
 

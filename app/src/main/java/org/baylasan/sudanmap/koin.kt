@@ -23,7 +23,7 @@ import org.baylasan.sudanmap.domain.entity.GetEntitiesUseCase
 import org.baylasan.sudanmap.domain.entity.GetNearbyEntitiesUseCase
 import org.baylasan.sudanmap.ui.layers.MapLayersViewModel
 import org.baylasan.sudanmap.ui.main.place.EntityViewModel
-import org.baylasan.sudanmap.ui.search.SearchViewModel
+import org.baylasan.sudanmap.ui.placesearch.PlaceSearchViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -81,7 +81,7 @@ val searchModule = module(override = true) {
     factory { get<Retrofit>().create(SudanMapApi.Entities::class.java) }
     factory<EntityRepository> { EntityApi(get(), get()) }
     factory { FindEntitiesByKeywordUseCase(get()) }
-    viewModel { SearchViewModel(get()) }
+    viewModel { PlaceSearchViewModel(get()) }
     factory { GetNearbyEntitiesUseCase(get()) }
     viewModel {
         EntityViewModel(get(), get())
