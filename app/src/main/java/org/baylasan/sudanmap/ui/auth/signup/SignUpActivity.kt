@@ -89,6 +89,7 @@ class SignUpActivity : AppCompatActivity() {
             when (event) {
                 is DataEvent -> {
                     hideProgress()
+
                 }
                 is LoadingEvent -> {
                     signUpProgressBar.show()
@@ -97,7 +98,7 @@ class SignUpActivity : AppCompatActivity() {
                 is ErrorEvent -> {
                     hideProgress()
                     try {
-                        Log.d("KLD", event.errorMessage)
+                        Log.d("KLD", event.errorMessage!!)
                     } catch (e: Exception) {
                         e.printStackTrace()
                     }
@@ -145,7 +146,7 @@ class SignUpActivity : AppCompatActivity() {
             return
         }
 
-        val registerRequest = RegisterRequest(email, name, password, passwordConfirmation)
+        val registerRequest = RegisterRequest(email, name, password, passwordConfirmation ,roleId = selectedType)
 
         viewModel.register(registerRequest)
     }

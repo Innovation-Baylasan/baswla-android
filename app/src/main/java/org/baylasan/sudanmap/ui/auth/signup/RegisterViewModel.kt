@@ -6,10 +6,16 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import org.baylasan.sudanmap.data.common.*
 import org.baylasan.sudanmap.data.user.model.RegisterRequest
+import org.baylasan.sudanmap.data.user.model.RegisterResponse
+import org.baylasan.sudanmap.data.user.model.UserDto
+import org.baylasan.sudanmap.domain.user.SessionManager
 import org.baylasan.sudanmap.domain.user.UserRegisterUseCase
 import org.baylasan.sudanmap.ui.BaseViewModel
 
-class RegisterViewModel(private val registerUseCase: UserRegisterUseCase) : BaseViewModel() {
+class RegisterViewModel(
+    private val registerUseCase: UserRegisterUseCase,
+    private val sessionManager: SessionManager
+) : BaseViewModel() {
     val events = MutableLiveData<RegisterEvent>()
 
     private val _error = MutableLiveData<Int>()
@@ -21,10 +27,9 @@ class RegisterViewModel(private val registerUseCase: UserRegisterUseCase) : Base
             Schedulers.io()
         )
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                it?.let {
-                    DataEvent(it)
-                } ?: kotlin.run { EmptyEvent }
+            .subscribe({ registerResponse ->
+                saveUserSession(registerResponse)
+                events.value = DataEvent(registerResponse)
             }, {
                 events.value = when (it) {
                     is UnAuthorizedException -> {
@@ -49,5 +54,17 @@ class RegisterViewModel(private val registerUseCase: UserRegisterUseCase) : Base
                     }
                 }
             }).addToDisposables()
+    }
+
+    private fun saveUserSession(response: RegisterResponse) {
+        val user = response.data.user
+        val userDto = UserDto(
+            email = user.email,
+            name = user.name,
+            token = response.data.token,
+            id = user.id,
+            username = user.username
+        )
+        sessionManager.saveUserSession(userDto)
     }
 }
