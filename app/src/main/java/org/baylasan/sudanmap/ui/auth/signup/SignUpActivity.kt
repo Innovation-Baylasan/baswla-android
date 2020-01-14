@@ -1,6 +1,7 @@
 package org.baylasan.sudanmap.ui.auth.signup
 
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.util.Patterns
@@ -8,9 +9,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import kotlinx.android.synthetic.main.fragment_sign_up.*
+import kotlinx.android.synthetic.main.activity_sign_up.*
 import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.data.user.model.RegisterRequest
+import org.baylasan.sudanmap.ui.main.MainActivity
 import org.baylasan.sudanmap.utils.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -27,7 +29,7 @@ class SignUpActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.fragment_sign_up)
+        setContentView(R.layout.activity_sign_up)
 
 
         individualBtn.setOnClickListener {
@@ -89,7 +91,8 @@ class SignUpActivity : AppCompatActivity() {
             when (event) {
                 is DataEvent -> {
                     hideProgress()
-
+                    startActivity(Intent(this, MainActivity::class.java))
+                    finish()
                 }
                 is LoadingEvent -> {
                     signUpProgressBar.show()
@@ -146,7 +149,8 @@ class SignUpActivity : AppCompatActivity() {
             return
         }
 
-        val registerRequest = RegisterRequest(email, name, password, passwordConfirmation ,roleId = selectedType)
+        val registerRequest =
+            RegisterRequest(email, name, password, passwordConfirmation, roleId = selectedType)
 
         viewModel.register(registerRequest)
     }

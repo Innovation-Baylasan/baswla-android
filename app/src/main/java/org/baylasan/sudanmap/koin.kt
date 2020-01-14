@@ -48,7 +48,7 @@ val appModule = module {
     single {
         provideErrorConverter(get())
     }
-    factory <SessionManager> { SessionManagerImpl(get()) }
+    factory<SessionManager> { SessionManagerImpl(get()) }
 }
 
 val categoryModule = module(override = true) {
@@ -89,9 +89,9 @@ val userModule = module(override = true) {
     factory { get<Retrofit>().create(SudanMapApi.User::class.java) }
     factory<UserRepository> { UserApi(get(), get()) }
     factory { UserRegisterUseCase(get()) }
-    viewModel { RegisterViewModel(get() ,get()) }
+    viewModel { RegisterViewModel(get(), get()) }
     factory { UserLoginUseCase(get()) }
-    viewModel { LoginViewModel(get()) }
+    viewModel { LoginViewModel(get(), get()) }
 
 }
 

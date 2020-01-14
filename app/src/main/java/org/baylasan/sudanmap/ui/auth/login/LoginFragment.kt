@@ -69,6 +69,8 @@ class LoginFragment : Fragment() {
             when (event) {
                 is DataEvent -> {
                     hideProgress()
+                    startActivity(Intent(activity, MainActivity::class.java))
+                    activity?.finish()
                 }
                 is LoadingEvent -> {
                     loginProgress.show()
@@ -77,7 +79,7 @@ class LoginFragment : Fragment() {
                 is ErrorEvent -> {
                     hideProgress()
                     try {
-                        Log.d("KLD", event.errorMessage)
+                        Log.d("KLD", event.errorMessage!!)
                     } catch (e: Exception) {
                         e.printStackTrace()
                     }
