@@ -140,6 +140,9 @@ And <font color="#003a7c">
     <string name="password_required">Password required</string>
     <string name="password_should_be_8_chars">Password should be 8 characters at least</string>
     <string name="please_confirm_password">Please confirm your password</string>
-    <string name="password_didnt_match">Password didn\'t match</string>
+    <string name="password_didnt_match">Password did not match</string>
     <string name="name_required">Name required</string>
+    <string name="organization_location">Organization location</string>
+    <string name="continue_complete">Continue and Complete</string>
+    <string name="upload_cover_photo">Upload cover photo</string>
 </resources>
