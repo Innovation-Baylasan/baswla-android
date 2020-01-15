@@ -14,35 +14,5 @@
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/ic_add" />
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:orientation="vertical">
-
-        <ImageView
-            android:layout_width="260dp"
-            android:layout_height="260dp"
-            app:srcCompat="@drawable/ic_no_place_empty" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:fontFamily="@font/neo_sans_arabic_bold"
-            android:text="No Places around"
-            android:textColor="@color/black"
-            android:textSize="16sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            android:fontFamily="@font/neo_sans_arabic_light"
-            android:gravity="center"
-            android:text="Try to check later or refresh now or Try to check later or refresh now Try to check later or refresh now Try to check later or refresh now " />
-    </LinearLayout>
+    <include layout="@layout/empty_place_layout" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
