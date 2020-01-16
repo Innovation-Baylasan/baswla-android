@@ -18,23 +18,18 @@ class RegisterViewModel(
 ) : BaseViewModel() {
     val events = MutableLiveData<RegisterEvent>()
 
-    private val _error = MutableLiveData<Int>()
-    val errorMessage: LiveData<Int> = _error
 
     fun register(registerRequest: RegisterRequest) {
         events.value = LoadingEvent
-        registerUseCase.execute(UserRegisterUseCase.Params(registerRequest)).subscribeOn(
-            Schedulers.io()
-        )
+        registerUseCase.execute(UserRegisterUseCase.Params(registerRequest))
+            .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ registerResponse ->
                 saveUserSession(registerResponse)
                 events.value = DataEvent(registerResponse)
             }, {
                 events.value = when (it) {
-                    is UnAuthorizedException -> {
-                        SessionExpiredEvent
-                    }
+                   
                     is TimeoutConnectionException -> {
                         TimeoutEvent
                     }
@@ -50,7 +45,7 @@ class RegisterViewModel(
                         ErrorEvent(it.message)
                     }
                     else -> {
-                        ErrorEvent("Unexpected errror")
+                        ErrorEvent("Unexpected error")
                     }
                 }
             }).addToDisposables()

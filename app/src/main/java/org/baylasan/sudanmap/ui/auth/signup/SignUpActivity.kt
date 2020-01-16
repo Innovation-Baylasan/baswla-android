@@ -135,7 +135,7 @@ class SignUpActivity : AppCompatActivity() {
             toast(getString(R.string.password_required))
             return
         }
-        if (password.length < 8) {
+        if (password.length < 6) {
             toast(getString(R.string.password_should_be_8_chars))
             return
         }

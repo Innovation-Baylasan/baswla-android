@@ -3,7 +3,6 @@ package org.baylasan.sudanmap.ui.auth.login
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -59,7 +58,6 @@ class LoginFragment : Fragment() {
             loginViewModel.login(email, password)
         }
 
-        observeError()
 
         observeEvent()
     }
@@ -74,16 +72,17 @@ class LoginFragment : Fragment() {
                 }
                 is LoadingEvent -> {
                     loginProgress.show()
-
                 }
                 is ErrorEvent -> {
                     hideProgress()
-                    try {
-                        Log.d("KLD", event.errorMessage!!)
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                    }
+
                     activity?.toast(event.errorMessage ?: "error")
+                }
+                is ValidationErrorEvent -> {
+                    hideProgress()
+                    if (event.message != 0) {
+                        activity?.toast(event.message)
+                    }
                 }
                 else -> hideProgress()
             }
@@ -92,14 +91,6 @@ class LoginFragment : Fragment() {
 
     private fun hideProgress() {
         loginProgress.gone()
-    }
-
-    private fun observeError() {
-        loginViewModel.errorMessage.observe(this, Observer { messageId ->
-            messageId?.let {
-                activity?.toast(it)
-            }
-        })
     }
 
 
