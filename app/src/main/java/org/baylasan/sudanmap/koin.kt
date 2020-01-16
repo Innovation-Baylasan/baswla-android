@@ -32,6 +32,7 @@ import org.baylasan.sudanmap.ui.auth.signup.RegisterViewModel
 import org.baylasan.sudanmap.ui.layers.MapLayersViewModel
 import org.baylasan.sudanmap.ui.main.place.EntityViewModel
 import org.baylasan.sudanmap.ui.placesearch.PlaceSearchViewModel
+import org.baylasan.sudanmap.ui.splash.SessionViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -95,6 +96,10 @@ val searchModule = module(override = true) {
     viewModel {
         EntityViewModel(get(), get())
     }
+}
+val sessionModule = module(override = true) {
+
+    viewModel { SessionViewModel(get()) }
 }
 
 val userModule = module(override = true) {

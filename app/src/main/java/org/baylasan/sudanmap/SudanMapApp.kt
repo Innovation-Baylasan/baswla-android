@@ -15,7 +15,16 @@ class SudanMapApp : Application() {
         startKoin {
             androidLogger()
             androidContext(applicationContext)
-            modules(listOf(appModule, categoryModule, entityListModule, searchModule, userModule))
+            modules(
+                listOf(
+                    appModule,
+                    categoryModule,
+                    entityListModule,
+                    searchModule,
+                    userModule,
+                    sessionModule
+                )
+            )
 
         }
 
