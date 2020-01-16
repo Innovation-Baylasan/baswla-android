@@ -144,5 +144,5 @@ And <font color="#003a7c">
     <string name="name_required">Name required</string>
     <string name="organization_location">Organization location</string>
     <string name="continue_complete">Continue and Complete</string>
-    <string name="upload_cover_photo">Upload cover photo</string>
+    <string name="upload_cover_photo">Upload cover\nphoto</string>
 </resources>
