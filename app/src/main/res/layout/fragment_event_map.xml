@@ -3,14 +3,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="org.baylasan.sudanmap.ui.main.event.EventMapFragment">
+
+
     <include
         android:id="@+id/searchLayout"
         layout="@layout/search_bar_layout" />
 
     <fragment
+
         android:id="@+id/mapFragment"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+    <include layout="@layout/empty_event_layout" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

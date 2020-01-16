@@ -44,11 +44,21 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener,
     }
 
     override fun onBackPressed() {
-        if (fragmentLayout.isDrawerOpen(navigationView))
-            closeDrawer()
-        else
-            super.onBackPressed()
+        when {
+            fragmentLayout.isDrawerOpen(navigationView) -> closeDrawer()
+            viewPager.currentItem == 1 -> {
+                selectFirstPage()
 
+
+            }
+            else -> super.onBackPressed()
+
+        }
+    }
+
+    private fun selectFirstPage() {
+        viewPager.setCurrentItem(0, false)
+        bottomNavigation.menu.findItem(R.id.action_places).isChecked = true
     }
 
     private fun closeDrawer() {

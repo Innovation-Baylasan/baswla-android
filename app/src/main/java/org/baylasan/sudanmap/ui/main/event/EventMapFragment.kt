@@ -13,7 +13,7 @@ import org.baylasan.sudanmap.ui.main.MainActivity
 import org.baylasan.sudanmap.utils.GpsChecker
 
 
-class EventMapFragment : Fragment(R.layout.fragment_event_map), GpsChecker.OnGpsListener {
+class EventMapFragment : Fragment(R.layout.fragment_event_map) {
     private lateinit var activity: MainActivity
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -24,7 +24,10 @@ class EventMapFragment : Fragment(R.layout.fragment_event_map), GpsChecker.OnGps
         super.onViewCreated(view, savedInstanceState)
         val mapFragment =
             childFragmentManager.findFragmentById(R.id.mapFragment) as SupportMapFragment?
-        GpsChecker(activity).turnGPSOn(this)
+        openDrawerMenu.setOnClickListener {
+            activity.openDrawer()
+        }
+
         mapFragment?.getMapAsync {googleMap ->
 
         }
@@ -45,7 +48,4 @@ class EventMapFragment : Fragment(R.layout.fragment_event_map), GpsChecker.OnGps
             .commit()
     }
 
-    override fun onGpsEnabled() {
-
-    }
 }
