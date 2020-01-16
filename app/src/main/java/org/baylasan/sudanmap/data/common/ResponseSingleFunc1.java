@@ -32,6 +32,10 @@ public class ResponseSingleFunc1<T> implements Function<Response<T>, Single<T>> 
                 return Single.error(new ExceedLimitException());
             }
 
+            if (code == 422) {
+                return Single.error(new ResponseException(response.errorBody().toString()));
+            }
+
             ApiErrorResponse apiErrorResponse;
 
             try {

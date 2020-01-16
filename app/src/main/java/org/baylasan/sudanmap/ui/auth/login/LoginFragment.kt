@@ -7,16 +7,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import kotlinx.android.synthetic.main.fragment_login.*
 import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.ui.auth.signup.SignUpActivity
 import org.baylasan.sudanmap.ui.main.MainActivity
+import org.baylasan.sudanmap.utils.asString
+import org.baylasan.sudanmap.utils.gone
+import org.baylasan.sudanmap.utils.show
+import org.baylasan.sudanmap.utils.toast
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 /**
  * A simple [Fragment] subclass.
  */
 class LoginFragment : Fragment() {
+
+    private val loginViewModel: LoginViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,6 +49,48 @@ class LoginFragment : Fragment() {
         signUpAsOrg.setOnClickListener {
             startActivity(Intent(activity!!, SignUpActivity::class.java))
         }
+
+
+        signInBtn.setOnClickListener {
+            val email = loginEmailEt.asString()
+            val password = loginPasswordEt.asString()
+
+            loginViewModel.login(email, password)
+        }
+
+
+        observeEvent()
+    }
+
+    private fun observeEvent() {
+        loginViewModel.event.observe(this, Observer { event ->
+            when (event) {
+                is DataEvent -> {
+                    hideProgress()
+                    startActivity(Intent(activity, MainActivity::class.java))
+                    activity?.finish()
+                }
+                is LoadingEvent -> {
+                    loginProgress.show()
+                }
+                is ErrorEvent -> {
+                    hideProgress()
+
+                    activity?.toast(event.errorMessage ?: "error")
+                }
+                is ValidationErrorEvent -> {
+                    hideProgress()
+                    if (event.message != 0) {
+                        activity?.toast(event.message)
+                    }
+                }
+                else -> hideProgress()
+            }
+        })
+    }
+
+    private fun hideProgress() {
+        loginProgress.gone()
     }
 
 

@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context="org.baylasan.sudanmap.ui.auth.login.LoginFragment">
 
     <ImageView
@@ -40,8 +41,8 @@
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/neo_sans_arabic_bold"
                 android:text="@string/app_name"
-                android:textSize="22sp"
                 android:textColor="@color/black"
+                android:textSize="22sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageView4" />
@@ -52,13 +53,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="32dp"
-                android:text="@string/user_name"
+                android:text="@string/email"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
             <com.google.android.material.textfield.TextInputEditText
 
-                android:id="@+id/loginUSerNameEt"
+                android:id="@+id/loginEmailEt"
                 style="@style/RoundedCornerEditText"
                 android:layout_width="0dp"
 
@@ -78,7 +79,7 @@
 
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/loginUSerNameEt" />
+                app:layout_constraintTop_toBottomOf="@+id/loginEmailEt" />
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/loginPasswordEt"
@@ -98,30 +99,29 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
-                android:text="@string/sgin_in"
-                app:elevation="0dp"
-                android:textSize="22sp"
-                app:cornerRadius="8dp"
                 android:fontFamily="@font/neo_sans_arabic_regular"
-                android:layout_marginBottom="8dp"
+                android:text="@string/sgin_in"
                 android:textColor="@color/white"
+                android:textSize="22sp"
                 app:backgroundTint="@color/colorAccent"
+                app:cornerRadius="8dp"
+                app:elevation="0dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/loginPasswordEt" />
+                app:layout_constraintTop_toBottomOf="@+id/loginProgress" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/signUpAsOrg"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                app:cornerRadius="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:fontFamily="@font/neo_sans_arabic_regular"
-                android:textSize="22sp"
-                app:elevation="0dp"
                 android:text="@string/sign_up_as_org"
+                android:textSize="22sp"
+                app:cornerRadius="8dp"
+                app:elevation="0dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/signInBtn"
@@ -149,8 +149,8 @@
                     android:layout_centerInParent="true"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:text="@string/or"
                     android:fontFamily="@font/neo_sans_arabic_light"
+                    android:text="@string/or"
                     android:textColor="@android:color/darker_gray" />
 
                 <View
@@ -173,19 +173,32 @@
                 android:id="@+id/signInAsGuest"
                 style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="wrap_content"
-                android:fontFamily="@font/neo_sans_arabic_bold"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
+                android:fontFamily="@font/neo_sans_arabic_bold"
                 android:text="@string/sign_in_as_guest"
-                android:textSize="16sp"
                 android:textColor="@color/colorAccent"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/relativeLayout"
                 app:rippleColor="@color/colorAccent" />
+
+            <ProgressBar
+                android:id="@+id/loginProgress"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/loginPasswordEt"
+                tools:visibility="visible" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

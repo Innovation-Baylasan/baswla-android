@@ -3,10 +3,12 @@ package org.baylasan.sudanmap.data
 import io.reactivex.Single
 import org.baylasan.sudanmap.data.category.model.CategoryDto
 import org.baylasan.sudanmap.data.entity.EntityResponse
+import org.baylasan.sudanmap.data.user.model.LoginRequest
+import org.baylasan.sudanmap.data.user.model.LoginResponse
+import org.baylasan.sudanmap.data.user.model.RegisterRequest
+import org.baylasan.sudanmap.data.user.model.RegisterResponse
 import retrofit2.Response
-import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface SudanMapApi {
 
@@ -32,6 +34,14 @@ interface SudanMapApi {
 
         @GET("categories/{id}")
         fun getCategoryDetails(@Path("id") categoryId: Int)
+    }
+
+    interface User {
+        @POST("register")
+        fun register(@Body registerRequest: RegisterRequest): Single<Response<RegisterResponse>>
+
+        @POST("login")
+        fun login(@Body loginRequest: LoginRequest): Single<Response<LoginResponse>>
     }
 }
 

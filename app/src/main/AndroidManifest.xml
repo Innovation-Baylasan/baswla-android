@@ -19,39 +19,44 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup">
-        <activity android:name=".ui.place.PlacesActivity"></activity>
-        <activity
-            android:name=".ui.addevent.AddEventActivity"
-            android:configChanges="layoutDirection"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity
-            android:name=".ui.addentity.AddEntityActivity"
-            android:label="@string/title_activity_add_entitiy"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <!--
-                 The API key for Google Maps-based APIs is defined as a string resource.
-                 (See the file "res/values/google_maps_api.xml").
-                 Note that the API key is linked to the encryption key used to sign the APK.
-                 You need a different API key for each encryption key, including the release key that is used to
-                 sign the APK for publishing.
-                 You can define the keys for the debug and release targets in src/debug/ and src/release/.
-        -->
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
-
-        <activity android:name=".ui.intro.IntroActivity" />
-        <activity android:name=".ui.auth.AuthActivity" />
-        <activity
-            android:name=".ui.main.MainActivity"
-            android:windowSoftInputMode="adjustNothing">
+        <activity android:name=".ui.splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.auth.signup.SignUpActivity" />
+        <activity android:name=".ui.place.PlacesActivity" />
+        <activity
+            android:name=".ui.addevent.AddEventActivity"
+            android:configChanges="layoutDirection"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
+
+        <activity
+            android:name=".ui.addentity.AddEntityActivity"
+            android:label="@string/title_activity_add_entitiy"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
+        <activity android:name=".ui.intro.IntroActivity" />
+        <activity
+            android:name=".ui.auth.AuthActivity"
+            android:windowSoftInputMode="adjustPan|adjustResize">
+
+        </activity>
+        <activity
+            android:name=".ui.main.MainActivity"
+            android:windowSoftInputMode="adjustNothing">
+
+        </activity>
+
+        <activity
+            android:name=".ui.auth.signup.SignUpActivity"
+            android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity android:name=".ui.profile.CompanyProfileActivity" />
     </application>
 

@@ -15,12 +15,20 @@ import org.baylasan.sudanmap.data.SudanMapApi
 import org.baylasan.sudanmap.data.category.CategoryApi
 import org.baylasan.sudanmap.data.common.ApiErrorResponse
 import org.baylasan.sudanmap.data.entity.EntityApi
+import org.baylasan.sudanmap.data.user.SessionManagerImpl
+import org.baylasan.sudanmap.data.user.UserApi
 import org.baylasan.sudanmap.domain.category.CategoryRepository
 import org.baylasan.sudanmap.domain.category.FetchCategoriesUseCase
 import org.baylasan.sudanmap.domain.entity.EntityRepository
 import org.baylasan.sudanmap.domain.entity.FindEntitiesByKeywordUseCase
 import org.baylasan.sudanmap.domain.entity.GetEntitiesUseCase
 import org.baylasan.sudanmap.domain.entity.GetNearbyEntitiesUseCase
+import org.baylasan.sudanmap.domain.user.SessionManager
+import org.baylasan.sudanmap.domain.user.UserLoginUseCase
+import org.baylasan.sudanmap.domain.user.UserRegisterUseCase
+import org.baylasan.sudanmap.domain.user.UserRepository
+import org.baylasan.sudanmap.ui.auth.login.LoginViewModel
+import org.baylasan.sudanmap.ui.auth.signup.RegisterViewModel
 import org.baylasan.sudanmap.ui.layers.MapLayersViewModel
 import org.baylasan.sudanmap.ui.main.place.EntityViewModel
 import org.baylasan.sudanmap.ui.placesearch.PlaceSearchViewModel
@@ -46,6 +54,7 @@ val appModule = module {
     single {
         provideErrorConverter(get())
     }
+    factory<SessionManager> { SessionManagerImpl(get()) }
 }
 
 val categoryModule = module(override = true) {
@@ -88,6 +97,16 @@ val searchModule = module(override = true) {
     }
 }
 
+val userModule = module(override = true) {
+    factory { get<Retrofit>().create(SudanMapApi.User::class.java) }
+    factory<UserRepository> { UserApi(get(), get()) }
+    factory { UserRegisterUseCase(get()) }
+    viewModel { RegisterViewModel(get(), get()) }
+    factory { UserLoginUseCase(get()) }
+    viewModel { LoginViewModel(get(), get()) }
+
+}
+
 private fun provideErrorConverter(retrofit: Retrofit) =
     retrofit.responseBodyConverter<ApiErrorResponse>(ApiErrorResponse::class.java, arrayOf())
 
@@ -112,6 +131,8 @@ private fun provideOkHttpClient(): OkHttpClient = OkHttpClient.Builder()
 private fun okHttpInterceptor() = Interceptor { chain ->
     val request: Request = chain.request().newBuilder()
         .addHeader("Connection", "close")
+        .addHeader("Content-Type", "application/json")
+        .addHeader("Accept", "application/json")
         .build()
     chain.proceed(request)
 }
