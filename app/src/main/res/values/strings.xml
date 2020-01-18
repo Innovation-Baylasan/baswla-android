@@ -142,4 +142,6 @@ And <font color="#003a7c">
     <string name="please_confirm_password">Please confirm your password</string>
     <string name="password_didnt_match">Password didn\'t match</string>
     <string name="name_required">Name required</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="terms_of_use">Terms of use</string>
 </resources>

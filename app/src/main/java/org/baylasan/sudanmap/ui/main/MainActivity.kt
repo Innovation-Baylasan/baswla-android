@@ -20,6 +20,7 @@ import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.ui.main.event.EventMapFragment
 import org.baylasan.sudanmap.ui.main.place.PlaceMapFragment
 import org.baylasan.sudanmap.ui.place.PlacesActivity
+import org.baylasan.sudanmap.ui.privacy.PrivacyPolicyActivity
 import org.baylasan.sudanmap.utils.GpsChecker
 
 
@@ -77,6 +78,9 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener,
 
         openPlacesButton.setOnClickListener {
             startActivityAndCloseDrawer<PlacesActivity>()
+        }
+        actionPrivacyButton.setOnClickListener {
+            startActivityAndCloseDrawer<PrivacyPolicyActivity>()
         }
     }
 

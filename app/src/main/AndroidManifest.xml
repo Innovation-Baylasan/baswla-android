@@ -19,6 +19,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup">
+        <activity android:name=".ui.privacy.PrivacyPolicyActivity"></activity>
         <activity android:name=".ui.splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,13 +31,11 @@
         <activity
             android:name=".ui.addevent.AddEventActivity"
             android:configChanges="layoutDirection"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-
-
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.addentity.AddEntityActivity"
             android:label="@string/title_activity_add_entitiy"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -45,15 +44,10 @@
         <activity android:name=".ui.intro.IntroActivity" />
         <activity
             android:name=".ui.auth.AuthActivity"
-            android:windowSoftInputMode="adjustPan|adjustResize">
-
-        </activity>
+            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
         <activity
             android:name=".ui.main.MainActivity"
-            android:windowSoftInputMode="adjustNothing">
-
-        </activity>
-
+            android:windowSoftInputMode="adjustNothing"></activity>
         <activity
             android:name=".ui.auth.signup.SignUpActivity"
             android:windowSoftInputMode="adjustPan|adjustResize" />
