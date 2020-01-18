@@ -4,8 +4,10 @@ package org.baylasan.sudanmap.ui.profile
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.appbar.AppBarLayout
+import kotlinx.android.synthetic.main.activity_event_details.*
 import kotlinx.android.synthetic.main.content_company_profile.*
 import kotlinx.android.synthetic.main.fragment_company_profile.*
+import kotlinx.android.synthetic.main.fragment_company_profile.toolbar
 import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.data.entity.model.Entity
 import org.baylasan.sudanmap.ui.main.place.load

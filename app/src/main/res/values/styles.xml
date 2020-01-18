@@ -22,7 +22,7 @@
           </item>-->
         <item name="android:fontFamily">@font/neo_sans_arabic_regular</item>
 
-<!--
+        <!--
         <item name="android:colorBackground" >@color/background</item >
 -->
         <item name="colorOnBackground">#212121</item>
@@ -48,8 +48,6 @@
         <!--<item name="android:textSize">24sp</item>-->
 
 
-
-
         <!--	<item name="toolbarStyle" >@style/ToolbarTheme</item >
         <item name="actionBarTheme" >@style/ToolbarTheme</item >
         <item name="actionBarStyle" >@style/ToolbarTheme</item >-->
@@ -60,12 +58,14 @@
         -->
 
     </style>
+
     <style name="SelectableChip" parent="@style/Widget.MaterialComponents.Chip.Filter">
         <item name="chipBackgroundColor">@color/chip_background</item>
         <item name="android:textColor">@color/chip_text_color</item>
         <item name="checkedIconVisible">false</item>
         <item name="android:checkableBehavior">single</item>
     </style>
+
     <style name="Outlined" parent="Widget.MaterialComponents.Chip.Action">
         <item name="chipBackgroundColor">@android:color/transparent</item>
         <item name="chipStrokeColor">@android:color/darker_gray</item>
