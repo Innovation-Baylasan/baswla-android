@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/neo_sans_arabic_bold"
-        android:text="No Places around"
+        android:text="No Event around"
         android:textColor="@color/black"
         android:textSize="16sp" />
 

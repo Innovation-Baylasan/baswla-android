@@ -66,6 +66,7 @@
                     style="@style/Widget.MaterialComponents.Button.UnelevatedButton.navigation"
                     android:drawableStart="@drawable/ic_my_events"
                     android:text="Events"
+                    android:id="@+id/openEventsButton"
                     app:cornerRadius="0dp"
                     app:icon="@drawable/ic_my_places"
                     app:iconPadding="16dp"

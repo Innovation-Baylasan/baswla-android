@@ -18,6 +18,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.ui.TOSActivity
+import org.baylasan.sudanmap.ui.event.EventsActivity
 import org.baylasan.sudanmap.ui.main.event.EventMapFragment
 import org.baylasan.sudanmap.ui.main.place.PlaceMapFragment
 import org.baylasan.sudanmap.ui.place.PlacesActivity
@@ -86,6 +87,9 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener,
         }
         tosButton.setOnClickListener {
             startActivityAndCloseDrawer<TOSActivity>()
+        }
+        openEventsButton.setOnClickListener {
+            startActivityAndCloseDrawer<EventsActivity>()
         }
     }
 
