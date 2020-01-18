@@ -19,6 +19,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.ui.TOSActivity
 import org.baylasan.sudanmap.ui.event.EventsActivity
+import org.baylasan.sudanmap.ui.faq.FAQActivity
 import org.baylasan.sudanmap.ui.main.event.EventMapFragment
 import org.baylasan.sudanmap.ui.main.place.PlaceMapFragment
 import org.baylasan.sudanmap.ui.place.PlacesActivity
@@ -90,6 +91,9 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener,
         }
         openEventsButton.setOnClickListener {
             startActivityAndCloseDrawer<EventsActivity>()
+        }
+        openFaqButton.setOnClickListener {
+            startActivityAndCloseDrawer<FAQActivity>()
         }
     }
 

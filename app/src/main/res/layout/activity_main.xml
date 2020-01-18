@@ -82,8 +82,9 @@
                 <com.google.android.material.button.MaterialButton
                     style="@style/Widget.MaterialComponents.Button.UnelevatedButton.navigation"
                     android:drawableStart="@drawable/ic_faq"
-                    android:text="FAQ"
+                    android:text="@string/faq"
                     app:cornerRadius="0dp"
+                    android:id="@+id/openFaqButton"
                     app:icon="@drawable/ic_faq"
                     app:iconPadding="16dp"
                     app:iconSize="30dp" />

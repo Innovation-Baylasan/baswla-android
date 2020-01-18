@@ -1,12 +1,12 @@
 package org.baylasan.sudanmap.utils
 
+import android.R.attr.duration
 import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.LayoutInflater
-import android.view.MotionEvent
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.view.animation.Animation
+import android.view.animation.Transformation
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageView
@@ -18,6 +18,7 @@ import androidx.appcompat.widget.AppCompatEditText
 fun View.hide() {
     visibility = View.INVISIBLE
 }
+
 fun AppCompatEditText.setEndDrawableOnTouchListener(func: AppCompatEditText.() -> Unit) {
     setOnTouchListener { _, event ->
         var consumed = false
@@ -35,7 +36,6 @@ fun AppCompatEditText.setEndDrawableOnTouchListener(func: AppCompatEditText.() -
 
     }
 }
-
 
 
 fun ViewGroup.inflate(layoutRes: Int, attachToRoot: Boolean = false): View? {
@@ -58,7 +58,6 @@ fun Context.toast(message: Int) {
 }
 
 
-
 fun View.slideExit() {
     if (translationY == 0f) animate().translationY(-height.toFloat())
 }
@@ -71,12 +70,61 @@ fun View.show() {
     visibility = View.VISIBLE
 }
 
+fun View.expand() {
+    measure(
+        WindowManager.LayoutParams.MATCH_PARENT
+        ,
+        View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
+    )
+    val targetHeight = measuredHeight
+    // Older versions of android (pre API 21) cancel animations for views with a height of 0.
+   layoutParams.height = 1
+    visibility = View.VISIBLE
+    val a: Animation = object : Animation() {
+        override fun applyTransformation(
+            interpolatedTime: Float,
+            t: Transformation?
+        ) {
+           layoutParams.height =
+                if (interpolatedTime == 1f) targetHeight else (targetHeight * interpolatedTime).toInt()
+            requestLayout()
+        }
+
+        override fun willChangeBounds(): Boolean {
+            return true
+        }
+    }
+    a.duration = duration.toLong()
+    startAnimation(a)
+}
+
+fun View.collapse() {
+    val initialHeight = measuredHeight
+    val a: Animation = object : Animation() {
+        override fun applyTransformation(
+            interpolatedTime: Float,
+            t: Transformation?
+        ) {
+            if (interpolatedTime == 1f) {
+                visibility = View.GONE
+            } else {
+                layoutParams.height =
+                    initialHeight - (initialHeight * interpolatedTime).toInt()
+                requestLayout()
+            }
+        }
+
+        override fun willChangeBounds(): Boolean {
+            return true
+        }
+    }
+    a.duration = duration.toLong()
+    startAnimation(a)
+}
 
 fun View.gone() {
-    if (this != null) {
-        if (isVisible) {
-            visibility = View.GONE
-        }
+    if (isVisible) {
+        visibility = View.GONE
     }
 }
 
@@ -116,8 +164,6 @@ fun EditText.afterChanged(cb: (String) -> Unit) {
 }
 
 
-
-
 val View.isVisible: Boolean
     get() = this.visibility == View.VISIBLE
 
@@ -150,7 +196,6 @@ fun EditText.asString(): String {
     }
     return ""
 }
-
 
 
 fun View.hideKeybord() {

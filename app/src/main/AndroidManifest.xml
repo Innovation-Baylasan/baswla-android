@@ -19,7 +19,8 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup">
-        <activity android:name=".ui.event.EventsActivity"></activity>
+        <activity android:name=".ui.faq.FAQActivity"></activity>
+        <activity android:name=".ui.event.EventsActivity" />
         <activity android:name=".ui.TOSActivity" />
         <activity android:name=".ui.privacy.PrivacyPolicyActivity" />
         <activity android:name=".ui.splash.SplashActivity">
