@@ -17,6 +17,7 @@ import androidx.viewpager.widget.ViewPager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import org.baylasan.sudanmap.R
+import org.baylasan.sudanmap.ui.TOSActivity
 import org.baylasan.sudanmap.ui.main.event.EventMapFragment
 import org.baylasan.sudanmap.ui.main.place.PlaceMapFragment
 import org.baylasan.sudanmap.ui.place.PlacesActivity
@@ -28,6 +29,7 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener,
     BottomNavigationView.OnNavigationItemSelectedListener, GpsChecker.OnGpsListener {
 
     private lateinit var gpsChecker: GpsChecker
+    private var didSetupViewPager = false
 
     override fun onActivityResult(
         requestCode: Int,
@@ -82,6 +84,9 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener,
         actionPrivacyButton.setOnClickListener {
             startActivityAndCloseDrawer<PrivacyPolicyActivity>()
         }
+        tosButton.setOnClickListener {
+            startActivityAndCloseDrawer<TOSActivity>()
+        }
     }
 
     private inline fun <reified T> startActivityAndCloseDrawer() {
@@ -133,7 +138,7 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener,
 
 
     private fun setupViewpager() {
-
+        didSetupViewPager = true
         viewPager.adapter = FragmentAdapter(supportFragmentManager)
         viewPager.addOnPageChangeListener(this)
         viewPager.offscreenPageLimit = 2
@@ -153,7 +158,8 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener,
         val fragment = supportFragmentManager.findFragmentByTag("perm")
         if (fragment != null) {
             if (!doseNotHaveLocationPermission()) {
-                setupViewpager()
+                if (!didSetupViewPager)
+                    setupViewpager()
                 supportFragmentManager.beginTransaction().remove(fragment).commit()
             }
         }
