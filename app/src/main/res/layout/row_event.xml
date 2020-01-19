@@ -57,7 +57,7 @@
             android:fontFamily="@font/neo_sans_arabic_light"
             android:textSize="14sp"
             android:gravity="center"
-            android:drawableStart="@drawable/ic_label_black_24dp"
+            android:drawableStart="@drawable/ic_price_label"
             />
         <TextView
             android:layout_marginTop="8dp"
@@ -71,7 +71,7 @@
             android:fontFamily="@font/neo_sans_arabic_light"
             android:textSize="14sp"
             android:gravity="center"
-            android:drawableStart="@drawable/ic_event_seat_black_24dp"
+            android:drawableStart="@drawable/ic_seat"
             />
     </LinearLayout>
 

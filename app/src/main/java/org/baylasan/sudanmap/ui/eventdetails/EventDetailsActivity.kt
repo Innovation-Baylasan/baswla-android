@@ -12,21 +12,7 @@ class EventDetailsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_event_details)
-        setSupportActionBar(toolbar)
-
-        app_bar.addOnOffsetChangedListener(object : AppBarChangedListener() {
-            override fun onStateChanged(appBarLayout: AppBarLayout, state: State) {
-                if (state == State.COLLAPSED) {
-
-                    supportActionBar?.title = "Art Space event"
-
-                } else {
-                    supportActionBar?.title = ""
 
 
-                }
-            }
-
-        })
     }
 }

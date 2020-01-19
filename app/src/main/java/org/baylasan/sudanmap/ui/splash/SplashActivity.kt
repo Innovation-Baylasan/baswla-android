@@ -21,17 +21,17 @@ class SplashActivity : AppCompatActivity() {
         sessionViewModel.sessionLiveData.observe(this, Observer {
             when (it) {
                 is AuthenticatedUser -> {
-                    val intent = Intent(this@SplashActivity, IntroActivity::class.java)
-                    startActivity(intent)
-                    finish()
-                }
-                is UnauthenticatedUser -> {
                     val intent = Intent(this@SplashActivity, MainActivity::class.java)
                     startActivity(intent)
                     finish()
                 }
-                is FirstTimeLaunch -> {
+                is UnauthenticatedUser -> {
                     val intent = Intent(this@SplashActivity, AuthActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+                is FirstTimeLaunch -> {
+                    val intent = Intent(this@SplashActivity, IntroActivity::class.java)
                     startActivity(intent)
                     finish()
 

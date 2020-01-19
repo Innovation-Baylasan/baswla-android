@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.MapStyleOptions
 import kotlinx.android.synthetic.main.search_bar_layout.*
 import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.ui.eventsearch.EventSearchFragment
@@ -29,6 +30,7 @@ class EventMapFragment : Fragment(R.layout.fragment_event_map) {
         }
 
         mapFragment?.getMapAsync {googleMap ->
+            googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(activity,R.raw.style))
 
         }
         searchField.setOnClickListener {

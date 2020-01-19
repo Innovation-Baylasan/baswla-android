@@ -6,8 +6,7 @@
     android:layout_height="match_parent"
     android:background="#F3F3F3"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="org.baylasan.sudanmap.ui.eventdetails.EventDetailsActivity"
-    tools:showIn="@layout/activity_event_details">
+    tools:context="org.baylasan.sudanmap.ui.eventdetails.EventDetailsActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,8 +18,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            app:cardCornerRadius="0dp"
-            app:cardBackgroundColor="#F3F3F3">
+            app:cardBackgroundColor="#F3F3F3"
+            app:cardCornerRadius="0dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -177,9 +176,9 @@
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="0dp"
             android:layout_marginTop="8dp"
-            app:cardBackgroundColor="@color/white">
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="0dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -202,5 +201,6 @@
                     android:text="APPLY NOW !" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
+
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

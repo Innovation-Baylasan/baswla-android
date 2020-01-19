@@ -22,18 +22,18 @@
         <activity
             android:name=".ui.eventdetails.EventDetailsActivity"
             android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".ui.faq.FAQActivity" />
         <activity android:name=".ui.event.EventsActivity" />
         <activity android:name=".ui.TOSActivity" />
         <activity android:name=".ui.privacy.PrivacyPolicyActivity" />
         <activity android:name=".ui.splash.SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".ui.place.PlacesActivity" />
         <activity

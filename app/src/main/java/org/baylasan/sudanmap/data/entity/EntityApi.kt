@@ -1,5 +1,6 @@
 package org.baylasan.sudanmap.data.entity
 
+import io.reactivex.Completable
 import io.reactivex.Single
 import okhttp3.ResponseBody
 import org.baylasan.sudanmap.data.SudanMapApi
@@ -34,5 +35,35 @@ class EntityApi(
             .onErrorResumeNext(ThrowableSingleFunc1())
             .flatMap(ResponseSingleFunc1(errorConverter))
             .map { it.entityList }
+    }
+
+    override fun rateEntity(id: Int, rating: Double): Completable {
+        return entityApi.rateEntityById(id, rating)
+            .onErrorResumeNext(ThrowableSingleFunc1())
+            .flatMap(ResponseSingleFunc1(errorConverter))
+            .ignoreElement()
+
+
+    }
+
+    override fun addReview(id: Int, comment: String): Completable {
+        return entityApi.reviewEntityById(id, comment)
+            .onErrorResumeNext(ThrowableSingleFunc1())
+            .flatMap(ResponseSingleFunc1(errorConverter))
+            .ignoreElement()
+    }
+
+    override fun follow(id: Int): Completable {
+        return entityApi.followEntity(id)
+            .onErrorResumeNext(ThrowableSingleFunc1())
+            .flatMap(ResponseSingleFunc1(errorConverter))
+            .ignoreElement()
+    }
+
+    override fun unFollow(id: Int): Completable {
+        return entityApi.unFollowEntity(id)
+            .onErrorResumeNext(ThrowableSingleFunc1())
+            .flatMap(ResponseSingleFunc1(errorConverter))
+            .ignoreElement()
     }
 }

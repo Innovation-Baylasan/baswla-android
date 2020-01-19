@@ -21,6 +21,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.card.MaterialCardView
@@ -81,6 +82,7 @@ class PlaceMapFragment : Fragment(R.layout.fragment_place_map) {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity)
 
         mapFragment?.getMapAsync { googleMap ->
+            googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(activity,R.raw.style))
             this.googleMap = googleMap
             googleMap.isMyLocationEnabled = ActivityCompat.checkSelfPermission(
                 activity,
