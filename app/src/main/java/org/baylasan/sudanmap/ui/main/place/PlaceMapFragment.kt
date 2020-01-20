@@ -66,6 +66,7 @@ class PlaceMapFragment : Fragment(R.layout.fragment_place_map) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Log.d("MEGA","view recreated")
 
         openDrawerMenu.setOnClickListener {
             activity.openDrawer()
@@ -302,7 +303,7 @@ class PlaceMapFragment : Fragment(R.layout.fragment_place_map) {
             })
             .zoom(12f)
             .build()
-        googleMap?.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+        googleMap?.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
     }
 
     override fun onDestroy() {

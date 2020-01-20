@@ -5,13 +5,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="org.baylasan.sudanmap.ui.place.PlacesActivity">
+<com.google.android.material.appbar.AppBarLayout
+    android:layout_width="match_parent"
+    app:elevation="8dp"
+    android:layout_height="wrap_content">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        app:navigationIcon="@drawable/ic_back"
+        app:title="My Places" />
+
+</com.google.android.material.appbar.AppBarLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:layout_width="wrap_content"
-        android:layout_gravity="bottom|end"
         android:id="@+id/addPlaceButton"
-        android:layout_margin="16dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
         app:srcCompat="@drawable/ic_add" />
 
     <include layout="@layout/empty_place_layout" />

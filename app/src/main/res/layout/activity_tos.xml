@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="org.baylasan.sudanmap.ui.TOSActivity">
+    tools:context="org.baylasan.sudanmap.ui.terms.TOSActivity">
     <FrameLayout
         android:id="@+id/frameLayout"
         android:layout_width="match_parent"

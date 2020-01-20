@@ -19,6 +19,9 @@ class FAQActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_faq)
+        backButton.setOnClickListener {
+            finish()
+        }
         faqRecyclerView.adapter = FAQAdapter()
         faqRecyclerView.layoutManager = LinearLayoutManager(this)
     }

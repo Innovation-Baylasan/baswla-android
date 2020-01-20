@@ -1,4 +1,4 @@
-package org.baylasan.sudanmap.ui
+package org.baylasan.sudanmap.ui.terms
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

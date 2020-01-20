@@ -26,7 +26,7 @@ class SplashActivity : AppCompatActivity() {
                     finish()
                 }
                 is UnauthenticatedUser -> {
-                    val intent = Intent(this@SplashActivity, AuthActivity::class.java)
+                    val intent = Intent(this@SplashActivity, MainActivity::class.java)
                     startActivity(intent)
                     finish()
                 }

@@ -10,6 +10,7 @@ import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.domain.ViewPagerModel
 import org.baylasan.sudanmap.domain.user.SessionManager
 import org.baylasan.sudanmap.ui.auth.AuthActivity
+import org.baylasan.sudanmap.ui.main.MainActivity
 import org.koin.android.ext.android.inject
 
 class IntroActivity : AppCompatActivity() {
@@ -55,7 +56,7 @@ class IntroActivity : AppCompatActivity() {
         nextBtn.setOnClickListener {
             if (currentPage == 2) {
                 sessionManager.setIsFirstTime(false)
-                startActivity(Intent(applicationContext, AuthActivity::class.java))
+                startActivity(Intent(applicationContext, MainActivity::class.java))
                 finish()
             }
             currentPage += 1

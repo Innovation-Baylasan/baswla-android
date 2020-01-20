@@ -10,4 +10,5 @@ interface SessionManager {
     fun setLoggedIn(loggedIn: Boolean)
     fun setIsFirstTime(firstTime: Boolean)
     fun isFirstTime(): Boolean
+    fun isGuest(): Boolean
 }

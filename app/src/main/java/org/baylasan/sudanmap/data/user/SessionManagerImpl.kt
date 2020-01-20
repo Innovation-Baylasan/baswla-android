@@ -7,13 +7,11 @@ import org.baylasan.sudanmap.domain.user.SessionManager
 import org.baylasan.sudanmap.utils.findPreference
 import org.baylasan.sudanmap.utils.putPreference
 
-class SessionManagerImpl(context: Context) : SessionManager {
-    private var appContext: Context
+class SessionManagerImpl(private val context: Context) : SessionManager {
     private var prefs: SharedPreferences
 
     init {
-        appContext = context.applicationContext
-        prefs = appContext.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+        prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
     }
 
     override fun saveUserSession(user: UserDto) {
@@ -44,6 +42,7 @@ class SessionManagerImpl(context: Context) : SessionManager {
     override fun setIsFirstTime(firstTime: Boolean) = prefs.putPreference(IS_FIRST_TIME, firstTime)
 
     override fun isFirstTime(): Boolean = prefs.findPreference(IS_FIRST_TIME, true)
+    override fun isGuest(): Boolean = !prefs.contains(USER_TOKEN)
 
     companion object {
         private const val PREF_NAME = "baswala"

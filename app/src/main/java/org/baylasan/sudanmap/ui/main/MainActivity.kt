@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -17,7 +18,7 @@ import androidx.viewpager.widget.ViewPager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import org.baylasan.sudanmap.R
-import org.baylasan.sudanmap.ui.TOSActivity
+import org.baylasan.sudanmap.ui.terms.TOSActivity
 import org.baylasan.sudanmap.ui.event.EventsActivity
 import org.baylasan.sudanmap.ui.faq.FAQActivity
 import org.baylasan.sudanmap.ui.main.event.EventMapFragment
@@ -163,11 +164,15 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener,
 
     override fun onResume() {
         super.onResume()
+        Log.d("MEGA","onResume")
         val fragment = supportFragmentManager.findFragmentByTag("perm")
         if (fragment != null) {
             if (!doseNotHaveLocationPermission()) {
-                if (!didSetupViewPager)
+                if (!didSetupViewPager) {
+                    Log.d("MEGA","did setup view pager")
+
                     setupViewpager()
+                }
                 supportFragmentManager.beginTransaction().remove(fragment).commit()
             }
         }
