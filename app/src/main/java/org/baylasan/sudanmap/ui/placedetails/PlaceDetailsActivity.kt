@@ -1,13 +1,11 @@
-package org.baylasan.sudanmap.ui.profile
+package org.baylasan.sudanmap.ui.placedetails
 
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.appbar.AppBarLayout
-import kotlinx.android.synthetic.main.activity_event_details.*
 import kotlinx.android.synthetic.main.content_company_profile.*
-import kotlinx.android.synthetic.main.fragment_company_profile.*
-import kotlinx.android.synthetic.main.fragment_company_profile.toolbar
+import kotlinx.android.synthetic.main.activity_place_details.*
 import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.data.entity.model.Entity
 import org.baylasan.sudanmap.ui.main.place.load
@@ -17,11 +15,11 @@ import org.baylasan.sudanmap.utils.gone
 import org.baylasan.sudanmap.utils.show
 
 
-class CompanyProfileActivity : AppCompatActivity() {
+class PlaceDetailsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.fragment_company_profile)
+        setContentView(R.layout.activity_place_details)
 
         profileBackBtn.setOnClickListener {
             super.onBackPressed()

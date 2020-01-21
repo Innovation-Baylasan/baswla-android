@@ -22,7 +22,8 @@ class SudanMapApp : Application() {
                     entityListModule,
                     searchModule,
                     userModule,
-                    sessionModule
+                    sessionModule,
+                    eventModule
                 )
             )
 

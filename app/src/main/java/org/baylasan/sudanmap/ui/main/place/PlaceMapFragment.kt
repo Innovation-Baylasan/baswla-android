@@ -1,25 +1,20 @@
 package org.baylasan.sudanmap.ui.main.place
 
 
-import android.Manifest
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
 import android.util.Log
 import android.util.TypedValue
 import android.view.View
-import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.MarkerOptions
@@ -38,8 +33,8 @@ import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.data.entity.model.Entity
 import org.baylasan.sudanmap.ui.main.MainActivity
 import org.baylasan.sudanmap.ui.placesearch.PlaceSearchFragment
-import org.baylasan.sudanmap.ui.profile.CompanyProfileActivity
-import org.baylasan.sudanmap.ui.profile.CompanyProfileSheetDialog
+import org.baylasan.sudanmap.ui.placedetails.PlaceDetailsActivity
+import org.baylasan.sudanmap.ui.placedetails.PlaceDetailsSheetDialog
 import org.baylasan.sudanmap.utils.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -66,7 +61,7 @@ class PlaceMapFragment : Fragment(R.layout.fragment_place_map) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d("MEGA","view recreated")
+        Log.d("MEGA", "view recreated")
 
         openDrawerMenu.setOnClickListener {
             activity.openDrawer()
@@ -83,17 +78,16 @@ class PlaceMapFragment : Fragment(R.layout.fragment_place_map) {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity)
 
         mapFragment?.getMapAsync { googleMap ->
-            googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(activity,R.raw.style))
+            googleMap.uiSettings.isMapToolbarEnabled = false
+
+            googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(activity, R.raw.style))
             this.googleMap = googleMap
-            googleMap.isMyLocationEnabled = ActivityCompat.checkSelfPermission(
-                activity,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED
+            googleMap.isMyLocationEnabled = activity.canEnableLocationButton()
             getLocation()
             googleMap.setOnMarkerClickListener {
                 val entity = (it.tag as Entity)
                 Log.d("MEGA", "$entity")
-                CompanyProfileSheetDialog.newInstance(entity).show(fragmentManager!!, "")
+                PlaceDetailsSheetDialog.newInstance(entity).show(fragmentManager!!, "")
                 true
             }
 
@@ -122,7 +116,7 @@ class PlaceMapFragment : Fragment(R.layout.fragment_place_map) {
             object : EntitiesListAdapter.OnItemClick {
                 override fun onItemClick(entity: Entity) {
                     val profileIntent =
-                        Intent(activity, CompanyProfileActivity::class.java)
+                        Intent(activity, PlaceDetailsActivity::class.java)
                     profileIntent.putExtra("entity", entity)
                     startActivity(profileIntent)
 
@@ -293,17 +287,8 @@ class PlaceMapFragment : Fragment(R.layout.fragment_place_map) {
     }
 
 
-    private fun zoomToMyLocation(location: Location?) {
-        val cameraPosition = CameraPosition.Builder()
-            .target(location?.latitude?.let {
-                LatLng(
-                    it,
-                    location.longitude
-                )
-            })
-            .zoom(12f)
-            .build()
-        googleMap?.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+    private fun zoomToMyLocation(location: Location) {
+        googleMap.zoomToMyLocation(location.latitude, location.longitude)
     }
 
     override fun onDestroy() {

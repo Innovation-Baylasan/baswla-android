@@ -15,14 +15,18 @@ import org.baylasan.sudanmap.data.SudanMapApi
 import org.baylasan.sudanmap.data.category.CategoryApi
 import org.baylasan.sudanmap.data.common.ApiErrorResponse
 import org.baylasan.sudanmap.data.entity.EntityApi
+import org.baylasan.sudanmap.data.event.EventApi
 import org.baylasan.sudanmap.data.user.SessionManagerImpl
 import org.baylasan.sudanmap.data.user.UserApi
+import org.baylasan.sudanmap.domain.LocationViewModel
 import org.baylasan.sudanmap.domain.category.CategoryRepository
 import org.baylasan.sudanmap.domain.category.FetchCategoriesUseCase
 import org.baylasan.sudanmap.domain.entity.EntityRepository
 import org.baylasan.sudanmap.domain.entity.FindEntitiesByKeywordUseCase
 import org.baylasan.sudanmap.domain.entity.GetEntitiesUseCase
 import org.baylasan.sudanmap.domain.entity.GetNearbyEntitiesUseCase
+import org.baylasan.sudanmap.domain.event.EventRepository
+import org.baylasan.sudanmap.domain.event.GetEventUseCase
 import org.baylasan.sudanmap.domain.user.SessionManager
 import org.baylasan.sudanmap.domain.user.UserLoginUseCase
 import org.baylasan.sudanmap.domain.user.UserRegisterUseCase
@@ -30,6 +34,7 @@ import org.baylasan.sudanmap.domain.user.UserRepository
 import org.baylasan.sudanmap.ui.auth.login.LoginViewModel
 import org.baylasan.sudanmap.ui.auth.signup.RegisterViewModel
 import org.baylasan.sudanmap.ui.layers.MapLayersViewModel
+import org.baylasan.sudanmap.ui.main.event.EventViewModel
 import org.baylasan.sudanmap.ui.main.place.EntityViewModel
 import org.baylasan.sudanmap.ui.placesearch.PlaceSearchViewModel
 import org.baylasan.sudanmap.ui.splash.SessionViewModel
@@ -56,6 +61,9 @@ val appModule = module {
         provideErrorConverter(get())
     }
     factory<SessionManager> { SessionManagerImpl(get()) }
+    viewModel {
+        LocationViewModel(androidApplication())
+    }
 }
 
 val categoryModule = module(override = true) {
@@ -85,6 +93,14 @@ val entityListModule = module(override = true) {
             get(),
             get()
         )
+    }
+}
+val eventModule = module(override = true) {
+    factory { get<Retrofit>().create(SudanMapApi.Events::class.java) }
+    factory<EventRepository> { EventApi(get(), get()) }
+    factory { GetEventUseCase(get()) }
+    viewModel {
+        EventViewModel(get())
     }
 }
 val searchModule = module(override = true) {

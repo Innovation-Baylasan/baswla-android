@@ -25,18 +25,22 @@ class PicassoMarker(var marker: Marker?) : Target {
     }
 
     override fun onBitmapLoaded(bitmap: Bitmap, from: LoadedFrom) {
+
         marker?.setIcon(BitmapDescriptorFactory.fromBitmap(bitmap))
     }
 
     override fun onBitmapFailed(
         e: Exception,
-        errorDrawable: Drawable
+        errorDrawable: Drawable?
     ) {
-        marker?.setIcon(BitmapDescriptorFactory.fromBitmap(errorDrawable.toBitmap()))
+        if(errorDrawable!=null)
+
+        marker?.setIcon(BitmapDescriptorFactory.fromBitmap(errorDrawable?.toBitmap()))
     }
 
-    override fun onPrepareLoad(placeHolderDrawable: Drawable) {
-        marker?.setIcon(BitmapDescriptorFactory.fromBitmap(placeHolderDrawable.toBitmap()))
+    override fun onPrepareLoad(placeHolderDrawable: Drawable?) {
+        if(placeHolderDrawable!=null)
+        marker?.setIcon(BitmapDescriptorFactory.fromBitmap(placeHolderDrawable?.toBitmap()))
 
     }
 

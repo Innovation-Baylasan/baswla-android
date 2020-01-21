@@ -13,3 +13,5 @@ data class Location(
 ) : Parcelable {
     constructor() : this(0.0, 0.0)
 }
+
+

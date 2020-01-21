@@ -3,6 +3,7 @@ package org.baylasan.sudanmap.data
 import io.reactivex.Single
 import org.baylasan.sudanmap.data.category.model.CategoryDto
 import org.baylasan.sudanmap.data.entity.EntityResponse
+import org.baylasan.sudanmap.data.event.model.EventResponse
 import org.baylasan.sudanmap.data.user.model.LoginRequest
 import org.baylasan.sudanmap.data.user.model.LoginResponse
 import org.baylasan.sudanmap.data.user.model.RegisterRequest
@@ -56,6 +57,11 @@ interface SudanMapApi {
 
         @POST("login")
         fun login(@Body loginRequest: LoginRequest): Single<Response<LoginResponse>>
+    }
+
+    interface Events {
+        @GET("events")
+        fun events(): Single<Response<EventResponse>>
     }
 }
 
