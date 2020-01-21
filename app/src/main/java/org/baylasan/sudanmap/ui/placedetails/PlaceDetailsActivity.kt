@@ -11,8 +11,8 @@ import org.baylasan.sudanmap.data.entity.model.Entity
 import org.baylasan.sudanmap.ui.main.place.load
 import org.baylasan.sudanmap.ui.main.place.loadCircle
 import org.baylasan.sudanmap.ui.view.AppBarChangedListener
-import org.baylasan.sudanmap.utils.gone
-import org.baylasan.sudanmap.utils.show
+import org.baylasan.sudanmap.common.gone
+import org.baylasan.sudanmap.common.show
 
 
 class PlaceDetailsActivity : AppCompatActivity() {

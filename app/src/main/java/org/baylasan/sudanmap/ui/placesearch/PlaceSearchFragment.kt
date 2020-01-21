@@ -22,9 +22,9 @@ import org.baylasan.sudanmap.ui.main.place.EntitiesListAdapter
 import org.baylasan.sudanmap.ui.main.place.LoadingEvent
 import org.baylasan.sudanmap.ui.placedetails.PlaceDetailsActivity
 import org.baylasan.sudanmap.ui.searchfilter.SearchFilterFragment
-import org.baylasan.sudanmap.utils.gone
-import org.baylasan.sudanmap.utils.setEndDrawableOnTouchListener
-import org.baylasan.sudanmap.utils.show
+import org.baylasan.sudanmap.common.gone
+import org.baylasan.sudanmap.common.setEndDrawableOnTouchListener
+import org.baylasan.sudanmap.common.show
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.concurrent.TimeUnit
 

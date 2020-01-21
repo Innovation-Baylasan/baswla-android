@@ -1,4 +1,4 @@
-package org.baylasan.sudanmap.utils
+package org.baylasan.sudanmap.common
 
 import android.app.Activity
 import android.content.ContentValues.TAG

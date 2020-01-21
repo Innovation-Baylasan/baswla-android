@@ -3,23 +3,24 @@ package org.baylasan.sudanmap.ui.main.event
 import androidx.lifecycle.MutableLiveData
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import org.baylasan.sudanmap.data.event.model.EventResponse
+import org.baylasan.sudanmap.common.UiState
+import org.baylasan.sudanmap.data.event.model.Event
 import org.baylasan.sudanmap.domain.event.GetEventUseCase
 import org.baylasan.sudanmap.ui.BaseViewModel
 
 class EventViewModel(private val useCase: GetEventUseCase) : BaseViewModel() {
-    val dataLiveData = MutableLiveData<EventResponse>()
-    val errorLiveData = MutableLiveData<Throwable>()
+    private val uiState = MutableLiveData<UiState<List<Event>>>()
+
+    fun uiState() = uiState
     fun loadEvents() {
+        uiState.value = UiState.Loading()
         useCase.execute()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribe({
-                dataLiveData.value = it
-
+                uiState.value = UiState.Success(it.events)
             }, {
-                errorLiveData.value = it
-            })
-            .addToDisposables()
+                uiState.value = UiState.Error(it)
+            }).addToDisposables()
     }
 }

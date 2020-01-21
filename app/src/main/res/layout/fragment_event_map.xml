@@ -1,24 +1,66 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="org.baylasan.sudanmap.ui.main.event.EventMapFragment">
-
 
     <include
         android:id="@+id/searchLayout"
         layout="@layout/search_bar_layout" />
 
     <fragment
-
         android:id="@+id/mapFragment"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/errorLayout"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|top"
+        android:layout_marginStart="16dp"
+        app:cardBackgroundColor="@color/white"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="16dp"
+        app:contentPadding="8dp">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_error_black_24dp"
+                android:textColor="@color/black"
+                android:textAllCaps="true"
+                android:drawablePadding="8dp"
+                android:text="Failed to load event" />
+            <TextView
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tap to try again"
+                />
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
     <include
         android:id="@+id/emptyLayout"
-        android:visibility="gone"
-        layout="@layout/empty_event_layout" />
+        layout="@layout/empty_event_layout"
+        android:visibility="gone" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

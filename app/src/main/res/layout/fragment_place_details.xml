@@ -78,7 +78,7 @@ android:layout_gravity="center|bottom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/neo_sans_arabic_bold"
-            android:text="View more !!"
+            android:text="@string/view_more"
             app:elevation="0dp" />
     </LinearLayout>
 

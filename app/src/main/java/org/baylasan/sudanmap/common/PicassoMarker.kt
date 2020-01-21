@@ -1,10 +1,8 @@
-package org.baylasan.sudanmap.utils
+package org.baylasan.sudanmap.common
 
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.drawable.Drawable
 import androidx.core.graphics.drawable.toBitmap
-import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.Marker
 import com.squareup.picasso.Picasso.LoadedFrom

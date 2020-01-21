@@ -14,9 +14,9 @@ import kotlinx.android.synthetic.main.activity_add_entity.*
 import kotlinx.android.synthetic.main.content_add_entity.*
 import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.ui.view.AppBarChangedListener
-import org.baylasan.sudanmap.utils.GpsChecker
-import org.baylasan.sudanmap.utils.LocationLiveData
-import org.baylasan.sudanmap.utils.toLatLng
+import org.baylasan.sudanmap.common.GpsChecker
+import org.baylasan.sudanmap.common.LocationLiveData
+import org.baylasan.sudanmap.common.toLatLng
 
 class AddEntityActivity : AppCompatActivity(), GpsChecker.OnGpsListener {
     private lateinit var gpsChecker: GpsChecker

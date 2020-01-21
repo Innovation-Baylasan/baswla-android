@@ -35,7 +35,7 @@ import org.baylasan.sudanmap.ui.main.MainActivity
 import org.baylasan.sudanmap.ui.placesearch.PlaceSearchFragment
 import org.baylasan.sudanmap.ui.placedetails.PlaceDetailsActivity
 import org.baylasan.sudanmap.ui.placedetails.PlaceDetailsSheetDialog
-import org.baylasan.sudanmap.utils.*
+import org.baylasan.sudanmap.common.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.concurrent.TimeUnit

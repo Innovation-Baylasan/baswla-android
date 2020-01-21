@@ -10,10 +10,10 @@ import kotlinx.android.synthetic.main.fragment_login.*
 import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.ui.auth.signup.SignUpActivity
 import org.baylasan.sudanmap.ui.main.MainActivity
-import org.baylasan.sudanmap.utils.asString
-import org.baylasan.sudanmap.utils.gone
-import org.baylasan.sudanmap.utils.show
-import org.baylasan.sudanmap.utils.toast
+import org.baylasan.sudanmap.common.asString
+import org.baylasan.sudanmap.common.gone
+import org.baylasan.sudanmap.common.show
+import org.baylasan.sudanmap.common.toast
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 

@@ -13,7 +13,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.fragment_permission_denied.view.*
 import org.baylasan.sudanmap.R
-import org.baylasan.sudanmap.utils.openSettings
+import org.baylasan.sudanmap.common.openSettings
 
 
 class PermissionDeniedFragment : Fragment() {

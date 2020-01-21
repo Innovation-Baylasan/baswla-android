@@ -1,5 +1,6 @@
 package org.baylasan.sudanmap.ui.eventdetails
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -38,14 +39,15 @@ class EventDetailsSheetDialog : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         val event = arguments?.getParcelable<Event>("event") as Event
 
-
         view.eventImage.load(event.eventPicture)
         view.eventName.text = event.eventName
         view.eventByUser.text = event.creator.name
         view.eventDescription.text = event.description
 
         viewMoreButton.setOnClickListener {
-
+            val intent = Intent(activity, EventDetailsActivity::class.java)
+            intent.putExtra("event",event)
+            startActivity(intent)
         }
 
     }

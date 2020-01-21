@@ -28,6 +28,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
+                android:id="@+id/eventImage"
                 android:src="@drawable/event_details_placeholder" />
 
             <ImageView
@@ -42,6 +43,7 @@
                 android:layout_height="wrap_content"
                 android:text="Art Space Event"
                 android:textSize="25sp"
+                android:id="@+id/eventName"
                 android:layout_gravity="bottom"
                 android:layout_margin="16dp"
 
