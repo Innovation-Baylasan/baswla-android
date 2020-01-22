@@ -8,6 +8,9 @@ import org.baylasan.sudanmap.data.common.ApiErrorResponse
 import org.baylasan.sudanmap.data.common.ResponseSingleFunc1
 import org.baylasan.sudanmap.data.common.ThrowableSingleFunc1
 import org.baylasan.sudanmap.data.entity.model.Entity
+import org.baylasan.sudanmap.data.entity.model.EntityDetails
+import org.baylasan.sudanmap.data.entity.model.Review
+import org.baylasan.sudanmap.domain.entity.AddReviewUseCase
 import org.baylasan.sudanmap.domain.entity.EntityRepository
 import retrofit2.Converter
 
@@ -46,11 +49,10 @@ class EntityApi(
 
     }
 
-    override fun addReview(id: Int, comment: String): Completable {
-        return entityApi.reviewEntityById(id, comment)
+    override fun addReview(request: AddReviewUseCase.Request): Single<Review> {
+        return entityApi.reviewEntityById(request.entityId, request)
             .onErrorResumeNext(ThrowableSingleFunc1())
             .flatMap(ResponseSingleFunc1(errorConverter))
-            .ignoreElement()
     }
 
     override fun follow(id: Int): Completable {
@@ -65,5 +67,12 @@ class EntityApi(
             .onErrorResumeNext(ThrowableSingleFunc1())
             .flatMap(ResponseSingleFunc1(errorConverter))
             .ignoreElement()
+    }
+
+    override fun getEntityDetails(id: Int): Single<EntityDetails> {
+        return entityApi.entityDetails(id)
+            .onErrorResumeNext(ThrowableSingleFunc1())
+            .flatMap(ResponseSingleFunc1(errorConverter))
+            .map { it.details }
     }
 }

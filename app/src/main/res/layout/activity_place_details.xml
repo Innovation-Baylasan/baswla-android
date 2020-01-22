@@ -1,16 +1,16 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-
+    android:id="@+id/coordinatorLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/GhostWhite"
     android:fitsSystemWindows="true">
 
+
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
         android:layout_width="match_parent"
-
         android:layout_height="180dp"
         android:fitsSystemWindows="true">
 
@@ -71,7 +71,7 @@
 
     <include
         android:id="@+id/nestedScrollView"
-        layout="@layout/content_company_profile" />
+        layout="@layout/content_place_details" />
 
     <ImageView
         android:id="@+id/profileImage"
@@ -91,8 +91,51 @@
         app:layout_anchor="@+id/nestedScrollView"
         app:layout_anchorGravity="end"
         app:layout_behavior="com.google.android.material.floatingactionbutton.FloatingActionButton$Behavior"
-
         app:srcCompat="@drawable/ic_bell" />
 
+    <LinearLayout
+        android:id="@+id/commentLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="#f8f8f8"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
+            app:srcCompat="@mipmap/ic_launcher_round" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/reviewField"
+            style="@style/RoundedCornerEditText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
+            android:layout_weight="1"
+            android:gravity="top|start"
+            android:hint="@string/comment_hint"
+            android:inputType="textMultiLine"
+            android:maxLines="3"
+
+            android:padding="2dp" />
+
+        <ImageView
+            android:id="@+id/submitCommentButton"
+            android:background="?selectableItemBackgroundBorderless"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
+            app:srcCompat="@drawable/ic_comment" />
+
+    </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

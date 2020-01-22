@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -58,19 +59,19 @@
                             app:layout_constraintTop_toTopOf="@+id/rateNowBtn" />
 
                         <com.google.android.material.button.MaterialButton
-                            app:elevation="0dp"
                             android:id="@+id/rateNowBtn"
                             style="@style/RateButton"
-
                             android:layout_width="wrap_content"
+
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="8dp"
                             android:background="@color/rateBtnBackgroundColor"
+                            android:fontFamily="@font/neo_sans_arabic_bold"
                             android:text="@string/rate_now_btn_label"
                             android:textAllCaps="false"
-                            android:fontFamily="@font/neo_sans_arabic_bold"
-                            android:textSize="14sp"
                             android:textColor="@color/rateBtnTextColor"
+                            android:textSize="14sp"
+                            app:elevation="0dp"
                             app:layout_constraintStart_toEndOf="@+id/ratingBar2"
                             app:layout_constraintTop_toBottomOf="@+id/companyNameTxt" />
 
@@ -81,10 +82,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="90dp"
+                        android:fontFamily="@font/neo_sans_arabic_bold"
                         android:text="@string/start_up_week_end"
                         android:textColor="@android:color/black"
                         android:textSize="14sp"
-                        android:fontFamily="@font/neo_sans_arabic_bold"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toStartOf="parent"
@@ -102,16 +103,16 @@
                         app:layout_constraintTop_toTopOf="@+id/linearLayout2">
 
                         <TextView
-                            android:id="@+id/companyProfileFolowersNumTxt"
+                            android:id="@+id/companyProfileFollowersNumTxt"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
                             android:layout_marginTop="8dp"
                             android:layout_marginEnd="8dp"
-                            android:gravity="center_horizontal"
-                            android:text="@string/number_sample"
-                            android:textColor="@color/black"
                             android:fontFamily="@font/neo_sans_arabic_bold"
+                            android:gravity="center_horizontal"
+                            android:text="0"
+                            android:textColor="@color/black"
                             android:textSize="14sp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -127,9 +128,9 @@
                             android:text="@string/followers"
                             android:textColor="#C1C1C1"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="@+id/companyProfileFolowersNumTxt"
-                            app:layout_constraintStart_toStartOf="@+id/companyProfileFolowersNumTxt"
-                            app:layout_constraintTop_toBottomOf="@+id/companyProfileFolowersNumTxt" />
+                            app:layout_constraintEnd_toEndOf="@+id/companyProfileFollowersNumTxt"
+                            app:layout_constraintStart_toStartOf="@+id/companyProfileFollowersNumTxt"
+                            app:layout_constraintTop_toBottomOf="@+id/companyProfileFollowersNumTxt" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -147,10 +148,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
-                            android:text="112"
-
-                            android:textColor="@color/black"
                             android:fontFamily="@font/neo_sans_arabic_bold"
+
+                            android:text="0"
+                            android:textColor="@color/black"
                             android:textSize="14sp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -189,11 +190,12 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
-                            android:text="@string/number_sample"
-
-                            android:textColor="@color/black"
                             android:fontFamily="@font/neo_sans_arabic_bold"
-                            android:textSize="14sp"                            app:layout_constraintEnd_toEndOf="parent"
+
+                            android:text="0"
+                            android:textColor="@color/black"
+                            android:textSize="14sp"
+                            app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="0.5"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -215,16 +217,16 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <TextView
-                        android:id="@+id/companyDescrition"
+                        android:id="@+id/companyDescriptionTextView"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="8dp"
                         android:layout_marginEnd="16dp"
-                        android:fontFamily="@font/neo_sans_arabic_light"
                         android:layout_marginBottom="16dp"
-                        android:textSize="14sp"
+                        android:fontFamily="@font/neo_sans_arabic_light"
                         android:text="@string/sample_descripition"
+                        android:textSize="14sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
@@ -242,81 +244,38 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/materialCardView">
 
-                <androidx.core.widget.NestedScrollView
+                <io.supercharge.shimmerlayout.ShimmerLayout
+                    android:id="@+id/loadingLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+
+                    android:visibility="gone"
+                    app:shimmer_auto_start="true"
+                    tools:visibility="visible">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
-                        <include layout="@layout/row_review_item" />
 
-                        <include layout="@layout/row_review_item" />
+                        <include layout="@layout/row_review_loading" />
 
-                        <com.google.android.material.button.MaterialButton
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
+                        <include layout="@layout/row_review_loading" />
+
+                        <include layout="@layout/row_review_loading" />
                     </LinearLayout>
-                </androidx.core.widget.NestedScrollView>
+                </io.supercharge.shimmerlayout.ShimmerLayout>
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/reviewsRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="60dp"/>
             </com.google.android.material.card.MaterialCardView>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <LinearLayout
-            android:id="@+id/commentLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:background="#f8f8f8"
-            android:gravity="center"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/materialCardView2">
-
-            <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center"
-                android:layout_marginStart="4dp"
-                app:srcCompat="@mipmap/ic_launcher_round" />
-
-            <EditText
-                android:id="@+id/editText"
-                style="@style/RoundedCornerEditText"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_marginEnd="4dp"
-                android:layout_weight="1"
-                android:hint="@string/comment_hint"
-                android:inputType="text" />
-
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                app:cardBackgroundColor="#ececec"
-                app:cardCornerRadius="8dp"
-
-                app:cardElevation="0dp">
-
-                <ImageButton
-                    android:id="@+id/imageButton2"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:background="@android:color/transparent"
-                    android:padding="10dp"
-                    app:srcCompat="@drawable/ic_comment" />
-            </com.google.android.material.card.MaterialCardView>
-
-        </LinearLayout>
 
     </LinearLayout>
 
