@@ -34,6 +34,7 @@ import org.baylasan.sudanmap.domain.user.UserRepository
 import org.baylasan.sudanmap.ui.auth.login.LoginViewModel
 import org.baylasan.sudanmap.ui.auth.signup.RegisterViewModel
 import org.baylasan.sudanmap.ui.layers.MapLayersViewModel
+import org.baylasan.sudanmap.ui.main.UserProfileViewModel
 import org.baylasan.sudanmap.ui.main.event.EventViewModel
 import org.baylasan.sudanmap.ui.main.place.EntityViewModel
 import org.baylasan.sudanmap.ui.placesearch.PlaceSearchViewModel
@@ -60,7 +61,7 @@ val appModule = module {
     single {
         provideErrorConverter(get())
     }
-    factory<SessionManager> { SessionManagerImpl(get()) }
+    single<SessionManager> { SessionManagerImpl(get()) }
     viewModel {
         LocationViewModel(androidApplication())
     }
@@ -82,7 +83,13 @@ private fun providePicasso(context: Context): Picasso {
 
 private fun provideIoScheduler(): Scheduler = Schedulers.io()
 private fun provideMainSchudler(): Scheduler = AndroidSchedulers.mainThread()
+val homePageModule = module(override = true) {
+    viewModel {
+        UserProfileViewModel(get())
 
+    }
+
+}
 val entityListModule = module(override = true) {
     factory { get<Retrofit>().create(SudanMapApi.Entities::class.java) }
     factory<EntityRepository> { EntityApi(get(), get()) }

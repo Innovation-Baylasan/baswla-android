@@ -23,7 +23,8 @@ class SudanMapApp : Application() {
                     searchModule,
                     userModule,
                     sessionModule,
-                    eventModule
+                    eventModule,
+                    homePageModule
                 )
             )
 

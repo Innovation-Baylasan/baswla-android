@@ -30,12 +30,13 @@ import kotlinx.android.synthetic.main.fragment_place_map.*
 import kotlinx.android.synthetic.main.network_error_layout.*
 import kotlinx.android.synthetic.main.search_bar_layout.*
 import org.baylasan.sudanmap.R
+import org.baylasan.sudanmap.common.*
 import org.baylasan.sudanmap.data.entity.model.Entity
+import org.baylasan.sudanmap.domain.LocationViewModel
 import org.baylasan.sudanmap.ui.main.MainActivity
-import org.baylasan.sudanmap.ui.placesearch.PlaceSearchFragment
 import org.baylasan.sudanmap.ui.placedetails.PlaceDetailsActivity
 import org.baylasan.sudanmap.ui.placedetails.PlaceDetailsSheetDialog
-import org.baylasan.sudanmap.common.*
+import org.baylasan.sudanmap.ui.placesearch.PlaceSearchFragment
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.concurrent.TimeUnit
@@ -51,7 +52,7 @@ class PlaceMapFragment : Fragment(R.layout.fragment_place_map) {
     private val locationUpdatesSubject = PublishSubject.create<LatLng>()
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var activity: MainActivity
-
+    private val locationViewModel by viewModel<LocationViewModel>()
     private lateinit var entities: ArrayList<Entity>
     private val picasso: Picasso by inject()
     override fun onAttach(context: Context) {
@@ -79,7 +80,7 @@ class PlaceMapFragment : Fragment(R.layout.fragment_place_map) {
 
         mapFragment?.getMapAsync { googleMap ->
             googleMap.uiSettings.isMapToolbarEnabled = false
-
+            locationViewModel
             googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(activity, R.raw.style))
             this.googleMap = googleMap
             googleMap.isMyLocationEnabled = activity.canEnableLocationButton()
@@ -298,7 +299,7 @@ class PlaceMapFragment : Fragment(R.layout.fragment_place_map) {
     }
 
     private fun getLocation() {
-        LocationLiveData(activity).observe(this, Observer {
+        locationViewModel.getLocationUpdates().observe(this, Observer {
             zoomToMyLocation(it.toLocation())
         })
     }
