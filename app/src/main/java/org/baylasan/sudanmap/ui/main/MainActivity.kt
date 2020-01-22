@@ -14,18 +14,27 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import androidx.lifecycle.Observer
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.navigation_header_layout.*
 import org.baylasan.sudanmap.R
-import org.baylasan.sudanmap.ui.terms.TOSActivity
+import org.baylasan.sudanmap.common.GpsChecker
+import org.baylasan.sudanmap.common.gone
+import org.baylasan.sudanmap.common.show
+import org.baylasan.sudanmap.ui.auth.AuthActivity
+import org.baylasan.sudanmap.ui.editprofile.EditUserProfileActivity
 import org.baylasan.sudanmap.ui.event.EventsActivity
 import org.baylasan.sudanmap.ui.faq.FAQActivity
 import org.baylasan.sudanmap.ui.main.event.EventMapFragment
 import org.baylasan.sudanmap.ui.main.place.PlaceMapFragment
 import org.baylasan.sudanmap.ui.place.PlacesActivity
 import org.baylasan.sudanmap.ui.privacy.PrivacyPolicyActivity
-import org.baylasan.sudanmap.common.GpsChecker
+import org.baylasan.sudanmap.ui.terms.TOSActivity
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener,
@@ -33,7 +42,8 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener,
 
     private lateinit var gpsChecker: GpsChecker
     private var didSetupViewPager = false
-
+    private val picasso by inject<Picasso>()
+    private val profileViewModel by viewModel<UserProfileViewModel>()
     override fun onActivityResult(
         requestCode: Int,
         resultCode: Int,
@@ -77,7 +87,29 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener,
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        profileViewModel.loadUser()
+        profileViewModel.listenToUserProfile().observe(this, Observer { profile ->
+            if (profile == null) {
+                userNameTextView.text = getString(R.string.guest_user)
+                userEmailTextView.text = getString(R.string.guest_user_tap_to_login)
+                editProfileButton.gone()
+                openPlacesButton.gone()
+                openEventsButton.gone()
+                navigationDrawerHeader.setOnClickListener {
+                    startActivityAndCloseDrawer<AuthActivity>()
+                    finish()
+                }
+            } else {
+                userNameTextView.text = profile.name
+                userEmailTextView.text = profile.email
+                editProfileButton.show()
+                openPlacesButton.show()
+                openEventsButton.show()
+            }
+        })
+        editProfileButton.setOnClickListener {
+            startActivityAndCloseDrawer<EditUserProfileActivity>()
+        }
         gpsChecker = GpsChecker(this)
         gpsChecker.turnGPSOn(this)
 
@@ -164,12 +196,12 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener,
 
     override fun onResume() {
         super.onResume()
-        Log.d("MEGA","onResume")
+        Log.d("MEGA", "onResume")
         val fragment = supportFragmentManager.findFragmentByTag("perm")
         if (fragment != null) {
             if (!doseNotHaveLocationPermission()) {
                 if (!didSetupViewPager) {
-                    Log.d("MEGA","did setup view pager")
+                    Log.d("MEGA", "did setup view pager")
 
                     setupViewpager()
                 }

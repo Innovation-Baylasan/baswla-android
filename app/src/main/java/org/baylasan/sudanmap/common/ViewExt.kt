@@ -78,14 +78,14 @@ fun View.expand() {
     )
     val targetHeight = measuredHeight
     // Older versions of android (pre API 21) cancel animations for views with a height of 0.
-   layoutParams.height = 1
+    layoutParams.height = 1
     visibility = View.VISIBLE
     val a: Animation = object : Animation() {
         override fun applyTransformation(
             interpolatedTime: Float,
             t: Transformation?
         ) {
-           layoutParams.height =
+            layoutParams.height =
                 if (interpolatedTime == 1f) targetHeight else (targetHeight * interpolatedTime).toInt()
             requestLayout()
         }
@@ -170,12 +170,10 @@ val View.isVisible: Boolean
 
 fun View.enable() {
     isEnabled = true
-    alpha = 1.0f
 }
 
 fun View.disable() {
     isEnabled = false
-    alpha = 0.3f
 }
 
 //edit text

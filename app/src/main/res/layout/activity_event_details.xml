@@ -38,6 +38,16 @@
                 android:rotation="180"
                 android:scaleType="centerCrop"
                 app:srcCompat="@drawable/ic_event_details_shade" />
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                app:title=""
+                app:layout_collapseMode="pin"
+                app:navigationIcon="@drawable/ic_back"
+                app:popupTheme="@style/AppTheme.PopupOverlay"
+                app:titleTextColor="@color/white" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -50,15 +60,6 @@
                 android:textColor="@color/white"
                 android:fontFamily="@font/neo_sans_arabic_bold"
                 />
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-app:title=""
-                app:layout_collapseMode="pin"
-                app:navigationIcon="@drawable/ic_back"
-                app:popupTheme="@style/AppTheme.PopupOverlay"
-                app:titleTextColor="@color/white" />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>

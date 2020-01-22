@@ -152,4 +152,6 @@ And <font color="#003a7c">
     <string name="free">Free</string>
     <string name="seats">Seats</string>
     <string name="apply_now">APPLY NOW !</string>
+    <string name="guest_user">Guest user</string>
+    <string name="guest_user_tap_to_login">Tap here to login</string>
 </resources>

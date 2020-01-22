@@ -35,17 +35,7 @@
                 app:layout_anchorGravity="top|center"
                 app:srcCompat="@drawable/ic_icon" />
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/imageView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="120dp"
-                android:layout_marginBottom="30dp"
 
-android:layout_gravity="center|bottom"
-                app:backgroundTint="#0E5AB0"
-                app:layout_anchor="@+id/nestedScrollView"
-                app:srcCompat="@drawable/ic_bell" />
         </FrameLayout>
 
         <TextView
