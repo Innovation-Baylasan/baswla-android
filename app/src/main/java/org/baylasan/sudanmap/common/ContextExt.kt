@@ -48,7 +48,7 @@ fun Activity.hideKeyboard() {
     if (view == null) {
         view = View(this)
     }
-    imm.hideSoftInputFromWindow(view.getWindowToken(), 0)
+    imm.hideSoftInputFromWindow(view.windowToken, 0)
 }
 
 fun Context.openWebPage(url: String) {

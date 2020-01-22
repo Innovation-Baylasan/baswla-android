@@ -1,15 +1,21 @@
 package org.baylasan.sudanmap.domain.entity
 
-import io.reactivex.Completable
-import org.baylasan.sudanmap.domain.common.CompletableUseCase
+import com.google.gson.annotations.SerializedName
+import io.reactivex.Single
+import org.baylasan.sudanmap.data.entity.model.Review
 import org.baylasan.sudanmap.domain.common.RequestValues
+import org.baylasan.sudanmap.domain.common.SingleUseCase
+import retrofit2.http.Path
 
 class AddReviewUseCase(private val repository: EntityRepository) :
-    CompletableUseCase<AddReviewUseCase.Request> {
-    class Request(val entityId: Int, val review: String) : RequestValues
+    SingleUseCase<AddReviewUseCase.Request, Review> {
+    class Request(@Path("") val entityId: Int,
+                  @SerializedName("review") val review: String) :
+        RequestValues
 
-    override fun execute(params: Request): Completable {
-        return repository.addReview(params.entityId, params.review)
+
+    override fun execute(params: Request): Single<Review> {
+        return repository.addReview(params)
     }
 
 }

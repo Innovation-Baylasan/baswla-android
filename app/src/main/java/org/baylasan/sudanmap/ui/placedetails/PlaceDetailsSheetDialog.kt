@@ -54,7 +54,7 @@ class PlaceDetailsSheetDialog : BottomSheetDialogFragment() {
             view.profileCoverImage.load(entity.cover)
             view.profileImage.loadCircle(entity.avatar)
             view.companyNameTxt.text = entity.name
-            view.companyDescrition.text = entity.description
+            view.companyDescription.text = entity.description
             view.viewMoreButton.setOnClickListener {
                 val profileIntent = Intent(activity, PlaceDetailsActivity::class.java)
                 profileIntent.putExtra("entity", entity)
