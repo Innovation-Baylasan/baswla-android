@@ -21,9 +21,14 @@ class PlaceDetailsViewModel(
 ) : BaseViewModel() {
     private val loadEntityUiState = MutableLiveData<UiState<EntityDetails>>()
     private val reviewUiState = MutableLiveData<UiState<Review>>()
+    private val followUiState = MutableLiveData<UiState<Unit>>()
+    private val unFollowUiState = MutableLiveData<UiState<Unit>>()
 
     val entityDetailsState: LiveData<UiState<EntityDetails>> = loadEntityUiState
     val reviewState: LiveData<UiState<Review>> = reviewUiState
+    val followState: LiveData<UiState<Unit>> = followUiState
+    val unFollowState: LiveData<UiState<Unit>> = unFollowUiState
+
     fun getDetailsForId(id: Int) {
         loadEntityUiState.value = UiState.Loading()
         getEntityDetailsUseCase.execute(GetEntityDetailsUseCase.Request(id))
@@ -39,11 +44,34 @@ class PlaceDetailsViewModel(
     }
 
     fun follow(id: Int) {
+        followUiState.value = UiState.Loading()
+        followEntityUseCase.execute(FollowEntityUseCase.Request(id))
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                followUiState.value = UiState.Complete()
+
+            }, {
+                followUiState.value = UiState.Error(it)
+
+            })
+            .addToDisposables()
 
     }
 
     fun unFollow(id: Int) {
+        unFollowUiState.value = UiState.Loading()
+        unFollowEntityUseCase.execute(UnFollowEntityUseCase.Request(id))
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                unFollowUiState.value = UiState.Complete()
 
+            }, {
+                unFollowUiState.value = UiState.Error(it)
+
+            })
+            .addToDisposables()
     }
 
     fun review(content: String, id: Int) {
