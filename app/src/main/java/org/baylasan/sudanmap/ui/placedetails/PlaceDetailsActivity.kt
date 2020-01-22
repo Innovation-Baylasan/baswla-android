@@ -40,7 +40,8 @@ class PlaceDetailsActivity : AppCompatActivity() {
         profileViewModel.listenToUserProfile().observe(this, Observer {
             if (it == null) {
                 commentLayout.disableChildern()
-
+            }else{
+                commentLayout.enableChildern()
             }
         })
 
