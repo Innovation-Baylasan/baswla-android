@@ -5,7 +5,7 @@
  * All rights reserved.
  */
 
-package org.baylasan.sudanmap.utils
+package org.baylasan.sudanmap.common
 
 import android.content.SharedPreferences
 

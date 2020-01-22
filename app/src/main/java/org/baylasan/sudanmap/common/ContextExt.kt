@@ -1,4 +1,4 @@
-package org.baylasan.sudanmap.utils
+package org.baylasan.sudanmap.common
 
 import android.app.Activity
 import android.content.Context
@@ -30,6 +30,7 @@ inline fun <reified T : Any> Fragment.extraNotNull(key: String, default: T? = nu
     val value = arguments?.get(key)
     requireNotNull(if (value is T) value else default) { key }
 }
+
 fun Context.openSettings() {
     startActivity(Intent().apply {
         action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
@@ -37,6 +38,7 @@ fun Context.openSettings() {
         data = Uri.fromParts("package", packageName, null)
     })
 }
+
 fun Activity.hideKeyboard() {
     val imm: InputMethodManager =
         getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -47,4 +49,12 @@ fun Activity.hideKeyboard() {
         view = View(this)
     }
     imm.hideSoftInputFromWindow(view.getWindowToken(), 0)
+}
+
+fun Context.openWebPage(url: String) {
+    val webpage: Uri = Uri.parse(url)
+    val intent = Intent(Intent.ACTION_VIEW, webpage)
+    if (intent.resolveActivity(packageManager) != null) {
+        startActivity(intent)
+    }
 }

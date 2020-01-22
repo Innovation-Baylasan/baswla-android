@@ -25,7 +25,7 @@ import org.baylasan.sudanmap.ui.main.event.EventMapFragment
 import org.baylasan.sudanmap.ui.main.place.PlaceMapFragment
 import org.baylasan.sudanmap.ui.place.PlacesActivity
 import org.baylasan.sudanmap.ui.privacy.PrivacyPolicyActivity
-import org.baylasan.sudanmap.utils.GpsChecker
+import org.baylasan.sudanmap.common.GpsChecker
 
 
 class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener,

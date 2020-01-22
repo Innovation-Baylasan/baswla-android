@@ -4,8 +4,8 @@ import android.content.Context
 import android.content.SharedPreferences
 import org.baylasan.sudanmap.data.user.model.UserDto
 import org.baylasan.sudanmap.domain.user.SessionManager
-import org.baylasan.sudanmap.utils.findPreference
-import org.baylasan.sudanmap.utils.putPreference
+import org.baylasan.sudanmap.common.findPreference
+import org.baylasan.sudanmap.common.putPreference
 
 class SessionManagerImpl(private val context: Context) : SessionManager {
     private var prefs: SharedPreferences

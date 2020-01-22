@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.activity_sign_up.*
 import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.data.user.model.RegisterRequest
 import org.baylasan.sudanmap.ui.main.MainActivity
-import org.baylasan.sudanmap.utils.*
+import org.baylasan.sudanmap.common.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 

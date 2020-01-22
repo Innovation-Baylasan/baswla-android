@@ -49,6 +49,11 @@
         <activity
             android:name=".ui.auth.AuthActivity"
             android:windowSoftInputMode="adjustPan|adjustResize" >
+
+        </activity>
+        <activity
+            android:name=".ui.main.MainActivity"
+            android:windowSoftInputMode="adjustNothing" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -56,12 +61,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.main.MainActivity"
-            android:windowSoftInputMode="adjustNothing" />
-        <activity
             android:name=".ui.auth.signup.SignUpActivity"
             android:windowSoftInputMode="adjustPan|adjustResize" />
-        <activity android:name=".ui.profile.CompanyProfileActivity" />
+        <activity android:name=".ui.placedetails.PlaceDetailsActivity" />
     </application>
 
 </manifest>

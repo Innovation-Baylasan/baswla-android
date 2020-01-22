@@ -1,10 +1,8 @@
-package org.baylasan.sudanmap.utils
+package org.baylasan.sudanmap.common
 
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.drawable.Drawable
 import androidx.core.graphics.drawable.toBitmap
-import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.Marker
 import com.squareup.picasso.Picasso.LoadedFrom
@@ -25,18 +23,22 @@ class PicassoMarker(var marker: Marker?) : Target {
     }
 
     override fun onBitmapLoaded(bitmap: Bitmap, from: LoadedFrom) {
+
         marker?.setIcon(BitmapDescriptorFactory.fromBitmap(bitmap))
     }
 
     override fun onBitmapFailed(
         e: Exception,
-        errorDrawable: Drawable
+        errorDrawable: Drawable?
     ) {
-        marker?.setIcon(BitmapDescriptorFactory.fromBitmap(errorDrawable.toBitmap()))
+        if(errorDrawable!=null)
+
+        marker?.setIcon(BitmapDescriptorFactory.fromBitmap(errorDrawable?.toBitmap()))
     }
 
-    override fun onPrepareLoad(placeHolderDrawable: Drawable) {
-        marker?.setIcon(BitmapDescriptorFactory.fromBitmap(placeHolderDrawable.toBitmap()))
+    override fun onPrepareLoad(placeHolderDrawable: Drawable?) {
+        if(placeHolderDrawable!=null)
+        marker?.setIcon(BitmapDescriptorFactory.fromBitmap(placeHolderDrawable?.toBitmap()))
 
     }
 

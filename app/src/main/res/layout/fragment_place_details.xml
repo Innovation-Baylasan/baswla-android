@@ -70,17 +70,16 @@ android:layout_gravity="center|bottom"
             android:layout_marginBottom="16dp"
 
             android:text="@string/sample_descripition" />
+
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/viewMoreButton"
+            style="@style/AppButton"
+            app:cornerRadius="0dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/viewMoreButton"
-            android:text="View more"
-            android:textColor="@color/colorAccent"
-            style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
-            app:elevation="0dp"
-
             android:fontFamily="@font/neo_sans_arabic_bold"
-            />
+            android:text="@string/view_more"
+            app:elevation="0dp" />
     </LinearLayout>
 
 </com.google.android.material.card.MaterialCardView>

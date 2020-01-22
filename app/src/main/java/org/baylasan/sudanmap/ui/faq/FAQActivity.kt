@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_faq.*
 import kotlinx.android.synthetic.main.row_faq.view.*
 import org.baylasan.sudanmap.R
-import org.baylasan.sudanmap.utils.gone
-import org.baylasan.sudanmap.utils.show
+import org.baylasan.sudanmap.common.gone
+import org.baylasan.sudanmap.common.show
 
 class FAQActivity : AppCompatActivity() {
 

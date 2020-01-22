@@ -1,4 +1,4 @@
-package org.baylasan.sudanmap.utils
+package org.baylasan.sudanmap.common
 
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment

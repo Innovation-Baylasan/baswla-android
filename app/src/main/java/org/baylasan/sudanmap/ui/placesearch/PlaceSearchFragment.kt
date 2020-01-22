@@ -20,11 +20,11 @@ import org.baylasan.sudanmap.ui.main.place.DataEvent
 import org.baylasan.sudanmap.ui.main.place.EmptyEvent
 import org.baylasan.sudanmap.ui.main.place.EntitiesListAdapter
 import org.baylasan.sudanmap.ui.main.place.LoadingEvent
-import org.baylasan.sudanmap.ui.profile.CompanyProfileActivity
+import org.baylasan.sudanmap.ui.placedetails.PlaceDetailsActivity
 import org.baylasan.sudanmap.ui.searchfilter.SearchFilterFragment
-import org.baylasan.sudanmap.utils.gone
-import org.baylasan.sudanmap.utils.setEndDrawableOnTouchListener
-import org.baylasan.sudanmap.utils.show
+import org.baylasan.sudanmap.common.gone
+import org.baylasan.sudanmap.common.setEndDrawableOnTouchListener
+import org.baylasan.sudanmap.common.show
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.concurrent.TimeUnit
 
@@ -124,7 +124,7 @@ class PlaceSearchFragment : Fragment(R.layout.fragment_place_search), EntitiesLi
     }
 
     override fun onItemClick(entity: Entity) {
-        val profileIntent = Intent(activity, CompanyProfileActivity::class.java)
+        val profileIntent = Intent(activity, PlaceDetailsActivity::class.java)
         profileIntent.putExtra("entity", entity)
         startActivity(profileIntent)
     }

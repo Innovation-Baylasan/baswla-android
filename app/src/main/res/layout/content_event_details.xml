@@ -51,9 +51,10 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
                             android:fontFamily="@font/neo_sans_arabic_light"
-                            android:text="Start date" />
+                            android:text="@string/start_date" />
 
                         <TextView
+                            android:id="@+id/startDate"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
@@ -88,7 +89,7 @@
 
                         <TextView
                             android:layout_width="wrap_content"
-
+                            android:id="@+id/endDate"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
                             android:fontFamily="@font/neo_sans_arabic_bold"
@@ -123,14 +124,15 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
                             android:fontFamily="@font/neo_sans_arabic_light"
-                            android:text="Ticket price" />
+                            android:text="@string/ticket_price" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
                             android:fontFamily="@font/neo_sans_arabic_bold"
-                            android:text="Free"
+                            android:text="@string/free"
+                            android:id="@+id/ticketPrice"
                             android:textColor="@color/black" />
                     </LinearLayout>
 
@@ -156,7 +158,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
                             android:fontFamily="@font/neo_sans_arabic_light"
-                            android:text="Seats" />
+                            android:text="@string/seats" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -165,6 +167,7 @@
                             android:layout_marginTop="4dp"
                             android:fontFamily="@font/neo_sans_arabic_bold"
                             android:text="100"
+                            android:id="@+id/seatsCount"
                             android:textColor="@color/black" />
                     </LinearLayout>
 
@@ -188,6 +191,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/eventDescription"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="rambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Let...….. sheets containing Lorem Ipsum passages, and more recently with desktop" />
@@ -197,8 +201,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
+                    android:id="@+id/applyButton"
                     android:fontFamily="@font/neo_sans_arabic_bold"
-                    android:text="APPLY NOW !" />
+                    android:text="@string/apply_now" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
