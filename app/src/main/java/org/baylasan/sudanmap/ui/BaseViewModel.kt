@@ -13,7 +13,7 @@ open class BaseViewModel : ViewModel() {
     }
 
     override fun onCleared() {
-        super.onCleared()
         disposables.dispose()
+        super.onCleared()
     }
 }

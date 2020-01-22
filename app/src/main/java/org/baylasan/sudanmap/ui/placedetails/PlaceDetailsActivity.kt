@@ -36,14 +36,28 @@ class PlaceDetailsActivity : AppCompatActivity() {
         profileBackBtn.setOnClickListener {
             super.onBackPressed()
         }
-        profileViewModel.loadUser()
-        profileViewModel.listenToUserProfile().observe(this, Observer {
-            if (it == null) {
-                commentLayout.disableChildern()
-            }else{
-                commentLayout.enableChildern()
+        viewModel.followState.observe(this, Observer {
+            if (it is UiState.Loading) {
+                toggleFollowButton.disable()
+            }
+            if (it is UiState.Error) {
+
+                toggleFollowButton.enable()
+                toast("Failed to follow, try again")
+
+            }
+            if (it is UiState.Complete) {
+                toggleFollowButton.enable()
+
+                companyProfileFollowersNumTxt.text =
+                    (companyProfileFollowersNumTxt.text.toString().toInt() + 1).toString()
             }
         })
+        toggleFollowButton.setOnClickListener {
+            //TODO handle if to follow or un-follow
+            viewModel.follow(entity.id)
+        }
+        checkIfUserIsGuest()
 
         viewModel.entityDetailsState.observe(this, Observer {
             if (it is UiState.Success) {
@@ -133,6 +147,20 @@ class PlaceDetailsActivity : AppCompatActivity() {
                 }
             }
 
+        })
+    }
+
+    private fun checkIfUserIsGuest() {
+        profileViewModel.loadUser()
+        profileViewModel.listenToUserProfile().observe(this, Observer {
+            if (it == null) {
+                toggleFollowButton.disable()
+                commentLayout.disableChildern()
+            } else {
+                toggleFollowButton.enable()
+
+                commentLayout.enableChildern()
+            }
         })
     }
 

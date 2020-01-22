@@ -37,7 +37,7 @@ interface SudanMapApi {
         @POST("entities/{id}/review")
         fun reviewEntityById(@Path("id") entityId: Int, @Body request: AddReviewUseCase.Request): Single<Response<Review>>
 
-        @POST("entities/{id}/review")
+        @POST("entities/{id}/follow")
         fun followEntity(@Path("id") entityId: Int): Single<Response<Unit>>
 
         @DELETE("entities/{id}/review")
