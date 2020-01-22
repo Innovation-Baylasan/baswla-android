@@ -13,6 +13,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatEditText
+import androidx.core.view.children
 
 
 fun View.hide() {
@@ -174,6 +175,17 @@ fun View.enable() {
 
 fun View.disable() {
     isEnabled = false
+}
+
+fun ViewGroup.disableChildern() {
+    children.forEach {
+        it.disable()
+    }
+}
+fun ViewGroup.enableChildern(){
+    children.forEach {
+        it.enable()
+    }
 }
 
 //edit text
