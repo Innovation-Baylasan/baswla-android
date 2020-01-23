@@ -1,5 +1,6 @@
 package org.baylasan.sudanmap.data.entity
 
+import io.reactivex.Completable
 import io.reactivex.Single
 import okhttp3.ResponseBody
 import org.baylasan.sudanmap.data.SudanMapApi
@@ -7,6 +8,9 @@ import org.baylasan.sudanmap.data.common.ApiErrorResponse
 import org.baylasan.sudanmap.data.common.ResponseSingleFunc1
 import org.baylasan.sudanmap.data.common.ThrowableSingleFunc1
 import org.baylasan.sudanmap.data.entity.model.Entity
+import org.baylasan.sudanmap.data.entity.model.EntityDetails
+import org.baylasan.sudanmap.data.entity.model.Review
+import org.baylasan.sudanmap.domain.entity.AddReviewUseCase
 import org.baylasan.sudanmap.domain.entity.EntityRepository
 import retrofit2.Converter
 
@@ -34,5 +38,41 @@ class EntityApi(
             .onErrorResumeNext(ThrowableSingleFunc1())
             .flatMap(ResponseSingleFunc1(errorConverter))
             .map { it.entityList }
+    }
+
+    override fun rateEntity(id: Int, rating: Double): Completable {
+        return entityApi.rateEntityById(id, rating)
+            .onErrorResumeNext(ThrowableSingleFunc1())
+            .flatMap(ResponseSingleFunc1(errorConverter))
+            .ignoreElement()
+
+
+    }
+
+    override fun addReview(request: AddReviewUseCase.Request): Single<Review> {
+        return entityApi.reviewEntityById(request.entityId, request)
+            .onErrorResumeNext(ThrowableSingleFunc1())
+            .flatMap(ResponseSingleFunc1(errorConverter))
+    }
+
+    override fun follow(id: Int): Completable {
+        return entityApi.followEntity(id)
+            .onErrorResumeNext(ThrowableSingleFunc1())
+            .flatMap(ResponseSingleFunc1(errorConverter))
+            .ignoreElement()
+    }
+
+    override fun unFollow(id: Int): Completable {
+        return entityApi.unFollowEntity(id)
+            .onErrorResumeNext(ThrowableSingleFunc1())
+            .flatMap(ResponseSingleFunc1(errorConverter))
+            .ignoreElement()
+    }
+
+    override fun getEntityDetails(id: Int): Single<EntityDetails> {
+        return entityApi.entityDetails(id)
+            .onErrorResumeNext(ThrowableSingleFunc1())
+            .flatMap(ResponseSingleFunc1(errorConverter))
+            .map { it.details }
     }
 }

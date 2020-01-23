@@ -8,12 +8,16 @@ import androidx.viewpager2.widget.ViewPager2
 import kotlinx.android.synthetic.main.activity_intro.*
 import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.domain.ViewPagerModel
+import org.baylasan.sudanmap.domain.user.SessionManager
 import org.baylasan.sudanmap.ui.auth.AuthActivity
+import org.baylasan.sudanmap.ui.main.MainActivity
+import org.koin.android.ext.android.inject
 
 class IntroActivity : AppCompatActivity() {
 
 
     private var currentPage = 0
+    private val sessionManager : SessionManager by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,7 +55,8 @@ class IntroActivity : AppCompatActivity() {
 
         nextBtn.setOnClickListener {
             if (currentPage == 2) {
-                startActivity(Intent(applicationContext, AuthActivity::class.java))
+                sessionManager.setIsFirstTime(false)
+                startActivity(Intent(applicationContext, MainActivity::class.java))
                 finish()
             }
             currentPage += 1

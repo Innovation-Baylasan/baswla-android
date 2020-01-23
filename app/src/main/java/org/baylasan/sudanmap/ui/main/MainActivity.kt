@@ -1,75 +1,132 @@
 package org.baylasan.sudanmap.ui.main
 
 import android.Manifest
-import android.content.Context
+import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.location.LocationManager
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.location.LocationManagerCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import androidx.lifecycle.Observer
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.navigation_header_layout.*
 import org.baylasan.sudanmap.R
+import org.baylasan.sudanmap.common.GpsChecker
+import org.baylasan.sudanmap.common.gone
+import org.baylasan.sudanmap.common.show
+import org.baylasan.sudanmap.ui.auth.AuthActivity
+import org.baylasan.sudanmap.ui.editprofile.EditUserProfileActivity
+import org.baylasan.sudanmap.ui.event.EventsActivity
+import org.baylasan.sudanmap.ui.faq.FAQActivity
 import org.baylasan.sudanmap.ui.main.event.EventMapFragment
 import org.baylasan.sudanmap.ui.main.place.PlaceMapFragment
 import org.baylasan.sudanmap.ui.place.PlacesActivity
+import org.baylasan.sudanmap.ui.privacy.PrivacyPolicyActivity
+import org.baylasan.sudanmap.ui.terms.TOSActivity
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener,
-    BottomNavigationView.OnNavigationItemSelectedListener {
+    BottomNavigationView.OnNavigationItemSelectedListener, GpsChecker.OnGpsListener {
+
+    private lateinit var gpsChecker: GpsChecker
+    private var didSetupViewPager = false
+    private val picasso by inject<Picasso>()
+    private val profileViewModel by viewModel<UserProfileViewModel>()
     override fun onActivityResult(
         requestCode: Int,
         resultCode: Int,
         data: Intent?
     ) {
         super.onActivityResult(requestCode, resultCode, data)
-        for (fragment in supportFragmentManager.fragments) {
-            fragment.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == GpsChecker.GPS_REQUEST) {
+            if (resultCode == Activity.RESULT_OK) {
+                checkPermission()
+            } else {
+                gpsChecker.turnGPSOn(this)
+            }
         }
     }
 
     override fun onBackPressed() {
-        if (fragmentLayout.isDrawerOpen(navigationView))
-            closeDrawer()
-        else
-            super.onBackPressed()
+        when {
+            fragmentLayout.isDrawerOpen(navigationView) -> closeDrawer()
+            viewPager.currentItem == 1 -> {
+                selectFirstPage()
 
+
+            }
+            else -> super.onBackPressed()
+
+        }
+    }
+
+    private fun selectFirstPage() {
+        viewPager.setCurrentItem(0, false)
+        bottomNavigation.menu.findItem(R.id.action_places).isChecked = true
     }
 
     private fun closeDrawer() {
         fragmentLayout.closeDrawer(navigationView, true)
     }
 
-    private var gpsDialog: AlertDialog? = null
     private var permissionDialog: AlertDialog? = null
-    private var didSetupViewPager = false
 
-    fun isGpsEnabled(): Boolean {
-        return LocationManagerCompat.isLocationEnabled(getSystemService(Context.LOCATION_SERVICE) as LocationManager)
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-
-        if (doseNotHaveLocationPermission()
-        ) {
-            requestPermission()
-        } else {
-            setupViewpager()
+        profileViewModel.loadUser()
+        profileViewModel.listenToUserProfile().observe(this, Observer { profile ->
+            if (profile == null) {
+                userNameTextView.text = getString(R.string.guest_user)
+                userEmailTextView.text = getString(R.string.guest_user_tap_to_login)
+                editProfileButton.gone()
+                openPlacesButton.gone()
+                openEventsButton.gone()
+                navigationDrawerHeader.setOnClickListener {
+                    startActivityAndCloseDrawer<AuthActivity>()
+                    finish()
+                }
+            } else {
+                userNameTextView.text = profile.name
+                userEmailTextView.text = profile.email
+                editProfileButton.show()
+                openPlacesButton.show()
+                openEventsButton.show()
+            }
+        })
+        editProfileButton.setOnClickListener {
+            startActivityAndCloseDrawer<EditUserProfileActivity>()
         }
+        gpsChecker = GpsChecker(this)
+        gpsChecker.turnGPSOn(this)
+
         openPlacesButton.setOnClickListener {
             startActivityAndCloseDrawer<PlacesActivity>()
+        }
+        actionPrivacyButton.setOnClickListener {
+            startActivityAndCloseDrawer<PrivacyPolicyActivity>()
+        }
+        tosButton.setOnClickListener {
+            startActivityAndCloseDrawer<TOSActivity>()
+        }
+        openEventsButton.setOnClickListener {
+            startActivityAndCloseDrawer<EventsActivity>()
+        }
+        openFaqButton.setOnClickListener {
+            startActivityAndCloseDrawer<FAQActivity>()
         }
     }
 
@@ -122,7 +179,7 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener,
 
 
     private fun setupViewpager() {
-
+        didSetupViewPager = true
         viewPager.adapter = FragmentAdapter(supportFragmentManager)
         viewPager.addOnPageChangeListener(this)
         viewPager.offscreenPageLimit = 2
@@ -139,10 +196,15 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener,
 
     override fun onResume() {
         super.onResume()
+        Log.d("MEGA", "onResume")
         val fragment = supportFragmentManager.findFragmentByTag("perm")
         if (fragment != null) {
             if (!doseNotHaveLocationPermission()) {
-                setupViewpager()
+                if (!didSetupViewPager) {
+                    Log.d("MEGA", "did setup view pager")
+
+                    setupViewpager()
+                }
                 supportFragmentManager.beginTransaction().remove(fragment).commit()
             }
         }
@@ -209,6 +271,18 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener,
     companion object {
         const val LOCATION_PERMISSION = 42
         const val REQUEST_CHECK_SETTINGS = 40
+    }
+
+    override fun onGpsEnabled() {
+        checkPermission()
+    }
+
+    private fun checkPermission() {
+        if (doseNotHaveLocationPermission()) {
+            requestPermission()
+        } else {
+            setupViewpager()
+        }
     }
 }
 

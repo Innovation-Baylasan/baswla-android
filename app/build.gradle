@@ -47,7 +47,7 @@ android {
     flavorDimensions "version"
     applicationVariants.all { variant ->
         variant.outputs.all { output ->
-            def project = "compass"
+            def project = "Bawasla"
             def SEP = "-"
             def flavor = variant.productFlavors[0].name
             def buildType = variant.variantData.variantConfiguration.buildType.name
@@ -61,12 +61,12 @@ android {
         }
     }
     productFlavors {
-        dev {
+        development {
             resValue "string", "base_url", "http://104.248.145.132/api/"
             resValue "string", "app_name", "Bawsala Dev"
             applicationIdSuffix = '.dev'
         }
-        prod {
+        production {
             resValue "string", "base_url", "http://104.248.145.132/api/"
             resValue "string", "app_name", "Bawsala"
 

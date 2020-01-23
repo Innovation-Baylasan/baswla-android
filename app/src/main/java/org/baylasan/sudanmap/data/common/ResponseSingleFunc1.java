@@ -33,8 +33,7 @@ public class ResponseSingleFunc1<T> implements Function<Response<T>, Single<T>> 
             }
 
             if (code == 422) {
-                System.out.println("vvvvvvv" + response.body().toString());
-                return Single.error(new ResponseException(response.body().toString()));
+                return Single.error(new ResponseException(response.errorBody().toString()));
             }
 
             ApiErrorResponse apiErrorResponse;
