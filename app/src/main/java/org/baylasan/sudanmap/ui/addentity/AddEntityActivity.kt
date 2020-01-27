@@ -16,6 +16,7 @@ import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.ui.view.AppBarChangedListener
 import org.baylasan.sudanmap.common.GpsChecker
 import org.baylasan.sudanmap.common.LocationLiveData
+import org.baylasan.sudanmap.common.canEnableLocationButton
 import org.baylasan.sudanmap.common.toLatLng
 
 class AddEntityActivity : AppCompatActivity(), GpsChecker.OnGpsListener {
@@ -76,8 +77,8 @@ class AddEntityActivity : AppCompatActivity(), GpsChecker.OnGpsListener {
 
     private fun setupMapAndLocation() {
         mapView.getMapAsync { googleMap ->
-            googleMap.uiSettings.isMyLocationButtonEnabled = true
-            googleMap.isMyLocationEnabled = true
+            googleMap.uiSettings.isMyLocationButtonEnabled = canEnableLocationButton()
+            googleMap.isMyLocationEnabled = canEnableLocationButton()
 
             val marker =
                 googleMap.addMarker(MarkerOptions().position(googleMap.cameraPosition.target))

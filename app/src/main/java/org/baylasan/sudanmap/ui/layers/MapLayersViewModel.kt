@@ -12,10 +12,7 @@ class MapLayersViewModel(private val fetchCategoriesUseCase: FetchCategoriesUseC
     BaseViewModel() {
 
     val events = MutableLiveData<MapLayersEvent>()
-    override fun onCleared() {
-        super.onCleared()
-        Log.d("MEGA","Cleared.")
-    }
+
     fun loadCategories() {
         events.value = LoadingEvent
         fetchCategoriesUseCase.execute()

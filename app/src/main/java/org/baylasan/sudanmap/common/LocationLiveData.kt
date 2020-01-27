@@ -12,23 +12,24 @@ import com.google.android.gms.maps.model.LatLng
 class LocationLiveData(context: Context) : LiveData<LocationModel>() {
 
     private var fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
-
+    private var lastLocation: Location? = null
     override fun onInactive() {
         super.onInactive()
         fusedLocationClient.removeLocationUpdates(locationCallback)
     }
 
 
-
     override fun onActive() {
         super.onActive()
-        fusedLocationClient.lastLocation
-            .addOnSuccessListener { location: Location? ->
-                location?.also {
-                    setLocationData(it)
+        if (lastLocation == null) {
+            fusedLocationClient.lastLocation
+                .addOnSuccessListener { location: Location? ->
+                    location?.also {
+                        setLocationData(it)
+                    }
                 }
-            }
-        startLocationUpdates()
+            startLocationUpdates()
+        }
     }
 
     private fun startLocationUpdates() {
@@ -49,6 +50,7 @@ class LocationLiveData(context: Context) : LiveData<LocationModel>() {
     }
 
     private fun setLocationData(location: Location) {
+        lastLocation=location
         value = LocationModel(
             longitude = location.longitude,
             latitude = location.latitude

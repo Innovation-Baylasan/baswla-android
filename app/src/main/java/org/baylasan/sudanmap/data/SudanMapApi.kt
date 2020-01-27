@@ -1,6 +1,7 @@
 package org.baylasan.sudanmap.data
 
 import io.reactivex.Single
+import okhttp3.MultipartBody
 import org.baylasan.sudanmap.data.category.model.CategoryDto
 import org.baylasan.sudanmap.data.entity.EntityDetailsResponse
 import org.baylasan.sudanmap.data.entity.EntityResponse
@@ -44,7 +45,7 @@ interface SudanMapApi {
         fun unFollowEntity(@Path("id") entityId: Int): Single<Response<Unit>>
 
         @GET("entities/{id}")
-        fun entityDetails(@Path("id")entityId: Int): Single<Response<EntityDetailsResponse>>
+        fun entityDetails(@Path("id") entityId: Int): Single<Response<EntityDetailsResponse>>
 
     }
 
@@ -59,6 +60,12 @@ interface SudanMapApi {
     interface User {
         @POST("register")
         fun register(@Body registerRequest: RegisterRequest): Single<Response<RegisterResponse>>
+
+        @Multipart
+        @POST("register")
+        fun registerCompany(
+            @Part list: List<MultipartBody.Part>
+        ): Single<Response<RegisterResponse>>
 
         @POST("login")
         fun login(@Body loginRequest: LoginRequest): Single<Response<LoginResponse>>
