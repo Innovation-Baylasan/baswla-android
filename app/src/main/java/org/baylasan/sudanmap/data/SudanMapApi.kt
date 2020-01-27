@@ -30,9 +30,8 @@ interface SudanMapApi {
         @GET("entities")
         fun findEntitiesByKeyword(@Query("q") keyword: String): Single<Response<EntityResponse>>
 
-        @FormUrlEncoded
         @PUT("entities/{id}/rating")
-        fun rateEntityById(@Path("id") entityId: Int, @Field("rating") rating: Double): Single<Response<Unit>>
+        fun rateEntityById(@Path("id") entityId: Int, @Body rate: RatingRequest): Single<Response<Unit>>
 
         @POST("entities/{id}/review")
         fun reviewEntityById(@Path("id") entityId: Int, @Body request: AddReviewUseCase.Request): Single<Response<Review>>
@@ -44,7 +43,7 @@ interface SudanMapApi {
         fun unFollowEntity(@Path("id") entityId: Int): Single<Response<Unit>>
 
         @GET("entities/{id}")
-        fun entityDetails(@Path("id")entityId: Int): Single<Response<EntityDetailsResponse>>
+        fun entityDetails(@Path("id") entityId: Int): Single<Response<EntityDetailsResponse>>
 
     }
 

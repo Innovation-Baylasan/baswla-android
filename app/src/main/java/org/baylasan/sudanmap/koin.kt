@@ -2,7 +2,6 @@ package org.baylasan.sudanmap
 
 import android.app.Application
 import android.content.Context
-import android.util.Log
 import com.squareup.picasso.OkHttp3Downloader
 import com.squareup.picasso.Picasso
 import io.reactivex.Scheduler
@@ -64,8 +63,9 @@ val entityDetailsModule = module(override = true) {
     factory { GetEntityDetailsUseCase(get()) }
     factory { UnFollowEntityUseCase(get()) }
     factory { FollowEntityUseCase(get()) }
+    factory { RateEntityUseCase(get()) }
     factory { AddReviewUseCase(get()) }
-    viewModel { PlaceDetailsViewModel(get(), get(), get(), get()) }
+    viewModel { PlaceDetailsViewModel(get(), get(), get(), get(), get()) }
 
 }
 val categoryModule = module(override = true) {

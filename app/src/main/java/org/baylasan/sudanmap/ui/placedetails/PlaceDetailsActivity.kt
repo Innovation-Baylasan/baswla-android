@@ -2,6 +2,8 @@ package org.baylasan.sudanmap.ui.placedetails
 
 
 import android.os.Bundle
+import android.view.LayoutInflater
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -9,6 +11,7 @@ import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_place_details.*
 import kotlinx.android.synthetic.main.content_place_details.*
+import kotlinx.android.synthetic.main.rate_entity_dialog_layout.view.*
 import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.common.*
 import org.baylasan.sudanmap.data.entity.model.Entity
@@ -29,10 +32,44 @@ class PlaceDetailsActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_place_details)
-        val entity = intent?.getParcelableExtra<Entity>("entity") as Entity
+        val entity = intent?.getParcelableExtra("entity") as Entity
 
         adapter = ReviewAdapter(mutableListOf())
+        rateNowButtton.setOnClickListener {
 
+            val view =
+                LayoutInflater.from(this).inflate(R.layout.rate_entity_dialog_layout, null, true)
+            val ratingBar = view.ratingBar
+            val submitRateButton = view.submitRateButton
+            val cancelRateButton = view.cancelRateButton
+            val alertDialog = AlertDialog.Builder(this)
+                .setView(view)
+                .create()
+            alertDialog
+                .show()
+            submitRateButton.setOnClickListener {
+                val rating = ratingBar.rating
+                if (rating != 0f) {
+                    viewModel.rate(entity.id, rating)
+                    alertDialog.dismiss()
+                }
+            }
+            cancelRateButton.setOnClickListener {
+                alertDialog.dismiss()
+            }
+        }
+        viewModel.rateState.observe(this, Observer {
+            if (it is UiState.Loading) {
+                rateNowButtton.disable()
+            }
+            if (it is UiState.Complete) {
+                rateNowButtton.enable()
+            }
+            if (it is UiState.Error) {
+                rateNowButtton.enable()
+                toast(getString(R.string.failed_to_rate_entity))
+            }
+        })
         profileBackBtn.setOnClickListener {
             super.onBackPressed()
         }
@@ -43,18 +80,17 @@ class PlaceDetailsActivity : AppCompatActivity() {
             if (it is UiState.Error) {
 
                 toggleFollowButton.enable()
-                toast("Failed to follow, try again")
+                toast(getString(R.string.failed_to_follow))
 
             }
             if (it is UiState.Complete) {
                 toggleFollowButton.enable()
-
+                toast(getString(R.string.followed_successfully))
                 companyProfileFollowersNumTxt.text =
                     (companyProfileFollowersNumTxt.text.toString().toInt() + 1).toString()
             }
         })
         toggleFollowButton.setOnClickListener {
-            //TODO handle if to follow or un-follow
             viewModel.follow(entity.id)
         }
         checkIfUserIsGuest()
@@ -154,10 +190,10 @@ class PlaceDetailsActivity : AppCompatActivity() {
         profileViewModel.loadUser()
         profileViewModel.listenToUserProfile().observe(this, Observer {
             if (it == null) {
-                toggleFollowButton.disable()
+                toggleFollowButton.gone()
                 commentLayout.disableChildern()
             } else {
-                toggleFollowButton.enable()
+                toggleFollowButton.show()
 
                 commentLayout.enableChildern()
             }
