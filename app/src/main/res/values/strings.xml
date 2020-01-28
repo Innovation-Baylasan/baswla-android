@@ -181,4 +181,7 @@ And <font color="#003a7c">
     <string name="start_date">Start date</string>
     <string name="end_date">End date</string>
     <string name="select_assigned_place">Select Assigned Place</string>
+    <string name="failed_to_rate_entity">Failed to rate entity, try again</string>
+    <string name="failed_to_follow">Failed to follow, try again</string>
+    <string name="followed_successfully">Followed successfully.</string>
 </resources>

@@ -3,6 +3,7 @@ package org.baylasan.sudanmap.data.entity
 import io.reactivex.Completable
 import io.reactivex.Single
 import okhttp3.ResponseBody
+import org.baylasan.sudanmap.data.RatingRequest
 import org.baylasan.sudanmap.data.SudanMapApi
 import org.baylasan.sudanmap.data.common.ApiErrorResponse
 import org.baylasan.sudanmap.data.common.ResponseSingleFunc1
@@ -40,7 +41,7 @@ class EntityApi(
             .map { it.entityList }
     }
 
-    override fun rateEntity(id: Int, rating: Double): Completable {
+    override fun rateEntity(id: Int, rating: RatingRequest): Completable {
         return entityApi.rateEntityById(id, rating)
             .onErrorResumeNext(ThrowableSingleFunc1())
             .flatMap(ResponseSingleFunc1(errorConverter))
