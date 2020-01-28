@@ -21,9 +21,6 @@
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup">
         <activity android:name=".ui.LocationPickerActivity"></activity>
-        <activity
-            android:name="m7mdra.com.picker.ImagePickerActivity"
-            android:theme="@style/PickerAppTheme" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -80,14 +77,11 @@
         <activity
             android:name=".ui.auth.signup.SignUpActivity"
             android:windowSoftInputMode="adjustPan|adjustResize">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-            android:windowSoftInputMode="adjustNothing">
+
 
         </activity>
         <activity android:name=".ui.placedetails.PlaceDetailsActivity" />
-        <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
-            android:theme="@style/Base.Theme.AppCompat"/>
+
     </application>
 
 </manifest>
