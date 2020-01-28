@@ -30,6 +30,8 @@
         <activity android:name=".ui.privacy.PrivacyPolicyActivity" />
         <activity android:name=".ui.splash.SplashActivity"></activity>
         <activity android:name=".ui.place.PlacesActivity" />
+        <activity android:name=".ui.auth.company.CompanyDataActivity"></activity>
+        <activity android:name=".ui.place.PlacesActivity" />
         <activity
             android:name=".ui.addevent.AddEventActivity"
             android:configChanges="layoutDirection"
@@ -44,15 +46,12 @@
             android:name=".ui.addentity.AddEntityActivity"
             android:label="@string/title_activity_add_entitiy"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
         <activity android:name=".ui.intro.IntroActivity" />
-        <activity
-            android:name=".ui.auth.AuthActivity"
-            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+        <activity android:name=".ui.auth.AuthActivity"android:windowSoftInputMode="adjustPan|adjustResize"></activity>
         <activity
             android:name=".ui.main.MainActivity"
             android:windowSoftInputMode="adjustNothing">
