@@ -20,6 +20,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="120dp"
+            android:id="@+id/eventImage"
             android:background="@drawable/rounded_end_cardview"
             android:scaleType="centerCrop"
             android:src="@drawable/add_event_stock_image" />
@@ -29,6 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
+            android:id="@+id/eventName"
             android:fontFamily="@font/neo_sans_arabic_bold"
             android:text="Gamenation"
             android:textAllCaps="true"
@@ -39,6 +41,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
+
+            android:id="@+id/eventDescription"
             android:layout_marginStart="12dp"
             android:layout_marginEnd="12dp"
             android:fontFamily="@font/neo_sans_arabic_light"
@@ -51,6 +55,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="120 SDG"
+            android:id="@+id/eventPrice"
             android:drawablePadding="8dp"
             android:layout_marginStart="12dp"
             android:layout_marginEnd="12dp"
@@ -65,6 +70,7 @@
             android:layout_height="wrap_content"
             android:text="60 SEATS"
             android:drawablePadding="8dp"
+            android:id="@+id/eventSeats"
             android:layout_marginBottom="8dp"
             android:layout_marginStart="12dp"
             android:layout_marginEnd="12dp"

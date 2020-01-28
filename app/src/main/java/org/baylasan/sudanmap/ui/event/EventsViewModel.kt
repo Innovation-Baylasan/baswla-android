@@ -9,7 +9,7 @@ import org.baylasan.sudanmap.data.event.model.Event
 import org.baylasan.sudanmap.domain.event.GetMyEventUseCase
 import org.baylasan.sudanmap.ui.BaseViewModel
 
-class EventViewModel(private val getMyEventUseCase: GetMyEventUseCase) : BaseViewModel() {
+class EventsViewModel(private val getMyEventUseCase: GetMyEventUseCase) : BaseViewModel() {
     private val eventUiEvent = MutableLiveData<UiState<List<Event>>>()
     val eventEvent: LiveData<UiState<List<Event>>> = eventUiEvent
     fun loadMyEvents() {
