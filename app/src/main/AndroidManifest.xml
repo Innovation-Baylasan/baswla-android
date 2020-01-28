@@ -24,7 +24,13 @@
             android:name=".ui.eventdetails.EventDetailsActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".ui.faq.FAQActivity" />
-        <activity android:name=".ui.event.EventsActivity" />
+        <activity android:name=".ui.event.EventsActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".ui.terms.TOSActivity" />
         <activity android:name=".ui.privacy.PrivacyPolicyActivity" />
         <activity android:name=".ui.splash.SplashActivity"></activity>
@@ -49,11 +55,7 @@
         <activity
             android:name=".ui.main.MainActivity"
             android:windowSoftInputMode="adjustNothing">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".ui.auth.signup.SignUpActivity"
