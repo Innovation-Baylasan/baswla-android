@@ -18,7 +18,7 @@ class EventViewModel(private val useCase: GetEventUseCase) : BaseViewModel() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribe({
-                uiState.value = UiState.Success(it.events)
+                uiState.value = UiState.Success(it)
             }, {
                 uiState.value = UiState.Error(it)
             }).addToDisposables()
