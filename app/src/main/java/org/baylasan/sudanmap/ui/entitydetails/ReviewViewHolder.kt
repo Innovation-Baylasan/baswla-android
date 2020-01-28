@@ -1,4 +1,4 @@
-package org.baylasan.sudanmap.ui.placedetails
+package org.baylasan.sudanmap.ui.entitydetails
 
 import android.view.View
 import android.widget.ImageView

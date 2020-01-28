@@ -7,7 +7,7 @@
     android:layout_gravity="center"
     android:gravity="center"
     android:orientation="vertical"
-    tools:showIn="@layout/activity_places">
+    tools:showIn="@layout/activity_my_entities">
 
     <ImageView
         android:layout_width="260dp"

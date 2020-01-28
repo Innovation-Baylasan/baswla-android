@@ -1,4 +1,4 @@
-package org.baylasan.sudanmap.ui.placedetails
+package org.baylasan.sudanmap.ui.entitydetails
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -9,9 +9,8 @@ import org.baylasan.sudanmap.data.entity.model.EntityDetails
 import org.baylasan.sudanmap.data.entity.model.Review
 import org.baylasan.sudanmap.domain.entity.*
 import org.baylasan.sudanmap.ui.BaseViewModel
-import kotlin.math.roundToInt
 
-class PlaceDetailsViewModel(
+class EntityDetailsViewModel(
     private val getEntityDetailsUseCase: GetEntityDetailsUseCase,
     private val followEntityUseCase: FollowEntityUseCase,
     private val unFollowEntityUseCase: UnFollowEntityUseCase,

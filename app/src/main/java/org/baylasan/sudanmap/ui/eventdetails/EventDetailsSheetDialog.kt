@@ -10,7 +10,7 @@ import kotlinx.android.synthetic.main.fragment_event_details.*
 import kotlinx.android.synthetic.main.fragment_event_details.view.*
 import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.data.event.model.Event
-import org.baylasan.sudanmap.ui.main.place.load
+import org.baylasan.sudanmap.ui.main.entity.load
 
 class EventDetailsSheetDialog : BottomSheetDialogFragment() {
 

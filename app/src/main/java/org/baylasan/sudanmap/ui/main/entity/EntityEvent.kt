@@ -1,4 +1,4 @@
-package org.baylasan.sudanmap.ui.main.place
+package org.baylasan.sudanmap.ui.main.entity
 
 import org.baylasan.sudanmap.data.entity.model.Entity
 

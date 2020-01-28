@@ -13,13 +13,13 @@ import org.junit.Test
 class GetEntitiesUseCaseTest {
 
     private lateinit var repository: EntityRepository
-    private lateinit var getEntitiesUseCase: GetEntitiesUseCase
+    private lateinit var getEntitiesUseCase: GetMyEntitiesUseCase
 
 
     @Before
     fun setUp() {
         repository = mock(verboseLogging = true)
-        getEntitiesUseCase = GetEntitiesUseCase(repository)
+        getEntitiesUseCase = GetMyEntitiesUseCase(repository)
     }
 
     @Test

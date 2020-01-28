@@ -1,61 +1,66 @@
-package org.baylasan.sudanmap.ui.event
+package org.baylasan.sudanmap.ui.myentities
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import kotlinx.android.synthetic.main.activity_events.*
+import kotlinx.android.synthetic.main.activity_my_entities.*
 import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.common.UiState
 import org.baylasan.sudanmap.common.gone
 import org.baylasan.sudanmap.common.show
-import org.baylasan.sudanmap.ui.addevent.AddEventActivity
-import org.baylasan.sudanmap.ui.eventsearch.EventAdapter
+import org.baylasan.sudanmap.data.entity.model.Entity
+import org.baylasan.sudanmap.ui.addentity.AddEntityActivity
+import org.baylasan.sudanmap.ui.main.entity.EntitiesListAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class EventsActivity : AppCompatActivity() {
-    private val viewModel by viewModel<EventsViewModel>()
+class MyEntitiesActivity : AppCompatActivity(), EntitiesListAdapter.OnItemClick {
+    private val viewModel by viewModel<MyEntitiesViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_events)
+        setContentView(R.layout.activity_my_entities)
         setSupportActionBar(toolbar)
-
-        addEventButton.setOnClickListener {
-            startActivity(Intent(this, AddEventActivity::class.java))
-        }
-        loadingRecyclerView.adapter = LoadingAdapter()
+        viewModel.loadMyEntities()
         refreshLayout.setOnRefreshListener {
-            viewModel.loadMyEvents()
+            viewModel.loadMyEntities()
         }
-        viewModel.loadMyEvents()
-        viewModel.eventEvent.observe(this, Observer {
-            refreshLayout.isRefreshing = false
+        viewModel.entitiesState.observe(this, Observer {
             if (it is UiState.Loading) {
-                eventsLoadingLayout.show()
-                emptyEventLayout.gone()
+                emptyEntityLayout.gone()
+                refreshLayout.isRefreshing = true
             }
             if (it is UiState.Success) {
                 refreshLayout.isRefreshing = false
-                eventsLoadingLayout.gone()
                 if (it.data.isEmpty()) {
-                    emptyEventLayout.show()
+                    emptyEntityLayout.show()
                 } else {
-                    eventsRecyclerView.adapter = EventAdapter(it.data)
+                    emptyEntityLayout.gone()
+                    entitiesRecyclerView.adapter = EntitiesListAdapter(it.data, this)
                 }
             }
             if (it is UiState.Error) {
                 refreshLayout.isRefreshing = false
-                eventsLoadingLayout.gone()
-                emptyEventLayout.gone()
+                emptyEntityLayout.gone()
+
             }
+
         })
+
+        addPlaceButton.setOnClickListener {
+            startActivity(Intent(this, AddEntityActivity::class.java))
+        }
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home)
             finish()
         return super.onOptionsItemSelected(item)
+
+    }
+
+    override fun onItemClick(entity: Entity) {
 
     }
 }

@@ -8,7 +8,7 @@
     android:gravity="center"
     android:orientation="vertical"
     android:background="?android:windowBackground"
-    tools:showIn="@layout/activity_places">
+    tools:showIn="@layout/activity_my_entities">
 
     <ImageView
         android:layout_width="100dp"

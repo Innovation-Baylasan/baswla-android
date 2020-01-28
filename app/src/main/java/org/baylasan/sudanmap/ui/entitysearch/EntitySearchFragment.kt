@@ -1,4 +1,4 @@
-package org.baylasan.sudanmap.ui.placesearch
+package org.baylasan.sudanmap.ui.entitysearch
 
 import android.content.Context
 import android.content.Intent
@@ -12,15 +12,15 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.jakewharton.rxbinding3.widget.textChanges
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
-import kotlinx.android.synthetic.main.fragment_place_search.*
+import kotlinx.android.synthetic.main.fragment_entity_search.*
 import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.data.entity.model.Entity
 import org.baylasan.sudanmap.ui.main.MainActivity
-import org.baylasan.sudanmap.ui.main.place.DataEvent
-import org.baylasan.sudanmap.ui.main.place.EmptyEvent
-import org.baylasan.sudanmap.ui.main.place.EntitiesListAdapter
-import org.baylasan.sudanmap.ui.main.place.LoadingEvent
-import org.baylasan.sudanmap.ui.placedetails.PlaceDetailsActivity
+import org.baylasan.sudanmap.ui.main.entity.DataEvent
+import org.baylasan.sudanmap.ui.main.entity.EmptyEvent
+import org.baylasan.sudanmap.ui.main.entity.EntitiesListAdapter
+import org.baylasan.sudanmap.ui.main.entity.LoadingEvent
+import org.baylasan.sudanmap.ui.entitydetails.EntityDetailsActivity
 import org.baylasan.sudanmap.ui.searchfilter.SearchFilterFragment
 import org.baylasan.sudanmap.common.gone
 import org.baylasan.sudanmap.common.setEndDrawableOnTouchListener
@@ -28,13 +28,13 @@ import org.baylasan.sudanmap.common.show
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.concurrent.TimeUnit
 
-class PlaceSearchFragment : Fragment(R.layout.fragment_place_search), EntitiesListAdapter.OnItemClick {
+class EntitySearchFragment : Fragment(R.layout.fragment_entity_search), EntitiesListAdapter.OnItemClick {
 
     companion object {
         const val SEARCH_KEY = "keyword"
         @JvmStatic
-        fun newInstance(): PlaceSearchFragment {
-            return PlaceSearchFragment()
+        fun newInstance(): EntitySearchFragment {
+            return EntitySearchFragment()
         }
     }
 
@@ -44,7 +44,7 @@ class PlaceSearchFragment : Fragment(R.layout.fragment_place_search), EntitiesLi
         activity = context as MainActivity
     }
 
-    private val viewModel: PlaceSearchViewModel by viewModel()
+    private val viewModel: EntitySearchViewModel by viewModel()
     override fun onStop() {
         super.onStop()
         disposable.dispose()
@@ -124,7 +124,7 @@ class PlaceSearchFragment : Fragment(R.layout.fragment_place_search), EntitiesLi
     }
 
     override fun onItemClick(entity: Entity) {
-        val profileIntent = Intent(activity, PlaceDetailsActivity::class.java)
+        val profileIntent = Intent(activity, EntityDetailsActivity::class.java)
         profileIntent.putExtra("entity", entity)
         startActivity(profileIntent)
     }

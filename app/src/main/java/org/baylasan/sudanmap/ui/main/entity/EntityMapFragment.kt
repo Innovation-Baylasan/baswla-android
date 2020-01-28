@@ -1,4 +1,4 @@
-package org.baylasan.sudanmap.ui.main.place
+package org.baylasan.sudanmap.ui.main.entity
 
 
 import android.content.Context
@@ -26,7 +26,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.entity_loading_layout.*
-import kotlinx.android.synthetic.main.fragment_place_map.*
+import kotlinx.android.synthetic.main.fragment_entity_map.*
 import kotlinx.android.synthetic.main.network_error_layout.*
 import kotlinx.android.synthetic.main.search_bar_layout.*
 import org.baylasan.sudanmap.R
@@ -34,15 +34,15 @@ import org.baylasan.sudanmap.common.*
 import org.baylasan.sudanmap.data.entity.model.Entity
 import org.baylasan.sudanmap.domain.LocationViewModel
 import org.baylasan.sudanmap.ui.main.MainActivity
-import org.baylasan.sudanmap.ui.placedetails.PlaceDetailsActivity
-import org.baylasan.sudanmap.ui.placedetails.PlaceDetailsSheetDialog
-import org.baylasan.sudanmap.ui.placesearch.PlaceSearchFragment
+import org.baylasan.sudanmap.ui.entitydetails.EntityDetailsActivity
+import org.baylasan.sudanmap.ui.entitydetails.EntityDetailsSheetDialog
+import org.baylasan.sudanmap.ui.entitysearch.EntitySearchFragment
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.concurrent.TimeUnit
 
 
-class PlaceMapFragment : Fragment(R.layout.fragment_place_map) {
+class EntityMapFragment : Fragment(R.layout.fragment_entity_map) {
 
     private val viewModel: EntityViewModel by viewModel()
     private val compositeDisposable = CompositeDisposable()
@@ -88,7 +88,7 @@ class PlaceMapFragment : Fragment(R.layout.fragment_place_map) {
             googleMap.setOnMarkerClickListener {
                 val entity = (it.tag as Entity)
                 Log.d("MEGA", "$entity")
-                PlaceDetailsSheetDialog.newInstance(entity).show(fragmentManager!!, "")
+                EntityDetailsSheetDialog.newInstance(entity).show(fragmentManager!!, "")
                 true
             }
 
@@ -117,7 +117,7 @@ class PlaceMapFragment : Fragment(R.layout.fragment_place_map) {
             object : EntitiesListAdapter.OnItemClick {
                 override fun onItemClick(entity: Entity) {
                     val profileIntent =
-                        Intent(activity, PlaceDetailsActivity::class.java)
+                        Intent(activity, EntityDetailsActivity::class.java)
                     profileIntent.putExtra("entity", entity)
                     startActivity(profileIntent)
 
@@ -170,7 +170,7 @@ class PlaceMapFragment : Fragment(R.layout.fragment_place_map) {
 
     private fun openSearchPage() {
         activity.supportFragmentManager.beginTransaction()
-            .replace(R.id.fragmentLayout, PlaceSearchFragment(), "")
+            .replace(R.id.fragmentLayout, EntitySearchFragment(), "")
             .addToBackStack("")
             .commit()
     }

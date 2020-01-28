@@ -46,6 +46,9 @@ interface SudanMapApi {
         @GET("entities/{id}")
         fun entityDetails(@Path("id") entityId: Int): Single<Response<EntityDetailsResponse>>
 
+        @GET("entities/my")
+        fun getMyEntities(): Single<Response<EntityResponse>>
+
     }
 
     interface Categories {
@@ -73,6 +76,7 @@ interface SudanMapApi {
     interface Events {
         @GET("events")
         fun events(): Single<Response<EventResponse>>
+
         @GET("events/my")
         fun myEvents(): Single<Response<EventResponse>>
     }
