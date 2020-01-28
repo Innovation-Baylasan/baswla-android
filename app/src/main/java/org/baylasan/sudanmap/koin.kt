@@ -2,7 +2,6 @@ package org.baylasan.sudanmap
 
 import android.app.Application
 import android.content.Context
-import android.util.Log
 import com.squareup.picasso.OkHttp3Downloader
 import com.squareup.picasso.Picasso
 import io.reactivex.Scheduler
@@ -26,12 +25,14 @@ import org.baylasan.sudanmap.domain.category.FetchCategoriesUseCase
 import org.baylasan.sudanmap.domain.entity.*
 import org.baylasan.sudanmap.domain.event.EventRepository
 import org.baylasan.sudanmap.domain.event.GetEventUseCase
+import org.baylasan.sudanmap.domain.event.GetMyEventUseCase
 import org.baylasan.sudanmap.domain.user.SessionManager
 import org.baylasan.sudanmap.domain.user.UserLoginUseCase
 import org.baylasan.sudanmap.domain.user.UserRegisterUseCase
 import org.baylasan.sudanmap.domain.user.UserRepository
 import org.baylasan.sudanmap.ui.auth.login.LoginViewModel
 import org.baylasan.sudanmap.ui.auth.signup.RegisterViewModel
+import org.baylasan.sudanmap.ui.event.EventsViewModel
 import org.baylasan.sudanmap.ui.layers.MapLayersViewModel
 import org.baylasan.sudanmap.ui.main.UserProfileViewModel
 import org.baylasan.sudanmap.ui.main.event.EventViewModel
@@ -56,6 +57,12 @@ val appModule = module {
     single { providePicasso(androidApplication()) }
     single { provideErrorConverter(get()) }
     viewModel { LocationViewModel(androidApplication()) }
+}
+val eventsModule = module(override = true) {
+    factory { get<Retrofit>().create(SudanMapApi.Events::class.java) }
+    factory<EventRepository> { EventApi(get(), get()) }
+    factory { GetMyEventUseCase(get()) }
+    viewModel { EventsViewModel(get()) }
 }
 
 val entityDetailsModule = module(override = true) {

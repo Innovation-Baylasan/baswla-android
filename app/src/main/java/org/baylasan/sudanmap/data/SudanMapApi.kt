@@ -67,6 +67,8 @@ interface SudanMapApi {
     interface Events {
         @GET("events")
         fun events(): Single<Response<EventResponse>>
+        @GET("events/my")
+        fun myEvents(): Single<Response<EventResponse>>
     }
 }
 
