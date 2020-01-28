@@ -1,6 +1,9 @@
 package org.baylasan.sudanmap.data.common
 
+import org.baylasan.sudanmap.data.user.model.RegisterErrorResponse
+
 class ApiException(val apiErrorResponse: ApiErrorResponse) : Exception("ApiException")
+class RegisterationResponseExcetpion(val registerationResponse: RegisterErrorResponse) : Exception()
 
 open class ConnectionException(message: String) : Exception(message)
 

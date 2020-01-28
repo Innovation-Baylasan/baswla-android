@@ -15,10 +15,12 @@ import okhttp3.logging.HttpLoggingInterceptor
 import org.baylasan.sudanmap.data.SudanMapApi
 import org.baylasan.sudanmap.data.category.CategoryApi
 import org.baylasan.sudanmap.data.common.ApiErrorResponse
+import org.baylasan.sudanmap.data.common.RegisterRequestMapper
 import org.baylasan.sudanmap.data.entity.EntityApi
 import org.baylasan.sudanmap.data.event.EventApi
 import org.baylasan.sudanmap.data.user.SessionManagerImpl
 import org.baylasan.sudanmap.data.user.UserApi
+import org.baylasan.sudanmap.data.user.model.RegisterErrorResponse
 import org.baylasan.sudanmap.domain.LocationViewModel
 import org.baylasan.sudanmap.domain.category.CategoryRepository
 import org.baylasan.sudanmap.domain.category.FetchCategoriesUseCase
@@ -26,10 +28,7 @@ import org.baylasan.sudanmap.domain.entity.*
 import org.baylasan.sudanmap.domain.event.EventRepository
 import org.baylasan.sudanmap.domain.event.GetEventUseCase
 import org.baylasan.sudanmap.domain.event.GetMyEventUseCase
-import org.baylasan.sudanmap.domain.user.SessionManager
-import org.baylasan.sudanmap.domain.user.UserLoginUseCase
-import org.baylasan.sudanmap.domain.user.UserRegisterUseCase
-import org.baylasan.sudanmap.domain.user.UserRepository
+import org.baylasan.sudanmap.domain.user.*
 import org.baylasan.sudanmap.ui.auth.login.LoginViewModel
 import org.baylasan.sudanmap.ui.auth.signup.RegisterViewModel
 import org.baylasan.sudanmap.ui.event.EventsViewModel
@@ -123,10 +122,14 @@ val sessionModule = module(override = true) {
 }
 
 val userModule = module(override = true) {
+    factory { RegisterRequestMapper() }
     factory { get<Retrofit>().create(SudanMapApi.User::class.java) }
-    factory<UserRepository> { UserApi(get(), get()) }
+    factory<UserRepository> { UserApi(get(), get(), get()) }
     factory { UserRegisterUseCase(get()) }
-    viewModel { RegisterViewModel(get(), get()) }
+    factory { CompanyRegisterUseCase(get()) }
+    factory { provideRegisterErrorConverter(get()) }
+
+    viewModel { RegisterViewModel(get(), get(), get()) }
     factory { UserLoginUseCase(get()) }
     viewModel { LoginViewModel(get(), get()) }
 
@@ -134,6 +137,9 @@ val userModule = module(override = true) {
 
 private fun provideErrorConverter(retrofit: Retrofit) =
     retrofit.responseBodyConverter<ApiErrorResponse>(ApiErrorResponse::class.java, arrayOf())
+
+private fun provideRegisterErrorConverter(retrofit: Retrofit) =
+    retrofit.responseBodyConverter<ApiErrorResponse>(RegisterErrorResponse::class.java, arrayOf())
 
 private fun provideRetrofit(androidApplication: Application, okHttpClient: OkHttpClient): Retrofit =
     Retrofit.Builder()

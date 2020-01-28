@@ -10,11 +10,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import com.google.android.material.button.MaterialButton
 import kotlinx.android.synthetic.main.activity_sign_up.*
 import org.baylasan.sudanmap.R
-import org.baylasan.sudanmap.data.user.model.RegisterRequest
-import org.baylasan.sudanmap.ui.main.MainActivity
 import org.baylasan.sudanmap.common.*
+import org.baylasan.sudanmap.data.user.model.RegisterRequest
+import org.baylasan.sudanmap.ui.auth.company.CompanyDataActivity
+import org.baylasan.sudanmap.ui.main.MainActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -24,58 +26,29 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class SignUpActivity : AppCompatActivity() {
 
 
-    private var selectedType = 1
+    private var selectedType = "user"
 
     private val viewModel: RegisterViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
-
+        individualBtn.select()
+        companyBtn.unselect()
         setAdjustScreen()
         individualBtn.setOnClickListener {
-            selectedType = 2
-            individualBtn.strokeColor =
-                ContextCompat.getColorStateList(applicationContext, R.color.colorAccent)
-            individualBtn.setTextColor(
-                ContextCompat.getColor(
-                    applicationContext,
-                    R.color.colorAccent
-                )
-            )
-            individualBtn.iconTint =
-                ContextCompat.getColorStateList(applicationContext, R.color.colorAccent)
+            selectedType = "user"
+            companyBtn.unselect()
+            individualBtn.select()
 
-            companyBtn.strokeColor =
-                ContextCompat.getColorStateList(applicationContext, R.color.black_overlay)
-            companyBtn.setTextColor(
-                ContextCompat.getColor(
-                    applicationContext,
-                    R.color.black_overlay
-                )
-            )
-            companyBtn.iconTint =
-                ContextCompat.getColorStateList(applicationContext, R.color.black_overlay)
+
         }
 
         companyBtn.setOnClickListener {
-            selectedType = 1
-            individualBtn.strokeColor =
-                ContextCompat.getColorStateList(applicationContext, R.color.black_overlay)
-            individualBtn.setTextColor(
-                ContextCompat.getColor(
-                    applicationContext,
-                    R.color.black_overlay
-                )
-            )
-            individualBtn.iconTint =
-                ContextCompat.getColorStateList(applicationContext, R.color.black_overlay)
+            selectedType = "company"
+            companyBtn.select()
+            individualBtn.unselect()
 
-            companyBtn.strokeColor =
-                ContextCompat.getColorStateList(applicationContext, R.color.colorAccent)
-            companyBtn.setTextColor(ContextCompat.getColor(applicationContext, R.color.colorAccent))
-            companyBtn.iconTint =
-                ContextCompat.getColorStateList(applicationContext, R.color.colorAccent)
         }
 
 
@@ -84,6 +57,34 @@ class SignUpActivity : AppCompatActivity() {
         }
 
         observeViewModel()
+        viewModel.moveToCompleteRegister.observe(this, Observer {
+            val intent = Intent(this, CompanyDataActivity::class.java)
+            intent.putExtra("registerData", it)
+            startActivity(intent)
+        })
+
+    }
+
+    private fun MaterialButton.select() {
+
+        strokeColor =
+            ContextCompat.getColorStateList(applicationContext, R.color.colorAccent)
+        setTextColor(ContextCompat.getColor(applicationContext, R.color.colorAccent))
+        iconTint =
+            ContextCompat.getColorStateList(applicationContext, R.color.colorAccent)
+    }
+
+    private fun MaterialButton.unselect() {
+        strokeColor =
+            ContextCompat.getColorStateList(applicationContext, R.color.black_overlay)
+        setTextColor(
+            ContextCompat.getColor(
+                applicationContext,
+                R.color.black_overlay
+            )
+        )
+        iconTint =
+            ContextCompat.getColorStateList(applicationContext, R.color.black_overlay)
 
     }
 
@@ -123,7 +124,7 @@ class SignUpActivity : AppCompatActivity() {
         val email = signUpEmalEditText.asString()
         val password = signUpPasswordEditText.asString()
         val passwordConfirmation = signUpPasswordConfirmationEditText.asString()
-        if (name.isEmpty()) {
+  /*      if (name.isEmpty()) {
             toast(getString(R.string.name_required))
             return
         }
@@ -151,12 +152,12 @@ class SignUpActivity : AppCompatActivity() {
         }
 
         val registerRequest =
-            RegisterRequest(email, name, password, passwordConfirmation, roleId = selectedType)
-
-        viewModel.register(registerRequest)
+            RegisterRequest(email, name, password, passwordConfirmation, type = 1)
+*/
+        viewModel.registerCompany()
     }
 
-     fun setAdjustScreen() {
+    fun setAdjustScreen() {
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
         /*android:windowSoftInputMode="adjustPan|adjustResize"*/

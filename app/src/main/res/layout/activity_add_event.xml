@@ -44,6 +44,7 @@
                 android:layout_height="?actionBarSize"
                 android:background="@android:color/transparent"
                 app:layout_collapseMode="pin"
+
                 app:navigationIcon="@drawable/ic_back">
 <FrameLayout
     android:layout_width="match_parent"
