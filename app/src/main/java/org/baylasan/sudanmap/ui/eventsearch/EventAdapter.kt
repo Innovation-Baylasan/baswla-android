@@ -1,12 +1,11 @@
 package org.baylasan.sudanmap.ui.eventsearch
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.data.event.model.Event
-import org.baylasan.sudanmap.ui.main.place.load
+import org.baylasan.sudanmap.ui.main.entity.load
 
 class EventAdapter(private val list:List<Event>) : RecyclerView.Adapter<EventViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {

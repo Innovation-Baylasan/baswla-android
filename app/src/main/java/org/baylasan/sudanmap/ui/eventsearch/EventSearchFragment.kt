@@ -15,7 +15,7 @@ class EventSearchFragment : Fragment(R.layout.fragment_event_search) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        searchRecyclerView.adapter=EventAdapter()
+        searchRecyclerView.adapter=EventAdapter(listOf())
         searchBackBtn.setOnClickListener {
             activity
                 ?.supportFragmentManager

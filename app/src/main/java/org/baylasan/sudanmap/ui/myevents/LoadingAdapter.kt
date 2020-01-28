@@ -1,4 +1,4 @@
-package org.baylasan.sudanmap.ui.event
+package org.baylasan.sudanmap.ui.myevents
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

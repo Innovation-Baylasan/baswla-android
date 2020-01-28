@@ -31,13 +31,14 @@ import org.baylasan.sudanmap.domain.event.GetMyEventUseCase
 import org.baylasan.sudanmap.domain.user.*
 import org.baylasan.sudanmap.ui.auth.login.LoginViewModel
 import org.baylasan.sudanmap.ui.auth.signup.RegisterViewModel
-import org.baylasan.sudanmap.ui.event.EventsViewModel
+import org.baylasan.sudanmap.ui.entitydetails.EntityDetailsViewModel
+import org.baylasan.sudanmap.ui.entitysearch.EntitySearchViewModel
 import org.baylasan.sudanmap.ui.layers.MapLayersViewModel
 import org.baylasan.sudanmap.ui.main.UserProfileViewModel
+import org.baylasan.sudanmap.ui.main.entity.EntityViewModel
 import org.baylasan.sudanmap.ui.main.event.EventViewModel
-import org.baylasan.sudanmap.ui.main.place.EntityViewModel
-import org.baylasan.sudanmap.ui.placedetails.PlaceDetailsViewModel
-import org.baylasan.sudanmap.ui.placesearch.PlaceSearchViewModel
+import org.baylasan.sudanmap.ui.myentities.MyEntitiesViewModel
+import org.baylasan.sudanmap.ui.myevents.MyEventsViewModel
 import org.baylasan.sudanmap.ui.splash.SessionViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -57,11 +58,20 @@ val appModule = module {
     single { provideErrorConverter(get()) }
     viewModel { LocationViewModel(androidApplication()) }
 }
+
+val entitiesModule = module(override = true) {
+    factory { get<Retrofit>().create(SudanMapApi.Categories::class.java) }
+    factory<EntityRepository> { EntityApi(get(), get()) }
+    factory { GetMyEntitiesUseCase(get()) }
+    viewModel {
+        MyEntitiesViewModel(get())
+    }
+}
 val eventsModule = module(override = true) {
     factory { get<Retrofit>().create(SudanMapApi.Events::class.java) }
     factory<EventRepository> { EventApi(get(), get()) }
     factory { GetMyEventUseCase(get()) }
-    viewModel { EventsViewModel(get()) }
+    viewModel { MyEventsViewModel(get()) }
 }
 
 val entityDetailsModule = module(override = true) {
@@ -72,7 +82,7 @@ val entityDetailsModule = module(override = true) {
     factory { FollowEntityUseCase(get()) }
     factory { RateEntityUseCase(get()) }
     factory { AddReviewUseCase(get()) }
-    viewModel { PlaceDetailsViewModel(get(), get(), get(), get(), get()) }
+    viewModel { EntityDetailsViewModel(get(), get(), get(), get(), get()) }
 
 }
 val categoryModule = module(override = true) {
@@ -98,7 +108,7 @@ val homePageModule = module(override = true) {
 val entityListModule = module(override = true) {
     factory { get<Retrofit>().create(SudanMapApi.Entities::class.java) }
     factory<EntityRepository> { EntityApi(get(), get()) }
-    factory { GetEntitiesUseCase(get()) }
+    factory { GetMyEntitiesUseCase(get()) }
     factory { GetNearbyEntitiesUseCase(get()) }
     viewModel { EntityViewModel(get(), get()) }
 }
@@ -112,7 +122,7 @@ val searchModule = module(override = true) {
     factory { get<Retrofit>().create(SudanMapApi.Entities::class.java) }
     factory<EntityRepository> { EntityApi(get(), get()) }
     factory { FindEntitiesByKeywordUseCase(get()) }
-    viewModel { PlaceSearchViewModel(get()) }
+    viewModel { EntitySearchViewModel(get()) }
     factory { GetNearbyEntitiesUseCase(get()) }
     viewModel { EntityViewModel(get(), get()) }
 }

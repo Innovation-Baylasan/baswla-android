@@ -76,4 +76,12 @@ class EntityApi(
             .flatMap(ResponseSingleFunc1(errorConverter))
             .map { it.details }
     }
+
+    override fun getMyEntities(): Single<List<Entity>> {
+        return entityApi.getMyEntities()
+            .onErrorResumeNext(ThrowableSingleFunc1())
+            .flatMap(ResponseSingleFunc1(errorConverter))
+            .map { it.entityList }
+
+    }
 }

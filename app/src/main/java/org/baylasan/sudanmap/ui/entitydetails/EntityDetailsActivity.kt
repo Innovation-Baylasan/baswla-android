@@ -1,4 +1,4 @@
-package org.baylasan.sudanmap.ui.placedetails
+package org.baylasan.sudanmap.ui.entitydetails
 
 
 import android.os.Bundle
@@ -9,21 +9,21 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.activity_place_details.*
-import kotlinx.android.synthetic.main.content_place_details.*
+import kotlinx.android.synthetic.main.activity_entity_details.*
+import kotlinx.android.synthetic.main.content_entity_details.*
 import kotlinx.android.synthetic.main.rate_entity_dialog_layout.view.*
 import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.common.*
 import org.baylasan.sudanmap.data.entity.model.Entity
 import org.baylasan.sudanmap.ui.main.UserProfileViewModel
-import org.baylasan.sudanmap.ui.main.place.load
-import org.baylasan.sudanmap.ui.main.place.loadCircle
+import org.baylasan.sudanmap.ui.main.entity.load
+import org.baylasan.sudanmap.ui.main.entity.loadCircle
 import org.baylasan.sudanmap.ui.view.AppBarChangedListener
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class PlaceDetailsActivity : AppCompatActivity() {
-    private val viewModel by viewModel<PlaceDetailsViewModel>()
+class EntityDetailsActivity : AppCompatActivity() {
+    private val viewModel by viewModel<EntityDetailsViewModel>()
     private var snackBar: Snackbar? = null
     lateinit var adapter: ReviewAdapter
     private val profileViewModel by viewModel<UserProfileViewModel>()
@@ -31,7 +31,7 @@ class PlaceDetailsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_place_details)
+        setContentView(R.layout.activity_entity_details)
         val entity = intent?.getParcelableExtra("entity") as Entity
 
         adapter = ReviewAdapter(mutableListOf())

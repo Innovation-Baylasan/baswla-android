@@ -26,11 +26,11 @@ import org.baylasan.sudanmap.common.gone
 import org.baylasan.sudanmap.common.show
 import org.baylasan.sudanmap.ui.auth.AuthActivity
 import org.baylasan.sudanmap.ui.editprofile.EditUserProfileActivity
-import org.baylasan.sudanmap.ui.event.EventsActivity
+import org.baylasan.sudanmap.ui.myevents.MyEventsActivity
 import org.baylasan.sudanmap.ui.faq.FAQActivity
 import org.baylasan.sudanmap.ui.main.event.EventMapFragment
-import org.baylasan.sudanmap.ui.main.place.PlaceMapFragment
-import org.baylasan.sudanmap.ui.place.PlacesActivity
+import org.baylasan.sudanmap.ui.main.entity.EntityMapFragment
+import org.baylasan.sudanmap.ui.myentities.MyEntitiesActivity
 import org.baylasan.sudanmap.ui.privacy.PrivacyPolicyActivity
 import org.baylasan.sudanmap.ui.terms.TOSActivity
 import org.koin.android.ext.android.inject
@@ -114,7 +114,7 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener,
         gpsChecker.turnGPSOn(this)
 
         openPlacesButton.setOnClickListener {
-            startActivityAndCloseDrawer<PlacesActivity>()
+            startActivityAndCloseDrawer<MyEntitiesActivity>()
         }
         actionPrivacyButton.setOnClickListener {
             startActivityAndCloseDrawer<PrivacyPolicyActivity>()
@@ -123,7 +123,7 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener,
             startActivityAndCloseDrawer<TOSActivity>()
         }
         openEventsButton.setOnClickListener {
-            startActivityAndCloseDrawer<EventsActivity>()
+            startActivityAndCloseDrawer<MyEventsActivity>()
         }
         openFaqButton.setOnClickListener {
             startActivityAndCloseDrawer<FAQActivity>()
@@ -292,7 +292,7 @@ class FragmentAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(
 ) {
     override fun getItem(position: Int): Fragment {
         return when (position) {
-            0 -> PlaceMapFragment()
+            0 -> EntityMapFragment()
             1 -> EventMapFragment()
             else -> throw  UnknownError()
         }

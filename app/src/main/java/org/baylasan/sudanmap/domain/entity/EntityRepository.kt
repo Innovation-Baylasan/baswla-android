@@ -17,4 +17,5 @@ interface EntityRepository {
     fun follow(id: Int): Completable
     fun unFollow(id: Int): Completable
     fun getEntityDetails(id: Int): Single<EntityDetails>
+    fun getMyEntities(): Single<List<Entity>>
 }

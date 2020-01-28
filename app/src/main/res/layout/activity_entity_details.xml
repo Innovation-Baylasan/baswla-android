@@ -71,7 +71,7 @@
 
     <include
         android:id="@+id/nestedScrollView"
-        layout="@layout/content_place_details" />
+        layout="@layout/content_entity_details" />
 
     <ImageView
         android:id="@+id/profileImage"

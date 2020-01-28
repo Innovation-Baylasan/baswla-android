@@ -8,7 +8,7 @@ import kotlinx.android.synthetic.main.content_event_details.*
 import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.common.openWebPage
 import org.baylasan.sudanmap.data.event.model.Event
-import org.baylasan.sudanmap.ui.main.place.load
+import org.baylasan.sudanmap.ui.main.entity.load
 
 class EventDetailsActivity : AppCompatActivity() {
 
