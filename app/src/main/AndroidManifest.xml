@@ -22,15 +22,6 @@
         tools:replace="android:allowBackup">
         <activity android:name=".ui.LocationPickerActivity"></activity>
 
-        <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="${applicationId}"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths" />
-        </provider>
 
         <activity android:name=".ui.editprofile.EditUserProfileActivity" />
         <activity
@@ -82,7 +73,7 @@
             android:windowSoftInputMode="adjustNothing">
 
         </activity>
-            android:windowSoftInputMode="adjustNothing"></activity>
+
         <activity
             android:name=".ui.auth.signup.SignUpActivity"
             android:windowSoftInputMode="adjustPan|adjustResize">
