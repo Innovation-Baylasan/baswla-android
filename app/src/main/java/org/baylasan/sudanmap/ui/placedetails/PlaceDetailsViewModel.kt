@@ -7,27 +7,28 @@ import io.reactivex.schedulers.Schedulers
 import org.baylasan.sudanmap.common.UiState
 import org.baylasan.sudanmap.data.entity.model.EntityDetails
 import org.baylasan.sudanmap.data.entity.model.Review
-import org.baylasan.sudanmap.domain.entity.AddReviewUseCase
-import org.baylasan.sudanmap.domain.entity.FollowEntityUseCase
-import org.baylasan.sudanmap.domain.entity.GetEntityDetailsUseCase
-import org.baylasan.sudanmap.domain.entity.UnFollowEntityUseCase
+import org.baylasan.sudanmap.domain.entity.*
 import org.baylasan.sudanmap.ui.BaseViewModel
+import kotlin.math.roundToInt
 
 class PlaceDetailsViewModel(
     private val getEntityDetailsUseCase: GetEntityDetailsUseCase,
     private val followEntityUseCase: FollowEntityUseCase,
     private val unFollowEntityUseCase: UnFollowEntityUseCase,
+    private val rateEntityUseCase: RateEntityUseCase,
     private val addReviewUseCase: AddReviewUseCase
 ) : BaseViewModel() {
     private val loadEntityUiState = MutableLiveData<UiState<EntityDetails>>()
     private val reviewUiState = MutableLiveData<UiState<Review>>()
     private val followUiState = MutableLiveData<UiState<Unit>>()
     private val unFollowUiState = MutableLiveData<UiState<Unit>>()
+    private val rateUiState = MutableLiveData<UiState<Unit>>()
 
     val entityDetailsState: LiveData<UiState<EntityDetails>> = loadEntityUiState
     val reviewState: LiveData<UiState<Review>> = reviewUiState
     val followState: LiveData<UiState<Unit>> = followUiState
     val unFollowState: LiveData<UiState<Unit>> = unFollowUiState
+    val rateState: LiveData<UiState<Unit>> = rateUiState
 
     fun getDetailsForId(id: Int) {
         loadEntityUiState.value = UiState.Loading()
@@ -85,6 +86,20 @@ class PlaceDetailsViewModel(
                 reviewUiState.value = UiState.Error(it)
             }).addToDisposables()
 
+    }
+
+    fun rate(id: Int, rating: Float) {
+        rateUiState.value = UiState.Loading()
+        rateEntityUseCase.execute(RateEntityUseCase.Request(id, rating.toDouble()))
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                rateUiState.value = UiState.Complete()
+
+            }, {
+                rateUiState.value = UiState.Error(it)
+
+            }).addToDisposables()
     }
 
 

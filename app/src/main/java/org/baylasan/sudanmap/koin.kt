@@ -71,8 +71,9 @@ val entityDetailsModule = module(override = true) {
     factory { GetEntityDetailsUseCase(get()) }
     factory { UnFollowEntityUseCase(get()) }
     factory { FollowEntityUseCase(get()) }
+    factory { RateEntityUseCase(get()) }
     factory { AddReviewUseCase(get()) }
-    viewModel { PlaceDetailsViewModel(get(), get(), get(), get()) }
+    viewModel { PlaceDetailsViewModel(get(), get(), get(), get(), get()) }
 
 }
 val categoryModule = module(override = true) {

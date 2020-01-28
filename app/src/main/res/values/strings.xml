@@ -157,4 +157,7 @@ And <font color="#003a7c">
     <string name="retry">Retry</string>
     <string name="failed_to_load_details">Failed to load the details</string>
     <string name="write_review_first">Write a review first</string>
+    <string name="failed_to_rate_entity">Failed to rate entity, try again</string>
+    <string name="failed_to_follow">Failed to follow, try again</string>
+    <string name="followed_successfully">Followed successfully.</string>
 </resources>
