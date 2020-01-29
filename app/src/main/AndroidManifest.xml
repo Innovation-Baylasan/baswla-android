@@ -8,9 +8,8 @@
              location permissions for the 'MyLocation' functionality.
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <application
         android:name=".SudanMapApp"
         android:allowBackup="true"
@@ -33,14 +32,14 @@
         <activity android:name=".ui.myevents.MyEventsActivity"></activity>
         <activity android:name=".ui.terms.TOSActivity" />
         <activity android:name=".ui.privacy.PrivacyPolicyActivity" />
-        <activity android:name=".ui.splash.SplashActivity" >
+        <activity android:name=".ui.splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.myentities.MyEntitiesActivity">
+        <activity android:name=".ui.myentities.MyEntitiesActivity" >
 
         </activity>
         <activity android:name=".ui.auth.company.CompanyDataActivity"></activity>

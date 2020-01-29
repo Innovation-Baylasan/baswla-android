@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import kotlinx.android.synthetic.main.activity_my_events.*
 import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.common.UiState
@@ -34,6 +35,7 @@ class MyEventsActivity : AppCompatActivity() {
             if (it is UiState.Loading) {
                 eventsLoadingLayout.show()
                 emptyEventLayout.gone()
+                eventsRecyclerView.gone()
             }
             if (it is UiState.Success) {
                 refreshLayout.isRefreshing = false
@@ -41,7 +43,9 @@ class MyEventsActivity : AppCompatActivity() {
                 if (it.data.isEmpty()) {
                     emptyEventLayout.show()
                 } else {
+                    eventsRecyclerView.show()
                     eventsRecyclerView.adapter = EventAdapter(it.data)
+                    eventsRecyclerView.layoutManager=StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL)
                 }
             }
             if (it is UiState.Error) {
