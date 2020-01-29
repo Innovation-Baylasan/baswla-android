@@ -6,12 +6,13 @@ import io.reactivex.schedulers.Schedulers
 import org.baylasan.sudanmap.data.common.*
 import org.baylasan.sudanmap.data.entity.model.Category
 import org.baylasan.sudanmap.data.entity.model.Entity
+import org.baylasan.sudanmap.domain.entity.GetEntitiesUseCase
 import org.baylasan.sudanmap.domain.entity.GetMyEntitiesUseCase
 import org.baylasan.sudanmap.domain.entity.GetNearbyEntitiesUseCase
 import org.baylasan.sudanmap.ui.BaseViewModel
 
 class EntityViewModel(
-    private val getEntitiesUseCase: GetMyEntitiesUseCase,
+    private val getEntitiesUseCase: GetEntitiesUseCase,
     private val getNearbyEntitiesUseCase: GetNearbyEntitiesUseCase
 ) : BaseViewModel() {
 

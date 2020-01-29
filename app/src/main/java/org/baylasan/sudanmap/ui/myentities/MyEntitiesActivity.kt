@@ -2,9 +2,11 @@ package org.baylasan.sudanmap.ui.myentities
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import kotlinx.android.synthetic.main.activity_my_entities.*
 import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.common.UiState
@@ -28,6 +30,7 @@ class MyEntitiesActivity : AppCompatActivity(), EntitiesListAdapter.OnItemClick 
         viewModel.entitiesState.observe(this, Observer {
             if (it is UiState.Loading) {
                 emptyEntityLayout.gone()
+                entitiesRecyclerView.gone()
                 refreshLayout.isRefreshing = true
             }
             if (it is UiState.Success) {
@@ -35,8 +38,13 @@ class MyEntitiesActivity : AppCompatActivity(), EntitiesListAdapter.OnItemClick 
                 if (it.data.isEmpty()) {
                     emptyEntityLayout.show()
                 } else {
+                    entitiesRecyclerView.show()
+
                     emptyEntityLayout.gone()
+                    Log.d("MEGA", "DATA ${it.data}")
                     entitiesRecyclerView.adapter = EntitiesListAdapter(it.data, this)
+                    entitiesRecyclerView.layoutManager =
+                        StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
                 }
             }
             if (it is UiState.Error) {

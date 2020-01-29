@@ -108,7 +108,7 @@ val homePageModule = module(override = true) {
 val entityListModule = module(override = true) {
     factory { get<Retrofit>().create(SudanMapApi.Entities::class.java) }
     factory<EntityRepository> { EntityApi(get(), get()) }
-    factory { GetMyEntitiesUseCase(get()) }
+    factory { GetEntitiesUseCase(get()) }
     factory { GetNearbyEntitiesUseCase(get()) }
     viewModel { EntityViewModel(get(), get()) }
 }
@@ -184,15 +184,14 @@ private fun okHttpInterceptor() = Interceptor { chain ->
 class SessionInterceptor(private val sessionManager: SessionManager) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
-        val headers = request.headers.newBuilder()
-            .add("Connection", "close")
-            .add("Content-Type", "application/json")
-            .add("Accept", "application/json")
-            .add("Authorization", "Bearer ${sessionManager.getToken()}")
+        val newRequest = request.newBuilder()
+            .header("Connection", "close")
+            .header("Content-Type", "application/json")
+            .header("Accept", "application/json")
+            .header("Authorization", "Bearer ${sessionManager.getToken()}")
             .build()
 
+        return chain.proceed(newRequest)
 
-
-        return chain.proceed(request.newBuilder().headers(headers).build())
     }
 }

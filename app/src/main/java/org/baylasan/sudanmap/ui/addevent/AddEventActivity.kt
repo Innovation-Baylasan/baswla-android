@@ -29,6 +29,7 @@ import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.common.*
 import org.baylasan.sudanmap.domain.LocationViewModel
 import org.baylasan.sudanmap.ui.LocationPickerActivity
+import org.baylasan.sudanmap.ui.myentities.MyEntitiesViewModel
 import org.baylasan.sudanmap.ui.view.AppBarChangedListener
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -47,8 +48,7 @@ class AddEventActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
     private var selectedCoverImage: Uri? = null
     private var entity: Entity? = null
     private val locationViewModel by viewModel<LocationViewModel>()
-
-
+    private val entitiesViewModel by viewModel<MyEntitiesViewModel>()
     private val calendar = Calendar.getInstance()
     private val onStateChanged = object : AppBarChangedListener() {
         override fun onStateChanged(appBarLayout: AppBarLayout, state: State) {
@@ -83,6 +83,15 @@ class AddEventActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
             startDateClicked = 2
             showDatePicker()
         }
+        entitiesViewModel.loadMyEntities()
+        entitiesViewModel.entitiesState.observe(this, Observer {
+            if (it is UiState.Loading) {
+
+            }
+            if (it is UiState.Success) {
+                eventAssignmentSpinner.setAdapter(EntityArrayAdapter(this, it.data))
+            }
+        })
 
         pickCoverImageButton.setOnClickListener {
             CropImage.activity()
