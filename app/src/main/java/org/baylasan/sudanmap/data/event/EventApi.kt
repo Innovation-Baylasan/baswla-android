@@ -7,8 +7,8 @@ import org.baylasan.sudanmap.data.SudanMapApi
 import org.baylasan.sudanmap.data.common.ApiErrorResponse
 import org.baylasan.sudanmap.data.common.ResponseSingleFunc1
 import org.baylasan.sudanmap.data.common.ThrowableSingleFunc1
+import org.baylasan.sudanmap.data.event.model.AddEventRequest
 import org.baylasan.sudanmap.data.event.model.Event
-import org.baylasan.sudanmap.data.event.model.EventResponse
 import org.baylasan.sudanmap.domain.event.EventRepository
 import retrofit2.Converter
 
@@ -29,6 +29,13 @@ class EventApi(
             .onErrorResumeNext(ThrowableSingleFunc1())
             .flatMap(ResponseSingleFunc1(errorConverter))
             .map { it.events }
+    }
+
+    override fun addEvent(addEventRequest: AddEventRequest): Completable {
+        return api.addEvent(addEventRequest)
+            .onErrorResumeNext(ThrowableSingleFunc1())
+            .flatMap(ResponseSingleFunc1(errorConverter))
+            .ignoreElement()
     }
 
 }

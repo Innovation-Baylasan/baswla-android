@@ -2,12 +2,13 @@ package org.baylasan.sudanmap.ui.addevent
 
 import android.app.Activity
 import android.app.DatePickerDialog
+import android.app.ProgressDialog
 import android.app.TimePickerDialog
-import android.content.Entity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.widget.DatePicker
 import android.widget.TimePicker
 import androidx.appcompat.app.AppCompatActivity
@@ -20,6 +21,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
@@ -27,6 +29,8 @@ import kotlinx.android.synthetic.main.activity_add_event.*
 import kotlinx.android.synthetic.main.content_add_event.*
 import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.common.*
+import org.baylasan.sudanmap.data.entity.model.Entity
+import org.baylasan.sudanmap.data.event.model.AddEventRequest
 import org.baylasan.sudanmap.domain.LocationViewModel
 import org.baylasan.sudanmap.ui.LocationPickerActivity
 import org.baylasan.sudanmap.ui.myentities.MyEntitiesViewModel
@@ -50,6 +54,8 @@ class AddEventActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
     private val locationViewModel by viewModel<LocationViewModel>()
     private val entitiesViewModel by viewModel<MyEntitiesViewModel>()
     private val calendar = Calendar.getInstance()
+    private var snackBar: Snackbar? = null
+    private val addViewModel by viewModel<AddEventViewModel>()
     private val onStateChanged = object : AppBarChangedListener() {
         override fun onStateChanged(appBarLayout: AppBarLayout, state: State) {
             if (state == State.COLLAPSED) {
@@ -71,9 +77,17 @@ class AddEventActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
         }
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            finish()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_event)
+        setSupportActionBar(toolbar)
         appBar.addOnOffsetChangedListener(onStateChanged)
         applicationStartButton.setOnClickListener {
             startDateClicked = 1
@@ -86,10 +100,31 @@ class AddEventActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
         entitiesViewModel.loadMyEntities()
         entitiesViewModel.entitiesState.observe(this, Observer {
             if (it is UiState.Loading) {
-
+                snackBar?.dismiss()
             }
             if (it is UiState.Success) {
-                eventAssignmentSpinner.setAdapter(EntityArrayAdapter(this, it.data))
+                snackBar?.dismiss()
+
+                val list = it.data
+                val entityArrayAdapter = EntityArrayAdapter(this, list)
+                eventAssignmentSpinner.setAdapter(entityArrayAdapter)
+                eventAssignmentSpinner.setOnItemClickListener { parent, view, position, id ->
+                    val selectedEntity = list[position]
+                    eventAssignmentSpinner.setText(selectedEntity.name, false)
+                    entity = selectedEntity
+
+                }
+            }
+            if (it is UiState.Error) {
+                snackBar = Snackbar.make(
+                    addEventLayout,
+                    R.string.failed_to_load_details,
+                    Snackbar.LENGTH_INDEFINITE
+                ).setAction(R.string.retry) {
+                    entitiesViewModel.loadMyEntities()
+                }
+                snackBar?.show()
+
             }
         })
 
@@ -172,7 +207,31 @@ class AddEventActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
                 return@setOnClickListener
             }
 
+            addViewModel.submitEvent(
+                AddEventRequest(
+                    name = eventName,
+                    description = eventDescription,
+                    cover = "/pic",
+                    registrationLink = registerLink,
+                    startDateTime = applicationStartDateTime!!.timeInMillis,
+                    endDateTime = applicationEndDateTime!!.timeInMillis,
+                    entityId = entity!!.id,
+                    locationLat = selectedLocation!!.latitude,
+                    locationLng = selectedLocation!!.longitude
 
+                )
+            )
+            addViewModel.addState.observe(this, Observer {
+                if (it is UiState.Loading) {
+
+                }
+                if (it is UiState.Complete) {
+
+                }
+                if (it is UiState.Error) {
+
+                }
+            })
         }
 
     }

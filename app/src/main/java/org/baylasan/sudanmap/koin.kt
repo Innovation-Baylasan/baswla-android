@@ -25,10 +25,12 @@ import org.baylasan.sudanmap.domain.LocationViewModel
 import org.baylasan.sudanmap.domain.category.CategoryRepository
 import org.baylasan.sudanmap.domain.category.FetchCategoriesUseCase
 import org.baylasan.sudanmap.domain.entity.*
+import org.baylasan.sudanmap.domain.event.AddEventUseCase
 import org.baylasan.sudanmap.domain.event.EventRepository
 import org.baylasan.sudanmap.domain.event.GetEventUseCase
 import org.baylasan.sudanmap.domain.event.GetMyEventUseCase
 import org.baylasan.sudanmap.domain.user.*
+import org.baylasan.sudanmap.ui.addevent.AddEventViewModel
 import org.baylasan.sudanmap.ui.auth.login.LoginViewModel
 import org.baylasan.sudanmap.ui.auth.signup.RegisterViewModel
 import org.baylasan.sudanmap.ui.entitydetails.EntityDetailsViewModel
@@ -72,6 +74,12 @@ val eventsModule = module(override = true) {
     factory<EventRepository> { EventApi(get(), get()) }
     factory { GetMyEventUseCase(get()) }
     viewModel { MyEventsViewModel(get()) }
+}
+val addEventModule = module(override = true) {
+    factory { get<Retrofit>().create(SudanMapApi.Events::class.java) }
+    factory<EventRepository> { EventApi(get(), get()) }
+    factory { AddEventUseCase(get()) }
+    viewModel { AddEventViewModel(get()) }
 }
 
 val entityDetailsModule = module(override = true) {
