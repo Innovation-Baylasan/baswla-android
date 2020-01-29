@@ -46,21 +46,22 @@
                 app:layout_collapseMode="pin"
 
                 app:navigationIcon="@drawable/ic_back">
-<FrameLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/neo_sans_arabic_bold"
-        android:text="Add new event"
-        android:layout_gravity="center|start"
-        android:textColor="@android:color/white"
-        android:textSize="26sp"
-        app:textAllCaps="true" />
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-</FrameLayout>
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center|start"
+                        android:fontFamily="@font/neo_sans_arabic_bold"
+                        android:text="Add new event"
+                        android:textColor="@android:color/white"
+                        android:textSize="26sp"
+                        app:textAllCaps="true" />
+
+                </FrameLayout>
 
             </androidx.appcompat.widget.Toolbar>
 
