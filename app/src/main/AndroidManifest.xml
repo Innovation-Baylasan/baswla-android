@@ -32,7 +32,6 @@
         <activity android:name=".ui.myevents.MyEventsActivity"></activity>
         <activity android:name=".ui.terms.TOSActivity" />
         <activity android:name=".ui.privacy.PrivacyPolicyActivity" />
-        <activity android:name=".ui.splash.SplashActivity" >
         <activity android:name=".ui.splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -41,9 +40,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.myentities.MyEntitiesActivity" >
-
-        </activity>
-        <activity android:name=".ui.myentities.MyEntitiesActivity">
 
         </activity>
         <activity android:name=".ui.auth.company.CompanyDataActivity"></activity>
