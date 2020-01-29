@@ -9,7 +9,6 @@ import kotlinx.android.synthetic.main.activity_intro.*
 import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.domain.ViewPagerModel
 import org.baylasan.sudanmap.domain.user.SessionManager
-import org.baylasan.sudanmap.ui.auth.AuthActivity
 import org.baylasan.sudanmap.ui.main.MainActivity
 import org.koin.android.ext.android.inject
 
@@ -17,7 +16,7 @@ class IntroActivity : AppCompatActivity() {
 
 
     private var currentPage = 0
-    private val sessionManager : SessionManager by inject()
+    private val sessionManager: SessionManager by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,9 +32,15 @@ class IntroActivity : AppCompatActivity() {
             ), ViewPagerModel(
                 jsonFile = R.raw.third, header = "Explore",
                 description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nunc eget lorem dolor sed viverra ipsum."
+            ), ViewPagerModel(
+                jsonFile = R.raw.four, header = "Explore",
+                description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nunc eget lorem dolor sed viverra ipsum."
+            ), ViewPagerModel(
+                jsonFile = R.raw.five, header = "Explore",
+                description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nunc eget lorem dolor sed viverra ipsum."
             )
-        )
-        val marginPageTransformer = MarginPageTransformer(50)
+            )
+        val marginPageTransformer = MarginPageTransformer(100)
 
         val adapter = ViewPagerAdapter(introItems)
         introViewPager.adapter = adapter
@@ -45,16 +50,16 @@ class IntroActivity : AppCompatActivity() {
 
         introViewPager.setPageTransformer(marginPageTransformer)
 
-        /*    introViewPager.setPageTransformer { page, position ->
+            introViewPager.setPageTransformer { page, position ->
                 page.apply {
                     translationY = Math.abs(position) * 500f
                     scaleX = 1f
                     scaleY = 1f
                 }
-            }*/
+            }
 
         nextBtn.setOnClickListener {
-            if (currentPage == 2) {
+            if (currentPage == introItems.size) {
                 sessionManager.setIsFirstTime(false)
                 startActivity(Intent(applicationContext, MainActivity::class.java))
                 finish()
@@ -77,9 +82,9 @@ class IntroActivity : AppCompatActivity() {
                 if (currentPage == introItems.lastIndex) {
                     //  introViewPager.setCurrentItem(currentPage, true)
                     //  currentPage =0
-                    nextBtn.text = "Finish"
+                    nextBtn.text = getString(R.string.finish)
                 } else {
-                    nextBtn.text = "Next"
+                    nextBtn.text = getString(R.string.next)
                 }
             }
 
