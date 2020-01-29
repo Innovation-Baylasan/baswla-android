@@ -32,7 +32,7 @@
             android:id="@+id/userAvatarImageView"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            app:srcCompat="@drawable/ic_user_nav_drawer_image" />
+            app:srcCompat="@drawable/ic_default_user_avatar" />
 
         <TextView
             android:id="@+id/userNameTextView"

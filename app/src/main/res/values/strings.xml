@@ -184,4 +184,7 @@ And <font color="#003a7c">
     <string name="failed_to_rate_entity">Failed to rate entity, try again</string>
     <string name="failed_to_follow">Failed to follow, try again</string>
     <string name="followed_successfully">Followed successfully.</string>
+    <string name="full_name">Full name</string>
+    <string name="e_mail_address">E-mail address</string>
+    <string name="save">Save</string>
 </resources>
