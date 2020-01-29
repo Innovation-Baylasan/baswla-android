@@ -105,6 +105,16 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener,
                 editProfileButton.show()
                 openPlacesButton.show()
                 openEventsButton.show()
+
+                openPlacesButton.setOnClickListener {
+                    startActivityAndCloseDrawer<MyEntitiesActivity>()
+                }
+                actionPrivacyButton.setOnClickListener {
+                    startActivityAndCloseDrawer<PrivacyPolicyActivity>()
+                }
+                editProfileButton.setOnClickListener {
+                    startActivityAndCloseDrawer<EditUserProfileActivity>()
+                }
             }
         })
         editProfileButton.setOnClickListener {
@@ -113,12 +123,6 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener,
         gpsChecker = GpsChecker(this)
         gpsChecker.turnGPSOn(this)
 
-        openPlacesButton.setOnClickListener {
-            startActivityAndCloseDrawer<MyEntitiesActivity>()
-        }
-        actionPrivacyButton.setOnClickListener {
-            startActivityAndCloseDrawer<PrivacyPolicyActivity>()
-        }
         tosButton.setOnClickListener {
             startActivityAndCloseDrawer<TOSActivity>()
         }
