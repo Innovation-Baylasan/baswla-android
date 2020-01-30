@@ -1,15 +1,29 @@
 package org.baylasan.sudanmap.data.event.model
 
+import com.google.gson.annotations.SerializedName
+
 class AddEventRequest(
+    @SerializedName("event_name")
     private val name: String,
+    @SerializedName("description")
     private val description: String,
-    private val address: String,
+    @SerializedName("event_picture")
     private val cover: String,
-    private val seats: Int,
-    private val price: Double,
+    @SerializedName("registration_link")
     private val registrationLink: String,
+    @SerializedName("application_start_datetime")
     private val startDateTime: Long,
+    @SerializedName("application_end_datetime")
     private val endDateTime: Long,
+    @SerializedName("entity_id")
     private val entityId: Int,
-    private val location: String
+    @SerializedName("latitude")
+    private val locationLat: Double,
+    @SerializedName("longitude")
+    private val locationLng: Double,
+
+    private val address: String = "",
+    private val seats: Int = 0,
+    private val price: Double = 0.0
+
 )

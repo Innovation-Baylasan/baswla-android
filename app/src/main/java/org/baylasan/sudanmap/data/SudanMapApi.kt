@@ -6,6 +6,7 @@ import org.baylasan.sudanmap.data.category.model.CategoryDto
 import org.baylasan.sudanmap.data.entity.EntityDetailsResponse
 import org.baylasan.sudanmap.data.entity.EntityResponse
 import org.baylasan.sudanmap.data.entity.model.Review
+import org.baylasan.sudanmap.data.event.model.AddEventRequest
 import org.baylasan.sudanmap.data.event.model.EventResponse
 import org.baylasan.sudanmap.data.user.model.LoginRequest
 import org.baylasan.sudanmap.data.user.model.LoginResponse
@@ -79,6 +80,9 @@ interface SudanMapApi {
 
         @GET("events/my")
         fun myEvents(): Single<Response<EventResponse>>
+
+        @POST("events/store")
+        fun addEvent(@Body request: AddEventRequest): Single<Response<Unit>>
     }
 }
 

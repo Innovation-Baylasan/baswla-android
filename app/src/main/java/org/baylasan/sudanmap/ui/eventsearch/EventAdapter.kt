@@ -7,7 +7,8 @@ import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.data.event.model.Event
 import org.baylasan.sudanmap.ui.main.entity.load
 
-class EventAdapter(private val list:List<Event>) : RecyclerView.Adapter<EventViewHolder>() {
+class EventAdapter(private val list: List<Event>, private val onClick: (Event) -> Unit = {}) :
+    RecyclerView.Adapter<EventViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
         return EventViewHolder(
             LayoutInflater.from(parent.context).inflate(
@@ -24,10 +25,12 @@ class EventAdapter(private val list:List<Event>) : RecyclerView.Adapter<EventVie
 
     override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
         val event = list[position]
-        holder.eventName.text=event.eventName
-        holder.eventDescription.text=event.description
+        holder.eventName.text = event.eventName
+        holder.eventDescription.text = event.description
         holder.eventImage.load(event.eventPicture)
-
+        holder.view.setOnClickListener {
+            onClick.invoke(event)
+        }
     }
 
 }

@@ -11,9 +11,9 @@ import org.baylasan.sudanmap.data.entity.model.Location
 @Keep
 @Parcelize
 data class Event(
-    @SerializedName("application_end_datetime") val applicationEndDatetime: String,
-    @SerializedName("application_start_datetime") val applicationStartDatetime: String,
-    @SerializedName("creator") val creator: Creator,
+    @SerializedName("application_end_datetime") val applicationEndDatetime: String?,
+    @SerializedName("application_start_datetime") val applicationStartDatetime: String?,
+    @SerializedName("creator") val creator: Creator?,
     @SerializedName("description") val description: String,
     @SerializedName("entity") val entity: Entity?,
     @SerializedName("event_name") val eventName: String,

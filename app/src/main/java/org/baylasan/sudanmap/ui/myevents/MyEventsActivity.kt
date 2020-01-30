@@ -12,6 +12,7 @@ import org.baylasan.sudanmap.common.UiState
 import org.baylasan.sudanmap.common.gone
 import org.baylasan.sudanmap.common.show
 import org.baylasan.sudanmap.ui.addevent.AddEventActivity
+import org.baylasan.sudanmap.ui.eventdetails.EventDetailsActivity
 import org.baylasan.sudanmap.ui.eventsearch.EventAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -44,7 +45,11 @@ class MyEventsActivity : AppCompatActivity() {
                     emptyEventLayout.show()
                 } else {
                     eventsRecyclerView.show()
-                    eventsRecyclerView.adapter = EventAdapter(it.data)
+                    eventsRecyclerView.adapter = EventAdapter(it.data){
+                        val intent = Intent(this, EventDetailsActivity::class.java)
+                        intent.putExtra("event",it)
+                        startActivity(intent)
+                    }
                     eventsRecyclerView.layoutManager=StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL)
                 }
             }

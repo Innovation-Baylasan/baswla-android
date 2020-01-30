@@ -8,6 +8,7 @@ import android.provider.Settings
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
+import org.baylasan.sudanmap.ui.main.MainActivity
 
 
 inline fun <reified T : Any> Activity.extra(key: String, default: T? = null) = lazy {
@@ -52,8 +53,8 @@ fun Activity.hideKeyboard() {
 }
 
 fun Context.openWebPage(url: String) {
-    val webpage: Uri = Uri.parse(url)
-    val intent = Intent(Intent.ACTION_VIEW, webpage)
+    val webPage: Uri = Uri.parse(url)
+    val intent = Intent(Intent.ACTION_VIEW, webPage)
     if (intent.resolveActivity(packageManager) != null) {
         startActivity(intent)
     }

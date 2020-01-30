@@ -11,7 +11,7 @@ import kotlinx.android.parcel.Parcelize
 data class Creator(
     @SerializedName("created_at") val createdAt: String,
     @SerializedName("email") val email: String,
-    @SerializedName("email_verified_at") val emailVerifiedAt: String,
+    @SerializedName("email_verified_at") val emailVerifiedAt: String?,
     @SerializedName("id") val id: Int,
     @SerializedName("name") val name: String,
     @SerializedName("role") val role: String,

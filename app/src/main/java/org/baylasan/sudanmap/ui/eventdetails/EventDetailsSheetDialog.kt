@@ -41,7 +41,7 @@ class EventDetailsSheetDialog : BottomSheetDialogFragment() {
 
         view.eventImage.load(event.eventPicture)
         view.eventName.text = event.eventName
-        view.eventByUser.text = event.creator.name
+        view.eventByUser.text = event.creator?.name
         view.eventDescription.text = event.description
 
         viewMoreButton.setOnClickListener {
