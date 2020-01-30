@@ -16,8 +16,6 @@ import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
 import kotlinx.android.synthetic.main.activity_company_data.*
 import org.baylasan.sudanmap.R
@@ -26,15 +24,14 @@ import org.baylasan.sudanmap.common.gone
 import org.baylasan.sudanmap.common.toLatLng
 import org.baylasan.sudanmap.common.zoomToMyLocation
 import org.baylasan.sudanmap.data.user.UserApi
-import org.baylasan.sudanmap.data.user.model.RegisterCompanyRequest
 import org.baylasan.sudanmap.domain.LocationViewModel
 import org.baylasan.sudanmap.ui.LocationPickerActivity
 import org.baylasan.sudanmap.ui.layers.DataEvent
+import org.baylasan.sudanmap.ui.layers.EmptyEvent
 import org.baylasan.sudanmap.ui.layers.LoadingEvent
 import org.baylasan.sudanmap.ui.layers.MapLayersViewModel
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.io.File
 
 
 class CompanyDataActivity : AppCompatActivity() {
@@ -55,7 +52,7 @@ class CompanyDataActivity : AppCompatActivity() {
         }
         viewModel.loadCategories()
         viewModel.events.observe(this, Observer {
-            if (it is LoadingEvent) {
+            if (it is LoadingEvent || it is EmptyEvent) {
                 snackbar?.dismiss()
             } else if (it is DataEvent) {
                 snackbar?.dismiss()

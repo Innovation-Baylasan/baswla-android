@@ -28,7 +28,8 @@ class SudanMapApp : Application() {
                     eventsModule,
                     entitiesModule,
                     addEventModule,
-                    entityDetailsModule
+                    entityDetailsModule,
+                    addEntityModule
                 )
             )
 

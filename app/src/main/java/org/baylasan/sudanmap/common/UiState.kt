@@ -20,5 +20,5 @@ sealed class UiState<T> {
     /**
      * represents an error occurred while a said operation is ongoing
      */
-    class Error<T>(throwable: Throwable) : UiState<T>()
+    class Error<T>( val throwable: Throwable) : UiState<T>()
 }

@@ -9,8 +9,10 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import kotlinx.android.synthetic.main.activity_my_events.*
 import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.common.UiState
+import org.baylasan.sudanmap.common.expiredSession
 import org.baylasan.sudanmap.common.gone
 import org.baylasan.sudanmap.common.show
+import org.baylasan.sudanmap.data.common.UnAuthorizedException
 import org.baylasan.sudanmap.ui.addevent.AddEventActivity
 import org.baylasan.sudanmap.ui.eventdetails.EventDetailsActivity
 import org.baylasan.sudanmap.ui.eventsearch.EventAdapter
@@ -45,18 +47,23 @@ class MyEventsActivity : AppCompatActivity() {
                     emptyEventLayout.show()
                 } else {
                     eventsRecyclerView.show()
-                    eventsRecyclerView.adapter = EventAdapter(it.data){
+                    eventsRecyclerView.adapter = EventAdapter(it.data) {
                         val intent = Intent(this, EventDetailsActivity::class.java)
-                        intent.putExtra("event",it)
+                        intent.putExtra("event", it)
                         startActivity(intent)
                     }
-                    eventsRecyclerView.layoutManager=StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL)
+                    eventsRecyclerView.layoutManager =
+                        StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
                 }
             }
             if (it is UiState.Error) {
-                refreshLayout.isRefreshing = false
-                eventsLoadingLayout.gone()
-                emptyEventLayout.gone()
+                if (it.throwable is UnAuthorizedException) {
+                    expiredSession()
+                } else {
+                    refreshLayout.isRefreshing = false
+                    eventsLoadingLayout.gone()
+                    emptyEventLayout.gone()
+                }
             }
         })
     }

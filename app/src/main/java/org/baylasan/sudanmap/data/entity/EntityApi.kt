@@ -3,11 +3,13 @@ package org.baylasan.sudanmap.data.entity
 import io.reactivex.Completable
 import io.reactivex.Single
 import okhttp3.ResponseBody
-import org.baylasan.sudanmap.data.RatingRequest
+import org.baylasan.sudanmap.data.user.model.RatingRequest
 import org.baylasan.sudanmap.data.SudanMapApi
+import org.baylasan.sudanmap.data.common.AddEntityRequestMapper
 import org.baylasan.sudanmap.data.common.ApiErrorResponse
 import org.baylasan.sudanmap.data.common.ResponseSingleFunc1
 import org.baylasan.sudanmap.data.common.ThrowableSingleFunc1
+import org.baylasan.sudanmap.data.entity.model.AddEntityRequest
 import org.baylasan.sudanmap.data.entity.model.Entity
 import org.baylasan.sudanmap.data.entity.model.EntityDetails
 import org.baylasan.sudanmap.data.entity.model.Review
@@ -17,7 +19,8 @@ import retrofit2.Converter
 
 class EntityApi(
     private val entityApi: SudanMapApi.Entities,
-    private val errorConverter: Converter<ResponseBody, ApiErrorResponse>
+    private val errorConverter: Converter<ResponseBody, ApiErrorResponse>,
+    private val requestMapper: AddEntityRequestMapper
 ) :
     EntityRepository {
     override fun getEntities(): Single<List<Entity>> = entityApi.getEntities()
@@ -83,5 +86,12 @@ class EntityApi(
             .flatMap(ResponseSingleFunc1(errorConverter))
             .map { it.entityList }
 
+    }
+
+    override fun addEntity(addEntityRequest: AddEntityRequest): Completable {
+        return entityApi.addEntity(requestMapper.mapToResponseBody(addEntityRequest))
+            .onErrorResumeNext(ThrowableSingleFunc1())
+            .flatMap(ResponseSingleFunc1(errorConverter))
+            .ignoreElement()
     }
 }

@@ -28,6 +28,7 @@ import kotlinx.android.synthetic.main.activity_add_event.*
 import kotlinx.android.synthetic.main.content_add_event.*
 import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.common.*
+import org.baylasan.sudanmap.data.common.UnAuthorizedException
 import org.baylasan.sudanmap.data.entity.model.Entity
 import org.baylasan.sudanmap.data.event.model.AddEventRequest
 import org.baylasan.sudanmap.domain.LocationViewModel
@@ -233,13 +234,16 @@ class AddEventActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
                 }
                 if (it is UiState.Complete) {
                     progressFragmentDialog.dismiss()
-                    toast("Event added successfully")
+                    toast(getString(R.string.event_add_success))
                     finish()
                 }
                 if (it is UiState.Error) {
                     progressFragmentDialog.dismiss()
-                    toast("Failed to add event. try again")
-
+                    if (it.throwable is UnAuthorizedException) {
+                        expiredSession()
+                    } else {
+                        toast(getString(R.string.failed_to_add_event))
+                    }
                 }
             })
         }

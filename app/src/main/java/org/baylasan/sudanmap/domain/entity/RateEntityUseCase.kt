@@ -2,7 +2,7 @@ package org.baylasan.sudanmap.domain.entity
 
 
 import io.reactivex.Completable
-import org.baylasan.sudanmap.data.RatingRequest
+import org.baylasan.sudanmap.data.user.model.RatingRequest
 import org.baylasan.sudanmap.domain.common.CompletableUseCase
 import org.baylasan.sudanmap.domain.common.RequestValues
 
@@ -12,7 +12,9 @@ class RateEntityUseCase(private val repository: EntityRepository) :
 
     override fun execute(params: Request): Completable {
 
-        return repository.rateEntity(params.entityId, RatingRequest(params.rating))
+        return repository.rateEntity(params.entityId,
+            RatingRequest(params.rating)
+        )
     }
 
 }

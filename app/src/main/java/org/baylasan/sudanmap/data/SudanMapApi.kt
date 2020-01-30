@@ -8,10 +8,7 @@ import org.baylasan.sudanmap.data.entity.EntityResponse
 import org.baylasan.sudanmap.data.entity.model.Review
 import org.baylasan.sudanmap.data.event.model.AddEventRequest
 import org.baylasan.sudanmap.data.event.model.EventResponse
-import org.baylasan.sudanmap.data.user.model.LoginRequest
-import org.baylasan.sudanmap.data.user.model.LoginResponse
-import org.baylasan.sudanmap.data.user.model.RegisterRequest
-import org.baylasan.sudanmap.data.user.model.RegisterResponse
+import org.baylasan.sudanmap.data.user.model.*
 import org.baylasan.sudanmap.domain.entity.AddReviewUseCase
 import retrofit2.Response
 import retrofit2.http.*
@@ -49,6 +46,10 @@ interface SudanMapApi {
 
         @GET("entities/my")
         fun getMyEntities(): Single<Response<EntityResponse>>
+
+        @Multipart
+        @POST("entities/store")
+        fun addEntity(@Part list: List<MultipartBody.Part>): Single<Response<Unit>>
 
     }
 

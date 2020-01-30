@@ -14,6 +14,7 @@ import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import org.baylasan.sudanmap.data.SudanMapApi
 import org.baylasan.sudanmap.data.category.CategoryApi
+import org.baylasan.sudanmap.data.common.AddEntityRequestMapper
 import org.baylasan.sudanmap.data.common.ApiErrorResponse
 import org.baylasan.sudanmap.data.common.RegisterRequestMapper
 import org.baylasan.sudanmap.data.entity.EntityApi
@@ -30,6 +31,7 @@ import org.baylasan.sudanmap.domain.event.EventRepository
 import org.baylasan.sudanmap.domain.event.GetEventUseCase
 import org.baylasan.sudanmap.domain.event.GetMyEventUseCase
 import org.baylasan.sudanmap.domain.user.*
+import org.baylasan.sudanmap.ui.addentity.AddEntityViewModel
 import org.baylasan.sudanmap.ui.addevent.AddEventViewModel
 import org.baylasan.sudanmap.ui.auth.login.LoginViewModel
 import org.baylasan.sudanmap.ui.auth.signup.RegisterViewModel
@@ -59,15 +61,23 @@ val appModule = module {
     single { providePicasso(androidApplication()) }
     single { provideErrorConverter(get()) }
     viewModel { LocationViewModel(androidApplication()) }
+    factory { AddEntityRequestMapper() }
+
 }
 
 val entitiesModule = module(override = true) {
     factory { get<Retrofit>().create(SudanMapApi.Categories::class.java) }
-    factory<EntityRepository> { EntityApi(get(), get()) }
+    factory<EntityRepository> { EntityApi(get(), get(), get()) }
     factory { GetMyEntitiesUseCase(get()) }
     viewModel {
         MyEntitiesViewModel(get())
     }
+}
+val addEntityModule = module(override = true) {
+    factory { get<Retrofit>().create(SudanMapApi.Entities::class.java) }
+    factory<EntityRepository> { EntityApi(get(), get(), get()) }
+    factory { AddEntityUseCase(get()) }
+    viewModel { AddEntityViewModel(get()) }
 }
 val eventsModule = module(override = true) {
     factory { get<Retrofit>().create(SudanMapApi.Events::class.java) }
@@ -84,7 +94,7 @@ val addEventModule = module(override = true) {
 
 val entityDetailsModule = module(override = true) {
     factory { get<Retrofit>().create(SudanMapApi.Categories::class.java) }
-    factory<EntityRepository> { EntityApi(get(), get()) }
+    factory<EntityRepository> { EntityApi(get(), get(), get()) }
     factory { GetEntityDetailsUseCase(get()) }
     factory { UnFollowEntityUseCase(get()) }
     factory { FollowEntityUseCase(get()) }
@@ -115,7 +125,7 @@ val homePageModule = module(override = true) {
 }
 val entityListModule = module(override = true) {
     factory { get<Retrofit>().create(SudanMapApi.Entities::class.java) }
-    factory<EntityRepository> { EntityApi(get(), get()) }
+    factory<EntityRepository> { EntityApi(get(), get(), get()) }
     factory { GetEntitiesUseCase(get()) }
     factory { GetNearbyEntitiesUseCase(get()) }
     viewModel { EntityViewModel(get(), get()) }
@@ -128,7 +138,7 @@ val eventModule = module(override = true) {
 }
 val searchModule = module(override = true) {
     factory { get<Retrofit>().create(SudanMapApi.Entities::class.java) }
-    factory<EntityRepository> { EntityApi(get(), get()) }
+    factory<EntityRepository> { EntityApi(get(), get(), get()) }
     factory { FindEntitiesByKeywordUseCase(get()) }
     viewModel { EntitySearchViewModel(get()) }
     factory { GetNearbyEntitiesUseCase(get()) }
@@ -193,9 +203,7 @@ class SessionInterceptor(private val sessionManager: SessionManager) : Intercept
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
         val newRequest = request.newBuilder()
-            .header("Connection", "close")
-            .header("Content-Type", "application/json")
-            .header("Accept", "application/json")
+
             .header("Authorization", "Bearer ${sessionManager.getToken()}")
             .build()
 

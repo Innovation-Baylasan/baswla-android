@@ -2,6 +2,7 @@ package org.baylasan.sudanmap.data.user
 
 import android.content.Context
 import android.content.SharedPreferences
+import org.baylasan.sudanmap.common.clear
 import org.baylasan.sudanmap.data.user.model.UserDto
 import org.baylasan.sudanmap.domain.user.SessionManager
 import org.baylasan.sudanmap.common.findPreference
@@ -43,6 +44,9 @@ class SessionManagerImpl(private val context: Context) : SessionManager {
 
     override fun isFirstTime(): Boolean = prefs.findPreference(IS_FIRST_TIME, true)
     override fun isGuest(): Boolean = !prefs.contains(USER_TOKEN)
+    override fun clear() {
+        prefs.clear()
+    }
 
     companion object {
         private const val PREF_NAME = "baswala"
