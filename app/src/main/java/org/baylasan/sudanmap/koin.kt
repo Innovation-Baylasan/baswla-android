@@ -77,19 +77,19 @@ val addEntityModule = module(override = true) {
     factory { get<Retrofit>().create(SudanMapApi.Entities::class.java) }
     factory<EntityRepository> { EntityApi(get(), get(), get()) }
     factory { AddEntityUseCase(get()) }
-    viewModel { AddEntityViewModel(get()) }
+    viewModel { AddEntityViewModel(get(),get()) }
 }
 val eventsModule = module(override = true) {
     factory { get<Retrofit>().create(SudanMapApi.Events::class.java) }
     factory<EventRepository> { EventApi(get(), get()) }
     factory { GetMyEventUseCase(get()) }
-    viewModel { MyEventsViewModel(get()) }
+    viewModel { MyEventsViewModel(get(),get()) }
 }
 val addEventModule = module(override = true) {
     factory { get<Retrofit>().create(SudanMapApi.Events::class.java) }
     factory<EventRepository> { EventApi(get(), get()) }
     factory { AddEventUseCase(get()) }
-    viewModel { AddEventViewModel(get()) }
+    viewModel { AddEventViewModel(get(),get()) }
 }
 
 val entityDetailsModule = module(override = true) {
