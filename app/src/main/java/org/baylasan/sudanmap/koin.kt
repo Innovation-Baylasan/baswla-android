@@ -15,10 +15,13 @@ import okhttp3.logging.HttpLoggingInterceptor
 import org.baylasan.sudanmap.data.SudanMapApi
 import org.baylasan.sudanmap.data.category.CategoryApi
 import org.baylasan.sudanmap.data.common.AddEntityRequestMapper
+import org.baylasan.sudanmap.data.common.AddEventRequestMapper
 import org.baylasan.sudanmap.data.common.ApiErrorResponse
 import org.baylasan.sudanmap.data.common.RegisterRequestMapper
+import org.baylasan.sudanmap.data.common.RequestMapper
 import org.baylasan.sudanmap.data.entity.EntityApi
 import org.baylasan.sudanmap.data.event.EventApi
+import org.baylasan.sudanmap.data.event.model.AddEventRequest
 import org.baylasan.sudanmap.data.user.SessionManagerImpl
 import org.baylasan.sudanmap.data.user.UserApi
 import org.baylasan.sudanmap.data.user.model.RegisterErrorResponse
@@ -61,6 +64,7 @@ val appModule = module {
     single { providePicasso(androidApplication()) }
     single { provideErrorConverter(get()) }
     viewModel { LocationViewModel(androidApplication()) }
+    factory<RequestMapper<AddEventRequest>> { AddEventRequestMapper() }
     factory { AddEntityRequestMapper() }
 
 }
@@ -81,13 +85,13 @@ val addEntityModule = module(override = true) {
 }
 val eventsModule = module(override = true) {
     factory { get<Retrofit>().create(SudanMapApi.Events::class.java) }
-    factory<EventRepository> { EventApi(get(), get()) }
+    factory<EventRepository> { EventApi(get(), get(), get()) }
     factory { GetMyEventUseCase(get()) }
     viewModel { MyEventsViewModel(get(),get()) }
 }
 val addEventModule = module(override = true) {
     factory { get<Retrofit>().create(SudanMapApi.Events::class.java) }
-    factory<EventRepository> { EventApi(get(), get()) }
+    factory<EventRepository> { EventApi(get(), get(), get()) }
     factory { AddEventUseCase(get()) }
     viewModel { AddEventViewModel(get(),get()) }
 }
@@ -125,14 +129,14 @@ val homePageModule = module(override = true) {
 }
 val entityListModule = module(override = true) {
     factory { get<Retrofit>().create(SudanMapApi.Entities::class.java) }
-    factory<EntityRepository> { EntityApi(get(), get(), get()) }
+    factory<EntityRepository> { EntityApi(get(), get()) }
     factory { GetEntitiesUseCase(get()) }
     factory { GetNearbyEntitiesUseCase(get()) }
     viewModel { EntityViewModel(get(), get()) }
 }
 val eventModule = module(override = true) {
     factory { get<Retrofit>().create(SudanMapApi.Events::class.java) }
-    factory<EventRepository> { EventApi(get(), get()) }
+    factory<EventRepository> { EventApi(get(), get(), get()) }
     factory { GetEventUseCase(get()) }
     viewModel { EventViewModel(get()) }
 }
