@@ -5,7 +5,6 @@ import org.baylasan.sudanmap.data.event.model.AddEventRequest
 import org.baylasan.sudanmap.data.user.model.RegisterCompanyRequest
 import okhttp3.RequestBody.Companion.asRequestBody
 import org.baylasan.sudanmap.data.entity.model.AddEntityRequest
-import org.baylasan.sudanmap.data.user.model.RegisterCompanyRequest
 import java.util.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 
