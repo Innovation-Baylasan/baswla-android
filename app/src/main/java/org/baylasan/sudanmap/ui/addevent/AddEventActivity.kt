@@ -178,10 +178,7 @@ class AddEventActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
                 eventAddressTextField.error = "Event address is required."
                 return@setOnClickListener
             }
-            if (selectedCoverImage == null) {
-                toast("Event cover is required.")
-                return@setOnClickListener
-            }
+
             if (seats.isEmpty()) {
                 eventSeatsTextField.error = "Number of Seats is required."
                 return@setOnClickListener
@@ -215,7 +212,7 @@ class AddEventActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
                 AddEventRequest(
                     name = eventName,
                     description = eventDescription,
-                    cover = selectedCoverImage!!.toFile(),
+                    cover = selectedCoverImage?.toFile(),
                     registrationLink = registerLink,
                     startDateTime = applicationStartDateTime!!.timeInMillis,
                     endDateTime = applicationEndDateTime!!.timeInMillis,
