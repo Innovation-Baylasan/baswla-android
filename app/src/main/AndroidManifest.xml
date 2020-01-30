@@ -29,13 +29,7 @@
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat.Light.DarkActionBar" />
         <activity android:name=".ui.faq.FAQActivity" />
-        <activity android:name=".ui.myevents.MyEventsActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".ui.myevents.MyEventsActivity"></activity>
         <activity android:name=".ui.terms.TOSActivity" />
         <activity android:name=".ui.privacy.PrivacyPolicyActivity" />
         <activity android:name=".ui.splash.SplashActivity">
@@ -48,9 +42,7 @@
         <activity
             android:name=".ui.addevent.AddEventActivity"
             android:configChanges="layoutDirection"
-            android:theme="@style/AppTheme.NoActionBar">
-
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".ui.addentity.AddEntityActivity"
             android:label="@string/title_activity_add_entitiy"
@@ -60,7 +52,13 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".ui.intro.IntroActivity" />
+        <activity android:name=".ui.intro.IntroActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".ui.auth.AuthActivity"
             android:windowSoftInputMode="adjustPan|adjustResize" />
