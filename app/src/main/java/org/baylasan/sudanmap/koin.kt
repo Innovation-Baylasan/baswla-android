@@ -14,10 +14,13 @@ import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import org.baylasan.sudanmap.data.SudanMapApi
 import org.baylasan.sudanmap.data.category.CategoryApi
+import org.baylasan.sudanmap.data.common.AddEventRequestMapper
 import org.baylasan.sudanmap.data.common.ApiErrorResponse
 import org.baylasan.sudanmap.data.common.RegisterRequestMapper
+import org.baylasan.sudanmap.data.common.RequestMapper
 import org.baylasan.sudanmap.data.entity.EntityApi
 import org.baylasan.sudanmap.data.event.EventApi
+import org.baylasan.sudanmap.data.event.model.AddEventRequest
 import org.baylasan.sudanmap.data.user.SessionManagerImpl
 import org.baylasan.sudanmap.data.user.UserApi
 import org.baylasan.sudanmap.data.user.model.RegisterErrorResponse
@@ -59,6 +62,7 @@ val appModule = module {
     single { providePicasso(androidApplication()) }
     single { provideErrorConverter(get()) }
     viewModel { LocationViewModel(androidApplication()) }
+    factory<RequestMapper<AddEventRequest>> { AddEventRequestMapper() }
 }
 
 val entitiesModule = module(override = true) {
@@ -71,13 +75,13 @@ val entitiesModule = module(override = true) {
 }
 val eventsModule = module(override = true) {
     factory { get<Retrofit>().create(SudanMapApi.Events::class.java) }
-    factory<EventRepository> { EventApi(get(), get()) }
+    factory<EventRepository> { EventApi(get(), get(), get()) }
     factory { GetMyEventUseCase(get()) }
     viewModel { MyEventsViewModel(get()) }
 }
 val addEventModule = module(override = true) {
     factory { get<Retrofit>().create(SudanMapApi.Events::class.java) }
-    factory<EventRepository> { EventApi(get(), get()) }
+    factory<EventRepository> { EventApi(get(), get(), get()) }
     factory { AddEventUseCase(get()) }
     viewModel { AddEventViewModel(get()) }
 }
@@ -122,7 +126,7 @@ val entityListModule = module(override = true) {
 }
 val eventModule = module(override = true) {
     factory { get<Retrofit>().create(SudanMapApi.Events::class.java) }
-    factory<EventRepository> { EventApi(get(), get()) }
+    factory<EventRepository> { EventApi(get(), get(), get()) }
     factory { GetEventUseCase(get()) }
     viewModel { EventViewModel(get()) }
 }
@@ -193,9 +197,7 @@ class SessionInterceptor(private val sessionManager: SessionManager) : Intercept
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
         val newRequest = request.newBuilder()
-            .header("Connection", "close")
-            .header("Content-Type", "application/json")
-            .header("Accept", "application/json")
+
             .header("Authorization", "Bearer ${sessionManager.getToken()}")
             .build()
 

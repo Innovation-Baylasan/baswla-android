@@ -215,7 +215,7 @@ class AddEventActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
                 AddEventRequest(
                     name = eventName,
                     description = eventDescription,
-                    cover = "/pic",
+                    cover = selectedCoverImage!!.toFile(),
                     registrationLink = registerLink,
                     startDateTime = applicationStartDateTime!!.timeInMillis,
                     endDateTime = applicationEndDateTime!!.timeInMillis,
