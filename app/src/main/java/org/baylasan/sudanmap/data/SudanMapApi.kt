@@ -80,9 +80,9 @@ interface SudanMapApi {
 
         @GET("events/my")
         fun myEvents(): Single<Response<EventResponse>>
-
+        @Multipart
         @POST("events/store")
-        fun addEvent(@Body request: AddEventRequest): Single<Response<Unit>>
+        fun addEvent(@Part list: List<MultipartBody.Part>): Single<Response<Unit>>
     }
 }
 

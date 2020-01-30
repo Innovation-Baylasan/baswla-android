@@ -167,31 +167,28 @@ class AddEventActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
             val registerLink = eventRegisterLinkTextField.text.toString()
 
             if (eventName.isEmpty()) {
-                eventNameTextField.error = "Event name is required."
+                eventNameTextField.error = getString(R.string.event_name_required)
                 return@setOnClickListener
             }
             if (eventDescription.isEmpty()) {
-                eventDescriptionTextField.error = "Event description is required."
+                eventDescriptionTextField.error = getString(R.string.event_description_required)
                 return@setOnClickListener
             }
             if (eventAddress.isEmpty()) {
-                eventAddressTextField.error = "Event address is required."
+                eventAddressTextField.error = getString(R.string.event_address_required)
                 return@setOnClickListener
             }
-            if (selectedCoverImage == null) {
-                toast("Event cover is required.")
-                return@setOnClickListener
-            }
+
             if (seats.isEmpty()) {
-                eventSeatsTextField.error = "Number of Seats is required."
+                eventSeatsTextField.error = getString(R.string.number_of_seats_is_required)
                 return@setOnClickListener
             }
             if (price.isEmpty()) {
-                eventPriceTextField.error = "Price is required."
+                eventPriceTextField.error = getString(R.string.price_required)
                 return@setOnClickListener
             }
             if (registerLink.isEmpty()) {
-                eventRegisterLinkTextField.error = "register link is required."
+                eventRegisterLinkTextField.error = getString(R.string.register_link_required)
                 return@setOnClickListener
             }
             if (applicationStartDateTime == null) {
@@ -207,7 +204,7 @@ class AddEventActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
                 return@setOnClickListener
             }
             if (selectedLocation == null) {
-                toast("Event location is required.")
+                toast(getString(R.string.event_location_required))
                 return@setOnClickListener
             }
 
@@ -215,7 +212,7 @@ class AddEventActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
                 AddEventRequest(
                     name = eventName,
                     description = eventDescription,
-                    cover = "/pic",
+                    cover = selectedCoverImage?.toFile(),
                     registrationLink = registerLink,
                     startDateTime = applicationStartDateTime!!.timeInMillis,
                     endDateTime = applicationEndDateTime!!.timeInMillis,
