@@ -33,7 +33,11 @@
         <activity android:name=".ui.terms.TOSActivity" />
         <activity android:name=".ui.privacy.PrivacyPolicyActivity" />
         <activity android:name=".ui.splash.SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".ui.myentities.MyEntitiesActivity" >
 
@@ -53,11 +57,7 @@
             android:value="@string/google_maps_key" />
 
         <activity android:name=".ui.intro.IntroActivity" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".ui.auth.AuthActivity"

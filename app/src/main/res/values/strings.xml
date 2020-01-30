@@ -198,7 +198,7 @@ And <font color="#003a7c">
     <string name="event_location_required">Event location is required.</string>
     <string name="submit">Submit</string>
     <string name="type">Type</string>
-    <string name="submit">Submit</string>
+    
     <string name="no_location_selected">No location selected!!</string>
     <string name="tap_to_pick">Tap to pick</string>
     <string name="general_information">General Information</string>

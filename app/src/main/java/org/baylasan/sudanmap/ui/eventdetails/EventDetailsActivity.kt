@@ -25,6 +25,9 @@ class EventDetailsActivity : AppCompatActivity() {
         applyButton.setOnClickListener {
             openWebPage(event.registrationLink)
         }
+        backButton.setOnClickListener {
+            onBackPressed()
+        }
     }
 
     override fun onContextItemSelected(item: MenuItem): Boolean {
