@@ -2,25 +2,45 @@ package org.baylasan.sudanmap.ui.addentity
 
 import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.net.toFile
 import androidx.lifecycle.Observer
 import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.snackbar.Snackbar
+import com.squareup.picasso.Picasso
+import com.theartofdev.edmodo.cropper.CropImage
+import com.theartofdev.edmodo.cropper.CropImageView
+import jp.wasabeef.picasso.transformations.CropCircleTransformation
 import kotlinx.android.synthetic.main.activity_add_entity.*
 import kotlinx.android.synthetic.main.content_add_entity.*
 import org.baylasan.sudanmap.R
+import org.baylasan.sudanmap.common.*
+import org.baylasan.sudanmap.data.common.UnAuthorizedException
+import org.baylasan.sudanmap.data.entity.model.AddEntityRequest
+import org.baylasan.sudanmap.data.entity.model.Category
+import org.baylasan.sudanmap.domain.LocationViewModel
+import org.baylasan.sudanmap.ui.LocationPickerActivity
+import org.baylasan.sudanmap.ui.auth.AuthActivity
+import org.baylasan.sudanmap.ui.layers.DataEvent
+import org.baylasan.sudanmap.ui.layers.EmptyEvent
+import org.baylasan.sudanmap.ui.layers.LoadingEvent
+import org.baylasan.sudanmap.ui.layers.MapLayersViewModel
 import org.baylasan.sudanmap.ui.view.AppBarChangedListener
-import org.baylasan.sudanmap.common.GpsChecker
-import org.baylasan.sudanmap.common.LocationLiveData
-import org.baylasan.sudanmap.common.canEnableLocationButton
-import org.baylasan.sudanmap.common.toLatLng
+import org.baylasan.sudanmap.ui.view.ProgressFragmentDialog
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.io.File
 
-class AddEntityActivity : AppCompatActivity(), GpsChecker.OnGpsListener {
-    private lateinit var gpsChecker: GpsChecker
+class AddEntityActivity : AppCompatActivity() {
     private val onStateChanged = object : AppBarChangedListener() {
         override fun onStateChanged(appBarLayout: AppBarLayout, state: State) {
             if (state == State.COLLAPSED) {
@@ -41,78 +61,182 @@ class AddEntityActivity : AppCompatActivity(), GpsChecker.OnGpsListener {
 
         }
     }
+    private val viewModel by viewModel<MapLayersViewModel>()
+    private var snackbar: Snackbar? = null
+    private var isAvatarClicked: Boolean = false
+    private var selectedCoverImage: Uri? = null
+    private var selectedAvatarImage: Uri? = null
+    private var selectedLocation: LatLng? = null
+    private var selectedCategory: Category? = null
+    private lateinit var googleMap: GoogleMap
+    private val progressDialog = ProgressFragmentDialog.newInstance().apply {
+        isCancelable = false
+    }
+    private val picasso by inject<Picasso>()
+    private val locationViewModel by viewModel<LocationViewModel>()
+    private val addEntityViewModel by viewModel<AddEntityViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_entity)
-        mapView.onCreate(savedInstanceState)
-        gpsChecker = GpsChecker(this)
-        gpsChecker.turnGPSOn(this)
 
         appBar.addOnOffsetChangedListener(onStateChanged)
+        viewModel.loadCategories()
 
+        pickAvatarImageButton.setOnClickListener {
+            isAvatarClicked = true
+            CropImage.activity()
+                .setGuidelines(CropImageView.Guidelines.ON)
+                .setFixAspectRatio(true)
+                .setAspectRatio(1, 1)
 
-    }
+                .start(this)
+        }
+        pickCoverImageButton.setOnClickListener {
+            isAvatarClicked = false
+            CropImage.activity()
+                .setGuidelines(CropImageView.Guidelines.ON)
+                .setFixAspectRatio(true)
+                .setAspectRatio(19, 6)
+                .start(this)
+        }
+        submitEntity.setOnClickListener {
+            val name = entityName.text.toString()
+            val description = entityDescription.text.toString()
+            if (name.isEmpty()) {
+                entityName.error = getString(R.string.name_required)
+                return@setOnClickListener
+            }
+            if (description.isEmpty()) {
+                entityDescription.error = getString(R.string.descritption_field_required)
+                return@setOnClickListener
+            }
+            if (selectedLocation == null) {
+                toast(getString(R.string.location_not_selected))
+                return@setOnClickListener
+            }
+            if (selectedCategory == null) {
+                entityCategorySpinner.error = ""
+                return@setOnClickListener
+            }
+            addEntityViewModel.add(
+                AddEntityRequest(
+                    category = selectedCategory!!.id,
+                    name = name,
+                    avatar = selectedAvatarImage?.toFile() ?: File(""),
+                    cover = selectedCoverImage?.toFile() ?: File(""),
+                    description = description,
+                    locationLat = selectedLocation!!.latitude.toString(),
+                    locationLng = selectedLocation!!.longitude.toString()
 
-    override fun onDestroy() {
-        super.onDestroy()
-        mapView.onDestroy()
-    }
+                )
+            )
+            addEntityViewModel.addState.observe(this, Observer {
+                if (it is UiState.Complete) {
+                    progressDialog.dismiss()
+                    toast(getString(R.string.entity_added))
+                    finish()
+                }
+                if (it is UiState.Error) {
+                    progressDialog.dismiss()
+                    if (it.throwable is UnAuthorizedException) {
+                        expiredSession()
+                    } else {
+                        toast(getString(R.string.failed_to_add_entitiy))
 
-    override fun onLowMemory() {
-        super.onLowMemory()
-        mapView.onLowMemory()
-
-    }
-
-    override fun onResume() {
-        super.onResume()
-        mapView.onResume()
-    }
-
-    override fun onStart() {
-        super.onStart()
-        mapView.onStart()
-    }
-
-    private fun setupMapAndLocation() {
-        mapView.getMapAsync { googleMap ->
-            googleMap.uiSettings.isMyLocationButtonEnabled = canEnableLocationButton()
-            googleMap.isMyLocationEnabled = canEnableLocationButton()
-
+                    }
+                }
+                if (it is UiState.Loading) {
+                    progressDialog.show(supportFragmentManager, "")
+                }
+            })
+        }
+        setupCategorySpinner()
+        val supportMapFragment =
+            supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+        supportMapFragment.getMapAsync { googleMap ->
+            googleMap.uiSettings.disableAll()
+            this.googleMap = googleMap
             val marker =
                 googleMap.addMarker(MarkerOptions().position(googleMap.cameraPosition.target))
             googleMap.setOnCameraMoveListener {
                 marker.position = googleMap.cameraPosition.target
             }
+            pickLocationLayout.setOnClickListener {
+                startActivityForResult(Intent(this, LocationPickerActivity::class.java), 12)
 
-            LocationLiveData(this).observe(this, Observer { location ->
-                Log.d("MEGA", "Location: $location")
-                googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(location.toLatLng(), 12f))
-
-
+            }
+            locationViewModel.getLocationUpdates().observe(this, Observer { location ->
+                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location.toLatLng(), 12f))
             })
         }
-    }
 
-    override fun onStop() {
-        super.onStop()
-        appBar.removeOnOffsetChangedListener(onStateChanged)
-        mapView.onStop()
+
     }
 
 
-    override fun onGpsEnabled() {
-        setupMapAndLocation()
+
+    private fun setupCategorySpinner() {
+        viewModel.events.observe(this, Observer {
+            if (it is LoadingEvent || it is EmptyEvent) {
+                snackbar?.dismiss()
+            } else if (it is DataEvent) {
+                snackbar?.dismiss()
+                val list = it.categories
+                entityCategorySpinner.setAdapter(CategoryEntityAdapter(this, list))
+                entityCategorySpinner.setOnItemClickListener { parent, view, position, id ->
+                    val category = list[position]
+                    entityCategorySpinner.setText(category.name, false)
+                    selectedCategory = category
+                }
+            } else {
+                snackbar =
+                    Snackbar.make(
+                        addEntityLayout,
+                        getString(R.string.failed_to_load_categories),
+                        Snackbar.LENGTH_INDEFINITE
+                    )
+                        .setAction(R.string.retry) {
+                            viewModel.loadCategories()
+                        }
+                snackbar?.show()
+            }
+        })
     }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == GpsChecker.GPS_REQUEST) {
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            val result = CropImage.getActivityResult(data)
             if (resultCode == Activity.RESULT_OK) {
-                setupMapAndLocation()
-            } else {
-                gpsChecker.turnGPSOn(this)
+                val resultUri: Uri = result.uri
+                if (isAvatarClicked) {
+                    selectedAvatarImage = resultUri
+                    Log.d("MEGA", "selected avatar= $resultUri")
+                    picasso.load(resultUri.toFile())
+                        .transform(CropCircleTransformation())
+                        .into(avatarImage)
+
+                } else {
+                    selectedCoverImage = resultUri
+                    Log.d("MEGA", "selected cover= $resultUri")
+
+                    picasso.load(resultUri.toFile()).into(coverImage)
+                }
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                toast(getString(R.string.failed_to_pick_image))
+
+            }
+        }
+        if (requestCode == 12 && resultCode == Activity.RESULT_OK) {
+            val latLng = data?.getParcelableExtra<LatLng>("picked_location")
+            if (latLng != null) {
+                this.selectedLocation = latLng
+                placeSelectionPlaceHolder.gone()
+                googleMap.clear()
+                googleMap.zoomToMyLocation(latLng.latitude, latLng.longitude, false)
+                googleMap.addMarker(MarkerOptions().position(latLng))
             }
         }
     }

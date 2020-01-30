@@ -119,7 +119,6 @@
     <string name="sample_date_in_month">2 month ago</string>
     <string name="email">Email</string>
     <string name="password_confirmation">Password Confirmation</string>
-    <string name="type">Type</string>
     <string name="company">Company</string>
     <string name="privacy_string">
         Here is a text explaining to the user that upon registration,  <font color="#003a7c">
@@ -198,4 +197,16 @@ And <font color="#003a7c">
     <string name="register_link_required">register link is required.</string>
     <string name="event_location_required">Event location is required.</string>
     <string name="submit">Submit</string>
+    <string name="type">Type</string>
+    <string name="submit">Submit</string>
+    <string name="no_location_selected">No location selected!!</string>
+    <string name="tap_to_pick">Tap to pick</string>
+    <string name="general_information">General Information</string>
+    <string name="descritption_field_required">Description field required.</string>
+    <string name="location_not_selected">Location is not selected.</string>
+    <string name="entity_added">Entity Added successfully</string>
+    <string name="session_expired">Session expired, log in again</string>
+    <string name="failed_to_add_entitiy">failed to add new entity, try again.</string>
+    <string name="event_add_success">Event added successfully</string>
+    <string name="failed_to_add_event">Failed to add event. try again</string>
 </resources>

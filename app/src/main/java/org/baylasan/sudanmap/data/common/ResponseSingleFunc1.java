@@ -1,5 +1,7 @@
 package org.baylasan.sudanmap.data.common;
 
+import org.baylasan.sudanmap.domain.user.SessionManager;
+
 import java.io.IOException;
 
 import io.reactivex.Single;

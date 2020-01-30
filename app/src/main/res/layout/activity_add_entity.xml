@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:clipToPadding="true"
     android:fitsSystemWindows="true"
+    android:id="@+id/addEntityLayout"
     tools:context="org.baylasan.sudanmap.ui.addentity.AddEntityActivity">
 
     <com.google.android.material.appbar.AppBarLayout

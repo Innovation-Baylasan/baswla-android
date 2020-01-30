@@ -8,7 +8,8 @@ import android.provider.Settings
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
-import org.baylasan.sudanmap.ui.main.MainActivity
+import org.baylasan.sudanmap.R
+import org.baylasan.sudanmap.ui.auth.AuthActivity
 
 
 inline fun <reified T : Any> Activity.extra(key: String, default: T? = null) = lazy {
@@ -50,6 +51,12 @@ fun Activity.hideKeyboard() {
         view = View(this)
     }
     imm.hideSoftInputFromWindow(view.windowToken, 0)
+}
+
+fun Activity.expiredSession() {
+    toast(getString(R.string.session_expired))
+    startActivity(Intent(this, AuthActivity::class.java))
+    finishAffinity()
 }
 
 fun Context.openWebPage(url: String) {

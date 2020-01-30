@@ -10,8 +10,10 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import kotlinx.android.synthetic.main.activity_my_entities.*
 import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.common.UiState
+import org.baylasan.sudanmap.common.expiredSession
 import org.baylasan.sudanmap.common.gone
 import org.baylasan.sudanmap.common.show
+import org.baylasan.sudanmap.data.common.UnAuthorizedException
 import org.baylasan.sudanmap.data.entity.model.Entity
 import org.baylasan.sudanmap.ui.addentity.AddEntityActivity
 import org.baylasan.sudanmap.ui.main.entity.EntitiesListAdapter
@@ -48,9 +50,12 @@ class MyEntitiesActivity : AppCompatActivity(), EntitiesListAdapter.OnItemClick 
                 }
             }
             if (it is UiState.Error) {
-                refreshLayout.isRefreshing = false
-                emptyEntityLayout.gone()
-
+                if (it.throwable is UnAuthorizedException) {
+                    expiredSession()
+                } else {
+                    refreshLayout.isRefreshing = false
+                    emptyEntityLayout.gone()
+                }
             }
 
         })
