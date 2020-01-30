@@ -187,4 +187,5 @@ And <font color="#003a7c">
     <string name="full_name">Full name</string>
     <string name="e_mail_address">E-mail address</string>
     <string name="save">Save</string>
+    <string name="please_wait_while_processing_the_information">Please wait while processing the information</string>
 </resources>

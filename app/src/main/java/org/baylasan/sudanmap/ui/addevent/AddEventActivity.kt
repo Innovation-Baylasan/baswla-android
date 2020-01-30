@@ -2,7 +2,6 @@ package org.baylasan.sudanmap.ui.addevent
 
 import android.app.Activity
 import android.app.DatePickerDialog
-import android.app.ProgressDialog
 import android.app.TimePickerDialog
 import android.content.Intent
 import android.net.Uri
@@ -35,6 +34,7 @@ import org.baylasan.sudanmap.domain.LocationViewModel
 import org.baylasan.sudanmap.ui.LocationPickerActivity
 import org.baylasan.sudanmap.ui.myentities.MyEntitiesViewModel
 import org.baylasan.sudanmap.ui.view.AppBarChangedListener
+import org.baylasan.sudanmap.ui.view.ProgressFragmentDialog
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
@@ -55,6 +55,10 @@ class AddEventActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
     private val entitiesViewModel by viewModel<MyEntitiesViewModel>()
     private val calendar = Calendar.getInstance()
     private var snackBar: Snackbar? = null
+    private val progressFragmentDialog = ProgressFragmentDialog.newInstance().apply {
+        isCancelable = false
+    }
+
     private val addViewModel by viewModel<AddEventViewModel>()
     private val onStateChanged = object : AppBarChangedListener() {
         override fun onStateChanged(appBarLayout: AppBarLayout, state: State) {
@@ -221,14 +225,20 @@ class AddEventActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
 
                 )
             )
+
             addViewModel.addState.observe(this, Observer {
                 if (it is UiState.Loading) {
-
+                    progressFragmentDialog
+                        .show(supportFragmentManager, "")
                 }
                 if (it is UiState.Complete) {
-
+                    progressFragmentDialog.dismiss()
+                    toast("Event added successfully")
+                    finish()
                 }
                 if (it is UiState.Error) {
+                    progressFragmentDialog.dismiss()
+                    toast("Failed to add event. try again")
 
                 }
             })
