@@ -70,7 +70,7 @@ val entitiesModule = module(override = true) {
     factory<EntityRepository> { EntityApi(get(), get(), get()) }
     factory { GetMyEntitiesUseCase(get()) }
     viewModel {
-        MyEntitiesViewModel(get())
+        MyEntitiesViewModel(get(),get())
     }
 }
 val addEntityModule = module(override = true) {
