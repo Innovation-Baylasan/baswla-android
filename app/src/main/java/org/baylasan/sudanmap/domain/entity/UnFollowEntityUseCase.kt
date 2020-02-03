@@ -8,7 +8,7 @@ import org.baylasan.sudanmap.domain.common.RequestValues
 class UnFollowEntityUseCase(private val repository: EntityRepository) :
     CompletableUseCase<UnFollowEntityUseCase.Request> {
     override fun execute(params: Request): Completable {
-        return repository.follow(params.entityId)
+        return repository.unFollow(params.entityId)
     }
 
     class Request(val entityId: Int) : RequestValues

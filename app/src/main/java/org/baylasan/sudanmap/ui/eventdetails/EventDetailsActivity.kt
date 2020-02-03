@@ -7,18 +7,25 @@ import kotlinx.android.synthetic.main.activity_event_details.*
 import kotlinx.android.synthetic.main.content_event_details.*
 import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.common.openWebPage
+import org.baylasan.sudanmap.common.visible
 import org.baylasan.sudanmap.data.event.model.Event
+import org.baylasan.sudanmap.ui.main.UserProfileViewModel
 import org.baylasan.sudanmap.ui.main.entity.load
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class EventDetailsActivity : AppCompatActivity() {
-
+    private val userProfileViewModel by viewModel<UserProfileViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_event_details)
         setSupportActionBar(toolbar)
         supportActionBar?.title = ""
         toolbar.setOnClickListener { finish() }
+
         val event = intent.getParcelableExtra<Event>("event") as Event
+        if(userProfileViewModel.isThisMine(event.creator?.id ?: -1)){
+            applyButton.visible()
+        }
         eventImage.load(event.eventPicture)
         eventName.text = event.eventName
         eventDescription.text = event.description
@@ -28,6 +35,7 @@ class EventDetailsActivity : AppCompatActivity() {
         backButton.setOnClickListener {
             onBackPressed()
         }
+
     }
 
     override fun onContextItemSelected(item: MenuItem): Boolean {

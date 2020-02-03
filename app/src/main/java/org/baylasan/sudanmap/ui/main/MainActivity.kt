@@ -10,7 +10,6 @@ import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
@@ -22,8 +21,9 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.navigation_header_layout.*
 import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.common.GpsChecker
+import org.baylasan.sudanmap.common.doseNotHaveLocationPermission
 import org.baylasan.sudanmap.common.gone
-import org.baylasan.sudanmap.common.show
+import org.baylasan.sudanmap.common.visible
 import org.baylasan.sudanmap.ui.auth.AuthActivity
 import org.baylasan.sudanmap.ui.editprofile.EditUserProfileActivity
 import org.baylasan.sudanmap.ui.myevents.MyEventsActivity
@@ -88,35 +88,7 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener,
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         profileViewModel.loadUser()
-        profileViewModel.listenToUserProfile().observe(this, Observer { profile ->
-            if (profile == null) {
-                userNameTextView.text = getString(R.string.guest_user)
-                userEmailTextView.text = getString(R.string.guest_user_tap_to_login)
-                editProfileButton.gone()
-                openPlacesButton.gone()
-                openEventsButton.gone()
-                navigationDrawerHeader.setOnClickListener {
-                    startActivityAndCloseDrawer<AuthActivity>()
-                    finish()
-                }
-            } else {
-                userNameTextView.text = profile.name
-                userEmailTextView.text = profile.email
-                editProfileButton.show()
-                openPlacesButton.show()
-                openEventsButton.show()
-
-                openPlacesButton.setOnClickListener {
-                    startActivityAndCloseDrawer<MyEntitiesActivity>()
-                }
-                actionPrivacyButton.setOnClickListener {
-                    startActivityAndCloseDrawer<PrivacyPolicyActivity>()
-                }
-                editProfileButton.setOnClickListener {
-                    startActivityAndCloseDrawer<EditUserProfileActivity>()
-                }
-            }
-        })
+        observeProfileEvents()
         editProfileButton.setOnClickListener {
             startActivityAndCloseDrawer<EditUserProfileActivity>()
         }
@@ -132,6 +104,38 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener,
         openFaqButton.setOnClickListener {
             startActivityAndCloseDrawer<FAQActivity>()
         }
+    }
+
+    private fun observeProfileEvents() {
+        profileViewModel.listenToUserProfile().observe(this, Observer { profile ->
+            if (profile == null) {
+                userNameTextView.text = getString(R.string.guest_user)
+                userEmailTextView.text = getString(R.string.guest_user_tap_to_login)
+                editProfileButton.gone()
+                openPlacesButton.gone()
+                openEventsButton.gone()
+                navigationDrawerHeader.setOnClickListener {
+                    startActivityAndCloseDrawer<AuthActivity>()
+                    finish()
+                }
+            } else {
+                userNameTextView.text = profile.name
+                userEmailTextView.text = profile.email
+                editProfileButton.visible()
+                openPlacesButton.visible()
+                openEventsButton.visible()
+
+                openPlacesButton.setOnClickListener {
+                    startActivityAndCloseDrawer<MyEntitiesActivity>()
+                }
+                actionPrivacyButton.setOnClickListener {
+                    startActivityAndCloseDrawer<PrivacyPolicyActivity>()
+                }
+                editProfileButton.setOnClickListener {
+                    startActivityAndCloseDrawer<EditUserProfileActivity>()
+                }
+            }
+        })
     }
 
     private inline fun <reified T> startActivityAndCloseDrawer() {
@@ -190,13 +194,7 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener,
         bottomNavigation.setOnNavigationItemSelectedListener(this)
     }
 
-    private fun doseNotHaveLocationPermission(): Boolean {
-        return (ContextCompat.checkSelfPermission(
-            this,
-            Manifest.permission.ACCESS_FINE_LOCATION
-        )
-                != PackageManager.PERMISSION_GRANTED)
-    }
+
 
     override fun onResume() {
         super.onResume()

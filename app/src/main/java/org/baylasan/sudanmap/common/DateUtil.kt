@@ -4,5 +4,5 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 fun parseDate(date: String): Date? {
-    return SimpleDateFormat("yyyy-MM-d HH:mm:ss", Locale.getDefault()).parse(date)
+    return SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", Locale.getDefault()).parse(date)
 }

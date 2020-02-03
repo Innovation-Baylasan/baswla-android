@@ -16,4 +16,8 @@ class UserProfileViewModel(private val sessionManager: SessionManager) : ViewMod
     }
 
     fun listenToUserProfile() = userProfileLiveData
+
+    fun isThisMine(id: Int): Boolean {
+        return id == sessionManager.getUser().id
+    }
 }

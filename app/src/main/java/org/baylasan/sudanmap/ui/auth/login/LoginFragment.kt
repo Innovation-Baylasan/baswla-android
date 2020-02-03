@@ -3,17 +3,15 @@ package org.baylasan.sudanmap.ui.auth.login
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Patterns
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import kotlinx.android.synthetic.main.fragment_login.*
 import org.baylasan.sudanmap.R
+import org.baylasan.sudanmap.common.*
 import org.baylasan.sudanmap.ui.auth.signup.SignUpActivity
 import org.baylasan.sudanmap.ui.main.MainActivity
-import org.baylasan.sudanmap.common.asString
-import org.baylasan.sudanmap.common.gone
-import org.baylasan.sudanmap.common.show
-import org.baylasan.sudanmap.common.toast
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -42,6 +40,14 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         signInBtn.setOnClickListener {
             val email = loginEmailEt.asString()
             val password = loginPasswordEt.asString()
+            if (email.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                loginEmailEt.error = getString(R.string.email_not_valid)
+                return@setOnClickListener
+            }
+            if (password.isEmpty()) {
+                loginPasswordEt.error = getString(R.string.password_required)
+                return@setOnClickListener
+            }
 
             loginViewModel.login(email, password)
         }
@@ -53,26 +59,17 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     private fun observeEvent() {
         loginViewModel.event.observe(this, Observer { event ->
             when (event) {
-                is DataEvent -> {
+                is UiState.Loading -> {
+                    loginProgress.visible()
+                }
+                is UiState.Complete -> {
                     hideProgress()
                     startActivity(Intent(activity, MainActivity::class.java))
-                    activity?.finish()
                 }
-                is LoadingEvent -> {
-                    loginProgress.show()
-                }
-                is ErrorEvent -> {
+                is UiState.Error -> {
+                    activity?.toast("Unable to login at the moment, try again")
                     hideProgress()
-
-                    activity?.toast(event.errorMessage ?: "error")
                 }
-                is ValidationErrorEvent -> {
-                    hideProgress()
-                    if (event.message != 0) {
-                        activity?.toast(event.message)
-                    }
-                }
-                else -> hideProgress()
             }
         })
     }

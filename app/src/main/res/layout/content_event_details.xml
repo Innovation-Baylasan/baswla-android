@@ -197,6 +197,8 @@
                     android:text="rambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Let...….. sheets containing Lorem Ipsum passages, and more recently with desktop" />
 
                 <com.google.android.material.button.MaterialButton
+                    android:visibility="gone"
+                    tools:visibility="visible"
                     style="@style/AppButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

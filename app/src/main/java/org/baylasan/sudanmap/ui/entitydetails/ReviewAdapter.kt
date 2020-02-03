@@ -32,8 +32,9 @@ class ReviewAdapter(private val reviews: MutableList<Review> = mutableListOf()) 
     override fun onBindViewHolder(holder: ReviewViewHolder, position: Int) {
         val review = reviews[position]
         holder.reviewContent.text = review.review
-        val time = parseDate(review.createdAt)!!.time
-        holder.reviewDate.text = DateUtils.getRelativeTimeSpanString(time, Date().time, DateUtils.MINUTE_IN_MILLIS)
+//        val time = parseDate(review.createdAt)!!.time
+        holder.reviewDate.text = review.createdAt
+        holder.reviewerName.text=review.name
     }
 
     fun addAll(reviews: List<Review>) {

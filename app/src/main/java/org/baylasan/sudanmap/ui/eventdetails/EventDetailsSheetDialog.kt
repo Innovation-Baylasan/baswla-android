@@ -48,6 +48,7 @@ class EventDetailsSheetDialog : BottomSheetDialogFragment() {
             val intent = Intent(activity, EventDetailsActivity::class.java)
             intent.putExtra("event",event)
             startActivity(intent)
+            dismiss()
         }
 
     }

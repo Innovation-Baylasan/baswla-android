@@ -20,24 +20,7 @@ class RegisterViewModel(
     val events = MutableLiveData<RegisterEvent>()
     val moveToCompleteRegister = MutableLiveData<RegisterRequest>()
     fun registerCompany(){
-        companyRegisterUseCase.execute(CompanyRegisterUseCase.Params( RegisterCompanyRequest(
-            "mail@domain.com",
-            "meg",
-            "00000000",
-            "00000000",
-            1,
-            "",
-            1,
-            File(""),
-            File(""),
-            "lalalalal"
 
-        )
-        )).subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-
-            },{it.printStackTrace()})
     }
     fun register(registerRequest: RegisterRequest) {
         if (registerRequest.type == 9) {

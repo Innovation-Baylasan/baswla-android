@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.activity_faq.*
 import kotlinx.android.synthetic.main.row_faq.view.*
 import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.common.gone
-import org.baylasan.sudanmap.common.show
+import org.baylasan.sudanmap.common.visible
 
 class FAQActivity : AppCompatActivity() {
 
@@ -50,7 +50,7 @@ class FAQAdapter : RecyclerView.Adapter<FAQViewHolder>() {
     override fun onBindViewHolder(holder: FAQViewHolder, position: Int) {
         holder.faqLayout.setOnClickListener {
             if (holder.faqDescription.isGone) {
-                holder.faqDescription.show()
+                holder.faqDescription.visible()
                 holder.faqExpandIcon.rotation=180f
             } else {
                 holder.faqDescription.gone()

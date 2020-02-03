@@ -38,7 +38,7 @@ interface SudanMapApi {
         @POST("entities/{id}/follow")
         fun followEntity(@Path("id") entityId: Int): Single<Response<Unit>>
 
-        @DELETE("entities/{id}/review")
+        @DELETE("entities/{id}/follow")
         fun unFollowEntity(@Path("id") entityId: Int): Single<Response<Unit>>
 
         @GET("entities/{id}")

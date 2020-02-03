@@ -180,13 +180,13 @@ class EntityMapFragment : Fragment(R.layout.fragment_entity_map) {
         viewModel.events.observe(this, Observer { event ->
             when (event) {
 
-                is DataEvent -> {
+                is UiState.Success -> {
                     Log.d("MEGA", "Data loaded")
                     entityFilterLoading.gone()
                     entityLoading.gone()
                     errorLayout.gone()
 
-                    val data = event.entityList
+                    val data = event.data
                     if (data.isNotEmpty()) {
                         entities.clear()
                         entities.addAll(data)
@@ -194,13 +194,13 @@ class EntityMapFragment : Fragment(R.layout.fragment_entity_map) {
                         entityEntitiesListAdapter.notifyDataSetChanged()
                     }
                 }
-                is LoadingEvent -> {
-                    entityFilterLoading.show()
-                    entityLoading.show()
+                is UiState.Loading -> {
+                    entityFilterLoading.visible()
+                    entityLoading.visible()
                     errorLayout.gone()
                 }
-                is ErrorEvent, TimeoutEvent, NetworkErrorEvent -> {
-                    errorLayout.show()
+                is UiState.Error -> {
+                    errorLayout.visible()
                     entityFilterLoading.gone()
                     entityLoading.gone()
                     retryButton.setOnClickListener {
@@ -223,19 +223,19 @@ class EntityMapFragment : Fragment(R.layout.fragment_entity_map) {
         viewModel.nearbyEvents.observe(this, Observer { event ->
 
             when (event) {
-                is NearbyEmptyEvent -> {
+                is UiState.Empty -> {
                     loadingCard.hide()
-                    emptyCard.show()
+                    emptyCard.visible()
                     errorCard.hide()
 
                 }
-                is NearbyDataEvent -> {
+                is UiState.Success -> {
                     Log.d("MEGA", "Data loaded")
                     loadingCard.hide()
                     emptyCard.hide()
                     errorCard.hide()
 
-                    val data = event.nearByEntity
+                    val data = event.data
                     googleMap?.clear()
 
                     data.forEach { entity ->
@@ -260,17 +260,17 @@ class EntityMapFragment : Fragment(R.layout.fragment_entity_map) {
 
 
                 }
-                is NearbyLoadingEvent -> {
+                is UiState.Loading -> {
                     Log.d("KLD", "Loading")
-                    loadingCard.show()
+                    loadingCard.visible()
                     emptyCard.hide()
                     errorCard.hide()
 
                 }
-                else -> {
+                is UiState.Error -> {
                     loadingCard.hide()
                     emptyCard.hide()
-                    errorCard.show()
+                    errorCard.visible()
 
 
                 }

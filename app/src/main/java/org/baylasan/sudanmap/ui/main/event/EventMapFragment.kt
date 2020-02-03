@@ -13,7 +13,6 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.MarkerOptions
-import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_event_map.*
 import kotlinx.android.synthetic.main.search_bar_layout.*
 import org.baylasan.sudanmap.R
@@ -23,7 +22,6 @@ import org.baylasan.sudanmap.domain.LocationViewModel
 import org.baylasan.sudanmap.ui.eventdetails.EventDetailsSheetDialog
 import org.baylasan.sudanmap.ui.eventsearch.EventSearchFragment
 import org.baylasan.sudanmap.ui.main.MainActivity
-import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -54,10 +52,10 @@ class EventMapFragment : Fragment(R.layout.fragment_event_map) {
             when (state) {
                 is UiState.Error -> {
                     progressBar.gone()
-                    errorLayout.show()
+                    errorLayout.visible()
                 }
                 is UiState.Loading -> {
-                    progressBar.show()
+                    progressBar.visible()
                     errorLayout.gone()
                 }
                 is UiState.Success -> {

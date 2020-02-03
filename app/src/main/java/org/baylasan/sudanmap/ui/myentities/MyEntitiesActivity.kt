@@ -12,10 +12,11 @@ import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.common.UiState
 import org.baylasan.sudanmap.common.expiredSession
 import org.baylasan.sudanmap.common.gone
-import org.baylasan.sudanmap.common.show
+import org.baylasan.sudanmap.common.visible
 import org.baylasan.sudanmap.data.common.UnAuthorizedException
 import org.baylasan.sudanmap.data.entity.model.Entity
 import org.baylasan.sudanmap.ui.addentity.AddEntityActivity
+import org.baylasan.sudanmap.ui.entitydetails.EntityDetailsActivity
 import org.baylasan.sudanmap.ui.main.entity.EntitiesListAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -38,9 +39,9 @@ class MyEntitiesActivity : AppCompatActivity(), EntitiesListAdapter.OnItemClick 
             if (it is UiState.Success) {
                 refreshLayout.isRefreshing = false
                 if (it.data.isEmpty()) {
-                    emptyEntityLayout.show()
+                    emptyEntityLayout.visible()
                 } else {
-                    entitiesRecyclerView.show()
+                    entitiesRecyclerView.visible()
 
                     emptyEntityLayout.gone()
                     Log.d("MEGA", "DATA ${it.data}")
@@ -74,6 +75,8 @@ class MyEntitiesActivity : AppCompatActivity(), EntitiesListAdapter.OnItemClick 
     }
 
     override fun onItemClick(entity: Entity) {
-
+        val intent = Intent(this, EntityDetailsActivity::class.java)
+        intent.putExtra("entity", entity)
+        startActivity(intent)
     }
 }

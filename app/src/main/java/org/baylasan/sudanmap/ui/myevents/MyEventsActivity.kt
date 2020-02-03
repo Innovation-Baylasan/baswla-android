@@ -11,7 +11,7 @@ import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.common.UiState
 import org.baylasan.sudanmap.common.expiredSession
 import org.baylasan.sudanmap.common.gone
-import org.baylasan.sudanmap.common.show
+import org.baylasan.sudanmap.common.visible
 import org.baylasan.sudanmap.data.common.UnAuthorizedException
 import org.baylasan.sudanmap.ui.addevent.AddEventActivity
 import org.baylasan.sudanmap.ui.eventdetails.EventDetailsActivity
@@ -36,7 +36,7 @@ class MyEventsActivity : AppCompatActivity() {
         viewModel.eventEvent.observe(this, Observer {
             refreshLayout.isRefreshing = false
             if (it is UiState.Loading) {
-                eventsLoadingLayout.show()
+                eventsLoadingLayout.visible()
                 emptyEventLayout.gone()
                 eventsRecyclerView.gone()
             }
@@ -44,9 +44,9 @@ class MyEventsActivity : AppCompatActivity() {
                 refreshLayout.isRefreshing = false
                 eventsLoadingLayout.gone()
                 if (it.data.isEmpty()) {
-                    emptyEventLayout.show()
+                    emptyEventLayout.visible()
                 } else {
-                    eventsRecyclerView.show()
+                    eventsRecyclerView.visible()
                     eventsRecyclerView.adapter = EventAdapter(it.data) {
                         val intent = Intent(this, EventDetailsActivity::class.java)
                         intent.putExtra("event", it)

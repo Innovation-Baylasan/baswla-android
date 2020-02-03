@@ -14,17 +14,15 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.fragment_entity_search.*
 import org.baylasan.sudanmap.R
+import org.baylasan.sudanmap.common.UiState
 import org.baylasan.sudanmap.data.entity.model.Entity
 import org.baylasan.sudanmap.ui.main.MainActivity
-import org.baylasan.sudanmap.ui.main.entity.DataEvent
-import org.baylasan.sudanmap.ui.main.entity.EmptyEvent
 import org.baylasan.sudanmap.ui.main.entity.EntitiesListAdapter
-import org.baylasan.sudanmap.ui.main.entity.LoadingEvent
 import org.baylasan.sudanmap.ui.entitydetails.EntityDetailsActivity
 import org.baylasan.sudanmap.ui.searchfilter.SearchFilterFragment
 import org.baylasan.sudanmap.common.gone
 import org.baylasan.sudanmap.common.setEndDrawableOnTouchListener
-import org.baylasan.sudanmap.common.show
+import org.baylasan.sudanmap.common.visible
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.concurrent.TimeUnit
 
@@ -74,29 +72,29 @@ class EntitySearchFragment : Fragment(R.layout.fragment_entity_search), Entities
         viewModel.events.observe(this, Observer { event ->
             Log.d("MEGA", "$event")
             when (event) {
-                is DataEvent -> {
-                    searchRecyclerView.show()
+                is UiState.Success -> {
+                    searchRecyclerView.visible()
                     progressBar.gone()
                     emptyView.gone()
                     errorView.gone()
                     searchRecyclerView.adapter =
-                        EntitiesListAdapter(list = event.entityList, onItemClick = this)
+                        EntitiesListAdapter(list = event.data, onItemClick = this)
                 }
-                is LoadingEvent -> {
-                    progressBar.show()
+                is UiState.Loading -> {
+                    progressBar.visible()
                     searchRecyclerView.gone()
                     emptyView.gone()
                     errorView.gone()
 
                 }
-                is EmptyEvent -> {
-                    emptyView.show()
+                is UiState.Empty -> {
+                    emptyView.visible()
                     progressBar.gone()
                     searchRecyclerView.gone()
                     errorView.gone()
                 }
-                else -> {
-                    errorView.show()
+                is UiState.Error -> {
+                    errorView.visible()
                     emptyView.gone()
                     searchRecyclerView.gone()
                     progressBar.gone()

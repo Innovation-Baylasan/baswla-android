@@ -97,7 +97,7 @@ class SignUpActivity : AppCompatActivity() {
                     finish()
                 }
                 is LoadingEvent -> {
-                    signUpProgressBar.show()
+                    signUpProgressBar.visible()
 
                 }
                 is ErrorEvent -> {
@@ -124,7 +124,7 @@ class SignUpActivity : AppCompatActivity() {
         val email = signUpEmalEditText.asString()
         val password = signUpPasswordEditText.asString()
         val passwordConfirmation = signUpPasswordConfirmationEditText.asString()
-  /*      if (name.isEmpty()) {
+        if (name.isEmpty()) {
             toast(getString(R.string.name_required))
             return
         }
@@ -153,11 +153,10 @@ class SignUpActivity : AppCompatActivity() {
 
         val registerRequest =
             RegisterRequest(email, name, password, passwordConfirmation, type = 1)
-*/
-        viewModel.registerCompany()
+        viewModel.register(registerRequest)
     }
 
-    fun setAdjustScreen() {
+    private fun setAdjustScreen() {
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
         /*android:windowSoftInputMode="adjustPan|adjustResize"*/

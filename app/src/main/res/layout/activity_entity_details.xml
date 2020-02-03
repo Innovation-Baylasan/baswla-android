@@ -28,7 +28,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
-
                 app:layout_collapseMode="parallax" />
 
 
@@ -77,7 +76,6 @@
         android:id="@+id/profileImage"
         android:layout_width="120dp"
         android:layout_height="120dp"
-        android:scaleType="fitXY"
         app:layout_anchor="@+id/nestedScrollView"
         app:layout_anchorGravity="top|center"
         app:srcCompat="@drawable/ic_icon" />
@@ -87,11 +85,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="24dp"
+        android:visibility="gone"
         app:backgroundTint="#0E5AB0"
         app:layout_anchor="@+id/nestedScrollView"
         app:layout_anchorGravity="end"
         app:layout_behavior="com.google.android.material.floatingactionbutton.FloatingActionButton$Behavior"
-        app:srcCompat="@drawable/ic_bell" />
+        app:srcCompat="@drawable/ic_bell_vib" />
 
     <LinearLayout
         android:id="@+id/commentLayout"
@@ -101,6 +100,8 @@
         android:background="#f8f8f8"
         android:gravity="center"
         android:orientation="horizontal"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
         android:visibility="gone"
         tools:visibility="visible">
 
@@ -124,16 +125,15 @@
             android:hint="@string/comment_hint"
             android:inputType="textMultiLine"
             android:maxLines="3"
-
             android:padding="2dp" />
 
         <ImageView
             android:id="@+id/submitCommentButton"
-            android:background="?selectableItemBackgroundBorderless"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginStart="4dp"
             android:layout_marginEnd="4dp"
+            android:background="?selectableItemBackgroundBorderless"
             app:srcCompat="@drawable/ic_comment" />
 
     </LinearLayout>

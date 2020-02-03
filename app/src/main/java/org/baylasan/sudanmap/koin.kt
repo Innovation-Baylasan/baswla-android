@@ -100,7 +100,7 @@ val entityDetailsModule = module(override = true) {
     factory { FollowEntityUseCase(get()) }
     factory { RateEntityUseCase(get()) }
     factory { AddReviewUseCase(get()) }
-    viewModel { EntityDetailsViewModel(get(), get(), get(), get(), get()) }
+    viewModel { EntityDetailsViewModel(get(), get(), get(), get(), get(),get()) }
 
 }
 val categoryModule = module(override = true) {
@@ -211,3 +211,8 @@ class SessionInterceptor(private val sessionManager: SessionManager) : Intercept
 
     }
 }
+/*
+class CacheInterceptor(private val context: Context) : Interceptor{
+    override fun intercept(chain: Interceptor.Chain): Response {
+    }
+}*/

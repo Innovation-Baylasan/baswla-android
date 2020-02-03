@@ -18,6 +18,6 @@ data class RegisterRequest(
     @SerializedName("password_confirmation")
     val passwordConfirmation: String = "",
     @SerializedName("role_id")
-    val type: Int = 0
+    val type: Int = 1
 ) : Parcelable
 

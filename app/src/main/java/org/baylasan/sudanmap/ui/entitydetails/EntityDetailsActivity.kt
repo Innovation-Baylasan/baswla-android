@@ -14,6 +14,7 @@ import kotlinx.android.synthetic.main.content_entity_details.*
 import kotlinx.android.synthetic.main.rate_entity_dialog_layout.view.*
 import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.common.*
+import org.baylasan.sudanmap.data.common.UnAuthorizedException
 import org.baylasan.sudanmap.data.entity.model.Entity
 import org.baylasan.sudanmap.ui.main.UserProfileViewModel
 import org.baylasan.sudanmap.ui.main.entity.load
@@ -21,7 +22,11 @@ import org.baylasan.sudanmap.ui.main.entity.loadCircle
 import org.baylasan.sudanmap.ui.view.AppBarChangedListener
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-
+/*TODO:(
+*  handle when user enters one of his entity/event.
+*  We should limit some of the interactions between him and his entity/event
+*  like rate/follow and respectively show other interactions that normal user can not do.)
+* */
 class EntityDetailsActivity : AppCompatActivity() {
     private val viewModel by viewModel<EntityDetailsViewModel>()
     private var snackBar: Snackbar? = null
@@ -36,7 +41,6 @@ class EntityDetailsActivity : AppCompatActivity() {
 
         adapter = ReviewAdapter(mutableListOf())
         rateNowButtton.setOnClickListener {
-
             val view =
                 LayoutInflater.from(this).inflate(R.layout.rate_entity_dialog_layout, null, true)
             val ratingBar = view.ratingBar
@@ -66,8 +70,12 @@ class EntityDetailsActivity : AppCompatActivity() {
                 rateNowButtton.enable()
             }
             if (it is UiState.Error) {
-                rateNowButtton.enable()
-                toast(getString(R.string.failed_to_rate_entity))
+                if (it.throwable is UnAuthorizedException) {
+                    expiredSession()
+                } else {
+                    rateNowButtton.enable()
+                    toast(getString(R.string.failed_to_rate_entity))
+                }
             }
         })
         profileBackBtn.setOnClickListener {
@@ -78,37 +86,78 @@ class EntityDetailsActivity : AppCompatActivity() {
                 toggleFollowButton.disable()
             }
             if (it is UiState.Error) {
-
-                toggleFollowButton.enable()
-                toast(getString(R.string.failed_to_follow))
-
+                if (it.throwable is UnAuthorizedException) {
+                    expiredSession()
+                } else {
+                    toggleFollowButton.enable()
+                    toast(getString(R.string.failed_to_follow))
+                }
             }
             if (it is UiState.Complete) {
+                toggleFollowButton.setImageResource(R.drawable.ic_bell)
                 toggleFollowButton.enable()
                 toast(getString(R.string.followed_successfully))
                 companyProfileFollowersNumTxt.text =
                     (companyProfileFollowersNumTxt.text.toString().toInt() + 1).toString()
             }
         })
+        viewModel.unFollowState.observe(this, Observer {
+            if (it is UiState.Loading) {
+
+                toggleFollowButton.disable()
+            }
+            if (it is UiState.Error) {
+                if (it.throwable is UnAuthorizedException) {
+                    expiredSession()
+                } else {
+                    toggleFollowButton.enable()
+                    toast(getString(R.string.failed_to_follow))
+                }
+            }
+            if (it is UiState.Complete) {
+                toggleFollowButton.setImageResource(R.drawable.ic_bell_vib)
+
+                toggleFollowButton.enable()
+//                toast(getString(R.string.unfollowed_successfully))
+                companyProfileFollowersNumTxt.text =
+                    (companyProfileFollowersNumTxt.text.toString().toInt() - 1).toString()
+            }
+        })
         toggleFollowButton.setOnClickListener {
-            viewModel.follow(entity.id)
+            viewModel.toggleFollow(entity.id)
         }
         checkIfUserIsGuest()
+        reviewsRecyclerView.adapter = adapter
+        reviewsRecyclerView.layoutManager = LinearLayoutManager(this)
 
         viewModel.entityDetailsState.observe(this, Observer {
             if (it is UiState.Success) {
                 snackBar?.dismiss()
-                loadingLayout.gone()
                 val details = it.data
-                profileToolBarTitleTxt.text = details.name
+                if (!profileViewModel.isThisMine(details.userId)) {
+                    rateNowButtton.visible()
+                    toggleFollowButton.visible()
+                } else {
+                    toggleFollowButton.gone()
+                    rateNowButtton.gone()
+                }
+                toggleFollowButton.setImageResource(if (details.isFollowed) R.drawable.ic_bell else R.drawable.ic_bell_vib)
                 companyNameTxt.text = details.name
+                ratingBar2.rating = details.rating.toFloat()
                 companyDescriptionTextView.text = details.description
                 profileCoverImage.load(details.cover)
                 profileImage.loadCircle(details.avatar)
+                companyProfileReviewsNumTxt.text=details.reviewsCount.toString()
+
                 companyProfileFollowersNumTxt.text = details.followersCount.toString()
-                reviewsRecyclerView.adapter = adapter
-                adapter.addAll(details.reviews)
-                reviewsRecyclerView.layoutManager = LinearLayoutManager(this)
+                if (details.reviews.isNotEmpty()) {
+                    loadingLayout.gone()
+                    adapter.addAll(details.reviews)
+                } else {
+                    loadingLayout.gone()
+                }
+
+
             }
             if (it is UiState.Error) {
                 loadingLayout.stopShimmerAnimation()
@@ -122,7 +171,7 @@ class EntityDetailsActivity : AppCompatActivity() {
                 snackBar?.show()
             }
             if (it is UiState.Loading) {
-                loadingLayout.show()
+                loadingLayout.visible()
                 loadingLayout.startShimmerAnimation()
                 snackBar?.dismiss()
             }
@@ -142,6 +191,7 @@ class EntityDetailsActivity : AppCompatActivity() {
                 reviewField.enable()
                 submitCommentButton.enable()
                 adapter.add(it.data)
+                loadingLayout.gone()
 
             }
             if (it is UiState.Loading) {
@@ -149,6 +199,9 @@ class EntityDetailsActivity : AppCompatActivity() {
                 submitCommentButton.disable()
             }
             if (it is UiState.Error) {
+                if (it.throwable is UnAuthorizedException) {
+                    expiredSession()
+                }
                 reviewField.enable()
                 submitCommentButton.enable()
                 toast("Failed to add comment, try again.")
@@ -166,36 +219,51 @@ class EntityDetailsActivity : AppCompatActivity() {
 
         }
 
-        appbar.addOnOffsetChangedListener(object : AppBarChangedListener() {
-            override fun onStateChanged(appBarLayout: AppBarLayout, state: State) {
-                when (state) {
-                    State.EXPANDED -> {
-                        profileImage.show()
-                        profileToolBarTitleTxt.text = ""
-                        commentLayout.gone()
-                    }
-                    State.COLLAPSED -> {
-                        profileImage.gone()
-                        commentLayout.show()
 
-                        profileToolBarTitleTxt.text = companyNameTxt.text
-                    }
-                }
-            }
-
-        })
     }
 
     private fun checkIfUserIsGuest() {
         profileViewModel.loadUser()
         profileViewModel.listenToUserProfile().observe(this, Observer {
             if (it == null) {
-                toggleFollowButton.gone()
-                commentLayout.disableChildern()
-            } else {
-                toggleFollowButton.show()
+                commentLayout.gone()
+                appbar.addOnOffsetChangedListener(object : AppBarChangedListener() {
+                    override fun onStateChanged(appBarLayout: AppBarLayout, state: State) {
+                        when (state) {
+                            State.EXPANDED -> {
+                                profileImage.visible()
+                                profileToolBarTitleTxt.text = ""
+                            }
+                            State.COLLAPSED -> {
+                                profileImage.gone()
+                                profileToolBarTitleTxt.text = companyNameTxt.text
+                            }
+                        }
+                    }
 
-                commentLayout.enableChildern()
+                })
+            } else {
+                appbar.addOnOffsetChangedListener(object : AppBarChangedListener() {
+                    override fun onStateChanged(appBarLayout: AppBarLayout, state: State) {
+                        when (state) {
+                            State.EXPANDED -> {
+                                profileImage.visible()
+                                profileToolBarTitleTxt.text = ""
+                                commentLayout.gone()
+                            }
+                            State.COLLAPSED -> {
+                                profileImage.gone()
+                                commentLayout.visible()
+                                profileToolBarTitleTxt.text = companyNameTxt.text
+                            }
+                            State.IDLE -> {
+
+
+                            }
+                        }
+                    }
+
+                })
             }
         })
     }

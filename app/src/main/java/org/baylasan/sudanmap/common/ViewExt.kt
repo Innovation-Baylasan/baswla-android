@@ -1,5 +1,4 @@
 package org.baylasan.sudanmap.common
-
 import android.R.attr.duration
 import android.content.Context
 import android.text.Editable
@@ -67,7 +66,7 @@ fun View.slideEnter() {
     if (translationY < 0f) animate().translationY(0f)
 }
 
-fun View.show() {
+fun View.visible() {
     visibility = View.VISIBLE
 }
 
