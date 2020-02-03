@@ -81,7 +81,6 @@
                 android:id="@+id/avatar"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:src="@drawable/ic_camera"
                 app:civ_border_color="@color/colorAccent"
                 app:civ_border_width="2dp"
                 app:layout_anchorGravity="bottom|center"
@@ -157,15 +156,38 @@
             android:hint="@string/select_category" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/description"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/categorySpinnerLayout" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/companyDescription"
+        style="@style/RoundedCornerEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="top|start"
+        android:inputType="textMultiLine"
+        android:maxLines="5"
+        android:padding="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
     <LinearLayout
         android:id="@+id/constraintLayout2"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintBottom_toTopOf="@+id/completeRegister"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/categorySpinnerLayout">
+        app:layout_constraintTop_toBottomOf="@+id/companyDescription">
 
 
         <com.google.android.material.card.MaterialCardView
@@ -241,7 +263,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/completeRegister"
         style="@style/AppButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

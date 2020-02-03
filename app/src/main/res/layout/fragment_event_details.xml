@@ -83,8 +83,8 @@
 
 
         <com.google.android.material.button.MaterialButton
+            style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
             android:id="@+id/viewMoreButton"
-            style="@style/AppButton"
             app:cornerRadius="0dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

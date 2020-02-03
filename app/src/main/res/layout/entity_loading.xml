@@ -61,7 +61,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/entityDescription"
+            android:id="@+id/companyDescription"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"

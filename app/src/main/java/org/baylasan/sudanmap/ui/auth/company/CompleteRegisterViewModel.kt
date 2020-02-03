@@ -1,35 +1,32 @@
-package org.baylasan.sudanmap.ui.auth.signup
+package org.baylasan.sudanmap.ui.auth.company
 
 import androidx.lifecycle.MutableLiveData
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import org.baylasan.sudanmap.data.common.*
-import org.baylasan.sudanmap.data.user.model.*
+import org.baylasan.sudanmap.data.user.model.RegisterCompanyRequest
+import org.baylasan.sudanmap.data.user.model.RegisterResponse
+import org.baylasan.sudanmap.data.user.model.UserDto
+import org.baylasan.sudanmap.data.user.model.stringify
 import org.baylasan.sudanmap.domain.user.CompanyRegisterUseCase
 import org.baylasan.sudanmap.domain.user.SessionManager
-import org.baylasan.sudanmap.domain.user.UserRegisterUseCase
 import org.baylasan.sudanmap.ui.BaseViewModel
+import org.baylasan.sudanmap.ui.auth.signup.*
 
-class RegisterViewModel(
-    private val registerUseCase: UserRegisterUseCase,
+class CompleteRegisterViewModel(
+    private val companyRegisterUseCase: CompanyRegisterUseCase,
     private val sessionManager: SessionManager
 ) : BaseViewModel() {
-    val moveToCompleteRegister = MutableLiveData<RegisterRequest>()
     val events = MutableLiveData<RegisterEvent>()
+    fun registerCompany(registerCompanyRequest: RegisterCompanyRequest) {
+        events.value = LoadingEvent
 
+        companyRegisterUseCase.execute(CompanyRegisterUseCase.Params(registerCompanyRequest))
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(onSuccess(), onError())
+            .addToDisposables()
 
-
-    fun register(registerRequest: RegisterRequest) {
-        if (registerRequest.type == "user") {
-            events.value = LoadingEvent
-            registerUseCase.execute(UserRegisterUseCase.Params(registerRequest))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(onSuccess(), onError())
-                .addToDisposables()
-        } else {
-            moveToCompleteRegister.value = registerRequest
-        }
     }
 
     private fun onError(): (Throwable) -> Unit {
@@ -76,4 +73,5 @@ class RegisterViewModel(
         )
         sessionManager.saveUserSession(userDto)
     }
+
 }

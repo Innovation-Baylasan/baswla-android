@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import kotlinx.android.synthetic.main.fragment_map_layers.*
 import org.baylasan.sudanmap.R
+import org.baylasan.sudanmap.common.UiState
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
@@ -44,14 +45,14 @@ class MapLayersFragment : Fragment(R.layout.fragment_map_layers) {
         viewModel.loadCategories()
         val mapLayersAdapter = MapLayersAdapter()
 
-        viewModel.events.observe(this, Observer { event ->
-            when (event) {
-                is DataEvent -> {
+        viewModel.events.observe(this, Observer {
+            when (it) {
+                is UiState.Success -> {
                     progressBar.visibility = View.GONE
-                    mapLayersAdapter.list.addAll(event.categories.map { Selectable(item = it) })
+                    mapLayersAdapter.list.addAll(it.data.map { Selectable(item = it) })
                     mapLayersAdapter.notifyDataSetChanged()
                 }
-                is LoadingEvent -> {
+                is UiState.Loading -> {
                     progressBar.visibility = View.VISIBLE
 
                 }

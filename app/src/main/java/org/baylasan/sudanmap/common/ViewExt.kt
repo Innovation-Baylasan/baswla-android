@@ -1,4 +1,5 @@
 package org.baylasan.sudanmap.common
+
 import android.R.attr.duration
 import android.content.Context
 import android.text.Editable
@@ -44,8 +45,9 @@ fun ViewGroup.inflate(layoutRes: Int, attachToRoot: Boolean = false): View? {
 }
 
 
-fun Context.toast(message: String) {
-
+fun Context.toast(message: String?) {
+    if (message == null || message.isEmpty())
+        return
     Toast.makeText(this, message, Toast.LENGTH_LONG)
         .show()
 
@@ -181,7 +183,8 @@ fun ViewGroup.disableChildern() {
         it.disable()
     }
 }
-fun ViewGroup.enableChildern(){
+
+fun ViewGroup.enableChildern() {
     children.forEach {
         it.enable()
     }

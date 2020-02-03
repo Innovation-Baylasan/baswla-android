@@ -34,11 +34,11 @@ class SignUpActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
         individualBtn.select()
-        companyBtn.unselect()
+        companyBtn.unSelect()
         setAdjustScreen()
         individualBtn.setOnClickListener {
             selectedType = "user"
-            companyBtn.unselect()
+            companyBtn.unSelect()
             individualBtn.select()
 
 
@@ -47,7 +47,7 @@ class SignUpActivity : AppCompatActivity() {
         companyBtn.setOnClickListener {
             selectedType = "company"
             companyBtn.select()
-            individualBtn.unselect()
+            individualBtn.unSelect()
 
         }
 
@@ -74,7 +74,7 @@ class SignUpActivity : AppCompatActivity() {
             ContextCompat.getColorStateList(applicationContext, R.color.colorAccent)
     }
 
-    private fun MaterialButton.unselect() {
+    private fun MaterialButton.unSelect() {
         strokeColor =
             ContextCompat.getColorStateList(applicationContext, R.color.black_overlay)
         setTextColor(
@@ -136,7 +136,7 @@ class SignUpActivity : AppCompatActivity() {
             toast(getString(R.string.password_required))
             return
         }
-        if (password.length < 6) {
+        if (password.length < 8) {
             toast(getString(R.string.password_should_be_8_chars))
             return
         }
@@ -152,7 +152,7 @@ class SignUpActivity : AppCompatActivity() {
         }
 
         val registerRequest =
-            RegisterRequest(email, name, password, passwordConfirmation, type = 1)
+            RegisterRequest(email, name, password, passwordConfirmation, type = selectedType)
         viewModel.register(registerRequest)
     }
 

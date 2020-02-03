@@ -32,6 +32,7 @@ import org.baylasan.sudanmap.domain.event.GetMyEventUseCase
 import org.baylasan.sudanmap.domain.user.*
 import org.baylasan.sudanmap.ui.addentity.AddEntityViewModel
 import org.baylasan.sudanmap.ui.addevent.AddEventViewModel
+import org.baylasan.sudanmap.ui.auth.company.CompleteRegisterViewModel
 import org.baylasan.sudanmap.ui.auth.login.LoginViewModel
 import org.baylasan.sudanmap.ui.auth.signup.RegisterViewModel
 import org.baylasan.sudanmap.ui.entitydetails.EntityDetailsViewModel
@@ -103,6 +104,7 @@ val entityDetailsModule = module(override = true) {
     viewModel { EntityDetailsViewModel(get(), get(), get(), get(), get(),get()) }
 
 }
+
 val categoryModule = module(override = true) {
     factory { get<Retrofit>().create(SudanMapApi.Categories::class.java) }
     factory<CategoryRepository> { CategoryApi(get(), get()) }
@@ -154,15 +156,22 @@ val userModule = module(override = true) {
     factory { get<Retrofit>().create(SudanMapApi.User::class.java) }
     factory<UserRepository> { UserApi(get(), get(), get()) }
     factory { UserRegisterUseCase(get()) }
-    factory { CompanyRegisterUseCase(get()) }
     factory { provideRegisterErrorConverter(get()) }
 
-    viewModel { RegisterViewModel(get(), get(), get()) }
+    viewModel { RegisterViewModel(get(), get()) }
     factory { UserLoginUseCase(get()) }
     viewModel { LoginViewModel(get(), get()) }
 
 }
+val completeRegister= module(override = true) {
+    factory { RegisterRequestMapper() }
+    factory { get<Retrofit>().create(SudanMapApi.User::class.java) }
+    factory<UserRepository> { UserApi(get(), get(), get()) }
+    factory { CompanyRegisterUseCase(get()) }
 
+    viewModel { CompleteRegisterViewModel(get(),get()) }
+
+}
 private fun provideErrorConverter(retrofit: Retrofit) =
     retrofit.responseBodyConverter<ApiErrorResponse>(ApiErrorResponse::class.java, arrayOf())
 

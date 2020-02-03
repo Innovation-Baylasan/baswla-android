@@ -24,5 +24,9 @@ class ProgressFragmentDialog : DialogFragment() {
             .inflate(R.layout.fragment_progress_dialog, container, false)
     }
 
+    override fun dismiss() {
+        if (isVisible)
+            super.dismiss()
+    }
 
 }

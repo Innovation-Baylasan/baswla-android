@@ -13,11 +13,11 @@ data class RegisterCompanyRequest(
     val name: String = "",
     val password: String = "",
     val passwordConfirmation: String = "",
-    val type: Int=1,
     val location: String,
     val categoryId: Int,
-    val avatar: File,
-    val cover: File,
-    val descriptor: String
+    val avatar: File?,
+    val cover: File?,
+    val description: String,
+    val userType: String = "company"
 ) : Parcelable
 

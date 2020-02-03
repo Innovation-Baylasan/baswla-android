@@ -3,7 +3,7 @@ package org.baylasan.sudanmap.ui.auth.company
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.widget.ArrayAdapter
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toFile
 import androidx.lifecycle.Observer
@@ -19,51 +19,64 @@ import com.theartofdev.edmodo.cropper.CropImageView
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
 import kotlinx.android.synthetic.main.activity_company_data.*
 import org.baylasan.sudanmap.R
-import org.baylasan.sudanmap.common.disableAll
-import org.baylasan.sudanmap.common.gone
-import org.baylasan.sudanmap.common.toLatLng
-import org.baylasan.sudanmap.common.zoomToMyLocation
-import org.baylasan.sudanmap.data.user.UserApi
+import org.baylasan.sudanmap.common.*
+import org.baylasan.sudanmap.data.entity.model.Category
+import org.baylasan.sudanmap.data.user.model.RegisterCompanyRequest
+import org.baylasan.sudanmap.data.user.model.RegisterRequest
 import org.baylasan.sudanmap.domain.LocationViewModel
 import org.baylasan.sudanmap.ui.LocationPickerActivity
-import org.baylasan.sudanmap.ui.layers.DataEvent
-import org.baylasan.sudanmap.ui.layers.EmptyEvent
-import org.baylasan.sudanmap.ui.layers.LoadingEvent
+import org.baylasan.sudanmap.ui.addentity.CategoryEntityAdapter
+import org.baylasan.sudanmap.ui.auth.signup.DataEvent
+import org.baylasan.sudanmap.ui.auth.signup.ErrorEvent
+import org.baylasan.sudanmap.ui.auth.signup.LoadingEvent
 import org.baylasan.sudanmap.ui.layers.MapLayersViewModel
+import org.baylasan.sudanmap.ui.main.MainActivity
+import org.baylasan.sudanmap.ui.view.ProgressFragmentDialog
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.io.File
 
 
 class CompanyDataActivity : AppCompatActivity() {
-    var imageSelected = -1
+    private var imageSelected = -1
 
     private val picasso by inject<Picasso>()
     private val viewModel by viewModel<MapLayersViewModel>()
-    private var snackbar: Snackbar? = null
     private val locationViewModel by viewModel<LocationViewModel>()
+    private val completeRegisterViewModel by viewModel<CompleteRegisterViewModel>()
+    private var snackBar: Snackbar? = null
     private lateinit var googleMap: GoogleMap
-    private val userApi by inject<UserApi>()
+    private var selectedCategory: Category? = null
+    private var selectedLocation: LatLng? = null
+    private var selectedAvatar: File? = null
+    private var selectedcover: File? = null
+    private var progressFragmentDialog: ProgressFragmentDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_company_data)
-        button.setOnClickListener {
-
-        }
+        avatar.setImageResource(R.drawable.ic_camera)
+        progressFragmentDialog = ProgressFragmentDialog.newInstance()
+            .apply {
+                isCancelable = false
+            }
         viewModel.loadCategories()
         viewModel.events.observe(this, Observer {
-            if (it is LoadingEvent || it is EmptyEvent) {
-                snackbar?.dismiss()
-            } else if (it is DataEvent) {
-                snackbar?.dismiss()
-                categorySpinner.setAdapter(
-                    ArrayAdapter<String>(
-                        this,
-                        android.R.layout.simple_list_item_1,
-                        it.categories.map { it.name })
-                )
+            if (it is UiState.Loading || it is UiState.Empty) {
+                snackBar?.dismiss()
+            } else if (it is UiState.Success) {
+                snackBar?.dismiss()
+                val categories = it.data
+                val categoryEntityAdapter = CategoryEntityAdapter(this, categories)
+                categorySpinner.setAdapter(categoryEntityAdapter)
+                categorySpinner.setOnItemClickListener { parent, view, position, id ->
+                    val category = categories[position]
+                    categorySpinner.setText(category.name, false)
+                    selectedCategory = category
+                    categorySpinner.clearError()
+                }
             } else {
-                snackbar =
+                snackBar =
                     Snackbar.make(
                         layout,
                         getString(R.string.failed_to_load_categories),
@@ -72,7 +85,7 @@ class CompanyDataActivity : AppCompatActivity() {
                         .setAction(R.string.retry) {
                             viewModel.loadCategories()
                         }
-                snackbar?.show()
+                snackBar?.show()
             }
         })
         val supportMapFragment =
@@ -104,6 +117,58 @@ class CompanyDataActivity : AppCompatActivity() {
             imageSelected = 2
             pickAndCropImage()
         }
+        completeRegister.setOnClickListener {
+            val description = companyDescription.text.toString()
+            if (selectedCategory == null) {
+                toast(R.string.select_category)
+                categorySpinner.error = ""
+                return@setOnClickListener
+            }
+            if (description.isEmpty()) {
+                companyDescription.error = getString(R.string.descritption_field_required)
+                return@setOnClickListener
+            }
+            if (selectedLocation == null) {
+                toast(R.string.location_not_selected)
+                return@setOnClickListener
+            }
+            val registerRequest = intent?.getParcelableExtra<RegisterRequest>("registerData")
+            completeRegisterViewModel.registerCompany(
+                RegisterCompanyRequest(
+                    email = registerRequest!!.email,
+                    cover = selectedcover,
+                    avatar = selectedAvatar,
+                    name = registerRequest.name,
+                    categoryId = selectedCategory!!.id,
+                    description = description,
+                    location = "${selectedLocation!!.latitude},${selectedLocation!!.longitude}",
+                    password = registerRequest.password,
+                    passwordConfirmation = registerRequest.passwordConfirmation,
+                    userType = "company"
+
+
+                )
+            )
+            completeRegisterViewModel.events.observe(this, Observer { event ->
+                when (event) {
+                    is DataEvent -> {
+                        progressFragmentDialog?.dismiss()
+                        startActivity(Intent(this, MainActivity::class.java))
+                        finish()
+                    }
+                    is LoadingEvent -> {
+                        progressFragmentDialog?.show(supportFragmentManager, "")
+                    }
+                    is ErrorEvent -> {
+
+                        progressFragmentDialog?.dismiss()
+                        toast(event.errorMessage)
+                    }
+
+
+                }
+            })
+        }
     }
 
     private fun pickAndCropImage() {
@@ -126,12 +191,14 @@ class CompanyDataActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            val uri = CropImage.getActivityResult(data).uri.toFile()
+            val imageFile = CropImage.getActivityResult(data).uri.toFile()
             if (imageSelected == 2) {
-                picasso.load(uri).into(coverImage)
+                selectedcover = imageFile
+                picasso.load(imageFile).into(coverImage)
             } else {
                 avatar.setImageResource(0)
-                picasso.load(uri)
+                selectedAvatar = imageFile
+                picasso.load(imageFile)
                     .transform(CropCircleTransformation())
                     .into(avatar)
 
@@ -142,6 +209,7 @@ class CompanyDataActivity : AppCompatActivity() {
             val latLng = data?.getParcelableExtra<LatLng>("picked_location")
             if (latLng != null) {
                 placeSelectionPlaceHolder.gone()
+                selectedLocation = latLng
                 googleMap.clear()
                 googleMap.zoomToMyLocation(latLng.latitude, latLng.longitude, false)
                 googleMap.addMarker(MarkerOptions().position(latLng))

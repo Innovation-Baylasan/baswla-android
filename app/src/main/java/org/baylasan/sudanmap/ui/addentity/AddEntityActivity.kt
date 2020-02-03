@@ -22,6 +22,10 @@ import com.theartofdev.edmodo.cropper.CropImageView
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
 import kotlinx.android.synthetic.main.activity_add_entity.*
 import kotlinx.android.synthetic.main.content_add_entity.*
+import kotlinx.android.synthetic.main.content_add_entity.avatarImage
+import kotlinx.android.synthetic.main.content_add_entity.coverImage
+import kotlinx.android.synthetic.main.content_add_entity.entityName
+import kotlinx.android.synthetic.main.row_entity.*
 import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.common.*
 import org.baylasan.sudanmap.data.common.UnAuthorizedException
@@ -29,10 +33,6 @@ import org.baylasan.sudanmap.data.entity.model.AddEntityRequest
 import org.baylasan.sudanmap.data.entity.model.Category
 import org.baylasan.sudanmap.domain.LocationViewModel
 import org.baylasan.sudanmap.ui.LocationPickerActivity
-import org.baylasan.sudanmap.ui.auth.AuthActivity
-import org.baylasan.sudanmap.ui.layers.DataEvent
-import org.baylasan.sudanmap.ui.layers.EmptyEvent
-import org.baylasan.sudanmap.ui.layers.LoadingEvent
 import org.baylasan.sudanmap.ui.layers.MapLayersViewModel
 import org.baylasan.sudanmap.ui.view.AppBarChangedListener
 import org.baylasan.sudanmap.ui.view.ProgressFragmentDialog
@@ -178,11 +178,11 @@ class AddEntityActivity : AppCompatActivity() {
 
     private fun setupCategorySpinner() {
         viewModel.events.observe(this, Observer {
-            if (it is LoadingEvent || it is EmptyEvent) {
+            if (it is UiState.Loading || it is UiState.Empty) {
                 snackbar?.dismiss()
-            } else if (it is DataEvent) {
+            } else if (it is UiState.Success) {
                 snackbar?.dismiss()
-                val list = it.categories
+                val list = it.data
                 entityCategorySpinner.setAdapter(CategoryEntityAdapter(this, list))
                 entityCategorySpinner.setOnItemClickListener { parent, view, position, id ->
                     val category = list[position]

@@ -11,6 +11,7 @@ import org.baylasan.sudanmap.domain.ViewPagerModel
 import org.baylasan.sudanmap.domain.user.SessionManager
 import org.baylasan.sudanmap.ui.main.MainActivity
 import org.koin.android.ext.android.inject
+import kotlin.math.abs
 
 class IntroActivity : AppCompatActivity() {
 
@@ -52,14 +53,14 @@ class IntroActivity : AppCompatActivity() {
 
             introViewPager.setPageTransformer { page, position ->
                 page.apply {
-                    translationY = Math.abs(position) * 500f
+                    translationY = abs(position) * 500f
                     scaleX = 1f
                     scaleY = 1f
                 }
             }
 
         nextBtn.setOnClickListener {
-            if (currentPage == introItems.size) {
+            if (currentPage == 5) {
                 sessionManager.setIsFirstTime(false)
                 startActivity(Intent(applicationContext, MainActivity::class.java))
                 finish()
