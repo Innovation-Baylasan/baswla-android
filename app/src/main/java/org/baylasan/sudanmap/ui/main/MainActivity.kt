@@ -26,11 +26,11 @@ import org.baylasan.sudanmap.common.gone
 import org.baylasan.sudanmap.common.visible
 import org.baylasan.sudanmap.ui.auth.AuthActivity
 import org.baylasan.sudanmap.ui.editprofile.EditUserProfileActivity
-import org.baylasan.sudanmap.ui.myevents.MyEventsActivity
 import org.baylasan.sudanmap.ui.faq.FAQActivity
-import org.baylasan.sudanmap.ui.main.event.EventMapFragment
 import org.baylasan.sudanmap.ui.main.entity.EntityMapFragment
+import org.baylasan.sudanmap.ui.main.event.EventMapFragment
 import org.baylasan.sudanmap.ui.myentities.MyEntitiesActivity
+import org.baylasan.sudanmap.ui.myevents.MyEventsActivity
 import org.baylasan.sudanmap.ui.privacy.PrivacyPolicyActivity
 import org.baylasan.sudanmap.ui.terms.TOSActivity
 import org.koin.android.ext.android.inject
@@ -121,8 +121,14 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener,
             } else {
                 userNameTextView.text = profile.name
                 userEmailTextView.text = profile.email
-                editProfileButton.visible()
-                openPlacesButton.visible()
+                if (profile.isCompany()) {
+                    editProfileButton.visible()
+                    openPlacesButton.visible()
+                } else {
+                    editProfileButton.gone()
+                    openPlacesButton.gone()
+
+                }
                 openEventsButton.visible()
 
                 openPlacesButton.setOnClickListener {
@@ -193,7 +199,6 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener,
         viewPager.offscreenPageLimit = 2
         bottomNavigation.setOnNavigationItemSelectedListener(this)
     }
-
 
 
     override fun onResume() {

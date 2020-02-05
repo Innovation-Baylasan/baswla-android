@@ -11,5 +11,7 @@ interface SessionManager {
     fun setIsFirstTime(firstTime: Boolean)
     fun isFirstTime(): Boolean
     fun isGuest(): Boolean
+    fun isCompany(): Boolean
+    fun isUser(): Boolean
     fun clear()
 }

@@ -30,7 +30,8 @@ class SudanMapApp : Application() {
                     addEventModule,
                     entityDetailsModule,
                     addEntityModule,
-                    completeRegister
+                    completeRegister,
+                    introModule
                 )
             )
 

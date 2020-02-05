@@ -1,63 +1,77 @@
 package org.baylasan.sudanmap.data.user
 
-import android.content.Context
 import android.content.SharedPreferences
-import org.baylasan.sudanmap.common.clear
-import org.baylasan.sudanmap.data.user.model.UserDto
-import org.baylasan.sudanmap.domain.user.SessionManager
 import org.baylasan.sudanmap.common.findPreference
 import org.baylasan.sudanmap.common.putPreference
+import org.baylasan.sudanmap.data.user.model.UserDto
+import org.baylasan.sudanmap.domain.user.SessionManager
 
-class SessionManagerImpl(private val context: Context) : SessionManager {
-    private var prefs: SharedPreferences
+class SessionManagerImpl(private val sharedPreferences: SharedPreferences) : SessionManager {
 
-    init {
-        prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
-    }
 
     override fun saveUserSession(user: UserDto) {
-        prefs.putPreference(USER_ID, user.id)
-        prefs.putPreference(USER_EMAIL, user.email)
-        prefs.putPreference(USER_TOKEN, user.token)
-        prefs.putPreference(NAME, user.name)
-        prefs.putPreference(IS_LOGIN, true)
-        prefs.putPreference(USER_NAME, user.username)
+        sharedPreferences.putPreference(KEY_USER_ID, user.id)
+        sharedPreferences.putPreference(KEY_USER_EMAIL, user.email)
+        sharedPreferences.putPreference(KEY_USER_TOKEN, user.token)
+        sharedPreferences.putPreference(KEY_NAME, user.name)
+        sharedPreferences.putPreference(KEY_IS_LOGIN, true)
+        sharedPreferences.putPreference(KEY_ROLE, user.role)
+        sharedPreferences.putPreference(KEY_USER_NAME, user.username)
     }
 
     override fun getUser(): UserDto {
         return UserDto(
-            email = prefs.findPreference(USER_EMAIL, ""),
-            id = prefs.findPreference(USER_ID, 0),
-            token = prefs.findPreference(USER_TOKEN, ""),
-            name = prefs.findPreference(NAME, ""),
-            username = prefs.findPreference(USER_NAME, "")
+            email = sharedPreferences.findPreference(KEY_USER_EMAIL, ""),
+            id = sharedPreferences.findPreference(KEY_USER_ID, 0),
+            token = sharedPreferences.findPreference(KEY_USER_TOKEN, ""),
+            name = sharedPreferences.findPreference(KEY_NAME, ""),
+            username = sharedPreferences.findPreference(KEY_USER_NAME, ""),
+            role = sharedPreferences.findPreference(KEY_ROLE, "user")
+
         )
     }
 
-    override fun getToken(): String = prefs.findPreference(USER_TOKEN, "")
+    override fun getToken(): String = sharedPreferences.findPreference(KEY_USER_TOKEN, "")
 
-    override fun isLoggedIn(): Boolean = prefs.findPreference(IS_LOGIN, false)
+    override fun isLoggedIn(): Boolean = sharedPreferences.findPreference(KEY_IS_LOGIN, false)
 
-    override fun setLoggedIn(loggedIn: Boolean) = prefs.putPreference(IS_LOGIN, loggedIn)
+    override fun setLoggedIn(loggedIn: Boolean) =
+        sharedPreferences.putPreference(KEY_IS_LOGIN, loggedIn)
 
-    override fun setIsFirstTime(firstTime: Boolean) = prefs.putPreference(IS_FIRST_TIME, firstTime)
+    override fun setIsFirstTime(firstTime: Boolean) =
+        sharedPreferences.putPreference(KEY_IS_FIRST_TIME, firstTime)
 
-    override fun isFirstTime(): Boolean = prefs.findPreference(IS_FIRST_TIME, true)
-    override fun isGuest(): Boolean = !prefs.contains(USER_TOKEN)
+    override fun isFirstTime(): Boolean = sharedPreferences.findPreference(KEY_IS_FIRST_TIME, true)
+    override fun isGuest(): Boolean = !sharedPreferences.contains(KEY_USER_TOKEN)
+    override fun isCompany() = sharedPreferences.getString(KEY_ROLE, "user") == "company"
+
+
+    override fun isUser() =
+        sharedPreferences.getString(KEY_ROLE, "user") == "Company"
+
+
     override fun clear() {
-        prefs.clear()
+        sharedPreferences.edit()
+            .remove(KEY_USER_NAME)
+            .remove(KEY_NAME)
+            .remove(KEY_USER_EMAIL)
+            .remove(KEY_USER_ID)
+            .remove(KEY_USER_TOKEN)
+            .remove(KEY_IS_LOGIN)
+            .apply()
     }
 
     companion object {
-        private const val PREF_NAME = "baswala"
-        private const val IS_LOGIN = "is_login"
-        private const val USER_NAME = "user_name"
-        private const val NAME = "name"
-        private const val USER_EMAIL = "user_email"
-        private const val USER_PHONE = "user_phone"
-        private const val USER_ID = "user_id"
-        private const val USER_TOKEN = "user_token"
-        private const val IS_FIRST_TIME = "first_time"
+        private const val KEY_PREFERENCE_FILE_NAME = "baswala"
+        private const val KEY_IS_LOGIN = "is_login"
+        private const val KEY_IS_FIRST_TIME = "first_time"
+
+        private const val KEY_USER_NAME = "user_name"
+        private const val KEY_NAME = "name"
+        private const val KEY_USER_EMAIL = "user_email"
+        private const val KEY_USER_ID = "user_id"
+        private const val KEY_USER_TOKEN = "user_token"
+        private const val KEY_ROLE = "user_role"
 
     }
 }

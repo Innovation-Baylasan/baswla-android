@@ -33,10 +33,10 @@ import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.common.*
 import org.baylasan.sudanmap.data.entity.model.Entity
 import org.baylasan.sudanmap.domain.LocationViewModel
-import org.baylasan.sudanmap.ui.main.MainActivity
 import org.baylasan.sudanmap.ui.entitydetails.EntityDetailsActivity
 import org.baylasan.sudanmap.ui.entitydetails.EntityDetailsSheetDialog
 import org.baylasan.sudanmap.ui.entitysearch.EntitySearchFragment
+import org.baylasan.sudanmap.ui.main.MainActivity
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.concurrent.TimeUnit
@@ -230,7 +230,6 @@ class EntityMapFragment : Fragment(R.layout.fragment_entity_map) {
 
                 }
                 is UiState.Success -> {
-                    Log.d("MEGA", "Data loaded")
                     loadingCard.hide()
                     emptyCard.hide()
                     errorCard.hide()
@@ -255,13 +254,13 @@ class EntityMapFragment : Fragment(R.layout.fragment_entity_map) {
                         picasso.load(entity.category.iconPng)
                             .placeholder(R.drawable.ic_marker_placeholder)
                             .error(R.drawable.ic_marker_placeholder)
+                            .resize(70, 70)
                             .into(PicassoMarker(marker))
                     }
 
 
                 }
                 is UiState.Loading -> {
-                    Log.d("KLD", "Loading")
                     loadingCard.visible()
                     emptyCard.hide()
                     errorCard.hide()

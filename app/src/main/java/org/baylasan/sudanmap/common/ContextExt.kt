@@ -15,7 +15,9 @@ import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import org.baylasan.sudanmap.R
+import org.baylasan.sudanmap.domain.user.SessionManager
 import org.baylasan.sudanmap.ui.auth.AuthActivity
+import org.koin.android.ext.android.inject
 
 
 inline fun <reified T : Any> Activity.extra(key: String, default: T? = null) = lazy {
@@ -45,7 +47,8 @@ fun Context.hasNetwork(): Boolean? {
         getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
         val networkCapabilities = connectivityManager.activeNetwork ?: return false
-        val capabilities = connectivityManager.getNetworkCapabilities(networkCapabilities) ?: return false
+        val capabilities =
+            connectivityManager.getNetworkCapabilities(networkCapabilities) ?: return false
         result = when {
             capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
             capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
@@ -98,7 +101,12 @@ fun Activity.hideKeyboard() {
 }
 
 fun Activity.expiredSession() {
-    toast(getString(R.string.session_expired))
+    val session by inject<SessionManager>()
+    if (session.isGuest()) {
+        toast(getString(R.string.login_to_continue))
+    } else {
+        toast(getString(R.string.session_expired))
+    }
     startActivity(Intent(this, AuthActivity::class.java))
     finishAffinity()
 }

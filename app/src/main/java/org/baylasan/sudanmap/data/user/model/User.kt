@@ -1,8 +1,8 @@
 package org.baylasan.sudanmap.data.user.model
 
 
-import com.google.gson.annotations.SerializedName
 import androidx.annotation.Keep
+import com.google.gson.annotations.SerializedName
 
 @Keep
 data class User(
@@ -17,5 +17,7 @@ data class User(
     @SerializedName("updated_at")
     val updatedAt: String = "",
     @SerializedName("username")
-    val username: String = ""
+    val username: String = "",
+    @SerializedName("role")
+    val role: String = ""
 )

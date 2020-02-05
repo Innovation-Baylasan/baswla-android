@@ -1,7 +1,10 @@
 package org.baylasan.sudanmap.ui.entitydetails
 
 
+import android.os.Build
 import android.os.Bundle
+import android.text.Html
+import android.text.util.Linkify
 import android.view.LayoutInflater
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -126,38 +129,80 @@ class EntityDetailsActivity : AppCompatActivity() {
         toggleFollowButton.setOnClickListener {
             viewModel.toggleFollow(entity.id)
         }
-        checkIfUserIsGuest()
+        appbar.addOnOffsetChangedListener(object : AppBarChangedListener() {
+            override fun onStateChanged(appBarLayout: AppBarLayout, state: State) {
+                when (state) {
+                    State.EXPANDED -> {
+                        profileImage.visible()
+                        profileToolBarTitleTxt.text = ""
+                        commentLayout.gone()
+                    }
+                    State.COLLAPSED -> {
+                        profileImage.gone()
+                        profileToolBarTitleTxt.text = companyNameTxt.text
+                    }
+                    State.IDLE -> {
+                        commentLayout.visible()
+
+
+                    }
+                }
+            }
+
+        })
+
+//        checkIfUserIsGuest()
         reviewsRecyclerView.adapter = adapter
         reviewsRecyclerView.layoutManager = LinearLayoutManager(this)
 
         viewModel.entityDetailsState.observe(this, Observer {
             if (it is UiState.Success) {
                 snackBar?.dismiss()
-                val details = it.data
-                if (!profileViewModel.isThisMine(details.userId)) {
-                    rateNowButtton.visible()
-                    toggleFollowButton.visible()
-                } else {
+                val entityDetails = it.data
+                if (profileViewModel.isThisMine(entityDetails.userId)) {
+
                     toggleFollowButton.gone()
                     rateNowButtton.gone()
-                }
-                toggleFollowButton.setImageResource(if (details.isFollowed) R.drawable.ic_bell else R.drawable.ic_bell_vib)
-                companyNameTxt.text = details.name
-                ratingBar2.rating = details.rating.toFloat()
-                companyDescriptionTextView.text = details.description
-                profileCoverImage.load(details.cover)
-                profileImage.loadCircle(details.avatar)
-                companyProfileReviewsNumTxt.text=details.reviewsCount.toString()
-
-                companyProfileFollowersNumTxt.text = details.followersCount.toString()
-                if (details.reviews.isNotEmpty()) {
-                    loadingLayout.gone()
-                    adapter.addAll(details.reviews)
                 } else {
-                    loadingLayout.gone()
+                    rateNowButtton.visible()
+                    toggleFollowButton.visible()
                 }
+                toggleFollowButton.setImageResource(if (entityDetails.isFollowed) R.drawable.ic_bell else R.drawable.ic_bell_vib)
+                companyNameTxt.text = entityDetails.name
+                ratingBar2.rating = entityDetails.rating.toFloat()
+                companyDescriptionTextView.text = entityDetails.description
+                val details = entityDetails.details
+                if(details !=null && details.isNotEmpty()) {
+                    Linkify.addLinks(companyDescriptionTextView,Linkify.ALL)
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        companyDescriptionTextView.append("\n")
+                        companyDescriptionTextView.append(
+                            Html.fromHtml(
+                                details,
+                                Html.FROM_HTML_MODE_COMPACT
+                            )
+                        )
+                    } else {
+                        companyDescriptionTextView.append("\n")
 
+                        companyDescriptionTextView.append(Html.fromHtml(details))
 
+                    }
+                }
+                profileCoverImage.load(entityDetails.cover)
+                profileImage.loadCircle(entityDetails.avatar)
+                companyProfileReviewsNumTxt.text = entityDetails.reviewsCount.toString()
+
+                companyProfileFollowersNumTxt.text = entityDetails.followersCount.toString()
+                if (entityDetails.reviews.isNotEmpty()) {
+                    loadingLayout.gone()
+                    adapter.addAll(entityDetails.reviews)
+//                    moreCommentButton.visible()
+                } else {
+                    emptyReviewsView.visible()
+                    loadingLayout.gone()
+//                    moreCommentButton.gone()
+                }
             }
             if (it is UiState.Error) {
                 loadingLayout.stopShimmerAnimation()
@@ -190,8 +235,9 @@ class EntityDetailsActivity : AppCompatActivity() {
                 reviewField.clear()
                 reviewField.enable()
                 submitCommentButton.enable()
-                adapter.add(it.data)
                 loadingLayout.gone()
+                emptyReviewsView.gone()
+                adapter.add(it.data)
 
             }
             if (it is UiState.Loading) {
@@ -201,11 +247,11 @@ class EntityDetailsActivity : AppCompatActivity() {
             if (it is UiState.Error) {
                 if (it.throwable is UnAuthorizedException) {
                     expiredSession()
+                } else {
+                    reviewField.enable()
+                    submitCommentButton.enable()
+                    toast("Failed to add comment, try again.")
                 }
-                reviewField.enable()
-                submitCommentButton.enable()
-                toast("Failed to add comment, try again.")
-
             }
         })
         submitCommentButton.setOnClickListener {
@@ -243,27 +289,6 @@ class EntityDetailsActivity : AppCompatActivity() {
 
                 })
             } else {
-                appbar.addOnOffsetChangedListener(object : AppBarChangedListener() {
-                    override fun onStateChanged(appBarLayout: AppBarLayout, state: State) {
-                        when (state) {
-                            State.EXPANDED -> {
-                                profileImage.visible()
-                                profileToolBarTitleTxt.text = ""
-                                commentLayout.gone()
-                            }
-                            State.COLLAPSED -> {
-                                profileImage.gone()
-                                commentLayout.visible()
-                                profileToolBarTitleTxt.text = companyNameTxt.text
-                            }
-                            State.IDLE -> {
-
-
-                            }
-                        }
-                    }
-
-                })
             }
         })
     }

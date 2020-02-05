@@ -31,14 +31,13 @@ class PicassoMarker(var marker: Marker?) : Target {
         e: Exception,
         errorDrawable: Drawable?
     ) {
-        if(errorDrawable!=null)
-
-        marker?.setIcon(BitmapDescriptorFactory.fromBitmap(errorDrawable?.toBitmap()))
+        if (errorDrawable != null)
+            marker?.setIcon(BitmapDescriptorFactory.fromBitmap(errorDrawable.toBitmap()))
     }
 
     override fun onPrepareLoad(placeHolderDrawable: Drawable?) {
-        if(placeHolderDrawable!=null)
-        marker?.setIcon(BitmapDescriptorFactory.fromBitmap(placeHolderDrawable?.toBitmap()))
+        if (placeHolderDrawable != null)
+            marker?.setIcon(BitmapDescriptorFactory.fromBitmap(placeHolderDrawable.toBitmap()))
 
     }
 

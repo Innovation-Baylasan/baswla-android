@@ -2,6 +2,7 @@ package org.baylasan.sudanmap
 
 import android.app.Application
 import android.content.Context
+import android.content.SharedPreferences
 import com.squareup.picasso.OkHttp3Downloader
 import com.squareup.picasso.Picasso
 import io.reactivex.Scheduler
@@ -37,6 +38,7 @@ import org.baylasan.sudanmap.ui.auth.login.LoginViewModel
 import org.baylasan.sudanmap.ui.auth.signup.RegisterViewModel
 import org.baylasan.sudanmap.ui.entitydetails.EntityDetailsViewModel
 import org.baylasan.sudanmap.ui.entitysearch.EntitySearchViewModel
+import org.baylasan.sudanmap.ui.intro.IntroViewModel
 import org.baylasan.sudanmap.ui.layers.MapLayersViewModel
 import org.baylasan.sudanmap.ui.main.UserProfileViewModel
 import org.baylasan.sudanmap.ui.main.entity.EntityViewModel
@@ -45,6 +47,7 @@ import org.baylasan.sudanmap.ui.myentities.MyEntitiesViewModel
 import org.baylasan.sudanmap.ui.myevents.MyEventsViewModel
 import org.baylasan.sudanmap.ui.splash.SessionViewModel
 import org.koin.android.ext.koin.androidApplication
+import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -55,7 +58,9 @@ import java.util.concurrent.TimeUnit
 
 val appModule = module {
     single<SessionManager> { SessionManagerImpl(get()) }
-
+    single<SharedPreferences> {
+        androidContext().getSharedPreferences("baswala", Context.MODE_PRIVATE)
+    }
     single { provideOkHttpClient(get()) }
     single { provideRetrofit(androidApplication(), get()) }
     single { providePicasso(androidApplication()) }
@@ -65,7 +70,9 @@ val appModule = module {
     factory { AddEntityRequestMapper() }
 
 }
-
+val introModule = module {
+    viewModel { IntroViewModel(get()) }
+}
 val entitiesModule = module(override = true) {
     factory { get<Retrofit>().create(SudanMapApi.Categories::class.java) }
     factory<EntityRepository> { EntityApi(get(), get(), get()) }
@@ -101,7 +108,7 @@ val entityDetailsModule = module(override = true) {
     factory { FollowEntityUseCase(get()) }
     factory { RateEntityUseCase(get()) }
     factory { AddReviewUseCase(get()) }
-    viewModel { EntityDetailsViewModel(get(), get(), get(), get(), get(),get()) }
+    viewModel { EntityDetailsViewModel(get(), get(), get(), get(), get(), get()) }
 
 }
 
@@ -163,15 +170,16 @@ val userModule = module(override = true) {
     viewModel { LoginViewModel(get(), get()) }
 
 }
-val completeRegister= module(override = true) {
+val completeRegister = module(override = true) {
     factory { RegisterRequestMapper() }
     factory { get<Retrofit>().create(SudanMapApi.User::class.java) }
     factory<UserRepository> { UserApi(get(), get(), get()) }
     factory { CompanyRegisterUseCase(get()) }
 
-    viewModel { CompleteRegisterViewModel(get(),get()) }
+    viewModel { CompleteRegisterViewModel(get(), get()) }
 
 }
+
 private fun provideErrorConverter(retrofit: Retrofit) =
     retrofit.responseBodyConverter<ApiErrorResponse>(ApiErrorResponse::class.java, arrayOf())
 

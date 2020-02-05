@@ -3,21 +3,21 @@ package org.baylasan.sudanmap.ui.intro
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
 import kotlinx.android.synthetic.main.activity_intro.*
 import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.domain.ViewPagerModel
-import org.baylasan.sudanmap.domain.user.SessionManager
 import org.baylasan.sudanmap.ui.main.MainActivity
-import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import kotlin.math.abs
 
 class IntroActivity : AppCompatActivity() {
 
 
     private var currentPage = 0
-    private val sessionManager: SessionManager by inject()
+    private val introViewModel by viewModel<IntroViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +40,7 @@ class IntroActivity : AppCompatActivity() {
                 jsonFile = R.raw.five, header = "Explore",
                 description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nunc eget lorem dolor sed viverra ipsum."
             )
-            )
+        )
         val marginPageTransformer = MarginPageTransformer(100)
 
         val adapter = ViewPagerAdapter(introItems)
@@ -51,25 +51,30 @@ class IntroActivity : AppCompatActivity() {
 
         introViewPager.setPageTransformer(marginPageTransformer)
 
-            introViewPager.setPageTransformer { page, position ->
-                page.apply {
-                    translationY = abs(position) * 500f
-                    scaleX = 1f
-                    scaleY = 1f
-                }
+        introViewPager.setPageTransformer { page, position ->
+            page.apply {
+                translationY = abs(position) * 500f
+                scaleX = 1f
+                scaleY = 1f
             }
+        }
 
-        nextBtn.setOnClickListener {
-            if (currentPage == 5) {
-                sessionManager.setIsFirstTime(false)
-                startActivity(Intent(applicationContext, MainActivity::class.java))
-                finish()
+        nextButton.setOnClickListener {
+            if (currentPage == 4) {
+                introViewModel.setFirstLaunchCompleted()
             }
             currentPage += 1
 
             introViewPager.setCurrentItem(currentPage, true)
 
 
+        }
+        introViewModel.event.observe(this, Observer {
+            startActivity(Intent(applicationContext, MainActivity::class.java))
+            finish()
+        })
+        skipButton.setOnClickListener {
+            introViewModel.setFirstLaunchCompleted()
         }
         introViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
 
@@ -83,9 +88,9 @@ class IntroActivity : AppCompatActivity() {
                 if (currentPage == introItems.lastIndex) {
                     //  introViewPager.setCurrentItem(currentPage, true)
                     //  currentPage =0
-                    nextBtn.text = getString(R.string.finish)
+                    nextButton.text = getString(R.string.finish)
                 } else {
-                    nextBtn.text = getString(R.string.next)
+                    nextButton.text = getString(R.string.next)
                 }
             }
 

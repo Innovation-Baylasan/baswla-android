@@ -8,5 +8,10 @@ data class UserDto(
     val id: Int = 0,
     val name: String = "",
     val username: String = "",
-    val token: String = ""
-)
+    val token: String = "",
+    val role: String
+) {
+    fun isCompany(): Boolean {
+        return role == "company"
+    }
+}

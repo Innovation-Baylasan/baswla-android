@@ -85,58 +85,64 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="24dp"
-        android:visibility="gone"
         app:backgroundTint="#0E5AB0"
         app:layout_anchor="@+id/nestedScrollView"
         app:layout_anchorGravity="end"
         app:layout_behavior="com.google.android.material.floatingactionbutton.FloatingActionButton$Behavior"
         app:srcCompat="@drawable/ic_bell_vib" />
 
-    <LinearLayout
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/commentLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:background="#f8f8f8"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:paddingTop="4dp"
-        android:paddingBottom="4dp"
+        android:layout_margin="0dp"
+        app:contentPaddingBottom="8dp"
+        app:contentPaddingTop="8dp"
+        app:cardCornerRadius="0dp"
+
         android:visibility="gone"
+        app:cardUseCompatPadding="true"
         tools:visibility="visible">
 
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="4dp"
-            app:srcCompat="@mipmap/ic_launcher_round" />
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/reviewField"
-            style="@style/RoundedCornerEditText"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="4dp"
-            android:layout_weight="1"
-            android:gravity="top|start"
-            android:hint="@string/comment_hint"
-            android:inputType="textMultiLine"
-            android:maxLines="3"
-            android:padding="2dp" />
+            android:gravity="center"
+            android:orientation="horizontal">
 
-        <ImageView
-            style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
-            android:id="@+id/submitCommentButton"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="4dp"
-            android:background="?selectableItemBackgroundBorderless"
-            app:srcCompat="@drawable/ic_comment" />
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"
+                app:srcCompat="@mipmap/ic_launcher_round" />
 
-    </LinearLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/reviewField"
+                style="@style/RoundedCornerEditText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"
+                android:layout_weight="1"
+                android:gravity="top|start"
+                android:hint="@string/comment_hint"
+                android:inputType="textMultiLine"
+                android:maxLines="3"
+                android:padding="2dp" />
+
+            <ImageView
+                android:id="@+id/submitCommentButton"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"
+                android:background="?selectableItemBackgroundBorderless"
+                app:srcCompat="@drawable/ic_comment" />
+
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
