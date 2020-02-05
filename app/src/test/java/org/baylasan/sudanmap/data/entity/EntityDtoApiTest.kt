@@ -21,11 +21,12 @@ class EntityDtoApiTest {
     private lateinit var entityService: SudanMapApi.Entities
     private lateinit var converter: Converter<ResponseBody, ApiErrorResponse>
 
+
     @Before
     fun setUp() {
         entityService = mock(verboseLogging = true)
         converter = mock(verboseLogging = true)
-        entityApi = EntityApi(entityApi = entityService, errorConverter = converter)
+        entityApi = EntityApi(entityApi = entityService, errorConverter = converter,)
     }
 
 

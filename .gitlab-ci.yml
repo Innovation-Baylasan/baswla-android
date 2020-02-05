@@ -16,20 +16,22 @@ stages:
   - build
   - test
   - release
-#lintDebug:
-#  stage: build
-#  script:
-#    - ./gradlew -Pci --console=plain :app:lintDebug -PbuildDir=lint
-
-assembleDevelopment:
+  - deploy
+lintDebug:
   stage: build
   script:
-    - ./gradlew assembleDevelopment
+    - ./gradlew -Pci --console=plain :app:lintDebug -PbuildDir=lint
+
+#assembleDevelopment:
+#  stage: build
+#  script:
+#    - ./gradlew assembleDevelopment
 
 #testDebug:
 #  stage: test
 #  script:
 #    - ./gradlew -Pci --console=plain :app:testDebug
+
 assembleProduction:
   stage: release
   script:

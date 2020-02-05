@@ -18,14 +18,14 @@ class MapLayersViewModelTest {
     private lateinit var viewModel: MapLayersViewModel
     lateinit var lifecycleOwner: LifecycleOwner
     private lateinit var lifecycleRegistry: LifecycleRegistry
-    private lateinit var observer: Observer<MapLayersEvent>
+//    private lateinit var observer: Observer<MapLayersEvent>
     @get:Rule
     val rule = InstantTaskExecutorRule()
 
     @Before
     fun setup() {
         lifecycleOwner = mock(verboseLogging = true)
-        observer = mock(verboseLogging = true)
+//        observer = mock(verboseLogging = true)
         lifecycleRegistry = LifecycleRegistry(lifecycleOwner)
         fetchCategoriesUseCase = mock(verboseLogging = true)
         viewModel = MapLayersViewModel(fetchCategoriesUseCase)
