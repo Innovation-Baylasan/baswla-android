@@ -27,4 +27,8 @@
             android:icon="@drawable/ic_share"
             android:title="Share App" />
     </group>
+    <item
+        android:id="@+id/action_logout"
+        android:icon="@drawable/ic_share"
+        android:title="Sign out" />
 </menu>

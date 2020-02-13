@@ -27,6 +27,21 @@ class EventApi(
 
     }
 
+    override fun deleteEvent(eventId: Int): Completable {
+        return api.deleteEvent(eventId)
+            .onErrorResumeNext(ThrowableSingleFunc1())
+            .flatMap(ResponseSingleFunc1(errorConverter))
+            .ignoreElement()
+    }
+
+    override fun findEvent(keyword: String): Single<List<Event>> {
+
+        return api.findEvents(keyword)
+            .onErrorResumeNext(ThrowableSingleFunc1())
+            .flatMap(ResponseSingleFunc1<EventResponse>(errorConverter))
+            .map { it.events }
+    }
+
     override fun getMyEvents(): Single<List<Event>> {
         return api.myEvents()
             .onErrorResumeNext(ThrowableSingleFunc1())
@@ -34,11 +49,18 @@ class EventApi(
             .map { it.events }
     }
 
-    override fun addEvent(addEventRequest: AddEventRequest): Completable {
+    override fun addEvent(addEventRequest: AddEventRequest): Single<Event> {
         return api.addEvent(requestMapper.mapToResponseBody(addEventRequest))
             .onErrorResumeNext(ThrowableSingleFunc1())
             .flatMap(ResponseSingleFunc1(errorConverter))
-            .ignoreElement()
+            .map { it.event }
+    }
+
+    override fun getEntityEvents(entityId: Int): Single<List<Event>> {
+        return api.getEntityEvents(entityId)
+            .onErrorResumeNext(ThrowableSingleFunc1())
+            .flatMap(ResponseSingleFunc1(errorConverter))
+            .map { it.events }
     }
 
 }

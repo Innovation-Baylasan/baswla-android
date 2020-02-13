@@ -15,18 +15,19 @@ import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.fragment_entity_search.*
 import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.common.UiState
-import org.baylasan.sudanmap.data.entity.model.Entity
-import org.baylasan.sudanmap.ui.main.MainActivity
-import org.baylasan.sudanmap.ui.main.entity.EntitiesListAdapter
-import org.baylasan.sudanmap.ui.entitydetails.EntityDetailsActivity
-import org.baylasan.sudanmap.ui.searchfilter.SearchFilterFragment
 import org.baylasan.sudanmap.common.gone
 import org.baylasan.sudanmap.common.setEndDrawableOnTouchListener
 import org.baylasan.sudanmap.common.visible
+import org.baylasan.sudanmap.data.entity.model.Entity
+import org.baylasan.sudanmap.ui.entitydetails.EntityDetailsActivity
+import org.baylasan.sudanmap.ui.main.MainActivity
+import org.baylasan.sudanmap.ui.main.entity.EntitiesListAdapter
+import org.baylasan.sudanmap.ui.searchfilter.SearchFilterFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.concurrent.TimeUnit
 
-class EntitySearchFragment : Fragment(R.layout.fragment_entity_search), EntitiesListAdapter.OnItemClick {
+class EntitySearchFragment : Fragment(R.layout.fragment_entity_search),
+    EntitiesListAdapter.OnItemClick {
 
     companion object {
         const val SEARCH_KEY = "keyword"
@@ -78,7 +79,7 @@ class EntitySearchFragment : Fragment(R.layout.fragment_entity_search), Entities
                     emptyView.gone()
                     errorView.gone()
                     searchRecyclerView.adapter =
-                        EntitiesListAdapter(list = event.data, onItemClick = this)
+                        EntitiesListAdapter(list = event.data.toMutableList(), onItemClick = this)
                 }
                 is UiState.Loading -> {
                     progressBar.visible()
@@ -117,7 +118,8 @@ class EntitySearchFragment : Fragment(R.layout.fragment_entity_search), Entities
 
 
 
-        searchRecyclerView.layoutManager = StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL)
+        searchRecyclerView.layoutManager =
+            StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
 
     }
 

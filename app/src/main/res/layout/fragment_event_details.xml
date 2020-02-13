@@ -41,6 +41,7 @@
             android:textColor="@color/black"
             android:textSize="16sp" />
 
+<!--
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -69,6 +70,7 @@
                 android:text="220 SEATS"
                 android:textColor="@color/black" />
         </LinearLayout>
+-->
 
         <TextView
             android:id="@+id/eventDescription"

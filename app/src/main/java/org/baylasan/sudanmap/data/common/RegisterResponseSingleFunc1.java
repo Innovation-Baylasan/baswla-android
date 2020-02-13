@@ -44,7 +44,7 @@ public class RegisterResponseSingleFunc1<T> implements Function<Response<T>, Sin
                     return Single.error(new ResponseConvertException(e.getMessage()));
                 }
 
-                return Single.error(new RegisterationResponseExcetpion(errorResponse));
+                return Single.error(new RegistrationResponseException(errorResponse));
             }
 
             return Single.error(new UnknownError());

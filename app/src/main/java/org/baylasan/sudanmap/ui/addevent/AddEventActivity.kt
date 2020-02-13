@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -14,6 +15,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.net.toFile
 import androidx.lifecycle.Observer
+import com.github.razir.progressbutton.hideProgress
+import com.github.razir.progressbutton.showProgress
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
@@ -35,7 +38,6 @@ import org.baylasan.sudanmap.domain.LocationViewModel
 import org.baylasan.sudanmap.ui.LocationPickerActivity
 import org.baylasan.sudanmap.ui.myentities.MyEntitiesViewModel
 import org.baylasan.sudanmap.ui.view.AppBarChangedListener
-import org.baylasan.sudanmap.ui.view.ProgressFragmentDialog
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
@@ -44,8 +46,8 @@ import java.util.*
 
 class AddEventActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
     TimePickerDialog.OnTimeSetListener {
-    private var applicationStartDateTime: Calendar? = null
-    private var applicationEndDateTime: Calendar? = null
+    private var startDate: Calendar? = null
+    private var endDate: Calendar? = null
     private val picasso by inject<Picasso>()
     private var startDateClicked = -1
     private lateinit var googleMap: GoogleMap
@@ -56,9 +58,7 @@ class AddEventActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
     private val entitiesViewModel by viewModel<MyEntitiesViewModel>()
     private val calendar = Calendar.getInstance()
     private var snackBar: Snackbar? = null
-    private val progressFragmentDialog = ProgressFragmentDialog.newInstance().apply {
-        isCancelable = false
-    }
+
 
     private val addViewModel by viewModel<AddEventViewModel>()
     private val onStateChanged = object : AppBarChangedListener() {
@@ -103,35 +103,7 @@ class AddEventActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
             showDatePicker()
         }
         entitiesViewModel.loadMyEntities()
-        entitiesViewModel.entitiesState.observe(this, Observer {
-            if (it is UiState.Loading) {
-                snackBar?.dismiss()
-            }
-            if (it is UiState.Success) {
-                snackBar?.dismiss()
-
-                val list = it.data
-                val entityArrayAdapter = EntityArrayAdapter(this, list)
-                eventAssignmentSpinner.setAdapter(entityArrayAdapter)
-                eventAssignmentSpinner.setOnItemClickListener { parent, view, position, id ->
-                    val selectedEntity = list[position]
-                    eventAssignmentSpinner.setText(selectedEntity.name, false)
-                    entity = selectedEntity
-
-                }
-            }
-            if (it is UiState.Error) {
-                snackBar = Snackbar.make(
-                    addEventLayout,
-                    R.string.failed_to_load_details,
-                    Snackbar.LENGTH_INDEFINITE
-                ).setAction(R.string.retry) {
-                    entitiesViewModel.loadMyEntities()
-                }
-                snackBar?.show()
-
-            }
-        })
+        observeEntityState()
 
         pickCoverImageButton.setOnClickListener {
             CropImage.activity()
@@ -162,9 +134,9 @@ class AddEventActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
         submitEventButton.setOnClickListener {
             val eventName = eventNameTextField.text.toString()
             val eventDescription = eventDescriptionTextField.text.toString()
-            val eventAddress = eventAddressTextField.text.toString()
-            val seats = eventSeatsTextField.text.toString()
-            val price = eventPriceTextField.text.toString()
+            /*    val eventAddress = eventAddressTextField.text.toString()
+                val seats = eventSeatsTextField.text.toString()
+                val price = eventPriceTextField.text.toString()*/
             val registerLink = eventRegisterLinkTextField.text.toString()
 
             if (eventName.isEmpty()) {
@@ -175,35 +147,32 @@ class AddEventActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
                 eventDescriptionTextField.error = getString(R.string.event_description_required)
                 return@setOnClickListener
             }
-            if (eventAddress.isEmpty()) {
-                eventAddressTextField.error = getString(R.string.event_address_required)
-                return@setOnClickListener
-            }
+            /*  if (eventAddress.isEmpty()) {
+                  eventAddressTextField.error = getString(R.string.event_address_required)
+                  return@setOnClickListener
+              }
 
-            if (seats.isEmpty()) {
-                eventSeatsTextField.error = getString(R.string.number_of_seats_is_required)
-                return@setOnClickListener
-            }
-            if (price.isEmpty()) {
-                eventPriceTextField.error = getString(R.string.price_required)
-                return@setOnClickListener
-            }
+              if (seats.isEmpty()) {
+                  eventSeatsTextField.error = getString(R.string.number_of_seats_is_required)
+                  return@setOnClickListener
+              }
+              if (price.isEmpty()) {
+                  eventPriceTextField.error = getString(R.string.price_required)
+                  return@setOnClickListener
+              }*/
             if (registerLink.isEmpty()) {
                 eventRegisterLinkTextField.error = getString(R.string.register_link_required)
                 return@setOnClickListener
             }
-            if (applicationStartDateTime == null) {
+            if (startDate == null) {
                 applicationStartButton.error = ""
                 return@setOnClickListener
             }
-            if (applicationEndDateTime == null) {
+            if (endDate == null) {
                 applicationEndButton.error = ""
                 return@setOnClickListener
             }
-            if (entity == null) {
-                eventAssignmentSpinner.error = ""
-                return@setOnClickListener
-            }
+
             if (selectedLocation == null) {
                 toast(getString(R.string.event_location_required))
                 return@setOnClickListener
@@ -215,9 +184,9 @@ class AddEventActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
                     description = eventDescription,
                     cover = selectedCoverImage?.toFile(),
                     registrationLink = registerLink,
-                    startDateTime = applicationStartDateTime!!.timeInMillis,
-                    endDateTime = applicationEndDateTime!!.timeInMillis,
-                    entityId = entity!!.id,
+                    startDateTime = startDate!!.toyyyyMMddHHmmss(),
+                    endDateTime = endDate!!.toyyyyMMddHHmmss(),
+                    entityId = entity?.id,
                     locationLat = selectedLocation!!.latitude,
                     locationLng = selectedLocation!!.longitude
 
@@ -226,25 +195,63 @@ class AddEventActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
 
             addViewModel.addState.observe(this, Observer {
                 if (it is UiState.Loading) {
-                    progressFragmentDialog
-                        .show(supportFragmentManager, "")
+                    submitEventButton.showProgress {
+                        buttonText = "Adding new Event..."
+                        progressColor = Color.WHITE
+                    }
                 }
-                if (it is UiState.Complete) {
-                    progressFragmentDialog.dismiss()
+                if (it is UiState.Success) {
+
+                    submitEventButton.hideProgress("Done.")
                     toast(getString(R.string.event_add_success))
+                    setResult(Activity.RESULT_OK, Intent().putExtra("event", it.data))
                     finish()
                 }
                 if (it is UiState.Error) {
-                    progressFragmentDialog.dismiss()
+
                     if (it.throwable is UnAuthorizedException) {
                         expiredSession()
                     } else {
+                        submitEventButton.hideProgress("Failed.")
+
                         toast(getString(R.string.failed_to_add_event))
                     }
                 }
             })
         }
 
+    }
+
+    private fun observeEntityState() {
+        entitiesViewModel.entitiesState.observe(this, Observer {
+            if (it is UiState.Loading) {
+                snackBar?.dismiss()
+            }
+            if (it is UiState.Success) {
+                snackBar?.dismiss()
+
+                val list = it.data
+                val entityArrayAdapter = EntityArrayAdapter(this, list)
+                eventAssignmentSpinner.setAdapter(entityArrayAdapter)
+                eventAssignmentSpinner.setOnItemClickListener { parent, view, position, id ->
+                    val selectedEntity = list[position]
+                    eventAssignmentSpinner.setText(selectedEntity.name, false)
+                    entity = selectedEntity
+
+                }
+            }
+            if (it is UiState.Error) {
+                snackBar = Snackbar.make(
+                    addEventLayout,
+                    R.string.failed_to_load_details,
+                    Snackbar.LENGTH_INDEFINITE
+                ).setAction(R.string.retry) {
+                    entitiesViewModel.loadMyEntities()
+                }
+                snackBar?.show()
+
+            }
+        })
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -291,20 +298,20 @@ class AddEventActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
 
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
         if (startDateClicked == 1) {
-            applicationStartDateTime = Calendar.getInstance()
-            applicationStartDateTime?.set(Calendar.YEAR, year)
-            applicationStartDateTime?.set(Calendar.MONTH, month)
-            applicationStartDateTime?.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+            startDate = Calendar.getInstance()
+            startDate?.set(Calendar.YEAR, year)
+            startDate?.set(Calendar.MONTH, month)
+            startDate?.set(Calendar.DAY_OF_MONTH, dayOfMonth)
             applicationStartButton.error = null
 
-            Log.d("MEGA", "application start date $applicationStartDateTime")
+            Log.d("MEGA", "application start date $startDate")
         } else {
-            applicationEndDateTime = Calendar.getInstance()
-            applicationEndDateTime?.set(Calendar.YEAR, year)
-            applicationEndDateTime?.set(Calendar.MONTH, month)
-            applicationEndDateTime?.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+            endDate = Calendar.getInstance()
+            endDate?.set(Calendar.YEAR, year)
+            endDate?.set(Calendar.MONTH, month)
+            endDate?.set(Calendar.DAY_OF_MONTH, dayOfMonth)
             applicationEndButton.error = null
-            Log.d("MEGA", "application end date $applicationEndDateTime")
+            Log.d("MEGA", "application end date $endDate")
 
         }
 
@@ -321,19 +328,19 @@ class AddEventActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
 
     override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
         if (startDateClicked == 1) {
-            applicationStartDateTime?.set(Calendar.HOUR_OF_DAY, hourOfDay)
-            applicationStartDateTime?.set(Calendar.MINUTE, minute)
-            val selectedDate = formatSelectedDate(applicationStartDateTime)
+            startDate?.set(Calendar.HOUR_OF_DAY, hourOfDay)
+            startDate?.set(Calendar.MINUTE, minute)
+            val selectedDate = formatSelectedDate(startDate)
             applicationStartButton.text = selectedDate
-            Log.d("MEGA", "application start time $applicationStartDateTime")
+            Log.d("MEGA", "application start time $startDate")
 
         } else {
 
-            applicationEndDateTime?.set(Calendar.HOUR_OF_DAY, hourOfDay)
-            applicationEndDateTime?.set(Calendar.MINUTE, minute)
-            val selectedDate = formatSelectedDate(applicationEndDateTime)
+            endDate?.set(Calendar.HOUR_OF_DAY, hourOfDay)
+            endDate?.set(Calendar.MINUTE, minute)
+            val selectedDate = formatSelectedDate(endDate)
             applicationEndButton.text = selectedDate
-            Log.d("MEGA", "application start time $applicationEndDateTime")
+            Log.d("MEGA", "application start time $endDate")
         }
 
     }

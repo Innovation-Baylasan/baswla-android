@@ -1,30 +1,35 @@
 package org.baylasan.sudanmap.ui.auth.signup
 
 import androidx.lifecycle.MutableLiveData
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import io.reactivex.Scheduler
 import org.baylasan.sudanmap.data.common.*
-import org.baylasan.sudanmap.data.user.model.*
-import org.baylasan.sudanmap.domain.user.CompanyRegisterUseCase
+import org.baylasan.sudanmap.data.user.model.AuthenticationResponse
+import org.baylasan.sudanmap.data.user.model.RegisterRequest
+import org.baylasan.sudanmap.data.user.model.UserDto
+import org.baylasan.sudanmap.data.user.model.stringify
 import org.baylasan.sudanmap.domain.user.SessionManager
 import org.baylasan.sudanmap.domain.user.UserRegisterUseCase
 import org.baylasan.sudanmap.ui.BaseViewModel
 
 class RegisterViewModel(
     private val registerUseCase: UserRegisterUseCase,
-    private val sessionManager: SessionManager
+    private val sessionManager: SessionManager,
+    private val ioScheduler: Scheduler,
+    private val mainScheduler: Scheduler
 ) : BaseViewModel() {
     val moveToCompleteRegister = MutableLiveData<RegisterRequest>()
     val events = MutableLiveData<RegisterEvent>()
 
 
-
     fun register(registerRequest: RegisterRequest) {
         if (registerRequest.type == "user") {
-            events.value = LoadingEvent
             registerUseCase.execute(UserRegisterUseCase.Params(registerRequest))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .compose {
+                    events.value = LoadingEvent
+                    it
+                }
+                .subscribeOn(ioScheduler)
+                .observeOn(mainScheduler)
                 .subscribe(onSuccess(), onError())
                 .addToDisposables()
         } else {
@@ -49,8 +54,8 @@ class RegisterViewModel(
                 is ResponseException -> {
                     ErrorEvent(it.message)
                 }
-                is RegisterationResponseExcetpion -> {
-                    val stringify = it.registerationResponse.errors.stringify()
+                is RegistrationResponseException -> {
+                    val stringify = it.registrationResponse.errors.stringify()
                     ErrorEvent(stringify)
                 }
                 else -> ErrorEvent("Unknown Error")
@@ -58,14 +63,14 @@ class RegisterViewModel(
         }
     }
 
-    private fun onSuccess(): (RegisterResponse) -> Unit {
-        return { registerResponse: RegisterResponse ->
+    private fun onSuccess(): (AuthenticationResponse) -> Unit {
+        return { registerResponse: AuthenticationResponse ->
             saveUserSession(registerResponse)
-            events.value = DataEvent(registerResponse)
+            events.value = DataEvent
         }
     }
 
-    private fun saveUserSession(response: RegisterResponse) {
+    private fun saveUserSession(response: AuthenticationResponse) {
         val user = response.data.user
         val userDto = UserDto(
             email = user.email,

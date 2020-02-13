@@ -2,6 +2,7 @@ package org.baylasan.sudanmap.ui.addentity
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -9,6 +10,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.net.toFile
 import androidx.lifecycle.Observer
+import com.github.razir.progressbutton.bindProgressButton
+import com.github.razir.progressbutton.hideProgress
+import com.github.razir.progressbutton.showProgress
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
@@ -22,10 +26,6 @@ import com.theartofdev.edmodo.cropper.CropImageView
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
 import kotlinx.android.synthetic.main.activity_add_entity.*
 import kotlinx.android.synthetic.main.content_add_entity.*
-import kotlinx.android.synthetic.main.content_add_entity.avatarImage
-import kotlinx.android.synthetic.main.content_add_entity.coverImage
-import kotlinx.android.synthetic.main.content_add_entity.entityName
-import kotlinx.android.synthetic.main.row_entity.*
 import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.common.*
 import org.baylasan.sudanmap.data.common.UnAuthorizedException
@@ -35,10 +35,8 @@ import org.baylasan.sudanmap.domain.LocationViewModel
 import org.baylasan.sudanmap.ui.LocationPickerActivity
 import org.baylasan.sudanmap.ui.layers.MapLayersViewModel
 import org.baylasan.sudanmap.ui.view.AppBarChangedListener
-import org.baylasan.sudanmap.ui.view.ProgressFragmentDialog
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.io.File
 
 class AddEntityActivity : AppCompatActivity() {
     private val onStateChanged = object : AppBarChangedListener() {
@@ -69,9 +67,7 @@ class AddEntityActivity : AppCompatActivity() {
     private var selectedLocation: LatLng? = null
     private var selectedCategory: Category? = null
     private lateinit var googleMap: GoogleMap
-    private val progressDialog = ProgressFragmentDialog.newInstance().apply {
-        isCancelable = false
-    }
+
     private val picasso by inject<Picasso>()
     private val locationViewModel by viewModel<LocationViewModel>()
     private val addEntityViewModel by viewModel<AddEntityViewModel>()
@@ -79,7 +75,7 @@ class AddEntityActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_entity)
-
+        bindProgressButton(submitEntityButton)
         appBar.addOnOffsetChangedListener(onStateChanged)
         viewModel.loadCategories()
 
@@ -100,7 +96,7 @@ class AddEntityActivity : AppCompatActivity() {
                 .setAspectRatio(19, 6)
                 .start(this)
         }
-        submitEntity.setOnClickListener {
+        submitEntityButton.setOnClickListener {
             val name = entityName.text.toString()
             val description = entityDescription.text.toString()
             if (name.isEmpty()) {
@@ -123,33 +119,15 @@ class AddEntityActivity : AppCompatActivity() {
                 AddEntityRequest(
                     category = selectedCategory!!.id,
                     name = name,
-                    avatar = selectedAvatarImage?.toFile() ?: File(""),
-                    cover = selectedCoverImage?.toFile() ?: File(""),
+                    avatar = selectedAvatarImage?.toFile(),
+                    cover = selectedCoverImage?.toFile(),
                     description = description,
                     locationLat = selectedLocation!!.latitude.toString(),
                     locationLng = selectedLocation!!.longitude.toString()
 
                 )
             )
-            addEntityViewModel.addState.observe(this, Observer {
-                if (it is UiState.Complete) {
-                    progressDialog.dismiss()
-                    toast(getString(R.string.entity_added))
-                    finish()
-                }
-                if (it is UiState.Error) {
-                    progressDialog.dismiss()
-                    if (it.throwable is UnAuthorizedException) {
-                        expiredSession()
-                    } else {
-                        toast(getString(R.string.failed_to_add_entitiy))
-
-                    }
-                }
-                if (it is UiState.Loading) {
-                    progressDialog.show(supportFragmentManager, "")
-                }
-            })
+            observeAddState()
         }
         setupCategorySpinner()
         val supportMapFragment =
@@ -174,6 +152,31 @@ class AddEntityActivity : AppCompatActivity() {
 
     }
 
+    private fun observeAddState() {
+        addEntityViewModel.addState.observe(this, Observer {
+            if (it is UiState.Success) {
+                submitEntityButton.hideProgress("Done.")
+                toast(getString(R.string.entity_added))
+                setResult(Activity.RESULT_OK, Intent().putExtra("entity", it.data))
+                finish()
+            }
+            if (it is UiState.Error) {
+                if (it.throwable is UnAuthorizedException) {
+                    expiredSession()
+                } else {
+                    submitEntityButton.hideProgress("Failed.")
+                    toast(getString(R.string.failed_to_add_entitiy))
+                }
+            }
+            if (it is UiState.Loading) {
+                submitEntityButton.showProgress {
+                    buttonText = "Adding new entity"
+                    progressColor = Color.WHITE
+                }
+
+            }
+        })
+    }
 
 
     private fun setupCategorySpinner() {
@@ -243,3 +246,4 @@ class AddEntityActivity : AppCompatActivity() {
 
 
 }
+

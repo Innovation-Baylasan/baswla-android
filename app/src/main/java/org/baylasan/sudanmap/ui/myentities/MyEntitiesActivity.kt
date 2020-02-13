@@ -1,8 +1,8 @@
 package org.baylasan.sudanmap.ui.myentities
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -22,9 +22,16 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MyEntitiesActivity : AppCompatActivity(), EntitiesListAdapter.OnItemClick {
     private val viewModel by viewModel<MyEntitiesViewModel>()
+    private lateinit var entitiesListAdapter: EntitiesListAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_my_entities)
+        entitiesListAdapter = EntitiesListAdapter(mutableListOf(), this)
+        entitiesRecyclerView.adapter =
+            entitiesListAdapter
+        entitiesRecyclerView.layoutManager =
+            StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         setSupportActionBar(toolbar)
         viewModel.loadMyEntities()
         refreshLayout.setOnRefreshListener {
@@ -42,12 +49,8 @@ class MyEntitiesActivity : AppCompatActivity(), EntitiesListAdapter.OnItemClick 
                     emptyEntityLayout.visible()
                 } else {
                     entitiesRecyclerView.visible()
-
                     emptyEntityLayout.gone()
-                    Log.d("MEGA", "DATA ${it.data}")
-                    entitiesRecyclerView.adapter = EntitiesListAdapter(it.data, this)
-                    entitiesRecyclerView.layoutManager =
-                        StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+                    entitiesListAdapter.addAll(it.data)
                 }
             }
             if (it is UiState.Error) {
@@ -62,7 +65,7 @@ class MyEntitiesActivity : AppCompatActivity(), EntitiesListAdapter.OnItemClick 
         })
 
         addPlaceButton.setOnClickListener {
-            startActivity(Intent(this, AddEntityActivity::class.java))
+            startActivityForResult(Intent(this, AddEntityActivity::class.java), 123)
         }
 
     }
@@ -78,5 +81,17 @@ class MyEntitiesActivity : AppCompatActivity(), EntitiesListAdapter.OnItemClick 
         val intent = Intent(this, EntityDetailsActivity::class.java)
         intent.putExtra("entity", entity)
         startActivity(intent)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 123 && resultCode == Activity.RESULT_OK) {
+            if (data != null)
+                entitiesListAdapter.addItem(
+                    data.getParcelableExtra(
+                        "entity"
+                    )
+                )
+        }
     }
 }

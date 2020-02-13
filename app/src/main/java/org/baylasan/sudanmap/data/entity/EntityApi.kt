@@ -3,16 +3,12 @@ package org.baylasan.sudanmap.data.entity
 import io.reactivex.Completable
 import io.reactivex.Single
 import okhttp3.ResponseBody
-import org.baylasan.sudanmap.data.user.model.RatingRequest
 import org.baylasan.sudanmap.data.SudanMapApi
 import org.baylasan.sudanmap.data.common.AddEntityRequestMapper
 import org.baylasan.sudanmap.data.common.ApiErrorResponse
 import org.baylasan.sudanmap.data.common.ResponseSingleFunc1
 import org.baylasan.sudanmap.data.common.ThrowableSingleFunc1
-import org.baylasan.sudanmap.data.entity.model.AddEntityRequest
-import org.baylasan.sudanmap.data.entity.model.Entity
-import org.baylasan.sudanmap.data.entity.model.EntityDetails
-import org.baylasan.sudanmap.data.entity.model.Review
+import org.baylasan.sudanmap.data.entity.model.*
 import org.baylasan.sudanmap.domain.entity.AddReviewUseCase
 import org.baylasan.sudanmap.domain.entity.EntityRepository
 import retrofit2.Converter
@@ -88,10 +84,11 @@ class EntityApi(
 
     }
 
-    override fun addEntity(addEntityRequest: AddEntityRequest): Completable {
+    override fun addEntity(addEntityRequest: AddEntityRequest): Single<Entity> {
         return entityApi.addEntity(requestMapper.mapToResponseBody(addEntityRequest))
             .onErrorResumeNext(ThrowableSingleFunc1())
             .flatMap(ResponseSingleFunc1(errorConverter))
-            .ignoreElement()
+            .map { it.entity }
+
     }
 }

@@ -8,7 +8,7 @@ import com.google.android.gms.maps.model.Marker
 import com.squareup.picasso.Picasso.LoadedFrom
 import com.squareup.picasso.Target
 
-class PicassoMarker(var marker: Marker?) : Target {
+class PicassoMarker(val marker: Marker?) : Target {
     override fun hashCode(): Int {
         return marker.hashCode()
     }
@@ -23,7 +23,6 @@ class PicassoMarker(var marker: Marker?) : Target {
     }
 
     override fun onBitmapLoaded(bitmap: Bitmap, from: LoadedFrom) {
-
         marker?.setIcon(BitmapDescriptorFactory.fromBitmap(bitmap))
     }
 

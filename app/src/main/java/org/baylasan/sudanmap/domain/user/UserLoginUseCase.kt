@@ -1,18 +1,19 @@
 package org.baylasan.sudanmap.domain.user
 
 import io.reactivex.Single
+import org.baylasan.sudanmap.data.user.model.AuthenticationResponse
 import org.baylasan.sudanmap.data.user.model.LoginRequest
 import org.baylasan.sudanmap.data.user.model.LoginResponse
 import org.baylasan.sudanmap.domain.common.RequestValues
 import org.baylasan.sudanmap.domain.common.SingleUseCase
 import java.util.regex.Pattern
 
-class UserLoginUseCase(private val userRepository: UserRepository) :
-    SingleUseCase<UserLoginUseCase.Params, LoginResponse> {
+open class UserLoginUseCase(private val userRepository: UserRepository) :
+    SingleUseCase<UserLoginUseCase.Params, AuthenticationResponse> {
 
     class Params(val loginRequest: LoginRequest) : RequestValues
 
-    override fun execute(params: Params): Single<LoginResponse> {
+    override fun execute(params: Params): Single<AuthenticationResponse> {
         val request = params.loginRequest
         return when {
             request.email.isEmpty() -> Single.error(EmptyFieldException())

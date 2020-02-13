@@ -9,9 +9,9 @@ class AddEntityRequest(
     @SerializedName("name")
     val name: String = "mega",
     @SerializedName("cover")
-    val cover: File = File(""),
+    val cover: File ?= null,
     @SerializedName("avatar")
-    val avatar: File = File(""),
+    val avatar: File? = null,
     @SerializedName("description")
     val description: String = "lawl",
     @SerializedName("latitude")

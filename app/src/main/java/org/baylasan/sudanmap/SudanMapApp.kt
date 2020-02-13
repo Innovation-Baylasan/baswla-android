@@ -20,7 +20,7 @@ class SudanMapApp : Application() {
                     appModule,
                     categoryModule,
                     entityListModule,
-                    searchModule,
+                    entitySearchModule,
                     userModule,
                     sessionModule,
                     eventModule,
@@ -31,7 +31,8 @@ class SudanMapApp : Application() {
                     entityDetailsModule,
                     addEntityModule,
                     completeRegister,
-                    introModule
+                    introModule,
+                    eventSearchModule
                 )
             )
 

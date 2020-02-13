@@ -3,12 +3,12 @@ package org.baylasan.sudanmap.data
 import io.reactivex.Single
 import okhttp3.MultipartBody
 import org.baylasan.sudanmap.data.category.model.CategoryDto
-import org.baylasan.sudanmap.data.entity.EntityDetailsResponse
-import org.baylasan.sudanmap.data.entity.EntityResponse
-import org.baylasan.sudanmap.data.entity.model.Review
-import org.baylasan.sudanmap.data.event.model.AddEventRequest
+import org.baylasan.sudanmap.data.entity.model.*
+import org.baylasan.sudanmap.data.event.model.AddEventResponse
 import org.baylasan.sudanmap.data.event.model.EventResponse
-import org.baylasan.sudanmap.data.user.model.*
+import org.baylasan.sudanmap.data.user.model.AuthenticationResponse
+import org.baylasan.sudanmap.data.user.model.LoginRequest
+import org.baylasan.sudanmap.data.user.model.RegisterRequest
 import org.baylasan.sudanmap.domain.entity.AddReviewUseCase
 import retrofit2.Response
 import retrofit2.http.*
@@ -48,8 +48,8 @@ interface SudanMapApi {
         fun getMyEntities(): Single<Response<EntityResponse>>
 
         @Multipart
-        @POST("entities/store")
-        fun addEntity(@Part list: List<MultipartBody.Part>): Single<Response<Unit>>
+        @POST("entities")
+        fun addEntity(@Part list: List<MultipartBody.Part>): Single<Response<AddEntityResponse>>
 
     }
 
@@ -63,27 +63,37 @@ interface SudanMapApi {
 
     interface User {
         @POST("register")
-        fun register(@Body registerRequest: RegisterRequest): Single<Response<RegisterResponse>>
+        fun register(@Body registerRequest: RegisterRequest): Single<Response<AuthenticationResponse>>
 
         @Multipart
         @POST("register")
         fun registerCompany(
             @Part list: List<MultipartBody.Part>
-        ): Single<Response<RegisterResponse>>
+        ): Single<Response<AuthenticationResponse>>
 
         @POST("login")
-        fun login(@Body loginRequest: LoginRequest): Single<Response<LoginResponse>>
+        fun login(@Body loginRequest: LoginRequest): Single<Response<AuthenticationResponse>>
     }
 
     interface Events {
         @GET("events")
         fun events(): Single<Response<EventResponse>>
 
+        @DELETE("events/destroy")
+        fun deleteEvent(@Query("event") eventId: Int): Single<Response<Unit>>
+
         @GET("events/my")
         fun myEvents(): Single<Response<EventResponse>>
+
         @Multipart
-        @POST("events/store")
-        fun addEvent(@Part list: List<MultipartBody.Part>): Single<Response<Unit>>
+        @POST("events")
+        fun addEvent(@Part list: List<MultipartBody.Part>): Single<Response<AddEventResponse>>
+
+        @GET("events")
+        fun getEntityEvents(@Query("entity") entityId: Int): Single<Response<EventResponse>>
+
+        @GET("events")
+        fun findEvents(@Query("q") keyword: String): Single<Response<EventResponse>>
     }
 }
 

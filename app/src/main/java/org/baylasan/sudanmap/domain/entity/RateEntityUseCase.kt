@@ -2,7 +2,7 @@ package org.baylasan.sudanmap.domain.entity
 
 
 import io.reactivex.Completable
-import org.baylasan.sudanmap.data.user.model.RatingRequest
+import org.baylasan.sudanmap.data.entity.model.RatingRequest
 import org.baylasan.sudanmap.domain.common.CompletableUseCase
 import org.baylasan.sudanmap.domain.common.RequestValues
 

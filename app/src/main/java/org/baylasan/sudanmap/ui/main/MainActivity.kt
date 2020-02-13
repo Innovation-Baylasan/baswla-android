@@ -104,6 +104,13 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener,
         openFaqButton.setOnClickListener {
             startActivityAndCloseDrawer<FAQActivity>()
         }
+        logoutButton.setOnClickListener {
+            profileViewModel.logout()
+        }
+        profileViewModel.logoutEvent.observe(this, Observer {
+            startActivityAndCloseDrawer<AuthActivity>()
+            finishAffinity()
+        })
     }
 
     private fun observeProfileEvents() {

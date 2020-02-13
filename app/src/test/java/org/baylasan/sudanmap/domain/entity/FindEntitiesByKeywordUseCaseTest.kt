@@ -5,6 +5,7 @@ import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
 import io.reactivex.Single
 import org.baylasan.sudanmap.data.entity.model.Entity
+import org.baylasan.sudanmap.emptyEntity
 import org.junit.Before
 import org.junit.Test
 
@@ -22,8 +23,11 @@ class FindEntitiesByKeywordUseCaseTest {
         whenever(repository.findEntitiesByKeyword(any())).thenReturn(
             Single.just(
                 listOf(
-                    Entity(),
-                    Entity()
+                    emptyEntity,
+                    emptyEntity,
+                    emptyEntity,
+                    emptyEntity,
+                    emptyEntity
                 )
             )
         )
@@ -40,8 +44,11 @@ class FindEntitiesByKeywordUseCaseTest {
         whenever(repository.findEntitiesByKeyword(any())).thenReturn(
             Single.just(
                 listOf(
-                    Entity(),
-                    Entity()
+                 emptyEntity,
+                 emptyEntity,
+                 emptyEntity,
+                 emptyEntity,
+                 emptyEntity
                 )
             )
         )

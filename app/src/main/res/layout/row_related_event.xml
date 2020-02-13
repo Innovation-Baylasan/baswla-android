@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="230dp"
+    android:layout_height="110dp"
+    android:layout_marginEnd="8dp"
+    android:orientation="vertical"
+    android:background="?selectableItemBackground"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="0dp">
+
+    <ImageView
+        android:id="@+id/eventImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        android:src="@drawable/event_details_placeholder" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:rotation="180"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/ic_event_details_shade" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|start"
+        android:layout_margin="16dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/eventName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/neo_sans_arabic_bold"
+            android:text="Art space events"
+
+            android:textColor="@android:color/white"
+            android:textSize="16sp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/eventPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8sp"
+                android:drawableStart="@drawable/ic_price_label"
+                android:drawablePadding="8dp"
+                android:fontFamily="@font/neo_sans_arabic_light"
+                android:gravity="center"
+
+                android:text="120 SDG"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:drawableTint="@color/white"
+
+                />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/eventSeats"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="8dp"
+                android:drawableStart="@drawable/ic_seat"
+                android:drawablePadding="8dp"
+                android:fontFamily="@font/neo_sans_arabic_light"
+                android:gravity="center"
+                android:text="60 SEATS"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:drawableTint="@color/white" />
+        </LinearLayout>
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

@@ -1,4 +1,4 @@
-package org.baylasan.sudanmap.data.entity
+package org.baylasan.sudanmap.data.entity.model
 
 import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName

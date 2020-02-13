@@ -10,6 +10,6 @@ class EventViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
     val eventName: TextView =view.eventName
     val eventDescription: TextView =view.eventDescription
     val eventImage: ImageView =view.eventImage
-    val eventPrice: TextView =view.eventPrice
-    val eventSeats: TextView =view.eventSeats
+    /*val eventPrice: TextView =view.eventPrice
+    val eventSeats: TextView =view.eventSeats*/
 }

@@ -185,7 +185,7 @@
                     android:textSize="12sp" />
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/entitiyDescription"
+                    android:id="@+id/entityDescription"
                     style="@style/RoundedCornerEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -306,13 +306,12 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/submitEntity"
+            android:id="@+id/submitEntityButton"
             style="@style/AppButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:drawableEnd="@drawable/ic_location_pin"
             android:text="@string/submit" />
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

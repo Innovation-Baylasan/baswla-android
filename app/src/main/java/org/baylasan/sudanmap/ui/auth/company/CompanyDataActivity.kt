@@ -3,10 +3,11 @@ package org.baylasan.sudanmap.ui.auth.company
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toFile
 import androidx.lifecycle.Observer
+import com.github.razir.progressbutton.hideProgress
+import com.github.razir.progressbutton.showProgress
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
@@ -31,7 +32,6 @@ import org.baylasan.sudanmap.ui.auth.signup.ErrorEvent
 import org.baylasan.sudanmap.ui.auth.signup.LoadingEvent
 import org.baylasan.sudanmap.ui.layers.MapLayersViewModel
 import org.baylasan.sudanmap.ui.main.MainActivity
-import org.baylasan.sudanmap.ui.view.ProgressFragmentDialog
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.File
@@ -49,17 +49,12 @@ class CompanyDataActivity : AppCompatActivity() {
     private var selectedCategory: Category? = null
     private var selectedLocation: LatLng? = null
     private var selectedAvatar: File? = null
-    private var selectedcover: File? = null
-    private var progressFragmentDialog: ProgressFragmentDialog? = null
+    private var selectedCover: File? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_company_data)
         avatar.setImageResource(R.drawable.ic_camera)
-        progressFragmentDialog = ProgressFragmentDialog.newInstance()
-            .apply {
-                isCancelable = false
-            }
         viewModel.loadCategories()
         viewModel.events.observe(this, Observer {
             if (it is UiState.Loading || it is UiState.Empty) {
@@ -69,7 +64,7 @@ class CompanyDataActivity : AppCompatActivity() {
                 val categories = it.data
                 val categoryEntityAdapter = CategoryEntityAdapter(this, categories)
                 categorySpinner.setAdapter(categoryEntityAdapter)
-                categorySpinner.setOnItemClickListener { parent, view, position, id ->
+                categorySpinner.setOnItemClickListener { _, _, position, _ ->
                     val category = categories[position]
                     categorySpinner.setText(category.name, false)
                     selectedCategory = category
@@ -136,7 +131,7 @@ class CompanyDataActivity : AppCompatActivity() {
             completeRegisterViewModel.registerCompany(
                 RegisterCompanyRequest(
                     email = registerRequest!!.email,
-                    cover = selectedcover,
+                    cover = selectedCover,
                     avatar = selectedAvatar,
                     name = registerRequest.name,
                     categoryId = selectedCategory!!.id,
@@ -152,16 +147,19 @@ class CompanyDataActivity : AppCompatActivity() {
             completeRegisterViewModel.events.observe(this, Observer { event ->
                 when (event) {
                     is DataEvent -> {
-                        progressFragmentDialog?.dismiss()
+                        completeRegister.hideProgress("Done.")
                         startActivity(Intent(this, MainActivity::class.java))
                         finish()
                     }
                     is LoadingEvent -> {
-                        progressFragmentDialog?.show(supportFragmentManager, "")
+
+                        completeRegister.showProgress {
+                            buttonText = "Completing registration..."
+                            progressColor
+                        }
                     }
                     is ErrorEvent -> {
-
-                        progressFragmentDialog?.dismiss()
+                        completeRegister.hideProgress("Failed.")
                         toast(event.errorMessage)
                     }
 
@@ -193,7 +191,7 @@ class CompanyDataActivity : AppCompatActivity() {
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             val imageFile = CropImage.getActivityResult(data).uri.toFile()
             if (imageSelected == 2) {
-                selectedcover = imageFile
+                selectedCover = imageFile
                 picasso.load(imageFile).into(coverImage)
             } else {
                 avatar.setImageResource(0)

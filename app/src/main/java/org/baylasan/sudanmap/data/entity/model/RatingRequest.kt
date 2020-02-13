@@ -1,4 +1,4 @@
-package org.baylasan.sudanmap.data.user.model
+package org.baylasan.sudanmap.data.entity.model
 
 import com.google.gson.annotations.SerializedName
 

@@ -146,9 +146,9 @@ dependencies {
     implementation 'com.theartofdev.edmodo:android-image-cropper:2.8.0'
 
     implementation 'io.reactivex.rxjava2:rxjava:2.2.15'
+    implementation group: 'androidx.swiperefreshlayout', name: 'swiperefreshlayout', version: '1.1.0-alpha03'
 
-    implementation 'com.github.m7mdra:picker:0.34'
-
+    implementation 'com.github.razir.progressbutton:progressbutton:2.0.0'
     //di
     // Koin for Android
     implementation "org.koin:koin-android:$koin_version"

@@ -133,6 +133,13 @@
                     app:icon="@drawable/ic_share"
                     app:iconPadding="16dp"
                     app:iconSize="30dp" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/logoutButton"
+                    style="@style/Widget.MaterialComponents.Button.UnelevatedButton.navigation"
+                    android:text="Sign out"
+                    app:cornerRadius="0dp"
+                    app:iconPadding="16dp"
+                    app:iconSize="30dp" />
             </LinearLayout>
         </ScrollView>
 

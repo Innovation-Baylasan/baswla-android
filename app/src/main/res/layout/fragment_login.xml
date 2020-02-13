@@ -93,22 +93,23 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/signInBtn"
+                android:id="@+id/signInButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
+                android:drawablePadding="16dp"
+                android:layout_marginTop="16dp"
                 android:fontFamily="@font/neo_sans_arabic_regular"
                 android:text="@string/sgin_in"
                 android:textColor="@color/white"
-                android:textSize="22sp"
+                android:textSize="20sp"
                 app:backgroundTint="@color/colorAccent"
                 app:cornerRadius="8dp"
                 app:elevation="0dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/loginProgress" />
+                app:layout_constraintTop_toBottomOf="@+id/loginPasswordEt" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/signUpAsOrg"
@@ -119,12 +120,12 @@
                 android:layout_marginEnd="16dp"
                 android:fontFamily="@font/neo_sans_arabic_regular"
                 android:text="@string/sign_up_as_org"
-                android:textSize="22sp"
+                android:textSize="20sp"
                 app:cornerRadius="8dp"
                 app:elevation="0dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/signInBtn"
+                app:layout_constraintTop_toBottomOf="@+id/signInButton"
                 app:rippleColor="@color/colorAccent"
                 app:strokeColor="@color/colorAccent"
                 app:strokeWidth="1dp" />
@@ -187,18 +188,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/relativeLayout"
                 app:rippleColor="@color/colorAccent" />
 
-            <ProgressBar
-                android:id="@+id/loginProgress"
-                style="?android:attr/progressBarStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/loginPasswordEt"
-                tools:visibility="visible" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

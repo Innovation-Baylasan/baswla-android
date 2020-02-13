@@ -141,8 +141,7 @@
 
     <style name="AppTextField" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="boxBackgroundColor">@color/white</item>
-        <item name="android:elevation" tools:targetApi="lollipop">8dp
-        </item>
+        <item name="elevation" >0dp</item>
         <item name="boxStrokeColor">@color/black</item>
         <item name="hintTextColor">@color/colorAccent</item>
     </style>
@@ -150,15 +149,14 @@
 
     <style name="AppButton" parent="Widget.MaterialComponents.Button">
         <item name="backgroundTint">?attr/colorSecondary</item>
-        <item name="android:elevation" tools:targetApi="lollipop">8dp
-        </item>
+        <item name="elevation" >0dp</item>
+        <item name="rippleColor">@color/white</item>
         <item name="android:textColor">@color/white</item>
     </style>
 
     <style name="RateButton" parent="Widget.MaterialComponents.Button">
         <item name="backgroundTint">@color/rateBtnBackgroundColor</item>
-        <item name="android:elevation" tools:targetApi="lollipop">8dp
-        </item>
+        <item name="elevation" >0dp</item>
         <item name="cornerRadius">20dp</item>
         <item name="android:textColor">@color/rateBtnTextColor</item>
     </style>
@@ -173,8 +171,7 @@
 
     <style name="FollowButton" parent="Widget.MaterialComponents.Button">
         <item name="backgroundTint">@color/reviewAccentColor</item>
-        <item name="android:elevation" tools:targetApi="lollipop">8dp
-        </item>
+        <item name="elevation" >8dp</item>
         <item name="cornerRadius">20dp</item>
         <item name="android:textColor">@color/white</item>
     </style>

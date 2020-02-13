@@ -44,25 +44,29 @@ class RegisterRequestMapper : RequestMapper<RegisterCompanyRequest> {
 
 class AddEntityRequestMapper : RequestMapper<AddEntityRequest> {
     override fun mapToResponseBody(t: AddEntityRequest): List<MultipartBody.Part> {
-        return MultipartBody.Builder()
+        val multipartBody = MultipartBody.Builder()
             .setType(MultipartBody.FORM)
 
             .addFormDataPart("category_id", t.category.toString())
             .addFormDataPart("name", t.name)
             .addFormDataPart(
-                "cover", "cover${Date().time}",
-                t.cover.asRequestBody("application/octet-stream".toMediaTypeOrNull())
-            ).addFormDataPart(
-                "avatar", "avatar${Date().time}",
-                t.avatar.asRequestBody("application/octet-stream".toMediaTypeOrNull())
-            ).addFormDataPart(
                 "description",
                 t.description
             )
             .addFormDataPart("latitude", t.locationLat)
             .addFormDataPart("longitude", t.locationLng)
-            .build()
-            .parts
+
+        if (t.cover != null)
+            multipartBody.addFormDataPart(
+                "cover", "cover${Date().time}",
+                t.cover.asRequestBody("application/octet-stream".toMediaTypeOrNull())
+            )
+        if (t.avatar != null)
+            multipartBody.addFormDataPart(
+                "avatar", "avatar${Date().time}",
+                t.avatar.asRequestBody("application/octet-stream".toMediaTypeOrNull())
+            )
+        return multipartBody.build().parts
     }
 
 }
@@ -70,16 +74,17 @@ class AddEntityRequestMapper : RequestMapper<AddEntityRequest> {
 class AddEventRequestMapper : RequestMapper<AddEventRequest> {
     override fun mapToResponseBody(t: AddEventRequest): List<MultipartBody.Part> {
         val requestBuilder = MultipartBody.Builder().setType(MultipartBody.FORM)
-            .addFormDataPart("entity_id", t.entityId.toString())
-            .addFormDataPart("event_picture", "cover.jpg")
-            .addFormDataPart("registration_link", t.registrationLink)
+
+            .addFormDataPart("link", t.registrationLink)
             .addFormDataPart("description", t.description)
-            .addFormDataPart("application_start_datetime", t.startDateTime.toString())
-            .addFormDataPart("application_end_datetime", t.endDateTime.toString())
+            .addFormDataPart("start_date", t.startDateTime.toString())
+            .addFormDataPart("end_date", t.endDateTime.toString())
             .addFormDataPart("latitude", t.locationLat.toString())
             .addFormDataPart("longitude", t.locationLng.toString())
-            .addFormDataPart("event_name", t.name)
-
+            .addFormDataPart("name", t.name)
+        if (t.entityId != null) {
+            requestBuilder.addFormDataPart("entity_id", t.entityId.toString())
+        }
         if (t.cover != null) {
             requestBuilder.addFormDataPart(
                 "cover", "file",

@@ -1,11 +1,12 @@
 package org.baylasan.sudanmap.data.user.model
 
 
-import com.google.gson.annotations.SerializedName
 import androidx.annotation.Keep
+import com.google.gson.annotations.SerializedName
+import org.baylasan.sudanmap.data.entity.model.EntityDetails
 
 @Keep
-data class RegisterResponse(
+data class AuthenticationResponse(
     @SerializedName("data")
     val `data`: Data = Data(),
     @SerializedName("message")

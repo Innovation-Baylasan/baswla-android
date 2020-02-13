@@ -1,6 +1,7 @@
 package org.baylasan.sudanmap.data.user.model
 
 import androidx.annotation.Keep
+import java.util.*
 
 @Keep
 data class UserDto(
@@ -12,6 +13,6 @@ data class UserDto(
     val role: String
 ) {
     fun isCompany(): Boolean {
-        return role == "company"
+        return role.toLowerCase(Locale.getDefault()) == "company"
     }
 }

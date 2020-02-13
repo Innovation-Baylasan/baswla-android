@@ -17,5 +17,6 @@
     <color name="iconButtonBackColor">#05eb413c</color>
     <color name="iconButtonColor">#eb413c</color>
     <color name="background">#F6F6F6</color>
+    <color name="skeleton_color">#54878787</color>
 
 </resources>

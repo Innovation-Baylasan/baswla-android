@@ -63,15 +63,17 @@ class EventMapFragment : Fragment(R.layout.fragment_event_map) {
                     progressBar.gone()
                     state.data.forEach { event ->
                         val location = event.location
-                        val marker = googleMap.addMarker(
-                            MarkerOptions().position(
-                                LatLng(
-                                    location.lat,
-                                    location.long
-                                )
-                            ).icon(BitmapDescriptorFactory.fromResource(R.drawable.event_marker))
-                        )
-                        marker.tag = event
+                        if (location != null) {
+                            val marker = googleMap.addMarker(
+                                MarkerOptions().position(
+                                    LatLng(
+                                        location.lat,
+                                        location.long
+                                    )
+                                ).icon(BitmapDescriptorFactory.fromResource(R.drawable.event_marker))
+                            )
+                            marker.tag = event
+                        }
                     }
 
                 }

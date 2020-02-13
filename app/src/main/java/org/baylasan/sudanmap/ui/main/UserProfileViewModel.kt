@@ -7,7 +7,7 @@ import org.baylasan.sudanmap.domain.user.SessionManager
 
 class UserProfileViewModel(private val sessionManager: SessionManager) : ViewModel() {
     private val userProfileLiveData = MutableLiveData<UserDto?>()
-
+     val logoutEvent = MutableLiveData<Unit>()
     fun loadUser() {
         userProfileLiveData.value = if (sessionManager.isGuest())
             null
@@ -19,5 +19,11 @@ class UserProfileViewModel(private val sessionManager: SessionManager) : ViewMod
 
     fun isThisMine(id: Int): Boolean {
         return id == sessionManager.getUser().id
+    }
+
+    fun logout() {
+        sessionManager.clear()
+        logoutEvent.value = Unit
+
     }
 }

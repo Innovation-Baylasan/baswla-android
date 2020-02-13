@@ -1,12 +1,10 @@
 package org.baylasan.sudanmap.ui.auth.login
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import io.reactivex.Scheduler
 import org.baylasan.sudanmap.common.UiState
+import org.baylasan.sudanmap.data.user.model.AuthenticationResponse
 import org.baylasan.sudanmap.data.user.model.LoginRequest
-import org.baylasan.sudanmap.data.user.model.LoginResponse
 import org.baylasan.sudanmap.data.user.model.UserDto
 import org.baylasan.sudanmap.domain.user.SessionManager
 import org.baylasan.sudanmap.domain.user.UserLoginUseCase
@@ -15,7 +13,10 @@ import org.baylasan.sudanmap.ui.BaseViewModel
 
 class LoginViewModel(
     private val loginUseCase: UserLoginUseCase,
-    private val sessionManager: SessionManager
+    private val sessionManager: SessionManager,
+    private val ioScheduler: Scheduler,
+    private val uiScheduler: Scheduler
+
 ) : BaseViewModel() {
 
 
@@ -28,24 +29,29 @@ class LoginViewModel(
 
     private fun performLogin(email: String, password: String) {
         val request = LoginRequest(email = email, password = password)
-        event.value = UiState.Loading()
 
         loginUseCase.execute(UserLoginUseCase.Params(request))
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+            .compose {
+                event.value = UiState.Loading()
+                it
+            }
+            .subscribeOn(ioScheduler)
+            .observeOn(uiScheduler)
             .subscribe({ loginResponse ->
-                saveUserSession(loginResponse)
                 event.value = UiState.Complete()
+                saveUserSession(loginResponse)
             }, {
-                Log.d("MEGA", it.toString())
                 event.value = UiState.Error(it)
-
-
             }).addToDisposables()
     }
 
-    private fun saveUserSession(response: LoginResponse) {
+    private fun saveUserSession(response: AuthenticationResponse) {
+
         val user = response.data.user
+        val entity = response.data.entity
+        if (entity != null) {
+            sessionManager.saveEntity(entity)
+        }
         val userDto = UserDto(
             email = user.email,
             name = user.name,

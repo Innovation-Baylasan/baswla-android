@@ -16,23 +16,22 @@ class UserApi(
     private val registerRequestMapper: RegisterRequestMapper
 
 ) : UserRepository {
-    override fun register(registerRequest: RegisterRequest): Single<RegisterResponse> {
+    override fun register(registerRequest: RegisterRequest): Single<AuthenticationResponse> {
         return userApi.register(registerRequest)
             .onErrorResumeNext(ThrowableSingleFunc1())
             .flatMap(RegisterResponseSingleFunc1(errorConverter))
     }
 
-    override fun registerCompany(registerCompanyRequest: RegisterCompanyRequest): Single<RegisterResponse> {
+    override fun registerCompany(registerCompanyRequest: RegisterCompanyRequest): Single<AuthenticationResponse> {
         return userApi.registerCompany(registerRequestMapper.mapToResponseBody(registerCompanyRequest))
             .onErrorResumeNext(ThrowableSingleFunc1())
             .flatMap(RegisterResponseSingleFunc1(errorConverter))
     }
 
 
-    override fun login(loginRequest: LoginRequest): Single<LoginResponse> {
+    override fun login(loginRequest: LoginRequest): Single<AuthenticationResponse> {
         return userApi.login(loginRequest)
             .onErrorResumeNext(ThrowableSingleFunc1())
             .flatMap(RegisterResponseSingleFunc1(errorConverter))
-            .map { it }
     }
 }

@@ -3,6 +3,8 @@ package org.baylasan.sudanmap
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.squareup.picasso.OkHttp3Downloader
 import com.squareup.picasso.Picasso
 import io.reactivex.Scheduler
@@ -26,10 +28,7 @@ import org.baylasan.sudanmap.domain.LocationViewModel
 import org.baylasan.sudanmap.domain.category.CategoryRepository
 import org.baylasan.sudanmap.domain.category.FetchCategoriesUseCase
 import org.baylasan.sudanmap.domain.entity.*
-import org.baylasan.sudanmap.domain.event.AddEventUseCase
-import org.baylasan.sudanmap.domain.event.EventRepository
-import org.baylasan.sudanmap.domain.event.GetEventUseCase
-import org.baylasan.sudanmap.domain.event.GetMyEventUseCase
+import org.baylasan.sudanmap.domain.event.*
 import org.baylasan.sudanmap.domain.user.*
 import org.baylasan.sudanmap.ui.addentity.AddEntityViewModel
 import org.baylasan.sudanmap.ui.addevent.AddEventViewModel
@@ -38,6 +37,7 @@ import org.baylasan.sudanmap.ui.auth.login.LoginViewModel
 import org.baylasan.sudanmap.ui.auth.signup.RegisterViewModel
 import org.baylasan.sudanmap.ui.entitydetails.EntityDetailsViewModel
 import org.baylasan.sudanmap.ui.entitysearch.EntitySearchViewModel
+import org.baylasan.sudanmap.ui.eventsearch.EventSearchViewModel
 import org.baylasan.sudanmap.ui.intro.IntroViewModel
 import org.baylasan.sudanmap.ui.layers.MapLayersViewModel
 import org.baylasan.sudanmap.ui.main.UserProfileViewModel
@@ -49,6 +49,7 @@ import org.baylasan.sudanmap.ui.splash.SessionViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -57,7 +58,10 @@ import java.util.concurrent.TimeUnit
 
 
 val appModule = module {
-    single<SessionManager> { SessionManagerImpl(get()) }
+    single<SessionManager> { SessionManagerImpl(get(), get()) }
+    single {
+        provideGson()
+    }
     single<SharedPreferences> {
         androidContext().getSharedPreferences("baswala", Context.MODE_PRIVATE)
     }
@@ -68,6 +72,8 @@ val appModule = module {
     viewModel { LocationViewModel(androidApplication()) }
     factory<RequestMapper<AddEventRequest>> { AddEventRequestMapper() }
     factory { AddEntityRequestMapper() }
+    factory(qualifier = named("io")) { provideIoScheduler() }
+    factory(qualifier = named("main")) { provideMainSchudler() }
 
 }
 val introModule = module {
@@ -88,10 +94,18 @@ val addEntityModule = module(override = true) {
     viewModel { AddEntityViewModel(get(), get()) }
 }
 val eventsModule = module(override = true) {
+    factory { GetMyEventUseCase(get()) }
+    factory { DeleteEventUseCase(get()) }
+    viewModel { MyEventsViewModel(get(), get(), get(), get(named("io")), get(named("main"))) }
+}
+
+val eventSearchModule = module(override = true) {
     factory { get<Retrofit>().create(SudanMapApi.Events::class.java) }
     factory<EventRepository> { EventApi(get(), get(), get()) }
-    factory { GetMyEventUseCase(get()) }
-    viewModel { MyEventsViewModel(get(), get()) }
+    factory { FindEventUseCase(get()) }
+    viewModel { EventSearchViewModel(get()) }
+
+
 }
 val addEventModule = module(override = true) {
     factory { get<Retrofit>().create(SudanMapApi.Events::class.java) }
@@ -108,7 +122,8 @@ val entityDetailsModule = module(override = true) {
     factory { FollowEntityUseCase(get()) }
     factory { RateEntityUseCase(get()) }
     factory { AddReviewUseCase(get()) }
-    viewModel { EntityDetailsViewModel(get(), get(), get(), get(), get(), get()) }
+    factory { GetEntityEventsUseCase(get()) }
+    viewModel { EntityDetailsViewModel(get(), get(), get(), get(), get(), get(), get()) }
 
 }
 
@@ -145,7 +160,7 @@ val eventModule = module(override = true) {
     factory { GetEventUseCase(get()) }
     viewModel { EventViewModel(get()) }
 }
-val searchModule = module(override = true) {
+val entitySearchModule = module(override = true) {
     factory { get<Retrofit>().create(SudanMapApi.Entities::class.java) }
     factory<EntityRepository> { EntityApi(get(), get(), get()) }
     factory { FindEntitiesByKeywordUseCase(get()) }
@@ -153,6 +168,7 @@ val searchModule = module(override = true) {
     factory { GetNearbyEntitiesUseCase(get()) }
     viewModel { EntityViewModel(get(), get()) }
 }
+
 val sessionModule = module(override = true) {
 
     viewModel { SessionViewModel(get()) }
@@ -165,9 +181,9 @@ val userModule = module(override = true) {
     factory { UserRegisterUseCase(get()) }
     factory { provideRegisterErrorConverter(get()) }
 
-    viewModel { RegisterViewModel(get(), get()) }
+    viewModel { RegisterViewModel(get(), get(), get(named("io")), get(named("main"))) }
     factory { UserLoginUseCase(get()) }
-    viewModel { LoginViewModel(get(), get()) }
+    viewModel { LoginViewModel(get(), get(), get(named("io")), get(named("main"))) }
 
 }
 val completeRegister = module(override = true) {
@@ -176,7 +192,7 @@ val completeRegister = module(override = true) {
     factory<UserRepository> { UserApi(get(), get(), get()) }
     factory { CompanyRegisterUseCase(get()) }
 
-    viewModel { CompleteRegisterViewModel(get(), get()) }
+    viewModel { CompleteRegisterViewModel(get(), get(),get(named("io")),get(named("main"))) }
 
 }
 
@@ -214,6 +230,12 @@ private fun okHttpInterceptor() = Interceptor { chain ->
         .addHeader("Accept", "application/json")
         .build()
     chain.proceed(request)
+}
+
+private fun provideGson(): Gson {
+    return GsonBuilder()
+        .setLenient()
+        .create()
 }
 
 class SessionInterceptor(private val sessionManager: SessionManager) : Interceptor {

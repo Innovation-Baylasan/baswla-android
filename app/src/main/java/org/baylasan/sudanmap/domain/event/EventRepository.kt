@@ -7,6 +7,10 @@ import org.baylasan.sudanmap.data.event.model.Event
 
 interface EventRepository {
     fun getEvents(): Single<List<Event>>
+    fun deleteEvent(eventId: Int): Completable
+    fun findEvent(keyword: String): Single<List<Event>>
     fun getMyEvents(): Single<List<Event>>
-    fun addEvent(addEventRequest: AddEventRequest): Completable
+    fun addEvent(addEventRequest: AddEventRequest): Single<Event>
+    fun getEntityEvents(entityId: Int): Single<List<Event>>
+
 }

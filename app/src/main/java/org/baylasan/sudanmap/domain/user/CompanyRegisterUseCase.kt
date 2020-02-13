@@ -5,11 +5,11 @@ import org.baylasan.sudanmap.data.user.model.*
 import org.baylasan.sudanmap.domain.common.RequestValues
 import org.baylasan.sudanmap.domain.common.SingleUseCase
 
-class CompanyRegisterUseCase(private val userRepository: UserRepository) :SingleUseCase<CompanyRegisterUseCase.Params ,RegisterResponse> {
+open class CompanyRegisterUseCase(private val userRepository: UserRepository) :SingleUseCase<CompanyRegisterUseCase.Params ,AuthenticationResponse> {
 
     class Params (val registerRequest: RegisterCompanyRequest)  : RequestValues
 
-    override fun execute(params: Params): Single<RegisterResponse> {
+    override fun execute(params: Params): Single<AuthenticationResponse> {
         return userRepository.registerCompany(params.registerRequest)
     }
 }

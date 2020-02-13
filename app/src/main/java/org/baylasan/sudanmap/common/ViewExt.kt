@@ -1,6 +1,7 @@
 package org.baylasan.sudanmap.common
 
 import android.R.attr.duration
+import android.app.Activity
 import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
@@ -178,14 +179,28 @@ fun View.disable() {
     isEnabled = false
 }
 
-fun ViewGroup.disableChildern() {
-    children.forEach {
+fun Activity.disableTouch() {
+    window.setFlags(
+        WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+        WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+    )
+}
+
+fun Activity.enableTouch() {
+    window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+
+}
+
+fun View.disableChildren() {
+    disable()
+    (this as? ViewGroup)?.children?.forEach {
         it.disable()
     }
 }
 
-fun ViewGroup.enableChildern() {
-    children.forEach {
+fun View.enableChildren() {
+    enable()
+    (this as? ViewGroup)?.children?.forEach {
         it.enable()
     }
 }

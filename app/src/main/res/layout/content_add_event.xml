@@ -48,7 +48,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="4dp"
                     android:layout_marginBottom="8dp"
                     android:text="@string/event_name"
                     android:textSize="12sp" />
@@ -78,7 +78,7 @@
                     android:inputType="textMultiLine"
                     android:maxLines="5" />
 
-                <TextView
+          <!--      <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
@@ -93,7 +93,7 @@
                     android:layout_marginStart="0dp"
                     android:layout_marginEnd="0dp"
                     android:layout_marginBottom="8dp" />
-
+-->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -132,7 +132,7 @@
                         app:rippleColor="@color/colorAccent" />
                 </FrameLayout>
 
-                <TextView
+                <!--<TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
@@ -157,8 +157,8 @@
                         android:text="0"
                         android:inputType="number" />
                 </com.google.android.material.textfield.TextInputLayout>
-
-                <TextView
+-->
+               <!-- <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
@@ -184,7 +184,7 @@
                         android:inputType="number"
                         android:text="0" />
                 </com.google.android.material.textfield.TextInputLayout>
-
+-->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -400,10 +400,8 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:text="@string/submit"
-            android:textSize="23sp"
-            app:icon="@drawable/ic_calender_white"
-            app:iconGravity="textEnd"
-            app:iconPadding="11dp"
+            android:textSize="18sp"
+
 
             app:iconTint="@color/white" />
     </LinearLayout>

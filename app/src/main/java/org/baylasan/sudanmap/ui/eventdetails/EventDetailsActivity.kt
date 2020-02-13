@@ -22,12 +22,10 @@ class EventDetailsActivity : AppCompatActivity() {
         supportActionBar?.title = ""
         toolbar.setOnClickListener { finish() }
 
-        val event = intent.getParcelableExtra<Event>("event") as Event
-        if(userProfileViewModel.isThisMine(event.creator?.id ?: -1)){
-            applyButton.visible()
-        }
-        eventImage.load(event.eventPicture)
-        eventName.text = event.eventName
+        val event = intent.getParcelableExtra("event") as Event
+        applyButton.visible()
+        eventImage.load(event.picture ?: "")
+        eventName.text = event.name
         eventDescription.text = event.description
         applyButton.setOnClickListener {
             openWebPage(event.registrationLink)

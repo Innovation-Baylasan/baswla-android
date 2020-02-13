@@ -1,12 +1,18 @@
 package org.baylasan.sudanmap.data.user
 
 import android.content.SharedPreferences
+import com.google.gson.Gson
+import org.baylasan.sudanmap.common.clear
 import org.baylasan.sudanmap.common.findPreference
 import org.baylasan.sudanmap.common.putPreference
+import org.baylasan.sudanmap.data.entity.model.EntityDetails
 import org.baylasan.sudanmap.data.user.model.UserDto
 import org.baylasan.sudanmap.domain.user.SessionManager
 
-class SessionManagerImpl(private val sharedPreferences: SharedPreferences) : SessionManager {
+class SessionManagerImpl(
+    private val sharedPreferences: SharedPreferences,
+    private val gson: Gson
+) : SessionManager {
 
 
     override fun saveUserSession(user: UserDto) {
@@ -38,6 +44,14 @@ class SessionManagerImpl(private val sharedPreferences: SharedPreferences) : Ses
     override fun setLoggedIn(loggedIn: Boolean) =
         sharedPreferences.putPreference(KEY_IS_LOGIN, loggedIn)
 
+    override fun saveEntity(entityDetails: EntityDetails) {
+        sharedPreferences.edit().putString(KEY_ENTITY, gson.toJson(entityDetails)).apply()
+    }
+
+    override fun getEntity(): EntityDetails? {
+        return gson.fromJson(sharedPreferences.getString(KEY_ENTITY, ""), EntityDetails::class.java)
+    }
+
     override fun setIsFirstTime(firstTime: Boolean) =
         sharedPreferences.putPreference(KEY_IS_FIRST_TIME, firstTime)
 
@@ -51,21 +65,14 @@ class SessionManagerImpl(private val sharedPreferences: SharedPreferences) : Ses
 
 
     override fun clear() {
-        sharedPreferences.edit()
-            .remove(KEY_USER_NAME)
-            .remove(KEY_NAME)
-            .remove(KEY_USER_EMAIL)
-            .remove(KEY_USER_ID)
-            .remove(KEY_USER_TOKEN)
-            .remove(KEY_IS_LOGIN)
-            .apply()
+      sharedPreferences.clear()
     }
 
     companion object {
         private const val KEY_PREFERENCE_FILE_NAME = "baswala"
         private const val KEY_IS_LOGIN = "is_login"
         private const val KEY_IS_FIRST_TIME = "first_time"
-
+        private const val KEY_ENTITY = "entity"
         private const val KEY_USER_NAME = "user_name"
         private const val KEY_NAME = "name"
         private const val KEY_USER_EMAIL = "user_email"

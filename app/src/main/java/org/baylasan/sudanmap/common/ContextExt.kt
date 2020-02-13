@@ -111,7 +111,9 @@ fun Activity.expiredSession() {
     finishAffinity()
 }
 
-fun Context.openWebPage(url: String) {
+fun Context.openWebPage(url: String?) {
+    if (url.isNullOrEmpty())
+        return
     val webPage: Uri = Uri.parse(url)
     val intent = Intent(Intent.ACTION_VIEW, webPage)
     if (intent.resolveActivity(packageManager) != null) {

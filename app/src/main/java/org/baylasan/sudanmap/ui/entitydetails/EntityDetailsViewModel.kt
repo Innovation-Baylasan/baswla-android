@@ -8,7 +8,9 @@ import org.baylasan.sudanmap.common.UiState
 import org.baylasan.sudanmap.data.common.UnAuthorizedException
 import org.baylasan.sudanmap.data.entity.model.EntityDetails
 import org.baylasan.sudanmap.data.entity.model.Review
+import org.baylasan.sudanmap.data.event.model.Event
 import org.baylasan.sudanmap.domain.entity.*
+import org.baylasan.sudanmap.domain.event.GetEntityEventsUseCase
 import org.baylasan.sudanmap.domain.user.SessionManager
 import org.baylasan.sudanmap.ui.BaseViewModel
 
@@ -18,9 +20,11 @@ class EntityDetailsViewModel(
     private val unFollowEntityUseCase: UnFollowEntityUseCase,
     private val rateEntityUseCase: RateEntityUseCase,
     private val addReviewUseCase: AddReviewUseCase,
+    private val entityEventsUseCase: GetEntityEventsUseCase,
     private val sessionManager: SessionManager
 ) : BaseViewModel() {
     private val loadEntityUiState = MutableLiveData<UiState<EntityDetails>>()
+    private val eventsUiState = MutableLiveData<UiState<List<Event>>>()
     private val reviewUiState = MutableLiveData<UiState<Review>>()
     private val followUiState = MutableLiveData<UiState<Unit>>()
     private val unFollowUiState = MutableLiveData<UiState<Unit>>()
@@ -31,7 +35,21 @@ class EntityDetailsViewModel(
     val followState: LiveData<UiState<Unit>> = followUiState
     val unFollowState: LiveData<UiState<Unit>> = unFollowUiState
     val rateState: LiveData<UiState<Unit>> = rateUiState
+    val eventState: LiveData<UiState<List<Event>>> = eventsUiState
     private var isFollowed = false
+    fun getEvents(id: Int) {
+        eventsUiState.value = UiState.Loading()
+        entityEventsUseCase.execute(GetEntityEventsUseCase.Request(id))
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                eventsUiState.value = UiState.Success(it)
+            }, {
+                eventsUiState.value = UiState.Error(it)
+            })
+            .addToDisposables()
+
+    }
 
     fun getDetailsForId(id: Int) {
         loadEntityUiState.value = UiState.Loading()
@@ -54,11 +72,11 @@ class EntityDetailsViewModel(
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                isFollowed=true
+                isFollowed = true
                 followUiState.value = UiState.Complete()
 
             }, {
-                if(it is UnAuthorizedException)
+                if (it is UnAuthorizedException)
                     sessionManager.clear()
                 followUiState.value = UiState.Error(it)
 
@@ -81,12 +99,12 @@ class EntityDetailsViewModel(
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                isFollowed=false
+                isFollowed = false
                 unFollowUiState.value = UiState.Complete()
 
             }, {
 
-                if(it is UnAuthorizedException)
+                if (it is UnAuthorizedException)
                     sessionManager.clear()
                 unFollowUiState.value = UiState.Error(it)
 
@@ -103,7 +121,7 @@ class EntityDetailsViewModel(
                 reviewUiState.value = UiState.Success(it)
             }, {
 
-                if(it is UnAuthorizedException)
+                if (it is UnAuthorizedException)
                     sessionManager.clear()
                 reviewUiState.value = UiState.Error(it)
             }).addToDisposables()
@@ -120,7 +138,7 @@ class EntityDetailsViewModel(
 
             }, {
 
-                if(it is UnAuthorizedException)
+                if (it is UnAuthorizedException)
                     sessionManager.clear()
                 rateUiState.value = UiState.Error(it)
 

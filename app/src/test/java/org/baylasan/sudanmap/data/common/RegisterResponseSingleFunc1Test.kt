@@ -7,7 +7,7 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.ResponseBody
 import org.baylasan.sudanmap.data.user.model.Errors
 import org.baylasan.sudanmap.data.user.model.RegisterErrorResponse
-import org.baylasan.sudanmap.data.user.model.RegisterResponse
+import org.baylasan.sudanmap.data.user.model.AuthenticationResponse
 import org.junit.Before
 import org.junit.Test
 import retrofit2.Converter
@@ -46,9 +46,9 @@ class RegisterResponseSingleFunc1Test {
                 ), 422
             )
         )
-        val func1 = RegisterResponseSingleFunc1<RegisterResponse>(converter)
+        val func1 = RegisterResponseSingleFunc1<AuthenticationResponse>(converter)
         func1.apply(
-            Response.error<RegisterResponse>(
+            Response.error<AuthenticationResponse>(
                 401,
                 ResponseBody.create("application/json".toMediaTypeOrNull(), error)
             )

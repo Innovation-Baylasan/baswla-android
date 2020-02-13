@@ -2,14 +2,19 @@ package org.baylasan.sudanmap.ui.auth.login
 
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Patterns
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import com.github.razir.progressbutton.*
 import kotlinx.android.synthetic.main.fragment_login.*
 import org.baylasan.sudanmap.R
-import org.baylasan.sudanmap.common.*
+import org.baylasan.sudanmap.common.UiState
+import org.baylasan.sudanmap.common.asString
+import org.baylasan.sudanmap.common.toast
 import org.baylasan.sudanmap.ui.auth.signup.SignUpActivity
 import org.baylasan.sudanmap.ui.main.MainActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -23,12 +28,14 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     private val loginViewModel: LoginViewModel by viewModel()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        bindProgressButton(signInButton)
+        signInButton.attachTextChangeAnimator()
         signInAsGuest.setOnClickListener {
             startActivity(Intent(activity!!, MainActivity::class.java))
 
         }
 
-        signInBtn.setOnClickListener {
+        signInButton.setOnClickListener {
             startActivity(Intent(activity!!, MainActivity::class.java))
 
         }
@@ -37,7 +44,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             startActivity(Intent(activity!!, SignUpActivity::class.java))
         }
 
-        signInBtn.setOnClickListener {
+        signInButton.setOnClickListener {
             val email = loginEmailEt.asString()
             val password = loginPasswordEt.asString()
             if (email.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
@@ -50,6 +57,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             }
 
             loginViewModel.login(email, password)
+
         }
 
 
@@ -60,22 +68,26 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         loginViewModel.event.observe(this, Observer { event ->
             when (event) {
                 is UiState.Loading -> {
-                    loginProgress.visible()
+                    signInButton.showProgress {
+                        buttonText = "Signing in..."
+                        progressColor = Color.WHITE
+                    }
                 }
                 is UiState.Complete -> {
-                    hideProgress()
-                    startActivity(Intent(activity, MainActivity::class.java))
+
+
+                    signInButton.hideProgress("Done.")
+                    startActivity(Intent(activity,MainActivity::class.java))
+                    activity?.finish()
+
                 }
                 is UiState.Error -> {
-                    activity?.toast("Unable to login at the moment, try again")
-                    hideProgress()
+                    activity?.toast("Unable to login at the moment.")
+                    signInButton.hideProgress("Failed.")
+
                 }
             }
         })
-    }
-
-    private fun hideProgress() {
-        loginProgress.gone()
     }
 
 

@@ -1,6 +1,7 @@
 package org.baylasan.sudanmap.ui.main.entity
 
-import android.util.Log
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +14,7 @@ import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.data.entity.model.Entity
 
 class EntitiesListAdapter(
-    private val list: List<Entity>,
+    private val list: MutableList<Entity>,
     private val onItemClick: OnItemClick
 ) :
     RecyclerView.Adapter<EntitiesListAdapter.ViewHolder>() {
@@ -38,12 +39,24 @@ class EntitiesListAdapter(
         holder.bind(entity, onItemClick)
     }
 
+    fun addItem(entity: Entity?) {
+        if (entity == null)
+            return
+        list.add(entity)
+        notifyItemInserted(list.size - 1)
+    }
+
+    fun addAll(data: List<Entity>) {
+        list.addAll(data)
+        notifyDataSetChanged()
+    }
+
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun bind(
             entity: Entity,
             onItemClick: OnItemClick
         ) {
-            Log.d("KLD", entity.toString())
+            itemView.entityRate.rating = entity.rating.toFloatOrNull() ?: 0f
             itemView.entityName.text = entity.name
             itemView.entityDescription.text = entity.description
             itemView.coverImage.load(entity.cover)
@@ -61,26 +74,27 @@ class EntitiesListAdapter(
 
 // fun ImageView.load(imageUrl: String) = Picasso.get().load(imageUrl ).into(this)
 
-fun ImageView.load(imageUrl: String){
-    if (imageUrl.isEmpty()) {
-        setImageResource(R.drawable.circle)
-    } else{
-        Picasso.get().load(imageUrl)
-            .error(R.drawable.ic_icon)
-            .placeholder(R.drawable.ic_icon)
+fun ImageView.load(imageUrl: String) {
 
+    if (imageUrl.isEmpty()) {
+        setImageDrawable(ColorDrawable(Color.GRAY))
+    } else {
+        Picasso.get().load(imageUrl)
+            .error(ColorDrawable(Color.GRAY))
+            .placeholder(ColorDrawable(Color.GRAY))
             .into(this)
     }
 }
 
-fun ImageView.loadCircle(imageUrl: String){
+fun ImageView.loadCircle(imageUrl: String) {
     if (imageUrl.isEmpty()) {
-        setImageResource(R.drawable.circle);
-    } else{
+        setImageDrawable(ColorDrawable(Color.GRAY))
+    } else {
         Picasso.get()
             .load(imageUrl)
-            .error(R.drawable.ic_icon)
-            .placeholder(R.drawable.ic_icon)
-            .transform(CropCircleTransformation()).into(this)
+            .transform(CropCircleTransformation())
+            .error(ColorDrawable(Color.GRAY))
+            .placeholder(ColorDrawable(Color.GRAY))
+            .into(this)
     }
 }

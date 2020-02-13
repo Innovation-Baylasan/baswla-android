@@ -45,6 +45,7 @@
         android:text="@string/next"
         android:textSize="22sp"
         app:cornerRadius="8dp"
+
         app:layout_constraintBottom_toTopOf="@+id/skipButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -60,8 +61,7 @@
         android:textColor="@color/colorAccent"
         android:layout_marginBottom="16dp"
         android:text="@string/skip"
-        app:strokeColor="@color/colorAccent"
-        app:strokeWidth="1dp"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

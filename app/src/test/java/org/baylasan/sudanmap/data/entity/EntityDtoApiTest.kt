@@ -6,8 +6,10 @@ import com.nhaarman.mockitokotlin2.whenever
 import io.reactivex.Single
 import okhttp3.ResponseBody
 import org.baylasan.sudanmap.data.SudanMapApi
+import org.baylasan.sudanmap.data.common.AddEntityRequestMapper
 import org.baylasan.sudanmap.data.common.ApiErrorResponse
 import org.baylasan.sudanmap.data.common.UnAuthorizedException
+import org.baylasan.sudanmap.data.entity.model.EntityResponse
 import org.junit.Before
 import org.junit.Test
 import retrofit2.Converter
@@ -26,7 +28,7 @@ class EntityDtoApiTest {
     fun setUp() {
         entityService = mock(verboseLogging = true)
         converter = mock(verboseLogging = true)
-        entityApi = EntityApi(entityApi = entityService, errorConverter = converter,)
+        entityApi = EntityApi(entityApi = entityService, errorConverter = converter,requestMapper = AddEntityRequestMapper())
     }
 
 
