@@ -41,29 +41,7 @@ class EntityDetailsActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_entity_details)
-        val entity = Gson().fromJson<Entity>(
-            "{\n" +
-                    "\"id\": 1,\n" +
-                    "\"name\": \"Innovation Baylasan\",\n" +
-                    "\"description\": \"شركة بيلسان الابتكار. مهتمون بتصميم و تجهيز و تفعيل البيئات الإبداعية. نساعدكم في تحويل مساحات العمل إلى بيئات إبداعية\",\n" +
-                    "\"category\": {\n" +
-                    "\"id\": 7,\n" +
-                    "\"name\": \"R&D Centers\",\n" +
-                    "\"icon\": \"/storage/icons/6A9WUoH9A7JCjMiQfxh2wrxyngonMxJepSaDWo6u.png\",\n" +
-                    "\"icon_png\": \"/storage/markers/oBL7FbFkCa7563o5knfUQHMzXxEI1nphrmenCCbp.png\",\n" +
-                    "\"created_at\": \"2020-02-15T14:03:28.000000Z\",\n" +
-                    "\"updated_at\": \"2020-02-15T14:03:28.000000Z\"\n" +
-                    "},\n" +
-                    "\"avatar\": \"/storage/7/conversions/%2BzsKj1sDUHMUoGGSLoVAUwtoBaF2iZtzHVL1SkF%2BQOYMYkgrHGxOtcArssJXP8Xm9g754hELQ0AAAAASUVORK5CYII%3D-avatar.jpg\",\n" +
-                    "\"cover\": \"/storage/8/conversions/AAAAAElFTkSuQmCC-cover.jpg\",\n" +
-                    "\"tags\": [],\n" +
-                    "\"rating\": \"0.00\",\n" +
-                    "\"location\": {\n" +
-                    "\"lat\": 15.60168778,\n" +
-                    "\"long\": 32.50422591\n" +
-                    "}\n" +
-                    "}", Entity::class.java
-        )
+        val entity = intent?.getParcelableExtra("entity") as Entity
         viewModel.getEvents(entity.id)
         viewModel.getDetailsForId(entity.id)
 
