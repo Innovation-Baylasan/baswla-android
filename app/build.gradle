@@ -64,17 +64,20 @@ android {
     }
     productFlavors {
         development {
-            resValue "string", "base_url", "http://104.248.145.132:9292/api/"
+            resValue "string", "base_url", "http://104.248.145.132:9292"
+            resValue "string", "api_url", "http://104.248.145.132:9292/api/"
             resValue "string", "app_name", "Bawsala Dev"
             applicationIdSuffix = '.dev'
         }
         production {
-            resValue "string", "base_url", "http://104.248.145.132/api/"
+            resValue "string", "base_url", "http://104.248.145.132"
+            resValue "string", "api_url", "http://104.248.145.132/api/"
             resValue "string", "app_name", "Bawsala"
 
         }
         local {
-            resValue "string", "base_url", "http://192.168.8.108:9292/api/"
+            resValue "string", "base_url", "http://192.168.8.108:9292"
+            resValue "string", "api_url", "http://192.168.8.108:9292/api/"
             resValue "string", "app_name", "Bawsala local"
             applicationIdSuffix = '.local'
         }

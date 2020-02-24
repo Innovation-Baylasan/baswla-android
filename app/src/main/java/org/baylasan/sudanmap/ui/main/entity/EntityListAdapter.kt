@@ -61,6 +61,7 @@ class EntitiesListAdapter(
             itemView.entityDescription.text = entity.description
             itemView.coverImage.load(entity.cover)
             itemView.avatarImage.loadCircle(entity.avatar)
+
             itemView.setOnClickListener {
                 onItemClick.onItemClick(entity)
             }
@@ -79,7 +80,8 @@ fun ImageView.load(imageUrl: String) {
     if (imageUrl.isEmpty()) {
         setImageDrawable(ColorDrawable(Color.GRAY))
     } else {
-        Picasso.get().load(imageUrl)
+        Picasso.get()
+            .load("http://104.248.145.132/$imageUrl")
             .error(ColorDrawable(Color.GRAY))
             .placeholder(ColorDrawable(Color.GRAY))
             .into(this)
@@ -91,7 +93,7 @@ fun ImageView.loadCircle(imageUrl: String) {
         setImageDrawable(ColorDrawable(Color.GRAY))
     } else {
         Picasso.get()
-            .load(imageUrl)
+            .load("http://104.248.145.132/$imageUrl")
             .transform(CropCircleTransformation())
             .error(ColorDrawable(Color.GRAY))
             .placeholder(ColorDrawable(Color.GRAY))

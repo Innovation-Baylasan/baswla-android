@@ -40,11 +40,10 @@ class EntityApi(
             .map { it.entityList }
     }
 
-    override fun rateEntity(id: Int, rating: RatingRequest): Completable {
+    override fun rateEntity(id: Int, rating: RatingRequest): Single<RateResponse> {
         return entityApi.rateEntityById(id, rating)
             .onErrorResumeNext(ThrowableSingleFunc1())
             .flatMap(ResponseSingleFunc1(errorConverter))
-            .ignoreElement()
 
 
     }
@@ -84,11 +83,12 @@ class EntityApi(
 
     }
 
-    override fun addEntity(addEntityRequest: AddEntityRequest): Single<Entity> {
+    override fun addEntity(addEntityRequest: AddEntityRequest): Completable{
         return entityApi.addEntity(requestMapper.mapToResponseBody(addEntityRequest))
             .onErrorResumeNext(ThrowableSingleFunc1())
             .flatMap(ResponseSingleFunc1(errorConverter))
-            .map { it.entity }
+            .ignoreElement()
+
 
     }
 }

@@ -1,5 +1,6 @@
 package org.baylasan.sudanmap.ui.myevents
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
@@ -26,7 +27,7 @@ class MyEventsActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         addEventButton.setOnClickListener {
-            startActivity(Intent(this, AddEventActivity::class.java))
+            startActivityForResult(Intent(this, AddEventActivity::class.java), 123)
         }
         loadingRecyclerView.adapter = LoadingAdapter()
         refreshLayout.setOnRefreshListener {
@@ -73,5 +74,12 @@ class MyEventsActivity : AppCompatActivity() {
             finish()
         return super.onOptionsItemSelected(item)
 
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 123 && resultCode == Activity.RESULT_OK) {
+            viewModel.loadMyEvents()
+        }
     }
 }

@@ -6,9 +6,13 @@ import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.net.toFile
+import androidx.core.view.children
+import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import com.github.razir.progressbutton.bindProgressButton
 import com.github.razir.progressbutton.hideProgress
@@ -19,6 +23,8 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
 import com.theartofdev.edmodo.cropper.CropImage
@@ -26,6 +32,7 @@ import com.theartofdev.edmodo.cropper.CropImageView
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
 import kotlinx.android.synthetic.main.activity_add_entity.*
 import kotlinx.android.synthetic.main.content_add_entity.*
+import kotlinx.android.synthetic.main.content_add_entity.view.*
 import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.common.*
 import org.baylasan.sudanmap.data.common.UnAuthorizedException
@@ -75,10 +82,27 @@ class AddEntityActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_entity)
+        setSupportActionBar(toolbar)
         bindProgressButton(submitEntityButton)
         appBar.addOnOffsetChangedListener(onStateChanged)
         viewModel.loadCategories()
-
+        tagField.addTextChangedListener(
+            afterTextChanged = {
+                if (it != null) {
+                    val entry = it.toString()
+                    if (entry.length > 2) {
+                        val lastChar = entry[it.length - 1]
+                        if (lastChar == ',' || lastChar == '،') {
+                            val txt = entry.replace(",", "").replace("،", "")
+                            if (txt.isNotEmpty()) {
+                                tagsGroup.addChipToGroup(txt)
+                                tagField.clear()
+                            }
+                        }
+                    }
+                }
+            }
+        )
         pickAvatarImageButton.setOnClickListener {
             isAvatarClicked = true
             CropImage.activity()
@@ -119,6 +143,7 @@ class AddEntityActivity : AppCompatActivity() {
                 AddEntityRequest(
                     category = selectedCategory!!.id,
                     name = name,
+                    tags = tagsGroup.groupValues() ?: setOf(),
                     avatar = selectedAvatarImage?.toFile(),
                     cover = selectedCoverImage?.toFile(),
                     description = description,
@@ -154,10 +179,10 @@ class AddEntityActivity : AppCompatActivity() {
 
     private fun observeAddState() {
         addEntityViewModel.addState.observe(this, Observer {
-            if (it is UiState.Success) {
+            if (it is UiState.Complete) {
                 submitEntityButton.hideProgress("Done.")
                 toast(getString(R.string.entity_added))
-                setResult(Activity.RESULT_OK, Intent().putExtra("entity", it.data))
+                setResult(Activity.RESULT_OK)
                 finish()
             }
             if (it is UiState.Error) {
@@ -170,7 +195,7 @@ class AddEntityActivity : AppCompatActivity() {
             }
             if (it is UiState.Loading) {
                 submitEntityButton.showProgress {
-                    buttonText = "Adding new entity"
+                    buttonText = "Adding new entity..."
                     progressColor = Color.WHITE
                 }
 
@@ -187,7 +212,7 @@ class AddEntityActivity : AppCompatActivity() {
                 snackbar?.dismiss()
                 val list = it.data
                 entityCategorySpinner.setAdapter(CategoryEntityAdapter(this, list))
-                entityCategorySpinner.setOnItemClickListener { parent, view, position, id ->
+                entityCategorySpinner.setOnItemClickListener { _, _, position, _->
                     val category = list[position]
                     entityCategorySpinner.setText(category.name, false)
                     selectedCategory = category
@@ -244,6 +269,28 @@ class AddEntityActivity : AppCompatActivity() {
         }
     }
 
+    private fun ChipGroup.addChipToGroup(txt: String) {
+        val chip = Chip(this@AddEntityActivity)
+        chip.text = txt
+        chip.isCloseIconVisible = true
+        chip.setChipIconTintResource(android.R.color.white)
 
+        chip.isClickable = false
+        chip.isCheckable = false
+        addView(chip as View)
+        chip.setOnCloseIconClickListener { removeView(chip as View) }
+    }
+
+    private fun ChipGroup.groupValues(): Set<String>? {
+        return tagsGroup.children.map { it as Chip }.map { it.text.toString() }.toSet()
+
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(item.itemId==android.R.id.home)
+            finish()
+        return super.onOptionsItemSelected(item)
+
+    }
 }
 

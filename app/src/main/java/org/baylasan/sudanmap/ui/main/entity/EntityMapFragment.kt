@@ -251,10 +251,9 @@ class EntityMapFragment : Fragment(R.layout.fragment_entity_map) {
                         marker?.tag = entity
 
 
-                        picasso.load(entity.category.iconPng)
+                        picasso.load("http://104.248.145.132/${entity.category.iconPng}")
                             .placeholder(R.drawable.ic_marker_placeholder)
                             .error(R.drawable.ic_marker_placeholder)
-                            .resize(70, 70)
                             .into(PicassoMarker(marker))
                     }
 

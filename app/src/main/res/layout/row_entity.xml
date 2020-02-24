@@ -57,6 +57,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="10k rates"
+                android:visibility="invisible"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Caption" />
         </LinearLayout>
 

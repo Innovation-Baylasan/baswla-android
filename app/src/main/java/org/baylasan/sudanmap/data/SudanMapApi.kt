@@ -30,7 +30,7 @@ interface SudanMapApi {
         fun findEntitiesByKeyword(@Query("q") keyword: String): Single<Response<EntityResponse>>
 
         @PUT("entities/{id}/rating")
-        fun rateEntityById(@Path("id") entityId: Int, @Body rate: RatingRequest): Single<Response<Unit>>
+        fun rateEntityById(@Path("id") entityId: Int, @Body rate: RatingRequest): Single<Response<RateResponse>>
 
         @POST("entities/{id}/review")
         fun reviewEntityById(@Path("id") entityId: Int, @Body request: AddReviewUseCase.Request): Single<Response<Review>>
@@ -49,7 +49,7 @@ interface SudanMapApi {
 
         @Multipart
         @POST("entities")
-        fun addEntity(@Part list: List<MultipartBody.Part>): Single<Response<AddEntityResponse>>
+        fun addEntity(@Part list: List<MultipartBody.Part>): Single<Response<Unit>>
 
     }
 

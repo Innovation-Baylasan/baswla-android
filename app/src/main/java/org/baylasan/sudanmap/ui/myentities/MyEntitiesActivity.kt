@@ -86,12 +86,7 @@ class MyEntitiesActivity : AppCompatActivity(), EntitiesListAdapter.OnItemClick 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 123 && resultCode == Activity.RESULT_OK) {
-            if (data != null)
-                entitiesListAdapter.addItem(
-                    data.getParcelableExtra(
-                        "entity"
-                    )
-                )
+            viewModel.loadMyEntities()
         }
     }
 }

@@ -6,6 +6,9 @@ import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.*
+import android.view.View.GONE
+import android.view.View.VISIBLE
+import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import android.view.animation.Transformation
 import android.view.inputmethod.InputMethodManager
@@ -233,3 +236,17 @@ fun View.hideKeybord() {
 }
 
 
+private fun View.alphaAnimation(duration: Long, visibility: Int) {
+    val alphaAnimation =
+        if (visibility == VISIBLE) AlphaAnimation(0f, 1f) else AlphaAnimation(1f, 0f)
+    alphaAnimation.duration = duration
+    alphaAnimation.fillAfter = true
+    startAnimation(alphaAnimation)
+}
+
+fun View.showAlpha(){
+    alphaAnimation(200, VISIBLE)
+}
+fun View.hideAlpha(){
+    alphaAnimation(200, GONE)
+}

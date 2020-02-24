@@ -56,8 +56,7 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/openPlacesButton"
                     style="@style/Widget.MaterialComponents.Button.UnelevatedButton.navigation"
-                    android:drawableStart="@drawable/ic_my_places"
-                    android:text="Places"
+                    android:text="@string/places"
                     app:cornerRadius="0dp"
                     app:icon="@drawable/ic_my_places"
                     app:iconPadding="16dp"
@@ -66,12 +65,10 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/openEventsButton"
                     style="@style/Widget.MaterialComponents.Button.UnelevatedButton.navigation"
-                    android:drawableStart="@drawable/ic_my_events"
-                    android:text="Events"
+                    android:text="@string/events"
                     app:cornerRadius="0dp"
-                    app:icon="@drawable/ic_my_places"
-                    app:iconPadding="16dp"
-                    app:iconSize="30dp" />
+                    app:icon="@drawable/ic_events"
+                    app:iconPadding="16dp" />
 
 
                 <View
@@ -83,7 +80,6 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/openFaqButton"
                     style="@style/Widget.MaterialComponents.Button.UnelevatedButton.navigation"
-                    android:drawableStart="@drawable/ic_faq"
                     android:text="@string/faq"
                     app:cornerRadius="0dp"
                     app:icon="@drawable/ic_faq"
@@ -92,7 +88,6 @@
 
                 <com.google.android.material.button.MaterialButton
                     style="@style/Widget.MaterialComponents.Button.UnelevatedButton.navigation"
-                    android:drawableStart="@drawable/ic_about"
                     android:text="About"
                     app:cornerRadius="0dp"
                     app:icon="@drawable/ic_about"
@@ -101,7 +96,6 @@
 
                 <com.google.android.material.button.MaterialButton
                     style="@style/Widget.MaterialComponents.Button.UnelevatedButton.navigation"
-                    android:drawableStart="@drawable/ic_share"
                     android:text="Share App"
                     app:cornerRadius="0dp"
                     app:icon="@drawable/ic_share"
@@ -117,29 +111,28 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/actionPrivacyButton"
                     style="@style/Widget.MaterialComponents.Button.UnelevatedButton.navigation"
-                    android:drawableStart="@drawable/ic_share"
                     android:text="@string/privacy_policy"
                     app:cornerRadius="0dp"
-                    app:icon="@drawable/ic_share"
-                    app:iconPadding="16dp"
-                    app:iconSize="30dp" />
+                    app:icon="@drawable/ic_privacy"
+                    app:iconPadding="16dp" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/tosButton"
                     style="@style/Widget.MaterialComponents.Button.UnelevatedButton.navigation"
-                    android:drawableStart="@drawable/ic_share"
                     android:text="@string/terms_of_use"
                     app:cornerRadius="0dp"
-                    app:icon="@drawable/ic_share"
+                    app:icon="@drawable/ic_terms_of_use"
                     app:iconPadding="16dp"
-                    app:iconSize="30dp" />
+                    />
+
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/logoutButton"
                     style="@style/Widget.MaterialComponents.Button.UnelevatedButton.navigation"
                     android:text="Sign out"
                     app:cornerRadius="0dp"
-                    app:iconPadding="16dp"
-                    app:iconSize="30dp" />
+                    app:iconSize="30dp"
+                    app:icon="@drawable/ic_exit_to_app_black_24dp"
+                    app:iconPadding="16dp" />
             </LinearLayout>
         </ScrollView>
 

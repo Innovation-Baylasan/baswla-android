@@ -15,7 +15,7 @@ data class EntityDetails(
     @SerializedName("cover") val cover: String = "",
     @SerializedName("created_at") val createdAt: String = "",
     @SerializedName("description") val description: String = "",
-    @SerializedName("details") val details: String = "",
+    @SerializedName("details") val details: String? = null,
     @SerializedName("followers_count") val followersCount: Int = 0,
     @SerializedName("reviews_count") val reviewsCount: Int = 0,
     @SerializedName("average_rating") val rating: String = "0",

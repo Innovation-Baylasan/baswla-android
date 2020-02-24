@@ -16,7 +16,7 @@ data class Entity(
     @SerializedName("id") val id: Int,
     @SerializedName("location") val location: Location,
     @SerializedName("name") val name: String,
-    @SerializedName("tags") val list: List<Tag>,
+    @SerializedName("tags") val tags: List<Tag>,
     @SerializedName("rating") val rating: String
 
 ) : Parcelable

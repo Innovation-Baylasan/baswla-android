@@ -1,5 +1,6 @@
 package org.baylasan.sudanmap.ui.view
 
+import android.util.Log
 import com.google.android.material.appbar.AppBarLayout
 import kotlin.math.abs
 
@@ -15,33 +16,38 @@ abstract class AppBarChangedListener : AppBarLayout.OnOffsetChangedListener {
         State.IDLE
 
     override fun onOffsetChanged(appBarLayout: AppBarLayout, verticalOffset: Int) {
-        if (verticalOffset == 0) {
-            if (currentState != State.EXPANDED) {
-                onStateChanged(
-                    appBarLayout,
+        Log.d("MEGA","offset: $verticalOffset")
+        when {
+            abs(verticalOffset) <= 50-> {
+                if (currentState != State.EXPANDED) {
+                    onStateChanged(
+                        appBarLayout,
+                        State.EXPANDED
+                    )
+                }
+                currentState =
                     State.EXPANDED
-                )
             }
-            currentState =
-                State.EXPANDED
-        } else if (abs(verticalOffset) >= appBarLayout.totalScrollRange) {
-            if (currentState != State.COLLAPSED) {
-                onStateChanged(
-                    appBarLayout,
+            abs(verticalOffset)  >= appBarLayout.totalScrollRange - 50 -> {
+                if (currentState != State.COLLAPSED) {
+                    onStateChanged(
+                        appBarLayout,
+                        State.COLLAPSED
+                    )
+                }
+                currentState =
                     State.COLLAPSED
-                )
             }
-            currentState =
-                State.COLLAPSED
-        } else {
-            if (currentState != State.IDLE) {
-                onStateChanged(
-                    appBarLayout,
+            else -> {
+                if (currentState != State.IDLE) {
+                    onStateChanged(
+                        appBarLayout,
+                        State.IDLE
+                    )
+                }
+                currentState =
                     State.IDLE
-                )
             }
-            currentState =
-                State.IDLE
         }
     }
 

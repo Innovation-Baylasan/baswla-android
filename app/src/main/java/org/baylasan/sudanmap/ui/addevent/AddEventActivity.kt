@@ -164,6 +164,11 @@ class AddEventActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
                 eventRegisterLinkTextField.error = getString(R.string.register_link_required)
                 return@setOnClickListener
             }
+            if (!registerLink.startsWith("https") && !registerLink.startsWith("http")) {
+                eventRegisterLinkTextField.error = "Url must start with http or https"
+                return@setOnClickListener
+            }
+
             if (startDate == null) {
                 applicationStartButton.error = ""
                 return@setOnClickListener
@@ -204,7 +209,7 @@ class AddEventActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
 
                     submitEventButton.hideProgress("Done.")
                     toast(getString(R.string.event_add_success))
-                    setResult(Activity.RESULT_OK, Intent().putExtra("event", it.data))
+                    setResult(Activity.RESULT_OK/*, Intent().putExtra("event", it.data)*/)
                     finish()
                 }
                 if (it is UiState.Error) {
@@ -213,7 +218,7 @@ class AddEventActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
                         expiredSession()
                     } else {
                         submitEventButton.hideProgress("Failed.")
-
+                        it.throwable.printStackTrace()
                         toast(getString(R.string.failed_to_add_event))
                     }
                 }

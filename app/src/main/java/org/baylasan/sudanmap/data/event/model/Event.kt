@@ -16,7 +16,7 @@ data class Event(
     @SerializedName("start_date") val startDatetime: String?,
     @SerializedName("creator") val creator: Creator?,
     @SerializedName("description") val description: String?,
-    @SerializedName("entity") val entity:EntityDetails,
+    @SerializedName("entity") val entity:EntityDetails?,
     @SerializedName("name") val name: String,
     @SerializedName("picture") val picture: String?,
     @SerializedName("id") val id: Int,

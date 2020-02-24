@@ -6,14 +6,15 @@ import android.os.Build
 import android.os.Bundle
 import android.text.Html
 import android.text.util.Linkify
-import android.util.Log
 import android.view.LayoutInflater
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.chip.Chip
 import com.google.android.material.snackbar.Snackbar
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_entity_details.*
 import kotlinx.android.synthetic.main.content_entity_details.*
 import kotlinx.android.synthetic.main.rate_entity_dialog_layout.view.*
@@ -21,6 +22,7 @@ import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.common.*
 import org.baylasan.sudanmap.data.common.UnAuthorizedException
 import org.baylasan.sudanmap.data.entity.model.Entity
+import org.baylasan.sudanmap.data.entity.model.Tag
 import org.baylasan.sudanmap.ui.eventdetails.EventDetailsActivity
 import org.baylasan.sudanmap.ui.main.UserProfileViewModel
 import org.baylasan.sudanmap.ui.main.entity.load
@@ -28,11 +30,7 @@ import org.baylasan.sudanmap.ui.main.entity.loadCircle
 import org.baylasan.sudanmap.ui.view.AppBarChangedListener
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-/*TODO:(
-*  handle when user enters one of his entity/event.
-*  We should limit some of the interactions between him and his entity/event
-*  like rate/follow and respectively show other interactions that normal user can not do.)
-* */
+
 class EntityDetailsActivity : AppCompatActivity() {
     private val viewModel by viewModel<EntityDetailsViewModel>()
     private var snackBar: Snackbar? = null
@@ -43,7 +41,29 @@ class EntityDetailsActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_entity_details)
-        val entity = intent?.getParcelableExtra("entity") as Entity
+        val entity = Gson().fromJson<Entity>(
+            "{\n" +
+                    "\"id\": 1,\n" +
+                    "\"name\": \"Innovation Baylasan\",\n" +
+                    "\"description\": \"شركة بيلسان الابتكار. مهتمون بتصميم و تجهيز و تفعيل البيئات الإبداعية. نساعدكم في تحويل مساحات العمل إلى بيئات إبداعية\",\n" +
+                    "\"category\": {\n" +
+                    "\"id\": 7,\n" +
+                    "\"name\": \"R&D Centers\",\n" +
+                    "\"icon\": \"/storage/icons/6A9WUoH9A7JCjMiQfxh2wrxyngonMxJepSaDWo6u.png\",\n" +
+                    "\"icon_png\": \"/storage/markers/oBL7FbFkCa7563o5knfUQHMzXxEI1nphrmenCCbp.png\",\n" +
+                    "\"created_at\": \"2020-02-15T14:03:28.000000Z\",\n" +
+                    "\"updated_at\": \"2020-02-15T14:03:28.000000Z\"\n" +
+                    "},\n" +
+                    "\"avatar\": \"/storage/7/conversions/%2BzsKj1sDUHMUoGGSLoVAUwtoBaF2iZtzHVL1SkF%2BQOYMYkgrHGxOtcArssJXP8Xm9g754hELQ0AAAAASUVORK5CYII%3D-avatar.jpg\",\n" +
+                    "\"cover\": \"/storage/8/conversions/AAAAAElFTkSuQmCC-cover.jpg\",\n" +
+                    "\"tags\": [],\n" +
+                    "\"rating\": \"0.00\",\n" +
+                    "\"location\": {\n" +
+                    "\"lat\": 15.60168778,\n" +
+                    "\"long\": 32.50422591\n" +
+                    "}\n" +
+                    "}", Entity::class.java
+        )
         viewModel.getEvents(entity.id)
         viewModel.getDetailsForId(entity.id)
 
@@ -67,18 +87,20 @@ class EntityDetailsActivity : AppCompatActivity() {
             override fun onStateChanged(appBarLayout: AppBarLayout, state: State) {
                 when (state) {
                     State.EXPANDED -> {
-                        profileImage.visible()
-                        profileToolBarTitleTxt.text = ""
-                        commentLayout.gone()
+                        profileImage.showAlpha()
+                        profileImageSmall.hideAlpha()
+                        profileToolBarTitleTxt.hideAlpha()
+                        companyNameTxt.showAlpha()
                     }
                     State.COLLAPSED -> {
-                        profileImage.gone()
-                        profileToolBarTitleTxt.text = companyNameTxt.text
+                        profileImage.hideAlpha()
+                        profileImageSmall.showAlpha()
+                        profileToolBarTitleTxt.showAlpha()
+                        companyNameTxt.hideAlpha()
+
                     }
                     State.IDLE -> {
-                        commentLayout.visible()
-
-
+                        //DOSE NOTHING.
                     }
                 }
             }
@@ -95,6 +117,8 @@ class EntityDetailsActivity : AppCompatActivity() {
             companyDescriptionTextView.text = it.description
             profileCoverImage.load(it.cover)
             profileImage.loadCircle(it.avatar)
+            profileImageSmall.loadCircle(it.avatar)
+            addTagsToChipGroup(it.tags)
 
         }
         submitCommentButton.setOnClickListener {
@@ -124,13 +148,14 @@ class EntityDetailsActivity : AppCompatActivity() {
                     emptyEventLayout.gone()
                     eventLoadingLayout.gone()
                     eventRecyclerView.visible()
-                    val eventsAdapter = EntityEventsAdapter(it.data) {event->
+                    val eventsAdapter = EntityEventsAdapter(it.data) { event ->
                         val intent = Intent(this, EventDetailsActivity::class.java)
-                        intent.putExtra("event",event)
+                        intent.putExtra("event", event)
                         startActivity(intent)
                     }
-                    eventRecyclerView.adapter=eventsAdapter
-                    eventRecyclerView.layoutManager=LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false)
+                    eventRecyclerView.adapter = eventsAdapter
+                    eventRecyclerView.layoutManager =
+                        LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
                 }
             }
             if (it is UiState.Error) {
@@ -243,7 +268,8 @@ class EntityDetailsActivity : AppCompatActivity() {
                 profileCoverImage.load(entityDetails.cover)
                 profileImage.loadCircle(entityDetails.avatar)
                 companyProfileReviewsNumTxt.text = entityDetails.reviewsCount.toString()
-
+                addTagsToChipGroup(it.data.tags)
+                commentLayout.visible()
                 companyProfileFollowersNumTxt.text = entityDetails.followersCount.toString()
                 if (entityDetails.reviews.isNotEmpty()) {
                     loadingLayout.gone()
@@ -327,7 +353,8 @@ class EntityDetailsActivity : AppCompatActivity() {
             if (it is UiState.Loading) {
                 rateNowButtton.disable()
             }
-            if (it is UiState.Complete) {
+            if (it is UiState.Success) {
+                ratingBar2.rating = it.data.avgRate.toFloatOrNull() ?: 0f
                 rateNowButtton.enable()
             }
             if (it is UiState.Error) {
@@ -341,6 +368,14 @@ class EntityDetailsActivity : AppCompatActivity() {
         })
     }
 
+    private fun addTagsToChipGroup(tags: List<Tag>) {
+        tagsGroup.removeAllViews()
+        tags.forEach {
+            val chip = Chip(this)
+            chip.text = it.label
+            tagsGroup.addView(chip)
+        }
+    }
 
 }
 

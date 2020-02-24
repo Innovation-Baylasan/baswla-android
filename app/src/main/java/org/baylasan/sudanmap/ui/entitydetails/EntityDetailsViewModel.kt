@@ -7,6 +7,7 @@ import io.reactivex.schedulers.Schedulers
 import org.baylasan.sudanmap.common.UiState
 import org.baylasan.sudanmap.data.common.UnAuthorizedException
 import org.baylasan.sudanmap.data.entity.model.EntityDetails
+import org.baylasan.sudanmap.data.entity.model.RateResponse
 import org.baylasan.sudanmap.data.entity.model.Review
 import org.baylasan.sudanmap.data.event.model.Event
 import org.baylasan.sudanmap.domain.entity.*
@@ -28,13 +29,13 @@ class EntityDetailsViewModel(
     private val reviewUiState = MutableLiveData<UiState<Review>>()
     private val followUiState = MutableLiveData<UiState<Unit>>()
     private val unFollowUiState = MutableLiveData<UiState<Unit>>()
-    private val rateUiState = MutableLiveData<UiState<Unit>>()
+    private val rateUiState = MutableLiveData<UiState<RateResponse>>()
 
     val entityDetailsState: LiveData<UiState<EntityDetails>> = loadEntityUiState
     val reviewState: LiveData<UiState<Review>> = reviewUiState
     val followState: LiveData<UiState<Unit>> = followUiState
     val unFollowState: LiveData<UiState<Unit>> = unFollowUiState
-    val rateState: LiveData<UiState<Unit>> = rateUiState
+    val rateState: LiveData<UiState<RateResponse>> = rateUiState
     val eventState: LiveData<UiState<List<Event>>> = eventsUiState
     private var isFollowed = false
     fun getEvents(id: Int) {
@@ -134,7 +135,7 @@ class EntityDetailsViewModel(
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                rateUiState.value = UiState.Complete()
+                rateUiState.value = UiState.Success(it)
 
             }, {
 

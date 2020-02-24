@@ -27,6 +27,8 @@ class EventDetailsActivity : AppCompatActivity() {
         eventImage.load(event.picture ?: "")
         eventName.text = event.name
         eventDescription.text = event.description
+        startDate.text=event.startDatetime
+        endDate.text=event.endDatetime
         applyButton.setOnClickListener {
             openWebPage(event.registrationLink)
         }

@@ -5,6 +5,6 @@ import com.google.gson.annotations.SerializedName
 data class AddEventResponse(
     @SerializedName("message")
     val message: String = "",
-    @SerializedName("event")
+    @SerializedName("data")
     val event: Event? = null
 )

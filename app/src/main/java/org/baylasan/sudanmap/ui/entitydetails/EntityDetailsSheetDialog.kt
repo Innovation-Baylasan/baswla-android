@@ -9,10 +9,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.chip.Chip
+import kotlinx.android.synthetic.main.fragment_entity_details.*
 import kotlinx.android.synthetic.main.fragment_entity_details.view.*
-
+import kotlinx.android.synthetic.main.row_search_result.*
 import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.data.entity.model.Entity
+import org.baylasan.sudanmap.data.entity.model.Tag
 import org.baylasan.sudanmap.ui.main.entity.load
 import org.baylasan.sudanmap.ui.main.entity.loadCircle
 
@@ -51,6 +54,7 @@ class EntityDetailsSheetDialog : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         val entity = arguments?.getParcelable<Entity>("entity")
         if (entity != null) {
+            addTagsToChipGroup(entity.tags)
             view.profileCoverImage.load(entity.cover)
             view.profileImage.loadCircle(entity.avatar)
             view.companyNameTxt.text = entity.name
@@ -63,6 +67,14 @@ class EntityDetailsSheetDialog : BottomSheetDialogFragment() {
             }
         } else {
             dismissAllowingStateLoss()
+        }
+    }
+
+    private fun addTagsToChipGroup(tags: List<Tag>) {
+        tags.forEach {
+            val chip = Chip(activity)
+            chip.text = it.label
+            tagsGroup.addView(chip)
         }
     }
 

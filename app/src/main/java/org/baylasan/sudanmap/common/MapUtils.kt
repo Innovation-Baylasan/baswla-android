@@ -25,7 +25,6 @@ fun GoogleMap.customize(context: Context) {
     uiSettings.isMyLocationButtonEnabled = context.canEnableLocationButton()
     uiSettings.isMapToolbarEnabled = false
 
-    //TODO complete and replace older code
 }
 fun UiSettings.disableAll(){
     isZoomControlsEnabled=false

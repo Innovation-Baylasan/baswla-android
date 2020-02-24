@@ -1,7 +1,8 @@
 package org.baylasan.sudanmap
 
-import org.junit.Assert.assertEquals
 import org.junit.Test
+import java.text.DateFormat
+import java.text.SimpleDateFormat
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -11,7 +12,11 @@ import org.junit.Test
 class ExampleUnitTest {
     @Test
     fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
+
     }
 
 }
+ fun main() {
+     val dateString = "2020-02-24T19:33:51.000000Z"
+     print(SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(dateString))
+ }

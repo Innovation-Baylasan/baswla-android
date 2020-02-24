@@ -131,8 +131,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="8dp"
                     android:text="@string/name"
                     android:textSize="12sp" />
 
@@ -147,7 +146,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:layout_marginBottom="8dp"
                     android:text="@string/type"
                     android:textSize="12sp" />
 
@@ -180,7 +178,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:layout_marginBottom="8dp"
                     android:text="@string/description"
                     android:textSize="12sp" />
 
@@ -191,11 +188,47 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="0dp"
                     android:layout_marginEnd="0dp"
-                    android:layout_marginBottom="16dp"
                     android:gravity="top|start"
                     android:inputType="textMultiLine"
                     android:maxLines="5"
                     android:padding="8dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Tags"
+                    android:textSize="12sp" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textInputLayout"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+
+                    app:helperText="Separate each value with a comma example: Research center, Venture capital...etc">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tagField"
+                        android:layout_width="match_parent"
+                        style="@style/RoundedCornerEditText"
+                        android:layout_height="match_parent"
+                        android:imeActionLabel="Add"
+                        android:imeOptions="actionDone"
+                        android:maxLines="1"
+                        android:layout_marginStart="0dp"
+                        android:layout_marginEnd="0dp"
+                        android:singleLine="true" />
+
+                    <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/tagsGroup"
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:duplicateParentState="false">
+
+                    </com.google.android.material.chip.ChipGroup>
+                </com.google.android.material.textfield.TextInputLayout>
 
 
             </LinearLayout>

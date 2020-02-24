@@ -16,6 +16,7 @@ class SessionManagerImpl(
 
 
     override fun saveUserSession(user: UserDto) {
+        setIsFirstTime(false)
         sharedPreferences.putPreference(KEY_USER_ID, user.id)
         sharedPreferences.putPreference(KEY_USER_EMAIL, user.email)
         sharedPreferences.putPreference(KEY_USER_TOKEN, user.token)

@@ -129,7 +129,7 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener,
                 userNameTextView.text = profile.name
                 userEmailTextView.text = profile.email
                 if (profile.isCompany()) {
-                    editProfileButton.visible()
+//                    editProfileButton.visible()
                     openPlacesButton.visible()
                 } else {
                     editProfileButton.gone()

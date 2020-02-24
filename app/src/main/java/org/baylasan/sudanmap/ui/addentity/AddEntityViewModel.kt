@@ -24,7 +24,7 @@ class AddEntityViewModel(
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                addUiState.value = UiState.Success(it)
+                addUiState.value = UiState.Complete()
             }, {
                 if (it is UnAuthorizedException) {
                     sessionManager.clear()

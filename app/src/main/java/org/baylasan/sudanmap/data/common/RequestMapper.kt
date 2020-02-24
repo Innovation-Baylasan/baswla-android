@@ -43,29 +43,33 @@ class RegisterRequestMapper : RequestMapper<RegisterCompanyRequest> {
 }
 
 class AddEntityRequestMapper : RequestMapper<AddEntityRequest> {
-    override fun mapToResponseBody(t: AddEntityRequest): List<MultipartBody.Part> {
+    override fun mapToResponseBody(request: AddEntityRequest): List<MultipartBody.Part> {
         val multipartBody = MultipartBody.Builder()
             .setType(MultipartBody.FORM)
-
-            .addFormDataPart("category_id", t.category.toString())
-            .addFormDataPart("name", t.name)
+            .addFormDataPart("category_id", request.category.toString())
+            .addFormDataPart("name", request.name)
             .addFormDataPart(
                 "description",
-                t.description
+                request.description
             )
-            .addFormDataPart("latitude", t.locationLat)
-            .addFormDataPart("longitude", t.locationLng)
+            .addFormDataPart("latitude", request.locationLat)
+            .addFormDataPart("longitude", request.locationLng)
 
-        if (t.cover != null)
+
+        if (request.cover != null)
             multipartBody.addFormDataPart(
                 "cover", "cover${Date().time}",
-                t.cover.asRequestBody("application/octet-stream".toMediaTypeOrNull())
+                request.cover.asRequestBody("application/octet-stream".toMediaTypeOrNull())
             )
-        if (t.avatar != null)
+        if (request.avatar != null)
             multipartBody.addFormDataPart(
                 "avatar", "avatar${Date().time}",
-                t.avatar.asRequestBody("application/octet-stream".toMediaTypeOrNull())
+                request.avatar.asRequestBody("application/octet-stream".toMediaTypeOrNull())
             )
+
+        request.tags.forEachIndexed { index, s ->
+            multipartBody.addFormDataPart("tags[$index]", s)
+        }
         return multipartBody.build().parts
     }
 

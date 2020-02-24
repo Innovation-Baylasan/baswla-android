@@ -67,7 +67,10 @@
         <activity
             android:name=".ui.auth.signup.SignUpActivity"
             android:windowSoftInputMode="adjustPan|adjustResize"></activity>
-        <activity android:name=".ui.entitydetails.EntityDetailsActivity" />
+        <activity android:name=".ui.entitydetails.EntityDetailsActivity"
+
+            android:windowSoftInputMode="adjustPan"
+            />
     </application>
 
 </manifest>

@@ -73,7 +73,7 @@ val appModule = module {
     factory<RequestMapper<AddEventRequest>> { AddEventRequestMapper() }
     factory { AddEntityRequestMapper() }
     factory(qualifier = named("io")) { provideIoScheduler() }
-    factory(qualifier = named("main")) { provideMainSchudler() }
+    factory(qualifier = named("main")) { provideMainScheduler() }
 
 }
 val introModule = module {
@@ -138,11 +138,12 @@ val categoryModule = module(override = true) {
 private fun providePicasso(context: Context): Picasso {
     return Picasso.Builder(context)
         .downloader(OkHttp3Downloader(context))
+        .loggingEnabled(BuildConfig.DEBUG)
         .build()
 }
 
 private fun provideIoScheduler(): Scheduler = Schedulers.io()
-private fun provideMainSchudler(): Scheduler = AndroidSchedulers.mainThread()
+private fun provideMainScheduler(): Scheduler = AndroidSchedulers.mainThread()
 val homePageModule = module(override = true) {
     viewModel { UserProfileViewModel(get()) }
 
@@ -204,7 +205,7 @@ private fun provideRegisterErrorConverter(retrofit: Retrofit) =
 
 private fun provideRetrofit(androidApplication: Application, okHttpClient: OkHttpClient): Retrofit =
     Retrofit.Builder()
-        .baseUrl(androidApplication.resources.getString(R.string.base_url))
+        .baseUrl(androidApplication.resources.getString(R.string.api_url))
         .addConverterFactory(GsonConverterFactory.create())
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .client(okHttpClient)

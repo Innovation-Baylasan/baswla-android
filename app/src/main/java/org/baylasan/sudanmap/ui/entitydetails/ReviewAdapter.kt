@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import org.baylasan.sudanmap.R
-import org.baylasan.sudanmap.common.parseDate
+import org.baylasan.sudanmap.common.fromYYYYMMddTHHmmss
 import org.baylasan.sudanmap.data.entity.model.Review
 import java.util.*
 
@@ -33,8 +33,10 @@ class ReviewAdapter(private val reviews: MutableList<Review> = mutableListOf()) 
         val review = reviews[position]
         holder.reviewContent.text = review.review
 //        val time = parseDate(review.createdAt)!!.time
-        holder.reviewDate.text = review.createdAt
-        holder.reviewerName.text=review.name
+        holder.reviewDate.text = DateUtils.getRelativeTimeSpanString(
+            holder.view.context,
+            review.createdAt.fromYYYYMMddTHHmmss().time)
+        holder.reviewerName.text = review.name
     }
 
     fun addAll(reviews: List<Review>) {
