@@ -47,12 +47,12 @@
                 android:textColor="@color/black"
                 android:textAllCaps="true"
                 android:drawablePadding="8dp"
-                android:text="Failed to load event" />
+                android:text="@string/failed_to_load_events" />
             <TextView
                 android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Tap to try again"
+                android:text="@string/tap_to_try_again"
                 />
         </LinearLayout>
 
@@ -61,6 +61,7 @@
     <include
         android:id="@+id/emptyLayout"
         layout="@layout/empty_event_layout"
-        android:visibility="gone" />
+        android:visibility="gone"
+        tools:visibility="visible"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

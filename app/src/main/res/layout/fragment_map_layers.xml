@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="16dp"
-        android:text="Map Filter"
+        android:text="@string/map_filter"
         android:textStyle="bold"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5" />
 
@@ -29,7 +29,7 @@
         android:layout_marginBottom="8dp"
         android:gravity="center"
         android:maxLines="4"
-        android:text="in this area there should be a descriptive text in this area there should be a descriptive text"
+        tools:text="in this area there should be a descriptive text in this area there should be a descriptive text"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
 
     <FrameLayout
@@ -63,7 +63,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="48dp"
-        android:text="Select"
+        android:text="@string/select"
         android:textSize="18sp"
         android:id="@+id/selectBtn"
         android:textColor="@color/white"

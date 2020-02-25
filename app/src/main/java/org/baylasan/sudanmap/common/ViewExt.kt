@@ -3,8 +3,10 @@ package org.baylasan.sudanmap.common
 import android.R.attr.duration
 import android.app.Activity
 import android.content.Context
-import android.text.Editable
-import android.text.TextWatcher
+import android.text.*
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
+import android.text.style.ForegroundColorSpan
 import android.view.*
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -42,7 +44,38 @@ fun AppCompatEditText.setEndDrawableOnTouchListener(func: AppCompatEditText.() -
     }
 }
 
-
+fun String.toClickableSpan(color: Int, onClick: () -> Unit): SpannableStringBuilder {
+    val spannableStringBuilder = SpannableStringBuilder(this)
+    spannableStringBuilder.setSpan(
+        ForegroundColorSpan(color),
+        0,
+        length,
+        Spannable.SPAN_INCLUSIVE_INCLUSIVE
+    )
+    spannableStringBuilder.setSpan(object : ClickableSpan() {
+        override fun onClick(widget: View) {
+            onClick.invoke()
+        }
+    }, 0, length, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
+    return spannableStringBuilder
+}
+fun TextView.makeLinks(vararg links: Pair<String, View.OnClickListener>) {
+    val spannableString = SpannableString(this.text)
+    for (link in links) {
+        val clickableSpan = object : ClickableSpan() {
+            override fun onClick(view: View) {
+                Selection.setSelection((view as TextView).text as Spannable, 0)
+                view.invalidate()
+                link.second.onClick(view)
+            }
+        }
+        val startIndexOfLink = this.text.toString().indexOf(link.first)
+        spannableString.setSpan(clickableSpan, startIndexOfLink, startIndexOfLink + link.first.length,
+            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+    }
+    this.movementMethod = LinkMovementMethod.getInstance() // without LinkMovementMethod, link can not click
+    this.setText(spannableString, TextView.BufferType.SPANNABLE)
+}
 fun ViewGroup.inflate(layoutRes: Int, attachToRoot: Boolean = false): View? {
     return LayoutInflater.from(context)
         .inflate(layoutRes, this, attachToRoot)
@@ -244,9 +277,10 @@ private fun View.alphaAnimation(duration: Long, visibility: Int) {
     startAnimation(alphaAnimation)
 }
 
-fun View.showAlpha(){
+fun View.showAlpha() {
     alphaAnimation(200, VISIBLE)
 }
-fun View.hideAlpha(){
+
+fun View.hideAlpha() {
     alphaAnimation(200, GONE)
 }

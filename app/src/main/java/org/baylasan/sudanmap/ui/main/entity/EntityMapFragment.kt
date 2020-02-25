@@ -62,7 +62,6 @@ class EntityMapFragment : Fragment(R.layout.fragment_entity_map) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d("MEGA", "view recreated")
 
         openDrawerMenu.setOnClickListener {
             activity.openDrawer()
@@ -87,7 +86,6 @@ class EntityMapFragment : Fragment(R.layout.fragment_entity_map) {
             getLocation()
             googleMap.setOnMarkerClickListener {
                 val entity = (it.tag as Entity)
-                Log.d("MEGA", "$entity")
                 EntityDetailsSheetDialog.newInstance(entity).show(fragmentManager!!, "")
                 true
             }

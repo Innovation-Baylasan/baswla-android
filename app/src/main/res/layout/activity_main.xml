@@ -88,7 +88,7 @@
 
                 <com.google.android.material.button.MaterialButton
                     style="@style/Widget.MaterialComponents.Button.UnelevatedButton.navigation"
-                    android:text="About"
+                    android:text="@string/about"
                     app:cornerRadius="0dp"
                     app:icon="@drawable/ic_about"
                     app:iconPadding="16dp"
@@ -96,7 +96,7 @@
 
                 <com.google.android.material.button.MaterialButton
                     style="@style/Widget.MaterialComponents.Button.UnelevatedButton.navigation"
-                    android:text="Share App"
+                    android:text="@string/share_app"
                     app:cornerRadius="0dp"
                     app:icon="@drawable/ic_share"
                     app:iconPadding="16dp"
@@ -128,7 +128,7 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/logoutButton"
                     style="@style/Widget.MaterialComponents.Button.UnelevatedButton.navigation"
-                    android:text="Sign out"
+                    android:text="@string/sign_out"
                     app:cornerRadius="0dp"
                     app:iconSize="30dp"
                     app:icon="@drawable/ic_exit_to_app_black_24dp"

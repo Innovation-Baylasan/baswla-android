@@ -28,7 +28,8 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:baselineAligned="false">
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -59,7 +60,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
                             android:fontFamily="@font/neo_sans_arabic_bold"
-                            android:text="12/1/2020 4:00 PM"
+                            tools:text="12/1/2020 4:00 PM"
                             android:textColor="@color/black" />
                     </LinearLayout>
 
@@ -85,7 +86,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
                             android:fontFamily="@font/neo_sans_arabic_light"
-                            android:text="End date" />
+                            android:text="@string/end_date" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -93,7 +94,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
                             android:fontFamily="@font/neo_sans_arabic_bold"
-                            android:text="12/1/2020 4:00 PM"
+                            tools:text="12/1/2020 4:00 PM"
                             android:textColor="@color/black" />
                     </LinearLayout>
 
@@ -102,7 +103,8 @@
                 <LinearLayout
                     android:visibility="gone"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:baselineAligned="false">
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -167,7 +169,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
                             android:fontFamily="@font/neo_sans_arabic_bold"
-                            android:text="100"
+                            tools:text="100"
                             android:id="@+id/seatsCount"
                             android:textColor="@color/black" />
                     </LinearLayout>
@@ -195,7 +197,7 @@
                     android:id="@+id/eventDescription"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="rambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Let...….. sheets containing Lorem Ipsum passages, and more recently with desktop" />
+                    tools:text="rambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Let...….. sheets containing Lorem Ipsum passages, and more recently with desktop" />
 
                 <com.google.android.material.button.MaterialButton
                     android:visibility="gone"
@@ -250,7 +252,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="this entity has no events."
+                        android:text="@string/this_entity_has_no_events"
                         android:textColor="@color/black"
                         tools:visibility="visible" />
 
@@ -266,7 +268,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Failed to load events"
+                            android:text="@string/unable_to_load_data"
                             android:textColor="@color/black"
                             android:textSize="14sp" />
 

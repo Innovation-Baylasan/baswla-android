@@ -69,21 +69,21 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             when (event) {
                 is UiState.Loading -> {
                     signInButton.showProgress {
-                        buttonText = "Signing in..."
+                        buttonText = getString(R.string.sigining_in)
                         progressColor = Color.WHITE
                     }
                 }
                 is UiState.Complete -> {
 
 
-                    signInButton.hideProgress("Done.")
+                    signInButton.hideProgress(R.string.done)
                     startActivity(Intent(activity,MainActivity::class.java))
                     activity?.finish()
 
                 }
                 is UiState.Error -> {
                     activity?.toast("Unable to login at the moment.")
-                    signInButton.hideProgress("Failed.")
+                    signInButton.hideProgress(R.string.failed)
 
                 }
             }

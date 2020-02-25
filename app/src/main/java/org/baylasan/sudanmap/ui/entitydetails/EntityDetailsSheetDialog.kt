@@ -12,7 +12,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.chip.Chip
 import kotlinx.android.synthetic.main.fragment_entity_details.*
 import kotlinx.android.synthetic.main.fragment_entity_details.view.*
-import kotlinx.android.synthetic.main.row_search_result.*
 import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.data.entity.model.Entity
 import org.baylasan.sudanmap.data.entity.model.Tag

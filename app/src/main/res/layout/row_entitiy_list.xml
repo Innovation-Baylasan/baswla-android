@@ -21,7 +21,7 @@
             android:drawableStart="@drawable/ic_navigation"
             android:drawablePadding="16dp"
             android:gravity="start|center"
-            android:text="Entity category name"
+            tools:text="Entity category name"
             android:textColor="@android:color/black"
             android:textSize="18sp" />
 
@@ -30,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/showMoreButton"
-            android:text="show all"
+            tools:text="show all"
             android:textColor="@color/colorAccent" />
     </LinearLayout>
 

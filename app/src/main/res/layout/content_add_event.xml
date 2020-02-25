@@ -363,7 +363,7 @@
                                 android:layout_gravity="center"
                                 android:layout_marginTop="8dp"
                                 android:fontFamily="@font/neo_sans_arabic_bold"
-                                android:text="No location selected!!"
+                                android:text="@string/no_location_selected"
                                 android:textColor="@color/white"
                                 android:textSize="16sp" />
 
@@ -373,7 +373,7 @@
                                 android:layout_gravity="center"
                                 android:layout_marginTop="2dp"
                                 android:fontFamily="@font/neo_sans_arabic_light"
-                                android:text="Tap to pick"
+                                android:text="@string/tap_to_pick"
                                 android:textColor="@color/white"
                                 android:textSize="16sp" />
                         </LinearLayout>

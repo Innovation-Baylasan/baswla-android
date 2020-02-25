@@ -43,7 +43,7 @@
                 android:background="@android:color/transparent"
                 android:drawableEnd="@drawable/ic_clear_black_24dp"
                 android:gravity="center"
-                android:hint="Search here..."
+                android:hint="@string/search_here"
 
                 android:imeOptions="actionSearch"
                 android:inputType="text"
@@ -72,13 +72,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
         tools:itemCount="20"
-        tools:listitem="@layout/row_search_result" />
+        tools:listitem="@layout/entity_list_item" />
 
     <TextView
         android:id="@+id/emptyView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="No data found"
+        android:text="@string/no_data_found"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -89,7 +89,7 @@
         android:id="@+id/errorView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Unable to load data"
+        android:text="@string/unable_to_load_data"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

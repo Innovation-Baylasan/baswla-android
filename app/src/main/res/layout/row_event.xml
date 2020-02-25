@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_margin="4dp"
     android:orientation="vertical"
     android:background="?selectableItemBackgroundBorderless"
@@ -32,7 +33,7 @@
             android:layout_marginTop="12dp"
             android:id="@+id/eventName"
             android:fontFamily="@font/neo_sans_arabic_bold"
-            android:text="Gamenation"
+            tools:text="Gamenation"
             android:textAllCaps="true"
             android:textColor="@color/black"
             android:textSize="16sp" />
@@ -48,7 +49,7 @@ android:layout_marginBottom="8dp"
             android:fontFamily="@font/neo_sans_arabic_light"
             android:maxLines="4"
             android:ellipsize="end"
-            android:text="rambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with deskto"
+            tools:text="rambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with deskto"
             android:textAlignment="textStart" />
     <!--    <TextView
             android:layout_marginTop="8sp"

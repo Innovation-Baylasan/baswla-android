@@ -147,19 +147,19 @@ class CompanyDataActivity : AppCompatActivity() {
             completeRegisterViewModel.events.observe(this, Observer { event ->
                 when (event) {
                     is DataEvent -> {
-                        completeRegister.hideProgress("Done.")
+                        completeRegister.hideProgress(R.string.done)
                         startActivity(Intent(this, MainActivity::class.java))
                         finish()
                     }
                     is LoadingEvent -> {
 
                         completeRegister.showProgress {
-                            buttonText = "Completing registration..."
+                            buttonText = getString(R.string.completing_register)
                             progressColor
                         }
                     }
                     is ErrorEvent -> {
-                        completeRegister.hideProgress("Failed.")
+                        completeRegister.hideProgress(R.string.failed)
                         toast(event.errorMessage)
                     }
 

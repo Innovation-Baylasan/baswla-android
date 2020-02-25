@@ -2,7 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/lottieView"
@@ -30,7 +31,7 @@
         android:layout_marginBottom="16dp"
         android:layout_marginTop="44dp"
         android:fontFamily="@font/neo_sans_arabic_bold"
-        android:text="Explore"
+        tools:text="Explore"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/descriptionText"
@@ -47,7 +48,7 @@
         android:layout_marginTop="10dp"
         android:gravity="center"
         android:layout_marginBottom="16dp"
-        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nunc eget lorem dolor sed viverra ipsum."
+        tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nunc eget lorem dolor sed viverra ipsum."
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"

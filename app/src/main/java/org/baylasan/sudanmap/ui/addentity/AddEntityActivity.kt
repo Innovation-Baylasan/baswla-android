@@ -180,7 +180,7 @@ class AddEntityActivity : AppCompatActivity() {
     private fun observeAddState() {
         addEntityViewModel.addState.observe(this, Observer {
             if (it is UiState.Complete) {
-                submitEntityButton.hideProgress("Done.")
+                submitEntityButton.hideProgress(getString(R.string.done))
                 toast(getString(R.string.entity_added))
                 setResult(Activity.RESULT_OK)
                 finish()
@@ -189,13 +189,13 @@ class AddEntityActivity : AppCompatActivity() {
                 if (it.throwable is UnAuthorizedException) {
                     expiredSession()
                 } else {
-                    submitEntityButton.hideProgress("Failed.")
+                    submitEntityButton.hideProgress(getString(R.string.failed))
                     toast(getString(R.string.failed_to_add_entitiy))
                 }
             }
             if (it is UiState.Loading) {
                 submitEntityButton.showProgress {
-                    buttonText = "Adding new entity..."
+                    buttonText = getString(R.string.adding_new_entity)
                     progressColor = Color.WHITE
                 }
 
@@ -241,14 +241,12 @@ class AddEntityActivity : AppCompatActivity() {
                 val resultUri: Uri = result.uri
                 if (isAvatarClicked) {
                     selectedAvatarImage = resultUri
-                    Log.d("MEGA", "selected avatar= $resultUri")
                     picasso.load(resultUri.toFile())
                         .transform(CropCircleTransformation())
                         .into(avatarImage)
 
                 } else {
                     selectedCoverImage = resultUri
-                    Log.d("MEGA", "selected cover= $resultUri")
 
                     picasso.load(resultUri.toFile()).into(coverImage)
                 }

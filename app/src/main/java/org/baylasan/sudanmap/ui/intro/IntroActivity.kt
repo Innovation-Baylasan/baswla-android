@@ -22,7 +22,7 @@ class IntroActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_intro)
-
+        //TODO change intro data
         val introItems = arrayListOf(
             ViewPagerModel(
                 jsonFile = R.raw.map_inter_actions, header = "Explore",

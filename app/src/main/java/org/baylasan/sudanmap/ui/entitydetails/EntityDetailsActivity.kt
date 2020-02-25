@@ -202,7 +202,7 @@ class EntityDetailsActivity : AppCompatActivity() {
                 } else {
                     reviewField.enable()
                     submitCommentButton.enable()
-                    toast("Failed to add comment, try again.")
+                    toast(getString(R.string.failed_to_add_comment))
                 }
             }
         })

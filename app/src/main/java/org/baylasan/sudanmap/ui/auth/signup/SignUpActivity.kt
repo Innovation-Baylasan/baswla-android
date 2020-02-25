@@ -2,18 +2,29 @@ package org.baylasan.sudanmap.ui.auth.signup
 
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.SpannableStringBuilder
+import android.text.style.ClickableSpan
 import android.util.Log
 import android.util.Patterns
+import android.view.View
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import com.github.razir.progressbutton.bindProgressButton
+import com.github.razir.progressbutton.hideProgress
+import com.github.razir.progressbutton.showProgress
 import com.google.android.material.button.MaterialButton
 import kotlinx.android.synthetic.main.activity_sign_up.*
 import org.baylasan.sudanmap.R
-import org.baylasan.sudanmap.common.*
+import org.baylasan.sudanmap.common.asString
+import org.baylasan.sudanmap.common.isMatch
+import org.baylasan.sudanmap.common.toClickableSpan
+import org.baylasan.sudanmap.common.toast
 import org.baylasan.sudanmap.data.user.model.RegisterRequest
 import org.baylasan.sudanmap.ui.auth.company.CompanyDataActivity
 import org.baylasan.sudanmap.ui.main.MainActivity
@@ -33,6 +44,8 @@ class SignUpActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
+        bindProgressButton(signUpBtn)
+
         individualBtn.select()
         companyBtn.unSelect()
         setAdjustScreen()
@@ -62,7 +75,27 @@ class SignUpActivity : AppCompatActivity() {
             intent.putExtra("registerData", it)
             startActivity(intent)
         })
+        val privacyPolicyText = getString(R.string.privacy_policy)
+        val termsOfServicesText = getString(R.string.terms_of_use)
+        val signUpNote = getString(R.string.by_signing_up)
+        val and = getString(R.string.and)
+        val space=" "
+        //TODO
+        signUpNoteText.apply {
+            append(space)
+            append(signUpNote)
+            append(space)
+            append(privacyPolicyText.toClickableSpan(getColor(R.color.colorAccent)) {
+                Log.d("MEGA","open privacy policy")
+            })
+            append(space)
+            append(and)
+            append(space)
+            append(termsOfServicesText.toClickableSpan(getColor(R.color.colorAccent)) {
+                Log.d("MEGA","open terms of service")
 
+            })
+        }
     }
 
     private fun MaterialButton.select() {
@@ -92,32 +125,30 @@ class SignUpActivity : AppCompatActivity() {
         viewModel.events.observe(this, Observer { event ->
             when (event) {
                 is DataEvent -> {
-                    hideProgress()
+                    signUpBtn.hideProgress(R.string.done)
                     startActivity(Intent(this, MainActivity::class.java))
                     finish()
                 }
                 is LoadingEvent -> {
-                    signUpProgressBar.visible()
+                    signUpBtn.showProgress {
+                        buttonText = getString(R.string.sign_up)
+                        progressColor = Color.WHITE
+                    }
 
                 }
                 is ErrorEvent -> {
-                    hideProgress()
-                    try {
-                        Log.d("KLD", event.errorMessage!!)
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                    }
-                    toast(event.errorMessage ?: "error")
+                    signUpBtn.hideProgress(R.string.failed)
+                    toast(event.errorMessage)
                 }
-                else -> hideProgress()
+                is NetworkErrorEvent, TimeoutEvent -> {
+                    signUpBtn.hideProgress(getString(R.string.connection_faile))
+                }
+
             }
 
         })
     }
 
-    private fun hideProgress() {
-        signUpProgressBar.gone()
-    }
 
     private fun performValidation() {
         val name = singUpNameEditText.asString()

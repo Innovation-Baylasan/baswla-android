@@ -11,8 +11,8 @@
 
     <ImageView
         android:id="@+id/eventImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:scaleType="centerCrop"
         android:src="@drawable/event_details_placeholder" />
 
@@ -37,7 +37,6 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/neo_sans_arabic_bold"
             android:text="Art space events"
-
             android:textColor="@android:color/white"
             android:textSize="16sp" />
 
@@ -49,6 +48,7 @@
                 android:id="@+id/eventPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:layout_marginTop="8sp"
                 android:drawableStart="@drawable/ic_price_label"
                 android:drawablePadding="8dp"
@@ -68,6 +68,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="8dp"
+                android:visibility="gone"
                 android:drawableStart="@drawable/ic_seat"
                 android:drawablePadding="8dp"
                 android:fontFamily="@font/neo_sans_arabic_light"

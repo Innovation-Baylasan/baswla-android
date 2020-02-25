@@ -59,7 +59,7 @@
                     android:background="@drawable/rounded_view"
                     android:fontFamily="@font/neo_sans_arabic_bold"
                     android:gravity="center"
-                    android:text="upload cover\n image"
+                    android:text="@string/upload_cover_picture"
                     android:textColor="@color/black"
                     android:textSize="10sp" />
             </LinearLayout>
@@ -91,7 +91,7 @@
                     android:background="@drawable/rounded_view"
                     android:fontFamily="@font/neo_sans_arabic_bold"
                     android:gravity="center"
-                    android:text="upload profile\n image"
+                    android:text="@string/upload_profile_picture"
                     android:textColor="@color/black"
                     android:textSize="10sp" />
             </LinearLayout>
@@ -196,7 +196,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:text="Tags"
+                    android:text="@string/tags"
                     android:textSize="12sp" />
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -222,7 +222,6 @@
 
                     <com.google.android.material.chip.ChipGroup
                         android:id="@+id/tagsGroup"
-
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:duplicateParentState="false">

@@ -1,46 +1,40 @@
 <resources>
 
     <string name="title_activity_maps">Map</string>
-    <string name="start_up_week_end">Startups Weekend Sudan</string>
+    <string name="start_up_week_end" translatable="false">Startups Weekend Sudan</string>
     <string name="rate_now_btn_label">Rate now</string>
-    <string name="number_sample">112</string>
+    <string name="number_sample" translatable="false">112</string>
     <string name="followers">Followers</string>
     <string name="events">Events</string>
-    <string name="review">Review</string>
-    <string name="sample_descripition">rambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem</string>
+    <string name="review">Reviews</string>
+    <string name="sample_descripition" translatable="false">rambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem</string>
     <string name="leave_review">Leave Review</string>
     <string name="comment_hint">Write a review…</string>
     <string name="post">Post</string>
     <string name="follow">Follow</string>
-    <string name="title_activity_add_entitiy">AddEntitiyActivity</string>
+    <string name="title_activity_add_entitiy" translatable="false">AddEntitiyActivity</string>
     <string name="action_settings">Settings</string>
     <string name="welcome">Welcome</string>
-    <string name="welcome_text_description">Here we should put text to let user register in our app Here we should put text to let user register in our app¬</string>
+    <string name="welcome_text_description" translatable="false">Here we should put text to let user register in our app Here we should put text to let user register in our app¬</string>
     <string name="user_name">Username</string>
     <string name="password">Passowrd</string>
     <string name="sgin_in">Sign in</string>
     <string name="sign_up_as_org">Sign up</string>
     <string name="or">OR</string>
     <string name="sign_in_as_guest">Sign in as guest</string>
-    <string name="sample_name">John Doe</string>
-    <string name="sample_comment">Nice Done, Such Great Place Nice Done, Such Great Place Nice Done, Such Great Place Nice Done, Such Great Place</string>
-    <string name="sample_date_in_month">2 month ago</string>
+    <string name="sample_name" translatable="false">John Doe</string>
+    <string name="sample_comment" translatable="false">Nice Done, Such Great Place Nice Done, Such Great Place Nice Done, Such Great Place Nice Done, Such Great Place</string>
+    <string name="sample_date_in_month" translatable="false">2 month ago</string>
     <string name="email">Email</string>
     <string name="password_confirmation">Password Confirmation</string>
     <string name="company">Company</string>
-    <string name="privacy_string">
-        Here is a text explaining to the user that upon registration,  <font color="#003a7c">
-            <strong>the policy of the agreement    </strong>
-        </font> will be approved.
-And <font color="#003a7c">
-            <strong> Privacy Policy      </strong>
-        </font>and its consequences.</string>
-    <string name="permission_denied_settings_subtitle">Bawsala app relies heavily on Location permission and without it the app wont function probably, we also use it to get nearby events and entities location</string>
+    <string name="privacy_string">By Signing up you are hereby agree to our <font color="#003a7c">Terms of service</font> and <font color="#003a7c">privacy policy</font></string>
+    <string name="permission_denied_settings_subtitle">Bawsala app relies heavily on Location permission and without it the app wont function as expected, we also use it to get nearby events and entities location.</string>
     <string name="permission_denied_settings_title">Permission required</string>
-    <string name="open_settings">Open settings</string>
+    <string name="open_settings" translatable="false">Open settings</string>
     <string name="grant">Grant</string>
     <string name="places">Places</string>
-    <string name="type_search_here">Type search here…</string>
+    <string name="type_search_here">search here…</string>
     <string name="sign_up">Sign up</string>
     <string name="name">Name</string>
     <string name="email_not_valid">Email not valid</string>
@@ -51,8 +45,10 @@ And <font color="#003a7c">
     <string name="name_required">Name required</string>
     <string name="privacy_policy">Privacy Policy</string>
     <string name="terms_of_use">Terms of use</string>
+    <string name="by_signing_up">By Signing up you are hereby agree to our</string>
+    <string name="and">and</string>
     <string name="faq">FAQ</string>
-    <string name="title_activity_event_details">EventDetails</string>
+    <string name="title_activity_event_details" translatable="false">EventDetails</string>
     <string name="view_more">View more</string>
     <string name="ticket_price">Ticket price</string>
     <string name="free">Free</string>
@@ -120,4 +116,41 @@ And <font color="#003a7c">
     <string name="skip">Skip</string>
     <string name="next">Next</string>
     <string name="login_to_continue">Please login to continue</string>
+    <string name="adding_new_entity">Adding new entity…</string>
+    <string name="failed">Failed.</string>
+    <string name="done">Done.</string>
+    <string name="adding_new_event">Adding new Event…</string>
+    <string name="completing_register">Completing registration…</string>
+    <string name="sigining_in">Signing in…</string>
+    <string name="connection_faile">Connection failed.</string>
+    <string name="organization_category">Organization Category</string>
+    <string name="upload_cover_picture">Upload cover picture</string>
+    <string name="upload_profile_picture">Upload profile picture</string>
+    <string name="failed_to_add_comment">Failed to add comment, try again.</string>
+    <string name="search_here">Search here…</string>
+    <string name="no_data_found">No data found</string>
+    <string name="unable_to_load_data">Unable to load data</string>
+    <string name="map_filter">Map Filter</string>
+    <string name="select">Select</string>
+    <string name="press_retry_or_if_the_problem_is_persistent_try_to_contact_us">Press retry or if the problem is persistent try to contact us</string>
+    <string name="error_occurred">Error occurred</string>
+    <string name="loading">Loading…</string>
+    <string name="failed_to_load_data_tap_to_retry">Failed to load data, tap to retry</string>
+    <string name="no_places_found_nearby">No places found nearby</string>
+    <string name="failed_to_load_events">Failed to load events</string>
+    <string name="tap_to_try_again">Tap to try again</string>
+    <string name="no_event_around">No Event around</string>
+    <string name="about">About</string>
+    <string name="share_app">Share App</string>
+    <string name="sign_out">Sign out</string>
+    <string name="select_current_location">Select current location</string>
+    <string name="tags">Tags</string>
+    <string name="add_new_event">Add new event</string>
+    <string name="all">All</string>
+    <string name="zero" translatable="false">0</string>
+    <string name="no_reviews_found_be_the_first">No reviews found, be the first</string>
+    <string name="see_more_comments">See more comments</string>
+    <string name="this_entity_has_no_events">this entity has no events.</string>
+    <string name="no_places_around">No Places around</string>
+    <string name="rate_entity">Rate Entity</string>
 </resources>

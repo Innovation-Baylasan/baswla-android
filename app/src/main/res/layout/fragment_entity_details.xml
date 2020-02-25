@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_margin="0dp"
     android:orientation="vertical"
     app:cardBackgroundColor="@color/white"
@@ -33,7 +34,7 @@
                 android:scaleType="fitXY"
                 app:layout_anchor="@+id/nestedScrollView"
                 app:layout_anchorGravity="top|center"
-                app:srcCompat="@drawable/ic_icon" />
+                tools:srcCompat="@drawable/ic_icon" />
 
 
         </FrameLayout>
@@ -45,7 +46,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="16dp"
             android:fontFamily="@font/neo_sans_arabic_bold"
-            android:text="@string/start_up_week_end"
+            tools:text="@string/start_up_week_end"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             android:textColor="@android:color/black"
             android:textSize="18sp" />
@@ -72,7 +73,7 @@
             android:gravity="center"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
-            android:text="@string/sample_descripition"
+            tools:text="@string/sample_descripition"
 
             android:textSize="14sp" />
 

@@ -23,7 +23,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
-            android:text="TextView"
+            tools:text="TextView"
             android:maxLines="1"
             android:ellipsize="end"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
@@ -50,7 +50,7 @@
                 style="@style/Widget.AppCompat.RatingBar.Small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:rating="3" />
+                tools:rating="3" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -70,7 +70,7 @@
             android:layout_marginBottom="8dp"
             android:ellipsize="end"
             android:maxLines="4"
-            android:text="text about text about text about text about text and over bendover bender over"
+            tools:text="text about text about text about text about text and over bendover bender over"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"

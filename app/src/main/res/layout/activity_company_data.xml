@@ -43,7 +43,7 @@
                 android:background="@drawable/rounded_view"
                 android:fontFamily="@font/neo_sans_arabic_bold"
                 android:gravity="center"
-                android:text="Upload cover\npicture"
+                android:text="@string/upload_cover_picture"
                 android:textColor="@color/black"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="@+id/pickCoverImageButton"
@@ -68,7 +68,8 @@
                 android:background="@drawable/rounded_view"
                 android:fontFamily="@font/neo_sans_arabic_bold"
                 android:gravity="center"
-                android:text="Upload profile\npicture"
+                android:layout_marginEnd="16dp"
+                android:text="@string/upload_profile_picture"
                 android:textColor="@color/black"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="@+id/avatar"
@@ -121,7 +122,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:text="Organization Category"
+        android:text="@string/organization_category"
         android:textColor="@color/black"
         android:textSize="17sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -234,7 +235,7 @@
                         android:layout_gravity="center"
                         android:layout_marginTop="8dp"
                         android:fontFamily="@font/neo_sans_arabic_bold"
-                        android:text="No location selected!!"
+                        android:text="@string/no_location_selected"
                         android:textColor="@color/white"
                         android:textSize="16sp" />
 
@@ -244,7 +245,7 @@
                         android:layout_gravity="center"
                         android:layout_marginTop="2dp"
                         android:fontFamily="@font/neo_sans_arabic_light"
-                        android:text="Tap to pick"
+                        android:text="@string/tap_to_pick"
                         android:textColor="@color/white"
                         android:textSize="16sp" />
                 </LinearLayout>

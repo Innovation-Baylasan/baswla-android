@@ -20,10 +20,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/neo_sans_arabic_bold"
-        android:text="No Event around"
+        android:text="@string/no_event_around"
         android:textColor="@color/black"
         android:textSize="16sp" />
-
+<!--TODO-->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -32,5 +32,5 @@
         android:layout_marginEnd="16dp"
         android:fontFamily="@font/neo_sans_arabic_light"
         android:gravity="center"
-        android:text="Try to check later or refresh now or Try to check later or refresh now Try to check later or refresh now Try to check later or refresh now " />
+        android:text="" />
 </LinearLayout>

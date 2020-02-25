@@ -58,7 +58,7 @@ class RegisterViewModel(
                     val stringify = it.registrationResponse.errors.stringify()
                     ErrorEvent(stringify)
                 }
-                else -> ErrorEvent("Unknown Error")
+                else -> ErrorEvent("")
             }
         }
     }

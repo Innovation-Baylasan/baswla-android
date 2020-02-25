@@ -94,9 +94,9 @@ fun ImageView.loadCircle(imageUrl: String) {
     } else {
         Picasso.get()
             .load("http://104.248.145.132/$imageUrl")
-            .transform(CropCircleTransformation())
             .error(ColorDrawable(Color.GRAY))
             .placeholder(ColorDrawable(Color.GRAY))
+            .transform(CropCircleTransformation())
             .into(this)
     }
 }

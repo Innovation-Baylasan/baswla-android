@@ -201,13 +201,13 @@ class AddEventActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
             addViewModel.addState.observe(this, Observer {
                 if (it is UiState.Loading) {
                     submitEventButton.showProgress {
-                        buttonText = "Adding new Event..."
+                        buttonText = getString(R.string.adding_new_event)
                         progressColor = Color.WHITE
                     }
                 }
                 if (it is UiState.Success) {
 
-                    submitEventButton.hideProgress("Done.")
+                    submitEventButton.hideProgress(getString(R.string.done))
                     toast(getString(R.string.event_add_success))
                     setResult(Activity.RESULT_OK/*, Intent().putExtra("event", it.data)*/)
                     finish()
@@ -217,7 +217,7 @@ class AddEventActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
                     if (it.throwable is UnAuthorizedException) {
                         expiredSession()
                     } else {
-                        submitEventButton.hideProgress("Failed.")
+                        submitEventButton.hideProgress(getString(R.string.failed))
                         it.throwable.printStackTrace()
                         toast(getString(R.string.failed_to_add_event))
                     }

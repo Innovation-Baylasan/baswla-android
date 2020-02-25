@@ -108,7 +108,7 @@
                         android:layout_marginEnd="8dp"
                         android:fontFamily="@font/neo_sans_arabic_bold"
                         android:gravity="center_horizontal"
-                        android:text="0"
+                        android:text="@string/zero"
                         android:textColor="@color/black"
                         android:textSize="14sp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -148,7 +148,7 @@
                         android:fontFamily="@font/neo_sans_arabic_bold"
                         android:gravity="center"
 
-                        android:text="0"
+                        android:text="@string/zero"
                         android:textColor="@color/black"
                         android:textSize="14sp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -191,7 +191,7 @@
                         android:fontFamily="@font/neo_sans_arabic_bold"
                         android:gravity="center"
 
-                        android:text="0"
+                        android:text="@string/zero"
                         android:textColor="@color/black"
                         android:textSize="14sp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -223,7 +223,7 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="16dp"
                     android:fontFamily="@font/neo_sans_arabic_light"
-                    android:text="@string/sample_descripition"
+                    tools:text="@string/sample_descripition"
                     android:textSize="14sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
@@ -295,7 +295,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="No reviews found, be the first"
+                android:text="@string/no_reviews_found_be_the_first"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textColor="@color/black"
                 android:visibility="gone"
@@ -362,7 +362,7 @@
                     style="@style/Widget.MaterialComponents.Button.TextButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="See more comments"
+                    android:text="@string/see_more_comments"
                     android:textColor="@color/colorAccent"
                     android:visibility="gone"
                     tools:visibility="visible" />
@@ -412,7 +412,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="this entity has no events."
+                        android:text="@string/this_entity_has_no_events"
                         android:textColor="@color/black"
                         android:visibility="gone"
                         tools:visibility="visible" />
@@ -429,7 +429,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Failed to load events"
+                            android:text="@string/failed_to_load_events"
                             android:textColor="@color/black"
                             android:textSize="14sp" />
 

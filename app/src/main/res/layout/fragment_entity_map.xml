@@ -103,7 +103,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
-                android:text="Loading..."
+                android:text="@string/loading"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/progressBar2"
@@ -132,7 +132,7 @@
             android:drawableStart="@drawable/ic_error_black_24dp"
             android:drawablePadding="16dp"
             android:gravity="center"
-            android:text="Failed to load data, tap to retry"
+            android:text="@string/failed_to_load_data_tap_to_retry"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
     </com.google.android.material.card.MaterialCardView>
 
@@ -154,7 +154,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:text="No data found nearby"
+            android:text="@string/no_places_found_nearby"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/progressBar2"

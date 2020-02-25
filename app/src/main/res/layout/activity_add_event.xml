@@ -57,7 +57,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center|start"
                         android:fontFamily="@font/neo_sans_arabic_bold"
-                        android:text="Add new event"
+                        android:text="@string/add_new_event"
                         android:textColor="@android:color/white"
                         android:textSize="26sp"
                         app:textAllCaps="true" />

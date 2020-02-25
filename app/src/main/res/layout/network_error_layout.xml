@@ -15,7 +15,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Error occurred"
+        android:text="@string/error_occurred"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5" />
 
     <TextView
@@ -25,7 +25,7 @@
         android:layout_marginTop="4dp"
         android:layout_marginEnd="16dp"
         android:gravity="center"
-        android:text="Press retry or if the problem is persistent try to contact us"
+        android:text="@string/press_retry_or_if_the_problem_is_persistent_try_to_contact_us"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Body2" />
 
     <com.google.android.material.button.MaterialButton
@@ -33,5 +33,5 @@
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Retry" />
+        android:text="@string/retry" />
 </LinearLayout>
