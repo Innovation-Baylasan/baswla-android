@@ -38,9 +38,7 @@ class EntityViewModel(
 
                     filterLiveData.value =
                         it.groupBy { entity -> entity.category }.keys.toMutableList()
-                            .apply {
-                                add(0, Category())
-                            }
+
                 } else {
                     events.value = UiState.Empty()
                 }

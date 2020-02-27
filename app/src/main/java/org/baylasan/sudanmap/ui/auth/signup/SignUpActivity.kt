@@ -13,6 +13,7 @@ import android.view.View
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.text.bold
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.github.razir.progressbutton.bindProgressButton
@@ -81,6 +82,8 @@ class SignUpActivity : AppCompatActivity() {
         val and = getString(R.string.and)
         val space=" "
         //TODO
+
+
         signUpNoteText.apply {
             append(space)
             append(signUpNote)

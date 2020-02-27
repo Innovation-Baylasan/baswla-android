@@ -31,6 +31,7 @@ import kotlinx.android.synthetic.main.network_error_layout.*
 import kotlinx.android.synthetic.main.search_bar_layout.*
 import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.common.*
+import org.baylasan.sudanmap.data.entity.model.Category
 import org.baylasan.sudanmap.data.entity.model.Entity
 import org.baylasan.sudanmap.domain.LocationViewModel
 import org.baylasan.sudanmap.ui.entitydetails.EntityDetailsActivity
@@ -86,7 +87,7 @@ class EntityMapFragment : Fragment(R.layout.fragment_entity_map) {
             getLocation()
             googleMap.setOnMarkerClickListener {
                 val entity = (it.tag as Entity)
-                EntityDetailsSheetDialog.newInstance(entity).show(fragmentManager!!, "")
+                EntityDetailsSheetDialog.newInstance(entity).show(childFragmentManager, "")
                 true
             }
 
@@ -130,7 +131,19 @@ class EntityMapFragment : Fragment(R.layout.fragment_entity_map) {
 
         recyclerView.adapter = entityEntitiesListAdapter
         viewModel.filterLiveData.observe(this, Observer {
-            val entityFilterAdapter = EntityFilterAdapter(activity, it) { category ->
+            val list = it.toMutableList()
+            list.add(
+                0,
+                Category(
+                    name = getString(R.string.all),
+                    id = -1,
+                    createdAt = "",
+                    updatedAt = "",
+                    icon = "",
+                    iconPng = ""
+                )
+            )
+            val entityFilterAdapter = EntityFilterAdapter(activity, list) { category ->
                 viewModel.filterEntities(category)
             }
             filterChipRecyclerView.layoutManager =
