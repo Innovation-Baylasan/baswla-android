@@ -8,7 +8,7 @@ import org.baylasan.sudanmap.data.event.model.AddEventRequest
 import java.util.*
 
 interface RequestMapper<T> {
-    fun mapToResponseBody(t: T): List<MultipartBody.Part>
+    fun mapToResponseBody(request: T): List<MultipartBody.Part>
 }
 
 
@@ -46,23 +46,23 @@ class AddEntityRequestMapper : RequestMapper<AddEntityRequest> {
 }
 
 class AddEventRequestMapper : RequestMapper<AddEventRequest> {
-    override fun mapToResponseBody(t: AddEventRequest): List<MultipartBody.Part> {
+    override fun mapToResponseBody(request: AddEventRequest): List<MultipartBody.Part> {
         val requestBuilder = MultipartBody.Builder().setType(MultipartBody.FORM)
 
-            .addFormDataPart("link", t.registrationLink)
-            .addFormDataPart("description", t.description)
-            .addFormDataPart("start_date", t.startDateTime.toString())
-            .addFormDataPart("end_date", t.endDateTime.toString())
-            .addFormDataPart("latitude", t.locationLat.toString())
-            .addFormDataPart("longitude", t.locationLng.toString())
-            .addFormDataPart("name", t.name)
-        if (t.entityId != null) {
-            requestBuilder.addFormDataPart("entity_id", t.entityId.toString())
+            .addFormDataPart("link", request.registrationLink)
+            .addFormDataPart("description", request.description)
+            .addFormDataPart("start_date", request.startDateTime.toString())
+            .addFormDataPart("end_date", request.endDateTime.toString())
+            .addFormDataPart("latitude", request.locationLat.toString())
+            .addFormDataPart("longitude", request.locationLng.toString())
+            .addFormDataPart("name", request.name)
+        if (request.entityId != null) {
+            requestBuilder.addFormDataPart("entity_id", request.entityId.toString())
         }
-        if (t.cover != null) {
+        if (request.cover != null) {
             requestBuilder.addFormDataPart(
                 "cover", "file",
-                t.cover.asRequestBody("application/octet-stream".toMediaTypeOrNull())
+                request.cover.asRequestBody("application/octet-stream".toMediaTypeOrNull())
             )
         }
         return requestBuilder.build().parts

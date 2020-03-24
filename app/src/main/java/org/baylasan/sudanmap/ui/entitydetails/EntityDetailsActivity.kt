@@ -2,13 +2,12 @@ package org.baylasan.sudanmap.ui.entitydetails
 
 
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
-import android.text.Html
 import android.text.util.Linkify
 import android.view.LayoutInflater
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.text.HtmlCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -260,10 +259,10 @@ class EntityDetailsActivity : AppCompatActivity() {
     }
 
     private fun observeDetailsState(entity: Entity) {
-        viewModel.entityDetailsState.observe(this, Observer {
-            if (it is UiState.Success) {
+        viewModel.entityDetailsState.observe(this, Observer { uiState ->
+            if (uiState is UiState.Success) {
                 snackBar?.dismiss()
-                val entityDetails = it.data
+                val entityDetails = uiState.data
                 if (profileViewModel.isThisMine(entityDetails.userId)) {
 
                     toggleFollowButton.gone()
@@ -279,25 +278,19 @@ class EntityDetailsActivity : AppCompatActivity() {
                 val details = entityDetails.details
                 if (details != null && details.isNotEmpty()) {
                     Linkify.addLinks(companyDescriptionTextView, Linkify.ALL)
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                        companyDescriptionTextView.append("\n")
-                        companyDescriptionTextView.append(
-                            Html.fromHtml(
-                                details,
-                                Html.FROM_HTML_MODE_COMPACT
-                            )
-                        )
-                    } else {
-                        companyDescriptionTextView.append("\n")
 
-                        companyDescriptionTextView.append(Html.fromHtml(details))
 
-                    }
+                    companyDescriptionTextView.append("\n")
+                    val htmlContent = HtmlCompat.fromHtml(
+                        details,
+                        HtmlCompat.FROM_HTML_MODE_COMPACT
+                    )
+                    companyDescriptionTextView.append(htmlContent)
                 }
                 profileCoverImage.load(entityDetails.cover)
                 profileImage.loadCircle(entityDetails.avatar)
                 companyProfileReviewsNumTxt.text = entityDetails.reviewsCount.toString()
-                addTagsToChipGroup(it.data.tags)
+                addTagsToChipGroup(uiState.data.tags)
                 commentLayout.visible()
                 companyProfileFollowersNumTxt.text = entityDetails.followersCount.toString()
                 if (entityDetails.reviews.isNotEmpty()) {
@@ -310,7 +303,7 @@ class EntityDetailsActivity : AppCompatActivity() {
                     //                    moreCommentButton.gone()
                 }
             }
-            if (it is UiState.Error) {
+            if (uiState is UiState.Error) {
                 loadingLayout.stopShimmerAnimation()
                 snackBar = Snackbar.make(
                     coordinatorLayout,
@@ -321,7 +314,7 @@ class EntityDetailsActivity : AppCompatActivity() {
                 }
                 snackBar?.show()
             }
-            if (it is UiState.Loading) {
+            if (uiState is UiState.Loading) {
                 loadingLayout.visible()
                 loadingLayout.startShimmerAnimation()
                 snackBar?.dismiss()

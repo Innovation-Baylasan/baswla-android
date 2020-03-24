@@ -257,7 +257,7 @@ class AddEventActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
                 val list = it.data
                 val entityArrayAdapter = EntityArrayAdapter(this, list)
                 eventAssignmentSpinner.setAdapter(entityArrayAdapter)
-                eventAssignmentSpinner.setOnItemClickListener { parent, view, position, id ->
+                eventAssignmentSpinner.setOnItemClickListener { _, _, position, _ ->
                     val selectedEntity = list[position]
                     eventAssignmentSpinner.setText(selectedEntity.name, false)
                     entity = selectedEntity
@@ -376,7 +376,7 @@ class AddEventActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
     private fun formatSelectedDate(calendar: Calendar?): String {
 
         return SimpleDateFormat("yyyy-MM-dd HH:MM", Locale.getDefault())
-            .format(calendar?.time)
+            .format(calendar?.time ?: Date().time)
     }
 }
 

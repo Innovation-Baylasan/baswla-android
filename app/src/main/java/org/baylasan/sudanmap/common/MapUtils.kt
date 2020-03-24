@@ -10,13 +10,6 @@ import com.google.android.gms.maps.UiSettings
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 
-enum class Zoom(zoom: Int) {
-    World(1),
-    Continent(5),
-    City(10),
-    Street(15),
-    Buildings(20)
-}
 
 fun GoogleMap.customize(context: Context) {
     setMaxZoomPreference(18f)
