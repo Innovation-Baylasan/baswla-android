@@ -20,7 +20,7 @@ assembleDevelopment:
   stage: build
   script:
     - ./gradlew assembleDevelopment
-h
+
 assembleLocal:
   stage: build
   script:
