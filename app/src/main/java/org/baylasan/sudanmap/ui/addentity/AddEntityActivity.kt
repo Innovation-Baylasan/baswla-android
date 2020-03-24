@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
@@ -35,9 +36,11 @@ import kotlinx.android.synthetic.main.content_add_entity.*
 import kotlinx.android.synthetic.main.content_add_entity.view.*
 import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.common.*
+import org.baylasan.sudanmap.data.common.AddEntityResponseException
 import org.baylasan.sudanmap.data.common.UnAuthorizedException
 import org.baylasan.sudanmap.data.entity.model.AddEntityRequest
 import org.baylasan.sudanmap.data.entity.model.Category
+import org.baylasan.sudanmap.data.entity.model.stringify
 import org.baylasan.sudanmap.domain.LocationViewModel
 import org.baylasan.sudanmap.ui.LocationPickerActivity
 import org.baylasan.sudanmap.ui.layers.MapLayersViewModel
@@ -84,6 +87,9 @@ class AddEntityActivity : AppCompatActivity() {
         setContentView(R.layout.activity_add_entity)
         setSupportActionBar(toolbar)
         bindProgressButton(submitEntityButton)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.statusBarColor = ContextCompat.getColor(this, R.color.yellowAccent)
+        }
         appBar.addOnOffsetChangedListener(onStateChanged)
         viewModel.loadCategories()
         tagField.addTextChangedListener(
@@ -139,6 +145,7 @@ class AddEntityActivity : AppCompatActivity() {
                 entityCategorySpinner.error = ""
                 return@setOnClickListener
             }
+
             addEntityViewModel.add(
                 AddEntityRequest(
                     category = selectedCategory!!.id,
@@ -186,11 +193,19 @@ class AddEntityActivity : AppCompatActivity() {
                 finish()
             }
             if (it is UiState.Error) {
-                if (it.throwable is UnAuthorizedException) {
-                    expiredSession()
-                } else {
-                    submitEntityButton.hideProgress(getString(R.string.failed))
-                    toast(getString(R.string.failed_to_add_entitiy))
+                submitEntityButton.hideProgress(getString(R.string.failed))
+
+                val throwable = it.throwable
+                when (throwable) {
+                    is UnAuthorizedException -> {
+                        expiredSession()
+                    }
+                    is AddEntityResponseException -> {
+                        toast(throwable.addEntityResponseError.fields.stringify())
+                    }
+                    else -> {
+                        toast(getString(R.string.failed_to_add_entitiy))
+                    }
                 }
             }
             if (it is UiState.Loading) {
@@ -212,7 +227,7 @@ class AddEntityActivity : AppCompatActivity() {
                 snackbar?.dismiss()
                 val list = it.data
                 entityCategorySpinner.setAdapter(CategoryEntityAdapter(this, list))
-                entityCategorySpinner.setOnItemClickListener { _, _, position, _->
+                entityCategorySpinner.setOnItemClickListener { _, _, position, _ ->
                     val category = list[position]
                     entityCategorySpinner.setText(category.name, false)
                     selectedCategory = category
@@ -285,7 +300,7 @@ class AddEntityActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(item.itemId==android.R.id.home)
+        if (item.itemId == android.R.id.home)
             finish()
         return super.onOptionsItemSelected(item)
 

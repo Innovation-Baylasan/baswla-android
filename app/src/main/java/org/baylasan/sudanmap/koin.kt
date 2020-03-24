@@ -19,8 +19,11 @@ import org.baylasan.sudanmap.data.SudanMapApi
 import org.baylasan.sudanmap.data.category.CategoryApi
 import org.baylasan.sudanmap.data.common.*
 import org.baylasan.sudanmap.data.entity.EntityApi
+import org.baylasan.sudanmap.data.entity.model.AddEntityResponseError
 import org.baylasan.sudanmap.data.event.EventApi
 import org.baylasan.sudanmap.data.event.model.AddEventRequest
+import org.baylasan.sudanmap.data.event.model.AddEventResponseError
+import org.baylasan.sudanmap.data.tags.TagsApi
 import org.baylasan.sudanmap.data.user.SessionManagerImpl
 import org.baylasan.sudanmap.data.user.UserApi
 import org.baylasan.sudanmap.data.user.model.RegisterErrorResponse
@@ -29,6 +32,9 @@ import org.baylasan.sudanmap.domain.category.CategoryRepository
 import org.baylasan.sudanmap.domain.category.FetchCategoriesUseCase
 import org.baylasan.sudanmap.domain.entity.*
 import org.baylasan.sudanmap.domain.event.*
+import org.baylasan.sudanmap.domain.tags.GetTagsByNameUseCase
+import org.baylasan.sudanmap.domain.tags.GetTagsUseCase
+import org.baylasan.sudanmap.domain.tags.TagsRepository
 import org.baylasan.sudanmap.domain.user.*
 import org.baylasan.sudanmap.ui.addentity.AddEntityViewModel
 import org.baylasan.sudanmap.ui.addevent.AddEventViewModel
@@ -69,11 +75,22 @@ val appModule = module {
     single { provideRetrofit(androidApplication(), get()) }
     single { providePicasso(androidApplication()) }
     single { provideErrorConverter(get()) }
+    factory(
+        override = true,
+        qualifier = named("addEntityErrorConverter")
+    ) { provideAddEntityErrorConverter(get()) }
+    factory(
+        override = true,
+        qualifier = named("addEventErrorConverter")
+    ) { provideAddEventErrorConverter(get()) }
     viewModel { LocationViewModel(androidApplication()) }
     factory<RequestMapper<AddEventRequest>> { AddEventRequestMapper() }
     factory { AddEntityRequestMapper() }
     factory(qualifier = named("io")) { provideIoScheduler() }
     factory(qualifier = named("main")) { provideMainScheduler() }
+    factory {
+
+    }
 
 }
 val introModule = module {
@@ -81,7 +98,14 @@ val introModule = module {
 }
 val entitiesModule = module(override = true) {
     factory { get<Retrofit>().create(SudanMapApi.Categories::class.java) }
-    factory<EntityRepository> { EntityApi(get(), get(), get()) }
+    factory<EntityRepository> {
+        EntityApi(
+            get(),
+            get(),
+            get(named("addEntityErrorConverter")),
+            get()
+        )
+    }
     factory { GetMyEntitiesUseCase(get()) }
     viewModel {
         MyEntitiesViewModel(get(), get())
@@ -89,9 +113,20 @@ val entitiesModule = module(override = true) {
 }
 val addEntityModule = module(override = true) {
     factory { get<Retrofit>().create(SudanMapApi.Entities::class.java) }
-    factory<EntityRepository> { EntityApi(get(), get(), get()) }
+    factory { get<Retrofit>().create(SudanMapApi.Tags::class.java) }
+    factory<EntityRepository> {
+        EntityApi(
+            get(),
+            get(),
+            get(named("addEntityErrorConverter")),
+            get()
+        )
+    }
+    factory<TagsRepository> { TagsApi(get(), get()) }
     factory { AddEntityUseCase(get()) }
-    viewModel { AddEntityViewModel(get(), get()) }
+    factory { GetTagsUseCase(get()) }
+    factory { GetTagsByNameUseCase(get()) }
+    viewModel { AddEntityViewModel(get(), get(), get(), get()) }
 }
 val eventsModule = module(override = true) {
     factory { GetMyEventUseCase(get()) }
@@ -101,7 +136,7 @@ val eventsModule = module(override = true) {
 
 val eventSearchModule = module(override = true) {
     factory { get<Retrofit>().create(SudanMapApi.Events::class.java) }
-    factory<EventRepository> { EventApi(get(), get(), get()) }
+    factory<EventRepository> { EventApi(get(), get(named("addEventErrorConverter")), get(), get()) }
     factory { FindEventUseCase(get()) }
     viewModel { EventSearchViewModel(get()) }
 
@@ -109,21 +144,24 @@ val eventSearchModule = module(override = true) {
 }
 val addEventModule = module(override = true) {
     factory { get<Retrofit>().create(SudanMapApi.Events::class.java) }
-    factory<EventRepository> { EventApi(get(), get(), get()) }
+    factory<EventRepository> { EventApi(get(), get(named("addEventErrorConverter")), get(), get()) }
     factory { AddEventUseCase(get()) }
     viewModel { AddEventViewModel(get(), get()) }
 }
 
 val entityDetailsModule = module(override = true) {
     factory { get<Retrofit>().create(SudanMapApi.Categories::class.java) }
-    factory<EntityRepository> { EntityApi(get(), get(), get()) }
+    factory<EntityRepository> {
+        EntityApi(get(), get(), get(named("addEntityErrorConverter")), get())
+    }
     factory { GetEntityDetailsUseCase(get()) }
     factory { UnFollowEntityUseCase(get()) }
     factory { FollowEntityUseCase(get()) }
+    factory { GetRelatedEntityUseCase(get()) }
     factory { RateEntityUseCase(get()) }
     factory { AddReviewUseCase(get()) }
     factory { GetEntityEventsUseCase(get()) }
-    viewModel { EntityDetailsViewModel(get(), get(), get(), get(), get(), get(), get()) }
+    viewModel { EntityDetailsViewModel(get(), get(), get(), get(), get(), get(), get(), get()) }
 
 }
 
@@ -150,20 +188,34 @@ val homePageModule = module(override = true) {
 }
 val entityListModule = module(override = true) {
     factory { get<Retrofit>().create(SudanMapApi.Entities::class.java) }
-    factory<EntityRepository> { EntityApi(get(), get(), get()) }
+    factory<EntityRepository> {
+        EntityApi(
+            get(),
+            get(),
+            get(named("addEntityErrorConverter")),
+            get()
+        )
+    }
     factory { GetEntitiesUseCase(get()) }
     factory { GetNearbyEntitiesUseCase(get()) }
     viewModel { EntityViewModel(get(), get()) }
 }
 val eventModule = module(override = true) {
     factory { get<Retrofit>().create(SudanMapApi.Events::class.java) }
-    factory<EventRepository> { EventApi(get(), get(), get()) }
+    factory<EventRepository> { EventApi(get(), get(named("addEventErrorConverter")), get(), get()) }
     factory { GetEventUseCase(get()) }
     viewModel { EventViewModel(get()) }
 }
 val entitySearchModule = module(override = true) {
     factory { get<Retrofit>().create(SudanMapApi.Entities::class.java) }
-    factory<EntityRepository> { EntityApi(get(), get(), get()) }
+    factory<EntityRepository> {
+        EntityApi(
+            get(),
+            get(),
+            get(named("addEntityErrorConverter")),
+            get()
+        )
+    }
     factory { FindEntitiesByKeywordUseCase(get()) }
     viewModel { EntitySearchViewModel(get()) }
     factory { GetNearbyEntitiesUseCase(get()) }
@@ -193,12 +245,24 @@ val completeRegister = module(override = true) {
     factory<UserRepository> { UserApi(get(), get(), get()) }
     factory { CompanyRegisterUseCase(get()) }
 
-    viewModel { CompleteRegisterViewModel(get(), get(),get(named("io")),get(named("main"))) }
+    viewModel { CompleteRegisterViewModel(get(), get(), get(named("io")), get(named("main"))) }
 
 }
 
 private fun provideErrorConverter(retrofit: Retrofit) =
     retrofit.responseBodyConverter<ApiErrorResponse>(ApiErrorResponse::class.java, arrayOf())
+
+private fun provideAddEntityErrorConverter(retrofit: Retrofit) =
+    retrofit.responseBodyConverter<AddEntityResponseError>(
+        AddEntityResponseError::class.java,
+        arrayOf()
+    )
+
+private fun provideAddEventErrorConverter(retrofit: Retrofit) =
+    retrofit.responseBodyConverter<AddEventResponseError>(
+        AddEventResponseError::class.java,
+        arrayOf()
+    )
 
 private fun provideRegisterErrorConverter(retrofit: Retrofit) =
     retrofit.responseBodyConverter<ApiErrorResponse>(RegisterErrorResponse::class.java, arrayOf())

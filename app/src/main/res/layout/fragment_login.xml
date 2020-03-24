@@ -24,45 +24,29 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:id="@+id/imageView4"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_gravity="center|top"
+                android:id="@+id/imageView6"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
                 android:layout_marginTop="16dp"
+                app:srcCompat="@drawable/ic_splash"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_logo" />
-
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:fontFamily="@font/neo_sans_arabic_bold"
-                android:text="@string/app_name"
-                android:textColor="@color/black"
-                android:textSize="22sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/textView7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="16dp"
                 android:text="@string/email"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView2" />
+                app:layout_constraintTop_toBottomOf="@+id/imageView6" />
 
             <com.google.android.material.textfield.TextInputEditText
-
                 android:id="@+id/loginEmailEt"
                 style="@style/RoundedCornerEditText"
                 android:layout_width="0dp"
-
                 android:inputType="textPersonName"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -99,7 +83,9 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:drawablePadding="16dp"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
                 android:layout_marginTop="16dp"
+                app:rippleColor="@color/white"
                 android:fontFamily="@font/neo_sans_arabic_regular"
                 android:text="@string/sgin_in"
                 android:textColor="@color/white"
@@ -123,6 +109,7 @@
                 android:textSize="20sp"
                 app:cornerRadius="8dp"
                 app:elevation="0dp"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/signInButton"

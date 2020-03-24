@@ -4,11 +4,9 @@ import io.reactivex.Completable
 import io.reactivex.Single
 import okhttp3.ResponseBody
 import org.baylasan.sudanmap.data.SudanMapApi
-import org.baylasan.sudanmap.data.common.ApiErrorResponse
-import org.baylasan.sudanmap.data.common.RequestMapper
-import org.baylasan.sudanmap.data.common.ResponseSingleFunc1
-import org.baylasan.sudanmap.data.common.ThrowableSingleFunc1
+import org.baylasan.sudanmap.data.common.*
 import org.baylasan.sudanmap.data.event.model.AddEventRequest
+import org.baylasan.sudanmap.data.event.model.AddEventResponseError
 import org.baylasan.sudanmap.data.event.model.Event
 import org.baylasan.sudanmap.data.event.model.EventResponse
 import org.baylasan.sudanmap.domain.event.EventRepository
@@ -16,6 +14,7 @@ import retrofit2.Converter
 
 class EventApi(
     private val errorConverter: Converter<ResponseBody, ApiErrorResponse>,
+    private val addEventErrorConverter: Converter<ResponseBody, AddEventResponseError>,
     private val api: SudanMapApi.Events,
     private val requestMapper: RequestMapper<AddEventRequest>
 ) : EventRepository {
@@ -52,7 +51,7 @@ class EventApi(
     override fun addEvent(addEventRequest: AddEventRequest): Single<Event> {
         return api.addEvent(requestMapper.mapToResponseBody(addEventRequest))
             .onErrorResumeNext(ThrowableSingleFunc1())
-            .flatMap(ResponseSingleFunc1(errorConverter))
+            .flatMap(AddEventResponseSingleFunc1(addEventErrorConverter))
             .map { it.event }
     }
 

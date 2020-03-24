@@ -16,7 +16,6 @@
 
 
         <LinearLayout
-            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#FCFCFC"
@@ -49,7 +48,6 @@
                 android:textSize="15sp" />
 
             <View
-                android:id="@+id/divider4"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="?android:attr/listDivider" />

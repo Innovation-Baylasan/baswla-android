@@ -2,8 +2,7 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/rowEntityRootView"
-    android:layout_width="wrap_content"
+    android:layout_width="200dp"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:layout_margin="4dp"
@@ -23,65 +22,57 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
-            tools:text="TextView"
-            android:maxLines="1"
             android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/avatarImage" />
+            app:layout_constraintTop_toBottomOf="@+id/avatarImage"
+            tools:text="TextView" />
 
-        <LinearLayout
-            android:id="@+id/ratingLayout"
+
+        <androidx.appcompat.widget.AppCompatRatingBar
+            android:id="@+id/entityRate"
+            style="@style/Widget.AppCompat.RatingBar.Small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
+            android:numStars="5"
+            android:rating="0"
+            android:stepSize="1"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/entityName">
+            app:layout_constraintTop_toBottomOf="@+id/entityName"
+            tools:rating="3" />
 
-            <androidx.appcompat.widget.AppCompatRatingBar
-                android:id="@+id/entityRate"
-                style="@style/Widget.AppCompat.RatingBar.Small"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:rating="3" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="10k rates"
-                android:visibility="invisible"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Caption" />
-        </LinearLayout>
 
         <TextView
             android:id="@+id/entityDescription"
             android:layout_width="0dp"
-            android:layout_height="90dp"
+            android:layout_height="70dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="8dp"
             android:ellipsize="end"
+            android:gravity="top|center"
             android:maxLines="4"
-            tools:text="text about text about text about text about text and over bendover bender over"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ratingLayout" />
+            app:layout_constraintTop_toBottomOf="@+id/entityRate"
+            tools:text="text about text about text about text about text and over bendover bender over" />
 
         <ImageView
             android:id="@+id/coverImage"
             android:layout_width="0dp"
             android:layout_height="100dp"
-            android:background="@drawable/map_filter_top_background"
+            android:background="@drawable/ic_default_placeholder"
             android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -92,15 +83,13 @@
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            app:srcCompat="@drawable/ic_icon"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="@+id/coverImage"
-            app:layout_constraintEnd_toEndOf="@+id/coverImage"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/coverImage"
             app:layout_constraintTop_toBottomOf="@+id/coverImage"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@drawable/ic_icon" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </com.google.android.material.card.MaterialCardView>

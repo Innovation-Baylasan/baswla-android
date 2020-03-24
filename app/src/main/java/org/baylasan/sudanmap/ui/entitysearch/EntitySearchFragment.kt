@@ -70,7 +70,7 @@ class EntitySearchFragment : Fragment(R.layout.fragment_entity_search),
                 it.printStackTrace()
             })
 
-        viewModel.events.observe(this, Observer { event ->
+        viewModel.events.observe(viewLifecycleOwner, Observer { event ->
             Log.d("MEGA", "$event")
             when (event) {
                 is UiState.Success -> {

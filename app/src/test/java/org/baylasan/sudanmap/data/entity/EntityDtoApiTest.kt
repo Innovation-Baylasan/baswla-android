@@ -28,7 +28,7 @@ class EntityDtoApiTest {
     fun setUp() {
         entityService = mock(verboseLogging = true)
         converter = mock(verboseLogging = true)
-        entityApi = EntityApi(entityApi = entityService, errorConverter = converter,requestMapper = AddEntityRequestMapper())
+//        entityApi = EntityApi(entityApi = entityService, errorConverter = converter,requestMapper = AddEntityRequestMapper())
     }
 
 

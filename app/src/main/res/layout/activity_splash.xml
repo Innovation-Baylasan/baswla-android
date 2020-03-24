@@ -7,7 +7,6 @@
     tools:context="org.baylasan.sudanmap.ui.splash.SplashActivity">
 
     <ImageView
-        android:id="@+id/imageView"
         android:layout_width="130dp"
         android:layout_height="130dp"
         app:layout_constraintBottom_toBottomOf="parent"

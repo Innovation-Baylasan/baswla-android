@@ -6,6 +6,7 @@ import android.app.TimePickerDialog
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
@@ -31,9 +32,11 @@ import kotlinx.android.synthetic.main.activity_add_event.*
 import kotlinx.android.synthetic.main.content_add_event.*
 import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.common.*
+import org.baylasan.sudanmap.data.common.AddEventResponseException
 import org.baylasan.sudanmap.data.common.UnAuthorizedException
 import org.baylasan.sudanmap.data.entity.model.Entity
 import org.baylasan.sudanmap.data.event.model.AddEventRequest
+import org.baylasan.sudanmap.data.event.model.stringify
 import org.baylasan.sudanmap.domain.LocationViewModel
 import org.baylasan.sudanmap.ui.LocationPickerActivity
 import org.baylasan.sudanmap.ui.myentities.MyEntitiesViewModel
@@ -92,6 +95,9 @@ class AddEventActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_event)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.statusBarColor = ContextCompat.getColor(this, R.color.yellowAccent)
+        }
         setSupportActionBar(toolbar)
         appBar.addOnOffsetChangedListener(onStateChanged)
         applicationStartButton.setOnClickListener {
@@ -177,6 +183,16 @@ class AddEventActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
                 applicationEndButton.error = ""
                 return@setOnClickListener
             }
+            if (startDate!!.after(endDate)) {
+                toast(getString(R.string.start_date_after_end_error))
+                applicationStartButton.error = ""
+                return@setOnClickListener
+            }
+            if (endDate!!.before(startDate)) {
+                toast(getString(R.string.end_date_before_start_date_error))
+                applicationEndButton.error = ""
+                return@setOnClickListener
+            }
 
             if (selectedLocation == null) {
                 toast(getString(R.string.event_location_required))
@@ -206,20 +222,23 @@ class AddEventActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
                     }
                 }
                 if (it is UiState.Success) {
-
                     submitEventButton.hideProgress(getString(R.string.done))
                     toast(getString(R.string.event_add_success))
                     setResult(Activity.RESULT_OK/*, Intent().putExtra("event", it.data)*/)
                     finish()
                 }
                 if (it is UiState.Error) {
-
-                    if (it.throwable is UnAuthorizedException) {
-                        expiredSession()
-                    } else {
-                        submitEventButton.hideProgress(getString(R.string.failed))
-                        it.throwable.printStackTrace()
-                        toast(getString(R.string.failed_to_add_event))
+                    submitEventButton.hideProgress(getString(R.string.failed))
+                    when (it.throwable) {
+                        is UnAuthorizedException -> {
+                            expiredSession()
+                        }
+                        is AddEventResponseException -> {
+                            toast(it.throwable.addEventResponseError.errors.stringify())
+                        }
+                        else -> {
+                            toast(getString(R.string.failed_to_add_event))
+                        }
                     }
                 }
             })
@@ -286,14 +305,18 @@ class AddEventActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
 
     private fun showDatePicker() {
 
-        DatePickerDialog(
+        val datePickerDialog = DatePickerDialog(
             this,
             R.style.ThemeOverlay_MaterialComponents_Dialog_Alert,
             this,
             calendar.get(Calendar.YEAR),
             calendar.get(Calendar.MONTH),
             calendar.get(Calendar.DAY_OF_MONTH)
-        ).show()
+        )
+        if (startDate != null) {
+            datePickerDialog.datePicker.minDate = startDate!!.timeInMillis
+        }
+        datePickerDialog.show()
     }
 
     override fun onStop() {

@@ -10,9 +10,7 @@
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-    <include
-        android:id="@+id/searchLayout"
-        layout="@layout/search_bar_layout" />
+    <include layout="@layout/search_bar_layout" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/myLocationFab"
@@ -53,7 +51,6 @@
 
 
             <LinearLayout
-                android:id="@+id/recyclerViewsLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">

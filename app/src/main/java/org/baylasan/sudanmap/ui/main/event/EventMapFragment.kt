@@ -63,7 +63,7 @@ class EventMapFragment : Fragment(R.layout.fragment_event_map) {
                     progressBar.gone()
                     state.data.forEach { event ->
                         val location = event.location
-                        if (location != null) {
+                        if (location != null && ::googleMap.isInitialized) {
                             val marker = googleMap.addMarker(
                                 MarkerOptions().position(
                                     LatLng(

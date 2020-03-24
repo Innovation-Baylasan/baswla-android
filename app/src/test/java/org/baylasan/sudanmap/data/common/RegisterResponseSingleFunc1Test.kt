@@ -5,7 +5,7 @@ import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.ResponseBody
-import org.baylasan.sudanmap.data.user.model.Errors
+import org.baylasan.sudanmap.data.user.model.Fields
 import org.baylasan.sudanmap.data.user.model.RegisterErrorResponse
 import org.baylasan.sudanmap.data.user.model.AuthenticationResponse
 import org.junit.Before
@@ -40,7 +40,7 @@ class RegisterResponseSingleFunc1Test {
     fun test() {
         whenever(converter.convert(any())).thenReturn(
             RegisterErrorResponse(
-                Errors(
+                Fields(
                     listOf(), listOf(),
                     listOf()
                 ), 422

@@ -33,25 +33,9 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_navigation_header" />
-
-            <TextView
-                android:id="@+id/pickAvatarButton2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:background="@drawable/rounded_view"
-                android:fontFamily="@font/neo_sans_arabic_bold"
-                android:gravity="center"
-                android:text="@string/upload_cover_picture"
-                android:textColor="@color/black"
-                android:textSize="12sp"
-                app:layout_constraintBottom_toBottomOf="@+id/pickCoverImageButton"
-                app:layout_constraintEnd_toStartOf="@+id/pickCoverImageButton"
-                app:layout_constraintTop_toTopOf="@+id/pickCoverImageButton" />
+                app:srcCompat="@drawable/ic_default_placeholder" />
 
             <ImageView
-                android:id="@+id/imageView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
@@ -60,30 +44,11 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_back" />
 
-            <TextView
-                android:id="@+id/pickAvatarButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:background="@drawable/rounded_view"
-                android:fontFamily="@font/neo_sans_arabic_bold"
-                android:gravity="center"
-                android:layout_marginEnd="16dp"
-                android:text="@string/upload_profile_picture"
-                android:textColor="@color/black"
-                android:textSize="12sp"
-                app:layout_constraintBottom_toBottomOf="@+id/avatar"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/avatar"
-                app:layout_constraintTop_toTopOf="@+id/avatar" />
-
-            <de.hdodenhof.circleimageview.CircleImageView
+            <ImageView
                 android:id="@+id/avatar"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                app:civ_border_color="@color/colorAccent"
-                app:civ_border_width="2dp"
+                app:srcCompat="@drawable/ic_camera_placeholder"
                 app:layout_anchorGravity="bottom|center"
                 app:layout_constraintBottom_toBottomOf="@+id/coverImage"
                 app:layout_constraintEnd_toEndOf="@+id/coverImage"
@@ -100,7 +65,7 @@
                 app:layout_constraintBottom_toTopOf="@+id/avatar"
                 app:layout_constraintEnd_toEndOf="@+id/coverImage"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_camera" />
+                app:srcCompat="@drawable/ic_camera_placeholder" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -181,7 +146,6 @@
         app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
     <LinearLayout
-        android:id="@+id/constraintLayout2"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="vertical"
@@ -270,6 +234,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
 
+android:layout_marginBottom="24dp"
         android:layout_marginEnd="24dp"
         android:text="@string/continue_complete"
         app:layout_constraintBottom_toBottomOf="parent"

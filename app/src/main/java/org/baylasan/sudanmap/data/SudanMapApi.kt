@@ -6,6 +6,7 @@ import org.baylasan.sudanmap.data.category.model.CategoryDto
 import org.baylasan.sudanmap.data.entity.model.*
 import org.baylasan.sudanmap.data.event.model.AddEventResponse
 import org.baylasan.sudanmap.data.event.model.EventResponse
+import org.baylasan.sudanmap.data.tags.model.TagsResponse
 import org.baylasan.sudanmap.data.user.model.AuthenticationResponse
 import org.baylasan.sudanmap.data.user.model.LoginRequest
 import org.baylasan.sudanmap.data.user.model.RegisterRequest
@@ -51,6 +52,9 @@ interface SudanMapApi {
         @POST("entities")
         fun addEntity(@Part list: List<MultipartBody.Part>): Single<Response<Unit>>
 
+        @GET("entities/{id}/related")
+        fun getRelated(@Path("id") id: Int): Single<Response<List<Entity>>>
+
     }
 
     interface Categories {
@@ -95,6 +99,13 @@ interface SudanMapApi {
         @GET("events")
         fun findEvents(@Query("q") keyword: String): Single<Response<EventResponse>>
     }
+
+    interface Tags {
+        @GET("tags")
+        fun getTags(): Single<Response<TagsResponse>>
+
+        @GET("tags")
+        fun getTagsByName(@Query("q") name: String): Single<Response<TagsResponse>>
+    }
 }
 
-const val BASE_URL = "http://104.248.145.132/api/"

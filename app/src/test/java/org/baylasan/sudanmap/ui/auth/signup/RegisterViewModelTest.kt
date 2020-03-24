@@ -9,7 +9,7 @@ import org.baylasan.sudanmap.data.common.ConnectionException
 import org.baylasan.sudanmap.data.common.RegistrationResponseException
 import org.baylasan.sudanmap.data.common.TimeoutConnectionException
 import org.baylasan.sudanmap.data.user.model.AuthenticationResponse
-import org.baylasan.sudanmap.data.user.model.Errors
+import org.baylasan.sudanmap.data.user.model.Fields
 import org.baylasan.sudanmap.data.user.model.RegisterErrorResponse
 import org.baylasan.sudanmap.data.user.model.RegisterRequest
 import org.baylasan.sudanmap.domain.user.SessionManager
@@ -109,7 +109,7 @@ class RegisterViewModelTest {
             Single.error(
                 RegistrationResponseException(
                     RegisterErrorResponse(
-                        errors = Errors(
+                        errors = Fields(
                             listOf("email is required"),
                             listOf("password is required"),
                             listOf("username is taken")

@@ -54,7 +54,6 @@ class CompanyDataActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_company_data)
-        avatar.setImageResource(R.drawable.ic_camera)
         viewModel.loadCategories()
         viewModel.events.observe(this, Observer {
             if (it is UiState.Loading || it is UiState.Empty) {
@@ -102,7 +101,7 @@ class CompanyDataActivity : AppCompatActivity() {
             })
         }
 
-        pickAvatarButton.setOnClickListener {
+        avatar.setOnClickListener {
             imageSelected = 1
             pickAndCropImage()
 
@@ -192,7 +191,8 @@ class CompanyDataActivity : AppCompatActivity() {
             val imageFile = CropImage.getActivityResult(data).uri.toFile()
             if (imageSelected == 2) {
                 selectedCover = imageFile
-                picasso.load(imageFile).into(coverImage)
+                picasso.load(imageFile)
+                    .into(coverImage)
             } else {
                 avatar.setImageResource(0)
                 selectedAvatar = imageFile

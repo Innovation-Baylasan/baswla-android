@@ -53,7 +53,7 @@ class EventSearchFragment : Fragment(R.layout.fragment_event_search) {
     }
 
     private fun observeSearchState() {
-        viewModel.events.observe(this, Observer { event ->
+        viewModel.events.observe(viewLifecycleOwner, Observer { event ->
             when (event) {
                 is UiState.Success -> {
                     searchRecyclerView.visible()

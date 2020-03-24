@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
             app:navigationIcon="@drawable/ic_back"
-            app:title="My Places" />
+            app:title="@string/places" />
 
     </com.google.android.material.appbar.AppBarLayout>
 

@@ -18,7 +18,6 @@
         app:liftOnScroll="false">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
-            android:id="@+id/toolbarLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
@@ -48,7 +47,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/neo_sans_arabic_bold"
-                        android:text="Add new Entity"
+                        android:text="@string/add_new_entity"
                         android:layout_gravity="center|start"
                         android:textColor="@android:color/white"
                         android:textSize="26sp"
@@ -67,11 +66,10 @@
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="24dp"
-                android:text="Place holder text, place holder text, place holder text place holder text place holder text place holder text
-place holder text place holder text place holder text
-place holder text place holder text place holder text"
-                android:textColor="@android:color/black"
+                android:text="@string/add_entity_summary"
+                android:textColor="@android:color/white"
                 android:textSize="13sp"
+
                 app:autoSizeTextType="uniform" />
 
 

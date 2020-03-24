@@ -24,6 +24,7 @@ import org.baylasan.sudanmap.common.GpsChecker
 import org.baylasan.sudanmap.common.doseNotHaveLocationPermission
 import org.baylasan.sudanmap.common.gone
 import org.baylasan.sudanmap.common.visible
+import org.baylasan.sudanmap.ui.AboutActivity
 import org.baylasan.sudanmap.ui.auth.AuthActivity
 import org.baylasan.sudanmap.ui.editprofile.EditUserProfileActivity
 import org.baylasan.sudanmap.ui.faq.FAQActivity
@@ -101,6 +102,12 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener,
         openEventsButton.setOnClickListener {
             startActivityAndCloseDrawer<MyEventsActivity>()
         }
+        actionPrivacyButton.setOnClickListener {
+            startActivityAndCloseDrawer<PrivacyPolicyActivity>()
+        }
+        openAboutButton.setOnClickListener {
+            startActivityAndCloseDrawer<AboutActivity>()
+        }
         openFaqButton.setOnClickListener {
             startActivityAndCloseDrawer<FAQActivity>()
         }
@@ -121,6 +128,7 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener,
                 editProfileButton.gone()
                 openPlacesButton.gone()
                 openEventsButton.gone()
+                logoutButton.text = getString(R.string.login)
                 navigationDrawerHeader.setOnClickListener {
                     startActivityAndCloseDrawer<AuthActivity>()
                     finish()
@@ -141,9 +149,7 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener,
                 openPlacesButton.setOnClickListener {
                     startActivityAndCloseDrawer<MyEntitiesActivity>()
                 }
-                actionPrivacyButton.setOnClickListener {
-                    startActivityAndCloseDrawer<PrivacyPolicyActivity>()
-                }
+
                 editProfileButton.setOnClickListener {
                     startActivityAndCloseDrawer<EditUserProfileActivity>()
                 }

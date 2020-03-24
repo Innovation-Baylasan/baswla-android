@@ -16,7 +16,6 @@ abstract class AppBarChangedListener : AppBarLayout.OnOffsetChangedListener {
         State.IDLE
 
     override fun onOffsetChanged(appBarLayout: AppBarLayout, verticalOffset: Int) {
-        Log.d("MEGA","offset: $verticalOffset")
         when {
             abs(verticalOffset) <= 50-> {
                 if (currentState != State.EXPANDED) {

@@ -4,10 +4,7 @@ import io.reactivex.Completable
 import io.reactivex.Single
 import okhttp3.ResponseBody
 import org.baylasan.sudanmap.data.SudanMapApi
-import org.baylasan.sudanmap.data.common.AddEntityRequestMapper
-import org.baylasan.sudanmap.data.common.ApiErrorResponse
-import org.baylasan.sudanmap.data.common.ResponseSingleFunc1
-import org.baylasan.sudanmap.data.common.ThrowableSingleFunc1
+import org.baylasan.sudanmap.data.common.*
 import org.baylasan.sudanmap.data.entity.model.*
 import org.baylasan.sudanmap.domain.entity.AddReviewUseCase
 import org.baylasan.sudanmap.domain.entity.EntityRepository
@@ -16,6 +13,7 @@ import retrofit2.Converter
 class EntityApi(
     private val entityApi: SudanMapApi.Entities,
     private val errorConverter: Converter<ResponseBody, ApiErrorResponse>,
+    private val addErrorConverter: Converter<ResponseBody, AddEntityResponseError>,
     private val requestMapper: AddEntityRequestMapper
 ) :
     EntityRepository {
@@ -29,7 +27,6 @@ class EntityApi(
         entityApi.getNearbyEntities(latitude, longitude)
             .onErrorResumeNext(ThrowableSingleFunc1())
             .flatMap(ResponseSingleFunc1(errorConverter))
-
             .map { it.entityList }
 
 
@@ -44,8 +41,6 @@ class EntityApi(
         return entityApi.rateEntityById(id, rating)
             .onErrorResumeNext(ThrowableSingleFunc1())
             .flatMap(ResponseSingleFunc1(errorConverter))
-
-
     }
 
     override fun addReview(request: AddReviewUseCase.Request): Single<Review> {
@@ -80,15 +75,18 @@ class EntityApi(
             .onErrorResumeNext(ThrowableSingleFunc1())
             .flatMap(ResponseSingleFunc1(errorConverter))
             .map { it.entityList }
-
     }
 
-    override fun addEntity(addEntityRequest: AddEntityRequest): Completable{
+    override fun addEntity(addEntityRequest: AddEntityRequest): Completable {
         return entityApi.addEntity(requestMapper.mapToResponseBody(addEntityRequest))
             .onErrorResumeNext(ThrowableSingleFunc1())
-            .flatMap(ResponseSingleFunc1(errorConverter))
+            .flatMap(AddEntityResponseSingleFunc1(addErrorConverter))
             .ignoreElement()
+    }
 
-
+    override fun getRelated(id: Int): Single<List<Entity>> {
+        return entityApi.getRelated(id)
+            .onErrorResumeNext(ThrowableSingleFunc1())
+            .flatMap(AddEntityResponseSingleFunc1(addErrorConverter))
     }
 }

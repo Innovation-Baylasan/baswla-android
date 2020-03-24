@@ -36,8 +36,8 @@
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigationView"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
         android:layout_gravity="start"
+        android:layout_height="match_parent"
         android:fitsSystemWindows="true">
 
         <ScrollView
@@ -59,8 +59,8 @@
                     android:text="@string/places"
                     app:cornerRadius="0dp"
                     app:icon="@drawable/ic_my_places"
-                    app:iconPadding="16dp"
-                    app:iconSize="30dp" />
+
+                    app:iconPadding="16dp" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/openEventsButton"
@@ -72,7 +72,6 @@
 
 
                 <View
-                    android:id="@+id/divider"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="?android:attr/listDivider" />
@@ -82,28 +81,25 @@
                     style="@style/Widget.MaterialComponents.Button.UnelevatedButton.navigation"
                     android:text="@string/faq"
                     app:cornerRadius="0dp"
-                    app:icon="@drawable/ic_faq"
-                    app:iconPadding="16dp"
-                    app:iconSize="30dp" />
+                    app:icon="@drawable/ic_faqs"
+                    app:iconPadding="16dp" />
 
                 <com.google.android.material.button.MaterialButton
                     style="@style/Widget.MaterialComponents.Button.UnelevatedButton.navigation"
                     android:text="@string/about"
                     app:cornerRadius="0dp"
                     app:icon="@drawable/ic_about"
-                    app:iconPadding="16dp"
-                    app:iconSize="30dp" />
+                    android:id="@+id/openAboutButton"
+                    app:iconPadding="16dp" />
 
                 <com.google.android.material.button.MaterialButton
                     style="@style/Widget.MaterialComponents.Button.UnelevatedButton.navigation"
                     android:text="@string/share_app"
                     app:cornerRadius="0dp"
                     app:icon="@drawable/ic_share"
-                    app:iconPadding="16dp"
-                    app:iconSize="30dp" />
+                    app:iconPadding="16dp" />
 
                 <View
-                    android:id="@+id/divider2"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="?android:attr/listDivider" />
@@ -121,7 +117,7 @@
                     style="@style/Widget.MaterialComponents.Button.UnelevatedButton.navigation"
                     android:text="@string/terms_of_use"
                     app:cornerRadius="0dp"
-                    app:icon="@drawable/ic_terms_of_use"
+                    app:icon="@drawable/ic_terms"
                     app:iconPadding="16dp"
                     />
 

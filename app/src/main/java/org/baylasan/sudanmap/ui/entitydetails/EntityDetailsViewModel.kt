@@ -6,6 +6,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import org.baylasan.sudanmap.common.UiState
 import org.baylasan.sudanmap.data.common.UnAuthorizedException
+import org.baylasan.sudanmap.data.entity.model.Entity
 import org.baylasan.sudanmap.data.entity.model.EntityDetails
 import org.baylasan.sudanmap.data.entity.model.RateResponse
 import org.baylasan.sudanmap.data.entity.model.Review
@@ -22,10 +23,12 @@ class EntityDetailsViewModel(
     private val rateEntityUseCase: RateEntityUseCase,
     private val addReviewUseCase: AddReviewUseCase,
     private val entityEventsUseCase: GetEntityEventsUseCase,
-    private val sessionManager: SessionManager
+    private val sessionManager: SessionManager,
+    private val relatedEntityUseCase: GetRelatedEntityUseCase
 ) : BaseViewModel() {
     private val loadEntityUiState = MutableLiveData<UiState<EntityDetails>>()
     private val eventsUiState = MutableLiveData<UiState<List<Event>>>()
+    private val entityUiState = MutableLiveData<UiState<List<Entity>>>()
     private val reviewUiState = MutableLiveData<UiState<Review>>()
     private val followUiState = MutableLiveData<UiState<Unit>>()
     private val unFollowUiState = MutableLiveData<UiState<Unit>>()
@@ -37,6 +40,7 @@ class EntityDetailsViewModel(
     val unFollowState: LiveData<UiState<Unit>> = unFollowUiState
     val rateState: LiveData<UiState<RateResponse>> = rateUiState
     val eventState: LiveData<UiState<List<Event>>> = eventsUiState
+    val entityState: LiveData<UiState<List<Entity>>> = entityUiState
     private var isFollowed = false
     fun getEvents(id: Int) {
         eventsUiState.value = UiState.Loading()
@@ -146,5 +150,20 @@ class EntityDetailsViewModel(
             }).addToDisposables()
     }
 
+    fun getRelated(id: Int) {
+        entityUiState.value = UiState.Loading()
+        relatedEntityUseCase.execute(Request(id))
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                entityUiState.value = if (it.isNotEmpty()) {
+                    UiState.Success(it)
+                } else {
+                    UiState.Empty()
+                }
+            }, {
+                entityUiState.value = UiState.Error(it)
+            }).addToDisposables()
+    }
 
 }

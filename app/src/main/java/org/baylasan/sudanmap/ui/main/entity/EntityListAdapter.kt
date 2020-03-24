@@ -47,6 +47,7 @@ class EntitiesListAdapter(
     }
 
     fun addAll(data: List<Entity>) {
+        list.clear()
         list.addAll(data)
         notifyDataSetChanged()
     }
@@ -82,8 +83,8 @@ fun ImageView.load(imageUrl: String) {
     } else {
         Picasso.get()
             .load("http://104.248.145.132/$imageUrl")
-            .error(ColorDrawable(Color.GRAY))
-            .placeholder(ColorDrawable(Color.GRAY))
+            .error(R.drawable.ic_default_placeholder)
+            .placeholder(R.drawable.ic_default_placeholder)
             .into(this)
     }
 }
@@ -94,8 +95,8 @@ fun ImageView.loadCircle(imageUrl: String) {
     } else {
         Picasso.get()
             .load("http://104.248.145.132/$imageUrl")
-            .error(ColorDrawable(Color.GRAY))
-            .placeholder(ColorDrawable(Color.GRAY))
+            .error(R.drawable.ic_default_avatar)
+            .placeholder(R.drawable.ic_default_avatar)
             .transform(CropCircleTransformation())
             .into(this)
     }

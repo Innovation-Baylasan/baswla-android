@@ -15,4 +15,5 @@ interface EntityRepository {
     fun getEntityDetails(id: Int): Single<EntityDetails>
     fun getMyEntities(): Single<List<Entity>>
     fun addEntity(addEntityRequest: AddEntityRequest): Completable
+    fun getRelated(id: Int): Single<List<Entity>>
 }

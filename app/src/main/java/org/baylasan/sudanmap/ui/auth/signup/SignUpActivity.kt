@@ -4,16 +4,11 @@ package org.baylasan.sudanmap.ui.auth.signup
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.text.SpannableString
-import android.text.SpannableStringBuilder
-import android.text.style.ClickableSpan
 import android.util.Log
 import android.util.Patterns
-import android.view.View
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.text.bold
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.github.razir.progressbutton.bindProgressButton
@@ -80,7 +75,7 @@ class SignUpActivity : AppCompatActivity() {
         val termsOfServicesText = getString(R.string.terms_of_use)
         val signUpNote = getString(R.string.by_signing_up)
         val and = getString(R.string.and)
-        val space=" "
+        val space = " "
         //TODO
 
 
@@ -88,16 +83,28 @@ class SignUpActivity : AppCompatActivity() {
             append(space)
             append(signUpNote)
             append(space)
-            append(privacyPolicyText.toClickableSpan(getColor(R.color.colorAccent)) {
-                Log.d("MEGA","open privacy policy")
-            })
+            append(
+                privacyPolicyText.toClickableSpan(
+                    ContextCompat.getColor(
+                        this@SignUpActivity,
+                        R.color.colorAccent
+                    )
+                ) {
+                    Log.d("MEGA", "open privacy policy")
+                })
             append(space)
             append(and)
             append(space)
-            append(termsOfServicesText.toClickableSpan(getColor(R.color.colorAccent)) {
-                Log.d("MEGA","open terms of service")
+            append(
+                termsOfServicesText.toClickableSpan(
+                    ContextCompat.getColor(
+                        this@SignUpActivity,
+                        R.color.colorAccent
+                    )
+                ) {
+                    Log.d("MEGA", "open terms of service")
 
-            })
+                })
         }
     }
 

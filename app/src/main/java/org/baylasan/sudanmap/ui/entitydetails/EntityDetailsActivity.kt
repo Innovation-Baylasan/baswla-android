@@ -10,11 +10,11 @@ import android.view.LayoutInflater
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.chip.Chip
 import com.google.android.material.snackbar.Snackbar
-import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_entity_details.*
 import kotlinx.android.synthetic.main.content_entity_details.*
 import kotlinx.android.synthetic.main.rate_entity_dialog_layout.view.*
@@ -25,6 +25,7 @@ import org.baylasan.sudanmap.data.entity.model.Entity
 import org.baylasan.sudanmap.data.entity.model.Tag
 import org.baylasan.sudanmap.ui.eventdetails.EventDetailsActivity
 import org.baylasan.sudanmap.ui.main.UserProfileViewModel
+import org.baylasan.sudanmap.ui.main.entity.EntitiesListAdapter
 import org.baylasan.sudanmap.ui.main.entity.load
 import org.baylasan.sudanmap.ui.main.entity.loadCircle
 import org.baylasan.sudanmap.ui.view.AppBarChangedListener
@@ -36,14 +37,16 @@ class EntityDetailsActivity : AppCompatActivity() {
     private var snackBar: Snackbar? = null
     lateinit var adapter: ReviewAdapter
     private val profileViewModel by viewModel<UserProfileViewModel>()
+    private lateinit var entity: Entity
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_entity_details)
-        val entity = intent?.getParcelableExtra("entity") as Entity
+        entity = intent?.getParcelableExtra("entity") as Entity
         viewModel.getEvents(entity.id)
         viewModel.getDetailsForId(entity.id)
+//        viewModel.getRelated(entity.id)
 
         observeRateState()
         observeFollowState()
@@ -51,7 +54,7 @@ class EntityDetailsActivity : AppCompatActivity() {
         observeDetailsState(entity)
         observeReviewState()
         observeEventState(entity)
-
+        observeEntityState()
         toggleFollowButton.setOnClickListener {
             viewModel.toggleFollow(entity.id)
         }
@@ -87,6 +90,12 @@ class EntityDetailsActivity : AppCompatActivity() {
 
         adapter = ReviewAdapter(mutableListOf())
         reviewsRecyclerView.adapter = adapter
+        reviewsRecyclerView.addItemDecoration(
+            DividerItemDecoration(
+                this,
+                DividerItemDecoration.VERTICAL
+            )
+        )
         reviewsRecyclerView.layoutManager = LinearLayoutManager(this)
 
         entity.let {
@@ -105,6 +114,48 @@ class EntityDetailsActivity : AppCompatActivity() {
         }
 
 
+    }
+
+    private fun observeEntityState() {
+        viewModel.entityState.observe(this, Observer {
+            if (it is UiState.Loading) {
+                entityLoadingLayout.visible()
+                entityErrorLayout.gone()
+                relatedEntityRecyclerView.gone()
+                emptyEntityLayout.gone()
+            }
+            if (it is UiState.Error) {
+                entityLoadingLayout.gone()
+                entityErrorLayout.visible()
+                emptyEntityLayout.gone()
+                retryEntityButton.setOnClickListener {
+                    viewModel.getRelated(entity.id)
+                }
+                relatedEntityRecyclerView.gone()
+            }
+            if (it is UiState.Empty) {
+                emptyEntityLayout.visible()
+                entityLoadingLayout.gone()
+                entityErrorLayout.gone()
+                relatedEntityRecyclerView.gone()
+            }
+            if (it is UiState.Success) {
+                emptyEntityLayout.gone()
+                entityLoadingLayout.gone()
+                entityErrorLayout.gone()
+                relatedEntityRecyclerView.visible()
+                relatedEntityRecyclerView.layoutManager =
+                    LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+                relatedEntityRecyclerView.adapter = EntitiesListAdapter(it.data.toMutableList(),
+                    object : EntitiesListAdapter.OnItemClick {
+                        override fun onItemClick(entity: Entity) {
+
+                        }
+
+                    })
+            }
+
+        })
     }
 
     private fun observeEventState(entity: Entity) {

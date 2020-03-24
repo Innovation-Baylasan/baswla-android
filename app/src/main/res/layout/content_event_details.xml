@@ -14,7 +14,6 @@
         android:orientation="vertical">
 
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/materialCardView3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -135,7 +134,6 @@
                             android:layout_marginTop="4dp"
                             android:fontFamily="@font/neo_sans_arabic_bold"
                             android:text="@string/free"
-                            android:id="@+id/ticketPrice"
                             android:textColor="@color/black" />
                     </LinearLayout>
 
@@ -170,7 +168,6 @@
                             android:layout_marginTop="4dp"
                             android:fontFamily="@font/neo_sans_arabic_bold"
                             tools:text="100"
-                            android:id="@+id/seatsCount"
                             android:textColor="@color/black" />
                     </LinearLayout>
 
@@ -218,7 +215,6 @@
 
 
             <LinearLayout
-                android:id="@+id/eventLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"

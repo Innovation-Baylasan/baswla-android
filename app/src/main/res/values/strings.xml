@@ -1,22 +1,13 @@
 <resources>
 
-    <string name="title_activity_maps">Map</string>
     <string name="start_up_week_end" translatable="false">Startups Weekend Sudan</string>
     <string name="rate_now_btn_label">Rate now</string>
-    <string name="number_sample" translatable="false">112</string>
     <string name="followers">Followers</string>
     <string name="events">Events</string>
     <string name="review">Reviews</string>
     <string name="sample_descripition" translatable="false">rambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem</string>
-    <string name="leave_review">Leave Review</string>
     <string name="comment_hint">Write a review…</string>
-    <string name="post">Post</string>
-    <string name="follow">Follow</string>
     <string name="title_activity_add_entitiy" translatable="false">AddEntitiyActivity</string>
-    <string name="action_settings">Settings</string>
-    <string name="welcome">Welcome</string>
-    <string name="welcome_text_description" translatable="false">Here we should put text to let user register in our app Here we should put text to let user register in our app¬</string>
-    <string name="user_name">Username</string>
     <string name="password">Passowrd</string>
     <string name="sgin_in">Sign in</string>
     <string name="sign_up_as_org">Sign up</string>
@@ -28,7 +19,6 @@
     <string name="email">Email</string>
     <string name="password_confirmation">Password Confirmation</string>
     <string name="company">Company</string>
-    <string name="privacy_string">By Signing up you are hereby agree to our <font color="#003a7c">Terms of service</font> and <font color="#003a7c">privacy policy</font></string>
     <string name="permission_denied_settings_subtitle">Bawsala app relies heavily on Location permission and without it the app wont function as expected, we also use it to get nearby events and entities location.</string>
     <string name="permission_denied_settings_title">Permission required</string>
     <string name="open_settings" translatable="false">Open settings</string>
@@ -48,7 +38,6 @@
     <string name="by_signing_up">By Signing up you are hereby agree to our</string>
     <string name="and">and</string>
     <string name="faq">FAQ</string>
-    <string name="title_activity_event_details" translatable="false">EventDetails</string>
     <string name="view_more">View more</string>
     <string name="ticket_price">Ticket price</string>
     <string name="free">Free</string>
@@ -59,9 +48,7 @@
     <string name="retry">Retry</string>
     <string name="failed_to_load_details">Failed to load the details</string>
     <string name="write_review_first">Write a review first</string>
-    <string name="organization_location">Organization location</string>
     <string name="continue_complete">Continue and Complete</string>
-    <string name="upload_cover_photo">Upload cover\nphoto</string>
     <string name="crop_cover_title">Crop your cover image</string>
     <string name="crop_profile_title">Crop your profile image</string>
     <string name="company_location_marker_title">Company location</string>
@@ -71,11 +58,8 @@
     <string name="event_information">Event Information</string>
     <string name="event_name">Event Name</string>
     <string name="description">Description</string>
-    <string name="address">Address</string>
     <string name="event_image">Event Image</string>
     <string name="pick_select_an_image">Pick/Select an image</string>
-    <string name="seat_count">Seat count</string>
-    <string name="seat_price">Seat Price</string>
     <string name="registration_link">Registration link</string>
     <string name="application_date">Application Date</string>
     <string name="to">TO</string>
@@ -87,22 +71,17 @@
     <string name="failed_to_rate_entity">Failed to rate entity, try again</string>
     <string name="failed_to_follow">Failed to follow, try again</string>
     <string name="followed_successfully">Followed successfully.</string>
-    <string name="unfollowed_successfully">Unfollowed successfully.</string>
     <string name="full_name">Full name</string>
     <string name="e_mail_address">E-mail address</string>
     <string name="save">Save</string>
-    <string name="please_wait_while_processing_the_information">Please wait while processing the information</string>
     <string name="finish">Finish</string>
     <string name="event_name_required">Event name is required.</string>
     <string name="event_description_required">Event description is required.</string>
-    <string name="event_address_required">Event address is required.</string>
-    <string name="number_of_seats_is_required">Number of Seats is required.</string>
-    <string name="price_required">Price is required.</string>
     <string name="register_link_required">register link is required.</string>
     <string name="event_location_required">Event location is required.</string>
     <string name="submit">Submit</string>
-    <string name="type">Type</string>
-    
+    <string name="type">Category</string>
+
     <string name="no_location_selected">No location selected!!</string>
     <string name="tap_to_pick">Tap to pick</string>
     <string name="general_information">General Information</string>
@@ -124,8 +103,6 @@
     <string name="sigining_in">Signing in…</string>
     <string name="connection_faile">Connection failed.</string>
     <string name="organization_category">Organization Category</string>
-    <string name="upload_cover_picture">Upload cover picture</string>
-    <string name="upload_profile_picture">Upload profile picture</string>
     <string name="failed_to_add_comment">Failed to add comment, try again.</string>
     <string name="search_here">Search here…</string>
     <string name="no_data_found">No data found</string>
@@ -153,4 +130,21 @@
     <string name="this_entity_has_no_events">this entity has no events.</string>
     <string name="no_places_around">No Places around</string>
     <string name="rate_entity">Rate Entity</string>
+    <string name="page1_title">Explore</string>
+    <string name="page1_summary">Bawsala platform provides an interactive presentation of information that related to Core production.</string>
+    <string name="page2_title">Search</string>
+    <string name="page2_summary">You can search for location of institutions, research centers, startups, funders, and sites of interest in the production and business process.</string>
+    <string name="page3_title">Contact</string>
+    <string name="page3_summary">Bawsala provides all the important information that contributes to connecting and communicating between business owners or production areas, in a more flexible and fast way.</string>
+    <string name="page4_title">Events</string>
+    <string name="page4_summary">Bawsala platform is concerned with all activities, workshops and interactive programs that are established in spreading awareness and production, whether they are individuals or institutions.</string>
+    <string name="page5_summary">Information is a right for everyone ❤️, this is what Bawsala publishes and shares with the innovative, productive society, and competes with everyone who monopolizes data that helps progress, Constructing and production.</string>
+    <string name="page5_title">Creative Commons</string>
+    <string name="sperate_tags">Separate each tag and other with comma</string>
+    <string name="add_entity_summary">Bawsala is based on exchanging information and enriching spatial content, make important places in your development and production process</string>
+    <string name="add_new_entity">Add new Entity</string>
+    <string name="add_event_summary">Bawsala is based on exchanging information and enriching spatial content, adding new events that help in transferring knowledge, training and activation.</string>
+    <string name="start_date_after_end_error">Start date can not be after end date</string>
+    <string name="end_date_before_start_date_error">end date can not be before start date</string>
+    <string name="login">Login</string>
 </resources>

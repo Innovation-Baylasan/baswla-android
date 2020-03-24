@@ -23,7 +23,9 @@ fun <T> LiveData<T>.blockingObserve(): T? {
     latch.await(2, TimeUnit.SECONDS)
     return value
 }
-
+inline fun <reified T : Any> mockLogging(): T {
+  return  com.nhaarman.mockitokotlin2.mock<T>(verboseLogging = true)
+}
 fun <T> LiveData<T>.testObserver() = TestObserver<T>().also {
     observeForever(it)
 }

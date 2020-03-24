@@ -14,9 +14,14 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class SplashActivity : AppCompatActivity() {
 
     private val sessionViewModel: SessionViewModel by viewModel()
+    override fun onStop() {
+        super.onStop()
+
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
+
         sessionViewModel.checkSession()
         sessionViewModel.sessionLiveData.observe(this, Observer {
             when (it) {

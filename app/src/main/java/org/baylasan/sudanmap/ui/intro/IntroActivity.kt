@@ -8,6 +8,10 @@ import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
 import kotlinx.android.synthetic.main.activity_intro.*
 import org.baylasan.sudanmap.R
+import org.baylasan.sudanmap.common.disable
+import org.baylasan.sudanmap.common.enable
+import org.baylasan.sudanmap.common.gone
+import org.baylasan.sudanmap.common.visible
 import org.baylasan.sudanmap.domain.ViewPagerModel
 import org.baylasan.sudanmap.ui.main.MainActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -25,20 +29,25 @@ class IntroActivity : AppCompatActivity() {
         //TODO change intro data
         val introItems = arrayListOf(
             ViewPagerModel(
-                jsonFile = R.raw.map_inter_actions, header = "Explore",
-                description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nunc eget lorem dolor sed viverra ipsum."
+                jsonFile = R.raw.map_inter_actions,
+                header = getString(R.string.page1_title),
+                description = getString(R.string.page1_summary)
             ), ViewPagerModel(
-                jsonFile = R.raw.search, header = "Test",
-                description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nunc eget lorem dolor sed viverra ipsum."
+                jsonFile = R.raw.search,
+                header = getString(R.string.page2_title),
+                description = getString(R.string.page2_summary)
             ), ViewPagerModel(
-                jsonFile = R.raw.third, header = "Explore",
-                description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nunc eget lorem dolor sed viverra ipsum."
+                jsonFile = R.raw.third,
+                header = getString(R.string.page3_title),
+                description = getString(R.string.page3_summary)
             ), ViewPagerModel(
-                jsonFile = R.raw.four, header = "Explore",
-                description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nunc eget lorem dolor sed viverra ipsum."
+                jsonFile = R.raw.four,
+                header = getString(R.string.page4_title),
+                description = getString(R.string.page4_summary)
             ), ViewPagerModel(
-                jsonFile = R.raw.five, header = "Explore",
-                description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nunc eget lorem dolor sed viverra ipsum."
+                jsonFile = R.raw.five,
+                header = getString(R.string.page5_title),
+                description = getString(R.string.page5_summary)
             )
         )
         val marginPageTransformer = MarginPageTransformer(100)
@@ -88,12 +97,13 @@ class IntroActivity : AppCompatActivity() {
                 if (currentPage == introItems.lastIndex) {
                     //  introViewPager.setCurrentItem(currentPage, true)
                     //  currentPage =0
+                    skipButton.gone()
                     nextButton.text = getString(R.string.finish)
                 } else {
                     nextButton.text = getString(R.string.next)
+                    skipButton.visible()
                 }
             }
-
         })
     }
 }
