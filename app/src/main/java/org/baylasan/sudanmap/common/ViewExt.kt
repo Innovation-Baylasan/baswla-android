@@ -44,19 +44,14 @@ fun AppCompatEditText.setEndDrawableOnTouchListener(func: AppCompatEditText.() -
     }
 }
 
-fun String.toClickableSpan(color: Int, onClick: () -> Unit): SpannableStringBuilder {
+fun String.toClickableSpan( onClick: () -> Unit): SpannableStringBuilder {
     val spannableStringBuilder = SpannableStringBuilder(this)
-    spannableStringBuilder.setSpan(
-        ForegroundColorSpan(color),
-        0,
-        length,
-        Spannable.SPAN_INCLUSIVE_INCLUSIVE
-    )
+
     spannableStringBuilder.setSpan(object : ClickableSpan() {
         override fun onClick(widget: View) {
             onClick.invoke()
         }
-    }, 0, length, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
+    }, 0, length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
     return spannableStringBuilder
 }
 fun TextView.makeLinks(vararg links: Pair<String, View.OnClickListener>) {

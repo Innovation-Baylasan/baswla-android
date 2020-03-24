@@ -5,42 +5,12 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import org.baylasan.sudanmap.data.entity.model.AddEntityRequest
 import org.baylasan.sudanmap.data.event.model.AddEventRequest
-import org.baylasan.sudanmap.data.user.model.RegisterCompanyRequest
 import java.util.*
 
 interface RequestMapper<T> {
     fun mapToResponseBody(t: T): List<MultipartBody.Part>
 }
 
-class RegisterRequestMapper : RequestMapper<RegisterCompanyRequest> {
-    override fun mapToResponseBody(request: RegisterCompanyRequest): List<MultipartBody.Part> {
-        val builder = MultipartBody.Builder()
-            .setType(MultipartBody.FORM)
-            .addFormDataPart("name", request.name)
-            .addFormDataPart("email", request.email)
-            .addFormDataPart("password", request.password)
-            .addFormDataPart("password_confirmation", request.passwordConfirmation)
-            .addFormDataPart("register_as", "company")
-            .addFormDataPart("location", request.location)
-            .addFormDataPart("category", request.categoryId.toString())
-            .addFormDataPart("description", request.description)
-        if (request.avatar != null) {
-            builder.addFormDataPart(
-                "avatar",
-                "file",
-                request.avatar.asRequestBody("application/octet-stream".toMediaTypeOrNull())
-            )
-
-        }
-        if (request.cover != null) {
-            builder.addFormDataPart(
-                "cover", "file",
-                request.cover.asRequestBody("application/octet-stream".toMediaTypeOrNull())
-            )
-        }
-        return builder.build().parts
-    }
-}
 
 class AddEntityRequestMapper : RequestMapper<AddEntityRequest> {
     override fun mapToResponseBody(request: AddEntityRequest): List<MultipartBody.Part> {

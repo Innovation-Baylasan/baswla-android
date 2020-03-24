@@ -17,12 +17,11 @@ class RegisterViewModel(
     private val ioScheduler: Scheduler,
     private val mainScheduler: Scheduler
 ) : BaseViewModel() {
-    val moveToCompleteRegister = MutableLiveData<RegisterRequest>()
     val events = MutableLiveData<RegisterEvent>()
 
 
     fun register(registerRequest: RegisterRequest) {
-        if (registerRequest.type == "user") {
+
             registerUseCase.execute(UserRegisterUseCase.Params(registerRequest))
                 .compose {
                     events.value = LoadingEvent
@@ -32,9 +31,7 @@ class RegisterViewModel(
                 .observeOn(mainScheduler)
                 .subscribe(onSuccess(), onError())
                 .addToDisposables()
-        } else {
-            moveToCompleteRegister.value = registerRequest
-        }
+
     }
 
     private fun onError(): (Throwable) -> Unit {

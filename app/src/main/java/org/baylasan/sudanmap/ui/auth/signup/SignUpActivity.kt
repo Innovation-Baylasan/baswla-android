@@ -4,17 +4,16 @@ package org.baylasan.sudanmap.ui.auth.signup
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.text.method.LinkMovementMethod
 import android.util.Log
 import android.util.Patterns
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.github.razir.progressbutton.bindProgressButton
 import com.github.razir.progressbutton.hideProgress
 import com.github.razir.progressbutton.showProgress
-import com.google.android.material.button.MaterialButton
 import kotlinx.android.synthetic.main.activity_sign_up.*
 import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.common.asString
@@ -22,8 +21,9 @@ import org.baylasan.sudanmap.common.isMatch
 import org.baylasan.sudanmap.common.toClickableSpan
 import org.baylasan.sudanmap.common.toast
 import org.baylasan.sudanmap.data.user.model.RegisterRequest
-import org.baylasan.sudanmap.ui.auth.company.CompanyDataActivity
 import org.baylasan.sudanmap.ui.main.MainActivity
+import org.baylasan.sudanmap.ui.privacy.PrivacyPolicyActivity
+import org.baylasan.sudanmap.ui.terms.TOSActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -41,94 +41,35 @@ class SignUpActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
         bindProgressButton(signUpBtn)
-
-        individualBtn.select()
-        companyBtn.unSelect()
         setAdjustScreen()
-        individualBtn.setOnClickListener {
-            selectedType = "user"
-            companyBtn.unSelect()
-            individualBtn.select()
-
-
-        }
-
-        companyBtn.setOnClickListener {
-            selectedType = "company"
-            companyBtn.select()
-            individualBtn.unSelect()
-
-        }
-
 
         signUpBtn.setOnClickListener {
             performValidation()
         }
 
         observeViewModel()
-        viewModel.moveToCompleteRegister.observe(this, Observer {
-            val intent = Intent(this, CompanyDataActivity::class.java)
-            intent.putExtra("registerData", it)
-            startActivity(intent)
-        })
+
         val privacyPolicyText = getString(R.string.privacy_policy)
         val termsOfServicesText = getString(R.string.terms_of_use)
         val signUpNote = getString(R.string.by_signing_up)
         val and = getString(R.string.and)
         val space = " "
-        //TODO
 
-
+        signUpNoteText.movementMethod=LinkMovementMethod.getInstance()
         signUpNoteText.apply {
             append(space)
             append(signUpNote)
             append(space)
-            append(
-                privacyPolicyText.toClickableSpan(
-                    ContextCompat.getColor(
-                        this@SignUpActivity,
-                        R.color.colorAccent
-                    )
-                ) {
-                    Log.d("MEGA", "open privacy policy")
-                })
+            append(privacyPolicyText.toClickableSpan {
+             startActivity(Intent(this@SignUpActivity,PrivacyPolicyActivity::class.java))
+            })
             append(space)
             append(and)
             append(space)
-            append(
-                termsOfServicesText.toClickableSpan(
-                    ContextCompat.getColor(
-                        this@SignUpActivity,
-                        R.color.colorAccent
-                    )
-                ) {
-                    Log.d("MEGA", "open terms of service")
-
-                })
+            append(termsOfServicesText.toClickableSpan {
+                startActivity(Intent(this@SignUpActivity,TOSActivity::class.java))
+            })
         }
-    }
-
-    private fun MaterialButton.select() {
-
-        strokeColor =
-            ContextCompat.getColorStateList(applicationContext, R.color.colorAccent)
-        setTextColor(ContextCompat.getColor(applicationContext, R.color.colorAccent))
-        iconTint =
-            ContextCompat.getColorStateList(applicationContext, R.color.colorAccent)
-    }
-
-    private fun MaterialButton.unSelect() {
-        strokeColor =
-            ContextCompat.getColorStateList(applicationContext, R.color.black_overlay)
-        setTextColor(
-            ContextCompat.getColor(
-                applicationContext,
-                R.color.black_overlay
-            )
-        )
-        iconTint =
-            ContextCompat.getColorStateList(applicationContext, R.color.black_overlay)
-
     }
 
     private fun observeViewModel() {

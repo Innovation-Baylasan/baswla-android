@@ -39,6 +39,7 @@
             <TextView
                 android:id="@+id/textView11"
                 android:layout_width="0dp"
+                android:visibility="gone"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
@@ -56,7 +57,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 android:text="@string/name"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView11" />
@@ -137,74 +138,20 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView15" />
 
-            <TextView
-                android:id="@+id/textView16"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8sp"
-                android:text="@string/type"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/signUpPasswordConfirmationEditText" />
-
-            <LinearLayout
-                android:id="@+id/radioGroup"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView16">
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/companyBtn"
-                    style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
-                    android:layout_width="wrap_content"
-
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:padding="10dp"
-                    android:text="@string/company"
-                    android:textAllCaps="false"
-                    app:cornerRadius="8dp"
-                    app:icon="@drawable/ic_company"
-                    app:strokeColor="@color/colorAccent"
-                    app:strokeWidth="3dp" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/individualBtn"
-                    style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:padding="10dp"
-
-                    android:text="Individual"
-                    android:textAllCaps="false"
-                    android:textColor="@color/black_overlay"
-                    app:cornerRadius="8dp"
-                    app:icon="@drawable/ic_individual"
-                    app:iconTint="@color/black_overlay"
-                    app:strokeColor="@android:color/darker_gray"
-                    app:strokeWidth="3dp" />
-            </LinearLayout>
 
             <TextView
                 android:id="@+id/signUpNoteText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:textSize="12sp"
+                android:layout_marginTop="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+                app:layout_constraintTop_toBottomOf="@+id/signUpPasswordConfirmationEditText"
+                tools:text="Sign uo " />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/signUpBtn"

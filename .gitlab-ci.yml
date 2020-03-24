@@ -14,25 +14,19 @@ cache:
     - .gradle/
 stages:
   - build
-  - test
   - release
-  - deploy
-#lintDebug:
-#  stage: build
-#  script:
-#    - ./gradlew -Pci --console=plain :app:lintDebug -PbuildDir=lint
 
-#assembleDevelopment:
-#  stage: build
-#  script:
-#    - ./gradlew assembleDevelopment
+assembleDevelopment:
+  stage: build
+  script:
+    - ./gradlew assembleDevelopment
+h
+assembleLocal:
+  stage: build
+  script:
+    - ./gradlew assembleLocal
 
-#testDebug:
-#  stage: test
-#  script:
-#    - ./gradlew -Pci --console=plain :app:testDebug
-
-assembleProduction:
+assembleRelease:
   stage: release
   script:
     - echo $KEYSTORE_FILE | base64 -d > my.keystore

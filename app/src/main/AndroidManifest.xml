@@ -40,7 +40,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.myentities.MyEntitiesActivity" />
-        <activity android:name=".ui.auth.company.CompanyDataActivity" />
         <activity
             android:name=".ui.addevent.AddEventActivity"
             android:configChanges="layoutDirection"

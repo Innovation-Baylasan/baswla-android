@@ -69,11 +69,6 @@ interface SudanMapApi {
         @POST("register")
         fun register(@Body registerRequest: RegisterRequest): Single<Response<AuthenticationResponse>>
 
-        @Multipart
-        @POST("register")
-        fun registerCompany(
-            @Part list: List<MultipartBody.Part>
-        ): Single<Response<AuthenticationResponse>>
 
         @POST("login")
         fun login(@Body loginRequest: LoginRequest): Single<Response<AuthenticationResponse>>

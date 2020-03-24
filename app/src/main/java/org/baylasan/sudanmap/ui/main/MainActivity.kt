@@ -136,16 +136,6 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener,
             } else {
                 userNameTextView.text = profile.name
                 userEmailTextView.text = profile.email
-                if (profile.isCompany()) {
-//                    editProfileButton.visible()
-                    openPlacesButton.visible()
-                } else {
-                    editProfileButton.gone()
-                    openPlacesButton.gone()
-
-                }
-                openEventsButton.visible()
-
                 openPlacesButton.setOnClickListener {
                     startActivityAndCloseDrawer<MyEntitiesActivity>()
                 }
@@ -160,7 +150,6 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener,
     private inline fun <reified T> startActivityAndCloseDrawer() {
         startActivity(Intent(this, T::class.java))
         closeDrawer()
-
     }
 
     private fun requestPermission() {

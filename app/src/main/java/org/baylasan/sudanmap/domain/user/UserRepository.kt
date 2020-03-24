@@ -5,6 +5,5 @@ import org.baylasan.sudanmap.data.user.model.*
 
 interface UserRepository {
     fun register(registerRequest: RegisterRequest): Single<AuthenticationResponse>
-    fun registerCompany(registerCompanyRequest: RegisterCompanyRequest) : Single<AuthenticationResponse>
     fun login(loginRequest: LoginRequest): Single<AuthenticationResponse>
 }
