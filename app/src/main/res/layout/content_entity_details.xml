@@ -57,6 +57,7 @@
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/rateNowButtton"
+                        android:enabled="false"
                         style="@style/RateButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -213,6 +214,7 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <TextView
+                    android:gravity="center"
                     android:id="@+id/companyDescriptionTextView"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -221,6 +223,7 @@
                     android:layout_marginEnd="16dp"
                     android:fontFamily="@font/neo_sans_arabic_light"
                     android:textSize="14sp"
+                    android:lineSpacingExtra="3dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
@@ -387,7 +390,7 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
                     android:fontFamily="@font/neo_sans_arabic_bold"
-                    android:text="@string/events"
+                    android:text="@string/related_events"
                     android:textColor="@color/black" />
 
                 <FrameLayout
@@ -470,7 +473,7 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
                     android:fontFamily="@font/neo_sans_arabic_bold"
-                    android:text="@string/places"
+                    android:text="@string/related_places"
                     android:textColor="@color/black" />
 
                 <FrameLayout
@@ -513,7 +516,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="@string/this_entity_has_no_events"
+                        android:text="@string/this_place_has_no_related_places"
                         android:textColor="@color/black"
                         android:visibility="gone"
                         tools:visibility="visible" />

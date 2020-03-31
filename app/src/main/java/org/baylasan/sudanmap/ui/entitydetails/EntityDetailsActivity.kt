@@ -21,6 +21,7 @@ import org.baylasan.sudanmap.R
 import org.baylasan.sudanmap.common.*
 import org.baylasan.sudanmap.data.common.UnAuthorizedException
 import org.baylasan.sudanmap.data.entity.model.Entity
+import org.baylasan.sudanmap.data.entity.model.EntityDetails
 import org.baylasan.sudanmap.data.entity.model.Tag
 import org.baylasan.sudanmap.ui.eventdetails.EventDetailsActivity
 import org.baylasan.sudanmap.ui.main.UserProfileViewModel
@@ -37,7 +38,6 @@ class EntityDetailsActivity : AppCompatActivity() {
     lateinit var adapter: ReviewAdapter
     private val profileViewModel by viewModel<UserProfileViewModel>()
     private lateinit var entity: Entity
-
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -262,7 +262,7 @@ class EntityDetailsActivity : AppCompatActivity() {
         viewModel.entityDetailsState.observe(this, Observer { uiState ->
             if (uiState is UiState.Success) {
                 snackBar?.dismiss()
-                val entityDetails = uiState.data
+                val entityDetails:EntityDetails = uiState.data
                 if (profileViewModel.isThisMine(entityDetails.userId)) {
 
                     toggleFollowButton.gone()
@@ -272,12 +272,12 @@ class EntityDetailsActivity : AppCompatActivity() {
                     toggleFollowButton.visible()
                 }
                 toggleFollowButton.setImageResource(if (entityDetails.isFollowed) R.drawable.ic_bell else R.drawable.ic_bell_vib)
+                rateNowButtton.enable()
                 companyNameTxt.text = entityDetails.name
                 ratingBar2.rating = entityDetails.rating.toFloat()
                 companyDescriptionTextView.text = entityDetails.description
                 val details = entityDetails.details
                 if (details != null && details.isNotEmpty()) {
-                    Linkify.addLinks(companyDescriptionTextView, Linkify.ALL)
 
 
                     companyDescriptionTextView.append("\n")
@@ -286,7 +286,9 @@ class EntityDetailsActivity : AppCompatActivity() {
                         HtmlCompat.FROM_HTML_MODE_COMPACT
                     )
                     companyDescriptionTextView.append(htmlContent)
+
                 }
+                    Linkify.addLinks(companyDescriptionTextView, Linkify.ALL)
                 profileCoverImage.load(entityDetails.cover)
                 profileImage.loadCircle(entityDetails.avatar)
                 companyProfileReviewsNumTxt.text = entityDetails.reviewsCount.toString()

@@ -147,4 +147,8 @@
     <string name="start_date_after_end_error">Start date can not be after end date</string>
     <string name="end_date_before_start_date_error">end date can not be before start date</string>
     <string name="login">Login</string>
+    <string name="this_place_has_no_related_places">this place has no related places.</string>
+    <string name="related_places">Related places</string>
+    <string name="related_events">Related events</string>
+    <string name="entity_added_message">Please wait while We verify this entry before adding it to our data set.</string>
 </resources>

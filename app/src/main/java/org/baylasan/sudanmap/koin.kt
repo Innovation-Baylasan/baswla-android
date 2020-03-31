@@ -87,9 +87,7 @@ val appModule = module {
     factory { AddEntityRequestMapper() }
     factory(qualifier = named("io")) { provideIoScheduler() }
     factory(qualifier = named("main")) { provideMainScheduler() }
-    factory {
 
-    }
 
 }
 val introModule = module {

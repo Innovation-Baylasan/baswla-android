@@ -78,7 +78,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
                     signInButton.hideProgress(R.string.done)
                     startActivity(Intent(activity,MainActivity::class.java))
-                    activity?.finish()
+                    activity?.finishAffinity()
 
                 }
                 is UiState.Error -> {

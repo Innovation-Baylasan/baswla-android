@@ -78,7 +78,7 @@ class SignUpActivity : AppCompatActivity() {
                 is DataEvent -> {
                     signUpBtn.hideProgress(R.string.done)
                     startActivity(Intent(this, MainActivity::class.java))
-                    finish()
+                    finishAffinity()
                 }
                 is LoadingEvent -> {
                     signUpBtn.showProgress {

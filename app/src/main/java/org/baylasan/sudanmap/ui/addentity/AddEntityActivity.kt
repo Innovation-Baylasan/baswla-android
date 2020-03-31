@@ -1,6 +1,8 @@
 package org.baylasan.sudanmap.ui.addentity
 
 import android.app.Activity
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
@@ -26,6 +28,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
 import com.theartofdev.edmodo.cropper.CropImage
@@ -188,13 +191,10 @@ class AddEntityActivity : AppCompatActivity() {
         addEntityViewModel.addState.observe(this, Observer {
             if (it is UiState.Complete) {
                 submitEntityButton.hideProgress(getString(R.string.done))
-                toast(getString(R.string.entity_added))
-                setResult(Activity.RESULT_OK)
-                finish()
+                showSuccessDialog()
             }
             if (it is UiState.Error) {
                 submitEntityButton.hideProgress(getString(R.string.failed))
-
                 val throwable = it.throwable
                 when (throwable) {
                     is UnAuthorizedException -> {
@@ -216,6 +216,25 @@ class AddEntityActivity : AppCompatActivity() {
 
             }
         })
+    }
+
+    private fun showSuccessDialog() {
+        MaterialAlertDialogBuilder(this,R.style.Theme_MaterialComponents_Light_Dialog_Alert)
+            .setTitle(R.string.entity_added)
+            .setMessage(getString(R.string.entity_added_message))
+            .setPositiveButton(android.R.string.ok){ dialogInterface: DialogInterface, _: Int ->
+                dialogInterface.dismiss()
+                sendOkResultAndFinishActivity()
+            }.setOnDismissListener {
+                sendOkResultAndFinishActivity()
+            }
+            .create()
+            .show()
+    }
+
+    private fun sendOkResultAndFinishActivity() {
+        setResult(Activity.RESULT_OK)
+        finish()
     }
 
 
