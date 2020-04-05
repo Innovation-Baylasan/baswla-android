@@ -17,13 +17,18 @@ import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import org.baylasan.sudanmap.data.SudanMapApi
 import org.baylasan.sudanmap.data.category.CategoryApi
-import org.baylasan.sudanmap.data.common.*
+import org.baylasan.sudanmap.data.common.AddEntityRequestMapper
+import org.baylasan.sudanmap.data.common.AddEventRequestMapper
+import org.baylasan.sudanmap.data.common.ApiErrorResponse
+import org.baylasan.sudanmap.data.common.RequestMapper
 import org.baylasan.sudanmap.data.entity.EntityApi
 import org.baylasan.sudanmap.data.entity.model.AddEntityResponseError
 import org.baylasan.sudanmap.data.event.EventApi
 import org.baylasan.sudanmap.data.event.model.AddEventRequest
 import org.baylasan.sudanmap.data.event.model.AddEventResponseError
+import org.baylasan.sudanmap.data.policy.PolicyApi
 import org.baylasan.sudanmap.data.tags.TagsApi
+import org.baylasan.sudanmap.data.terms.TermsApi
 import org.baylasan.sudanmap.data.user.SessionManagerImpl
 import org.baylasan.sudanmap.data.user.UserApi
 import org.baylasan.sudanmap.data.user.model.RegisterErrorResponse
@@ -32,10 +37,17 @@ import org.baylasan.sudanmap.domain.category.CategoryRepository
 import org.baylasan.sudanmap.domain.category.FetchCategoriesUseCase
 import org.baylasan.sudanmap.domain.entity.*
 import org.baylasan.sudanmap.domain.event.*
+import org.baylasan.sudanmap.domain.policy.GetPolicyUseCase
+import org.baylasan.sudanmap.domain.policy.PolicyRepository
 import org.baylasan.sudanmap.domain.tags.GetTagsByNameUseCase
 import org.baylasan.sudanmap.domain.tags.GetTagsUseCase
 import org.baylasan.sudanmap.domain.tags.TagsRepository
-import org.baylasan.sudanmap.domain.user.*
+import org.baylasan.sudanmap.domain.terms.GetTermsUseCase
+import org.baylasan.sudanmap.domain.terms.TermsRepository
+import org.baylasan.sudanmap.domain.user.SessionManager
+import org.baylasan.sudanmap.domain.user.UserLoginUseCase
+import org.baylasan.sudanmap.domain.user.UserRegisterUseCase
+import org.baylasan.sudanmap.domain.user.UserRepository
 import org.baylasan.sudanmap.ui.addentity.AddEntityViewModel
 import org.baylasan.sudanmap.ui.addevent.AddEventViewModel
 import org.baylasan.sudanmap.ui.auth.login.LoginViewModel
@@ -50,7 +62,9 @@ import org.baylasan.sudanmap.ui.main.entity.EntityViewModel
 import org.baylasan.sudanmap.ui.main.event.EventViewModel
 import org.baylasan.sudanmap.ui.myentities.MyEntitiesViewModel
 import org.baylasan.sudanmap.ui.myevents.MyEventsViewModel
+import org.baylasan.sudanmap.ui.privacy.PolicyViewModel
 import org.baylasan.sudanmap.ui.splash.SessionViewModel
+import org.baylasan.sudanmap.ui.terms.TermsViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -107,6 +121,18 @@ val entitiesModule = module(override = true) {
     viewModel {
         MyEntitiesViewModel(get(), get())
     }
+}
+val policyModule = module(override = true) {
+    factory { get<Retrofit>().create(SudanMapApi.Miscs::class.java) }
+    factory<PolicyRepository> { PolicyApi(get(), get()) }
+    factory { GetPolicyUseCase(get()) }
+    viewModel { PolicyViewModel(get()) }
+}
+val termsModule = module(override = true) {
+    factory { get<Retrofit>().create(SudanMapApi.Miscs::class.java) }
+    factory<TermsRepository> { TermsApi(get(), get()) }
+    factory { GetTermsUseCase(get()) }
+    viewModel { TermsViewModel(get()) }
 }
 val addEntityModule = module(override = true) {
     factory { get<Retrofit>().create(SudanMapApi.Entities::class.java) }

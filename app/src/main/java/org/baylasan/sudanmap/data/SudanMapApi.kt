@@ -11,6 +11,9 @@ import org.baylasan.sudanmap.data.user.model.AuthenticationResponse
 import org.baylasan.sudanmap.data.user.model.LoginRequest
 import org.baylasan.sudanmap.data.user.model.RegisterRequest
 import org.baylasan.sudanmap.domain.entity.AddReviewUseCase
+import org.baylasan.sudanmap.domain.faq.model.Faq
+import org.baylasan.sudanmap.domain.policy.model.Policy
+import org.baylasan.sudanmap.domain.terms.model.Terms
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -101,6 +104,18 @@ interface SudanMapApi {
 
         @GET("tags")
         fun getTagsByName(@Query("q") name: String): Single<Response<TagsResponse>>
+    }
+
+    interface Miscs {
+        @GET("terms")
+        fun terms(): Single<Response<Terms>>
+
+        @GET("policy")
+
+        fun policy(): Single<Response<Policy>>
+
+        @GET("faq")
+        fun faqs(): Single<Response<Faq>>
     }
 }
 
