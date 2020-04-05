@@ -16,8 +16,7 @@ data class User(
     val name: String = "",
     @SerializedName("updated_at")
     val updatedAt: String = "",
-    @SerializedName("username")
-    val username: String = "",
+
     @SerializedName("role")
     val role: String = ""
 )

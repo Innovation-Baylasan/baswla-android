@@ -33,7 +33,8 @@ class SudanMapApp : Application() {
                     introModule,
                     eventSearchModule,
                     policyModule,
-                    termsModule
+                    termsModule,
+                    faqModule
                 )
             )
 

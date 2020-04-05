@@ -23,7 +23,6 @@ class SessionManagerImpl(
         sharedPreferences.putPreference(KEY_NAME, user.name)
         sharedPreferences.putPreference(KEY_IS_LOGIN, true)
         sharedPreferences.putPreference(KEY_ROLE, user.role)
-        sharedPreferences.putPreference(KEY_USER_NAME, user.username)
     }
 
     override fun getUser(): UserDto {
@@ -32,7 +31,6 @@ class SessionManagerImpl(
             id = sharedPreferences.findPreference(KEY_USER_ID, 0),
             token = sharedPreferences.findPreference(KEY_USER_TOKEN, ""),
             name = sharedPreferences.findPreference(KEY_NAME, ""),
-            username = sharedPreferences.findPreference(KEY_USER_NAME, ""),
             role = sharedPreferences.findPreference(KEY_ROLE, "user")
 
         )
@@ -74,7 +72,6 @@ class SessionManagerImpl(
         private const val KEY_IS_LOGIN = "is_login"
         private const val KEY_IS_FIRST_TIME = "first_time"
         private const val KEY_ENTITY = "entity"
-        private const val KEY_USER_NAME = "user_name"
         private const val KEY_NAME = "name"
         private const val KEY_USER_EMAIL = "user_email"
         private const val KEY_USER_ID = "user_id"

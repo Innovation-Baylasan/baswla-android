@@ -16,6 +16,5 @@ data class Creator(
     @SerializedName("name") val name: String,
     @SerializedName("role") val role: String,
     @SerializedName("role_id") val roleId: Int,
-    @SerializedName("updated_at") val updatedAt: String,
-    @SerializedName("username") val username: String
+    @SerializedName("updated_at") val updatedAt: String
 ) :Parcelable

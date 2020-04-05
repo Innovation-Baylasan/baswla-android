@@ -13,11 +13,10 @@ data class RegisterErrorResponse(
 @Keep
 data class Fields(
     @SerializedName("email") val email: List<String>?,
-    @SerializedName("password") val password: List<String>?,
-    @SerializedName("name") val username: List<String>?
+    @SerializedName("password") val password: List<String>?
 )
 
 fun Fields.stringify(): String {
-    return listOfNotNull(email, password, username)
+    return listOfNotNull(email, password)
         .flatten().joinToString { "$it\n" }
 }

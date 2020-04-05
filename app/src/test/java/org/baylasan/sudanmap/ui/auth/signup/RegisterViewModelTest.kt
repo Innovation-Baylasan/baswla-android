@@ -111,8 +111,7 @@ class RegisterViewModelTest {
                     RegisterErrorResponse(
                         errors = Fields(
                             listOf("email is required"),
-                            listOf("password is required"),
-                            listOf("username is taken")
+                            listOf("password is required")
                         ), httpCode = 404
                     )
                 )

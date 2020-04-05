@@ -26,6 +26,7 @@ import org.baylasan.sudanmap.data.entity.model.AddEntityResponseError
 import org.baylasan.sudanmap.data.event.EventApi
 import org.baylasan.sudanmap.data.event.model.AddEventRequest
 import org.baylasan.sudanmap.data.event.model.AddEventResponseError
+import org.baylasan.sudanmap.data.faq.FaqApi
 import org.baylasan.sudanmap.data.policy.PolicyApi
 import org.baylasan.sudanmap.data.tags.TagsApi
 import org.baylasan.sudanmap.data.terms.TermsApi
@@ -37,6 +38,8 @@ import org.baylasan.sudanmap.domain.category.CategoryRepository
 import org.baylasan.sudanmap.domain.category.FetchCategoriesUseCase
 import org.baylasan.sudanmap.domain.entity.*
 import org.baylasan.sudanmap.domain.event.*
+import org.baylasan.sudanmap.domain.faq.FaqRepository
+import org.baylasan.sudanmap.domain.faq.GetFaqUseCase
 import org.baylasan.sudanmap.domain.policy.GetPolicyUseCase
 import org.baylasan.sudanmap.domain.policy.PolicyRepository
 import org.baylasan.sudanmap.domain.tags.GetTagsByNameUseCase
@@ -55,6 +58,7 @@ import org.baylasan.sudanmap.ui.auth.signup.RegisterViewModel
 import org.baylasan.sudanmap.ui.entitydetails.EntityDetailsViewModel
 import org.baylasan.sudanmap.ui.entitysearch.EntitySearchViewModel
 import org.baylasan.sudanmap.ui.eventsearch.EventSearchViewModel
+import org.baylasan.sudanmap.ui.faq.FaqViewModel
 import org.baylasan.sudanmap.ui.intro.IntroViewModel
 import org.baylasan.sudanmap.ui.layers.MapLayersViewModel
 import org.baylasan.sudanmap.ui.main.UserProfileViewModel
@@ -127,6 +131,12 @@ val policyModule = module(override = true) {
     factory<PolicyRepository> { PolicyApi(get(), get()) }
     factory { GetPolicyUseCase(get()) }
     viewModel { PolicyViewModel(get()) }
+}
+val faqModule = module(override = true) {
+    factory { get<Retrofit>().create(SudanMapApi.Miscs::class.java) }
+    factory<FaqRepository> { FaqApi(get(), get()) }
+    factory { GetFaqUseCase(get()) }
+    viewModel { FaqViewModel(get()) }
 }
 val termsModule = module(override = true) {
     factory { get<Retrofit>().create(SudanMapApi.Miscs::class.java) }

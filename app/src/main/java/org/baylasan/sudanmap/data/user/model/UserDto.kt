@@ -12,7 +12,5 @@ data class UserDto(
     val token: String = "",
     val role: String
 ) {
-    fun isCompany(): Boolean {
-        return role.toLowerCase(Locale.getDefault()) == "company"
-    }
+
 }

@@ -1,13 +1,14 @@
 package org.baylasan.sudanmap.domain.faq.model
 
 
-import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
-
-typealias FaqData = Data
+import androidx.annotation.Keep
 
 @Keep
 data class Faq(
-    @SerializedName("data") val data: List<Data>
-){
-}
+    @SerializedName("answer") val answer: String,
+    @SerializedName("created_at") val createdAt: String,
+    @SerializedName("id") val id: Int,
+    @SerializedName("title") val title: String,
+    @SerializedName("updated_at") val updatedAt: String
+)

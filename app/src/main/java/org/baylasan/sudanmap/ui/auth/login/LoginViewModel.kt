@@ -57,7 +57,6 @@ class LoginViewModel(
             name = user.name,
             token = response.data.token,
             id = user.id,
-            username = user.username,
             role = user.role
         )
         sessionManager.saveUserSession(userDto)

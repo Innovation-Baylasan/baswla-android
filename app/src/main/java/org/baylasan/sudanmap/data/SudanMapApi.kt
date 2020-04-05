@@ -11,7 +11,7 @@ import org.baylasan.sudanmap.data.user.model.AuthenticationResponse
 import org.baylasan.sudanmap.data.user.model.LoginRequest
 import org.baylasan.sudanmap.data.user.model.RegisterRequest
 import org.baylasan.sudanmap.domain.entity.AddReviewUseCase
-import org.baylasan.sudanmap.domain.faq.model.Faq
+import org.baylasan.sudanmap.domain.faq.model.Faqs
 import org.baylasan.sudanmap.domain.policy.model.Policy
 import org.baylasan.sudanmap.domain.terms.model.Terms
 import retrofit2.Response
@@ -115,7 +115,7 @@ interface SudanMapApi {
         fun policy(): Single<Response<Policy>>
 
         @GET("faq")
-        fun faqs(): Single<Response<Faq>>
+        fun faqs(): Single<Response<Faqs>>
     }
 }
 

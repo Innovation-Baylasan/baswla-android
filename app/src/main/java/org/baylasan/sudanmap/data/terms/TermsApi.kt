@@ -6,8 +6,6 @@ import org.baylasan.sudanmap.data.SudanMapApi
 import org.baylasan.sudanmap.data.common.ApiErrorResponse
 import org.baylasan.sudanmap.data.common.ResponseSingleFunc1
 import org.baylasan.sudanmap.data.common.ThrowableSingleFunc1
-import org.baylasan.sudanmap.domain.faq.FaqRepository
-import org.baylasan.sudanmap.domain.faq.model.Faq
 import org.baylasan.sudanmap.domain.terms.TermsRepository
 import org.baylasan.sudanmap.domain.terms.model.Terms
 import retrofit2.Converter
