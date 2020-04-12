@@ -82,7 +82,7 @@ fun ImageView.load(imageUrl: String) {
         setImageDrawable(ColorDrawable(Color.GRAY))
     } else {
         Picasso.get()
-            .load("http://104.248.145.132/$imageUrl")
+            .load("$imageUrl")
             .error(R.drawable.ic_default_placeholder)
             .placeholder(R.drawable.ic_default_placeholder)
             .into(this)
@@ -94,7 +94,7 @@ fun ImageView.loadCircle(imageUrl: String) {
         setImageDrawable(ColorDrawable(Color.GRAY))
     } else {
         Picasso.get()
-            .load("http://104.248.145.132/$imageUrl")
+            .load("$imageUrl")
             .error(R.drawable.ic_default_avatar)
             .placeholder(R.drawable.ic_default_avatar)
             .transform(CropCircleTransformation())

@@ -32,7 +32,7 @@ class MapLayersAdapter : RecyclerView.Adapter<MapLayersViewHolder>() {
                 selectable.toggle()
                 notifyItemChanged(adapterPosition)
             }
-            layerImage.loadCircle("http://104.248.145.132/${category.icon}")
+            layerImage.loadCircle("${category.icon}")
             layerSelected.setColorFilter(
 
                 ContextCompat.getColor(
