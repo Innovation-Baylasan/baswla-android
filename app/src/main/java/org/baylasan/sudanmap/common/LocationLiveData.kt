@@ -1,5 +1,6 @@
 package org.baylasan.sudanmap.common
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.location.Location
 import androidx.lifecycle.LiveData
@@ -19,6 +20,7 @@ class LocationLiveData(context: Context) : LiveData<LocationModel>() {
     }
 
 
+    @SuppressLint("MissingPermission")
     override fun onActive() {
         super.onActive()
         if (lastLocation == null) {
@@ -32,6 +34,7 @@ class LocationLiveData(context: Context) : LiveData<LocationModel>() {
         }
     }
 
+    @SuppressLint("MissingPermission")
     private fun startLocationUpdates() {
         fusedLocationClient.requestLocationUpdates(
             locationRequest,
